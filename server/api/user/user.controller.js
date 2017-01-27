@@ -40,7 +40,7 @@ exports.create = function (req, res, next) {
 exports.show = function (req, res, next) {
   var userId = req.params.id;
   console.log(userId)
-  User.find(userId, function (err, user) {
+  User.find({ _id: userId }, function (err, user) {
     if (err) return next(err);
     if (!user) return res.send(401);
     res.json(user);
