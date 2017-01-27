@@ -7,6 +7,7 @@
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Backend
+Lunch your MongoDb server with `mongod` 
 Go to `server/` and run `nodemong server.js` #UnderDevelopement
 
 
