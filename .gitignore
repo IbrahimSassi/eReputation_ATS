@@ -38,3 +38,9 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
+logs/*
+!.gitkeep
+node_modules/
+bower_components/
+tmp
+.idea
