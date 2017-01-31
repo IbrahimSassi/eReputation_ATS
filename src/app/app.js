@@ -2,11 +2,12 @@
 
 // Declare app level module which depends on views, and components
 angular.module('ATSApp', [
-    'ATSApp.user',
+  'ATSApp.home',
+  'ATSApp.user',
     'ngResource',
 
 
 ])
     .config(['$urlRouterProvider', function ($urlRouterProvider) {
-        $urlRouterProvider.otherwise('/users');
+        $urlRouterProvider.otherwise('/eReputation/users');
 }]);
