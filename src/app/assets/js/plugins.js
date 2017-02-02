@@ -14,11 +14,11 @@ $(function() {
   /*Preloader*/
   $(window).load(function() {
     setTimeout(function() {
-      $('body').addClass('loaded');      
+      $('body').addClass('loaded');
     }, 200);
-  });  
+  });
 
-  
+
   // Search class for focus
   $('.header-search-input').focus(
   function(){
@@ -26,7 +26,7 @@ $(function() {
   }).blur(
   function(){
       $(this).parent('div').removeClass('header-search-wrapper-focus');
-  });  
+  });
 
   // Check first if any of the task is checked
   $('#task-card input:checkbox').each(function() {
@@ -41,22 +41,22 @@ $(function() {
   // Check Uncheck function
   function checkbox_check(el){
       if (!$(el).is(':checked')) {
-          $(el).next().css('text-decoration', 'none'); // or addClass            
+          $(el).next().css('text-decoration', 'none'); // or addClass
       } else {
           $(el).next().css('text-decoration', 'line-through'); //or addClass
-      }    
+      }
   }
 
   /*----------------------
   * Plugin initialization
   ------------------------*/
-  
+
   $('select').material_select();
   // Set checkbox on forms.html to indeterminate
   var indeterminateCheckbox = document.getElementById('indeterminate-checkbox');
   if (indeterminateCheckbox !== null)
     indeterminateCheckbox.indeterminate = true;
-      
+
   // Materialize Slider
   $('.slider').slider({
     full_width: true
@@ -107,11 +107,11 @@ $(function() {
       opacity: .5, // Opacity of modal background
       in_duration: 300, // Transition in duration
       out_duration: 200, // Transition out duration
-      ready: function() { 
-      //alert('Ready'); 
+      ready: function() {
+      //alert('Ready');
       }, // Callback for Modal open
-      complete: function() { 
-      //alert('Closed'); 
+      complete: function() {
+      //alert('Closed');
       } // Callback for Modal close
   });
 
@@ -123,20 +123,20 @@ $(function() {
     delay: 50
   });
 
-  // Materialize sideNav  
+  // Materialize sideNav
 
   //Main Left Sidebar Menu
   $('.sidebar-collapse').sideNav({
-    edge: 'left', // Choose the horizontal origin    
+    edge: 'left', // Choose the horizontal origin
   });
 
   // FULL SCREEN MENU (Layout 02)
   $('.menu-sidebar-collapse').sideNav({
         menuWidth: 240,
-        edge: 'left', // Choose the horizontal origin     
+        edge: 'left', // Choose the horizontal origin
         //closeOnClick:true, // Set if default menu open is true
         menuOut:false // Set if default menu open is true
-        
+
       });
 
   // HORIZONTAL MENU (Layout 03)
@@ -149,7 +149,7 @@ $(function() {
       belowOrigin: true // Displays dropdown below the button
     });
 
-  
+
   //Main Left Sidebar Chat
   $('.chat-collapse').sideNav({
     menuWidth: 300,
@@ -167,10 +167,10 @@ $(function() {
     selectMonths: true, // Creates a dropdown to control month
     selectYears: 15 // Creates a dropdown of 15 years to control year
   });
-  
+
   // Perfect Scrollbar
   $('select').not('.disabled').material_select();
-    var leftnav = $(".page-topbar").height();  
+    var leftnav = $(".page-topbar").height();
     var leftnavHeight = window.innerHeight - leftnav;
   $('.leftside-navigation').height(leftnavHeight).perfectScrollbar({
     suppressScrollX: true
@@ -178,9 +178,9 @@ $(function() {
     var righttnav = $("#chat-out").height();
   $('.rightside-navigation').height(righttnav).perfectScrollbar({
     suppressScrollX: true
-  }); 
-  
-  
+  });
+
+
   // Fullscreen
   function toggleFullScreen() {
     if ((document.fullScreenElement && document.fullScreenElement !== null) ||
@@ -237,12 +237,12 @@ $(function() {
       $(this).toggleClass('flow-text');
     })
   });
-  
+
   //Alerts
   $("#card-alert .close").click(function(){
     $(this).closest('#card-alert').fadeOut('slow');
   });
-  
+
   //Toggle Containers on page
   var toggleContainersButton = $('#container-toggle-button');
   toggleContainersButton.click(function() {
@@ -287,19 +287,19 @@ $(function() {
     });
   }
   //Trending chart for small screen
-  if(window_width <= 480){    
+  if(window_width <= 480){
     $("#trending-line-chart").attr({
       height: '200'
     });
   }
-  
+
   /*
-  * Advanced UI 
+  * Advanced UI
   */
-  
-  
-         
-    
+
+
+
+
 
 
 

@@ -1,0 +1,72 @@
+/*Ibra Style Starts*/
+
+/* Wizard */
+
+.wizard > .content > .title,
+.tabcontrol > .content > .title {
+  position: absolute;
+  left: -999em;
+}
+
+.wizard .actions {
+  position: relative;
+  display: block;
+  text-align: right;
+  width: 100%;
+}
+
+.wizard .actions ul li {
+  display: inline-block;
+}
+
+.wizard .actions ul li {
+  display: inline-block;
+}
+
+.wizard .steps ul li a .current-info,
+.wizard .steps ul li a .number {
+  display: none;
+}
+
+.wizard .tabs {
+  box-shadow: none;
+}
+
+.wizard-content {
+  padding: 50px 0;
+}
+
+.wizard-content img {
+  display: block;
+  width: 100%;
+}
+
+.wizardTerms {
+  height: 300px;
+  overflow-y: scroll;
+  padding: 20px;
+  border: 1px solid #f1f1f1;
+  margin-bottom: 40px;
+}
+
+
+.input-field .prefix.active {
+  color: #26a69a;
+}
+
+.input-field label.error {
+  color: #F44336;
+  position: static;
+  top: 0.8rem;
+  left: 0.75rem;
+  font-size: 0.8rem;
+  cursor: text;
+  -webkit-transition: .2s ease-out;
+  -moz-transition: .2s ease-out;
+  -o-transition: .2s ease-out;
+  -ms-transition: .2s ease-out;
+  transition: .2s ease-out;
+}
+
+
+/*Ibra Style Ends*/
