@@ -116,6 +116,8 @@ $.extend($.fn, {
 			valid = true;
 			validator = $( this[ 0 ].form ).validate();
 			this.each( function() {
+			  console.log(validator.element( this ));
+			  alert(validator.element( this ))
 				valid = validator.element( this ) && valid;
 				errorList = errorList.concat( validator.errorList );
 			});

@@ -1,7 +1,52 @@
+<style type="text/css">
+  .error {
+    color: red !important
+  }
+
+  .tags > span {
+    padding: 4px 9px;
+    margin: 0 5px 30px 0 !important;
+    white-space: nowrap;
+    color: white;
+    background-color: #26a69a;
+    border-radius: 5px;
+    line-height: 32px;
+    font-size: 12px
+  }
+  .tags {
+    height: 100%;
+    font-size: 1.2rem;
+    border: none;
+    padding-left: 2rem;
+    width: 100%;
+  }
+
+  .tags.dismissible > span:hover {
+    opacity: 0.5
+  }
+
+  .tags.dismissible > span:not(.off):after {
+    content: " ✕"
+  }
+
+  .tags > span.off {
+    background-color: #ccc
+  }
+
+  .tags.dismissible > span.off:hover {
+    background-color: #26a69a
+  }
+
+  ul.autocomplete {
+    list-style-type: none;
+    padding-left: 10px;
+  }
+</style>
+
 <div class="col s12 m12 l12">
   <div class="card">
     <div class="card-content">
-      <form id="example-form" >
+      <form id="example-form" ng-submit="vm.addChannel()">
         <div>
           <h3>Campaign Info</h3>
           <section>
@@ -315,12 +360,11 @@
 
                     <input type="text" class="autocomplete"
                            placeholder="autocomplete"
-                           data-source="{{vm.OPTIONS}}"
+                           data-source="url:options.json"
                            data-mode="simple"
                            ng-model="vm.newChannel.link"
-
                     />
-                    {{vm.OPTIONS}}
+                    <!--{{ vm.OPTIONS}}-->
                     <!--data-source="[['aaaa', 1], ['aaab', 2], ['aabb', 3], ['abbb', 4],-->
                     <!--['bbbb', 5], ['hello world', 6], ['this is a test', 7]]"-->
 
@@ -329,7 +373,10 @@
 
 
                   <div ng-repeat="channel in vm.channels" class="chip white-text"
-                       ng-class="{'blue': channel.src=='facebook','red': channel.src=='google+','light-blue': channel.src=='twitter'}">
+                       ng-class="{'blue': channel.src=='facebook',
+                       'red': channel.src=='google+',
+                       'light-blue': channel.src=='twitter',
+                       'black':channel.src=='others'}">
                     <!--<img src="../../assets/images/login-logo.png" alt="Materialize">-->
                     {{channel.link}}
                     <i class="material-icons mdi-navigation-close"></i>
@@ -338,8 +385,7 @@
                 </div>
 
                 <div class="col m2 s12 center-align">
-                  <span class="btn" ng-click="vm.addChannel()">Add</span>
-
+                  <button type="submit" class="waves-effect waves-blue btn-flat" prevent-default>Add</button>
                 </div>
 
               </div>
@@ -348,48 +394,23 @@
           <h3>Keywords</h3>
           <section>
             <div class="wizard-content">
-              <div class="wizardTerms">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vel risus elit. Nunc tempor velit dui,
-                sed gravida urna posuere in. Cras sollicitudin urna at sapien vestibulum commodo quis eget tellus. Nam
-                dapibus fringilla nulla, ac interdum velit. Vestibulum ante ipsum primis in faucibus orci luctus et
-                ultrices posuere cubilia Curae; Phasellus at enim lectus. Phasellus commodo, massa vel congue fermentum,
-                ligula erat egestas turpis, at tempor tellus nulla at nunc. Proin in ornare diam. Proin egestas sodales
-                dolor at rutrum. Suspendisse eu ipsum feugiat, sollicitudin mi eu, tincidunt nibh. Etiam et orci nulla.
-                Sed condimentum orci vel maximus egestas.<br><br>Donec malesuada urna sed orci venenatis ultricies nec
-                eu enim. Vestibulum accumsan iaculis ligula, ac semper risus feugiat ut. Suspendisse tincidunt iaculis
-                ante at eleifend. Maecenas ac nulla varius, vehicula tellus vitae, placerat ipsum. Suspendisse nunc
-                nibh, efficitur non mollis in, pulvinar volutpat metus. Nulla sit amet tortor vestibulum, porttitor dui
-                sed, porta ex. Mauris at justo in sapien semper efficitur quis eget orci. Donec pellentesque leo sit
-                amet dui pharetra condimentum. Nullam eleifend tempor augue, non rutrum nibh tristique non. Nullam eget
-                pellentesque nisi. Aenean nibh ipsum, suscipit id imperdiet vitae, sodales et lacus. Cum sociis natoque
-                penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed at ex turpis. Donec tempor
-                molestie leo eget rutrum. Suspendisse quis nunc a nibh luctus cursus. Fusce vel varius nibh.<br><br>Duis
-                dapibus consequat iaculis. Maecenas fringilla velit ligula, non mattis enim vehicula ut. Suspendisse
-                ipsum ante, pellentesque quis auctor eu, ullamcorper ac ligula. Morbi laoreet consectetur leo. Nam lacus
-                felis, feugiat eget felis eget, lobortis dictum justo. Aenean congue magna at eros rutrum, ut volutpat
-                risus porta. Vivamus arcu lectus, accumsan sit amet mauris ut, tristique sollicitudin sapien. Sed
-                pulvinar feugiat justo, eu mattis sem consequat blandit. Duis blandit purus sit amet sem ornare
-                accumsan. Donec ullamcorper ante enim, sed pretium odio ultricies ac. Duis nec sapien efficitur,
-                faucibus erat ut, bibendum diam. Cras tempus mattis sapien eu feugiat. Aenean risus dui, semper eget
-                velit in, ultrices convallis velit. Morbi a velit dictum, egestas orci eu, venenatis felis. Sed feugiat
-                eros eget orci semper finibus.<br><br>Vivamus in metus lobortis, bibendum mauris dignissim, dapibus
-                justo. Nunc tempor lacus dolor, nec venenatis neque scelerisque sed. Fusce quis est ac erat condimentum
-                posuere. Pellentesque eleifend mauris dui, eu volutpat elit commodo id. Donec faucibus, enim nec luctus
-                elementum, orci justo faucibus dui, ut porttitor lectus neque id leo. Proin viverra diam lacus, rutrum
-                feugiat eros tempor eu. Sed et lorem eu lectus interdum aliquet. In pretium luctus arcu ut pellentesque.
-                Nam faucibus posuere leo, in vehicula mauris vestibulum non.<br><br>Class aptent taciti sociosqu ad
-                litora torquent per conubia nostra, per inceptos himenaeos. Aliquam fringilla efficitur sapien at
-                volutpat. Vivamus nec enim est. Quisque sit amet ex non ex lobortis pulvinar vel id sapien. Vestibulum
-                ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean ut nisl ac ipsum
-                suscipit consectetur. Vestibulum in sodales turpis, eget elementum ipsum. Suspendisse ac magna sed
-                turpis porttitor efficitur quis ac dolor. Vestibulum ante ipsum primis in faucibus orci luctus et
-                ultrices posuere cubilia Curae; Phasellus convallis gravida lacus nec efficitur. Mauris euismod ex
-                accumsan, convallis ante non, varius dui. Nam nec quam feugiat justo rhoncus aliquam. Phasellus lectus
-                nisl, tristique vitae pellentesque ut, faucibus id turpis.
 
+              <div class="row">
+                <div class="col m12 s12 center-align">
+                  <div class="input-field">
+                    <input type="text"
+                           placeholder="Add Keyword"
+                           class="tags"
+                           value="iphone6;iphone6;ipad"
+                           data-options="apple;iphone6;iphone6plus;ipad;iphone6 price"
+                    />
+
+
+                  </div>
+
+                </div>
 
               </div>
-              <p>By clicking Next you agree with the Terms and Conditions!</p>
             </div>
           </section>
           <h3>Finish</h3>
