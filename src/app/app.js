@@ -8,5 +8,14 @@ angular.module('ATSApp', [
 
 ])
     .config(['$urlRouterProvider', function ($urlRouterProvider) {
-        $urlRouterProvider.otherwise('/users');
-}]);
+        $urlRouterProvider.otherwise('/user');
+}])
+  .run(function ($rootScope, $state, UserService) {
+    $rootScope.$on("$stateChangeStart", function (event, toState) {
+      if (!toState.register ) {
+        $rootScope.userpage = false;
+        event.preventDefault();
+      }
+
+    });
+  });

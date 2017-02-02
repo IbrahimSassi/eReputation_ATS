@@ -16,7 +16,7 @@ module.exports = function (app) {
     res.send('api works');
   });
 
-  app.use('/api/users', require('./api/user'));
+  app.use('/api/user', require('./api/user'));
 
 
   // Catch all other routes and return the index file
