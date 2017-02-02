@@ -3,19 +3,18 @@
 
     /**My Module init**/
     angular
-        .module('ATSApp.user', [
-            'ui.router',
+        .module('ATSApp.dashboard', [
 
         ])
         .config(config)
-        .controller('UserCtrl', UserCtrl);
+        .controller('DashboardCtrl', DashboardCtrl);
 
     /**End My Module Init**/
 
     /**Injection**/
     config.$inject = ['$stateProvider', '$urlRouterProvider', '$qProvider'];
 
-    UserCtrl.$inject = ['UserService', '$state'];
+  DashboardCtrl.$inject = ['DashboardService', '$state'];
     /**End Of Injection**/
 
 
@@ -23,10 +22,10 @@
     function config($stateProvider, $urlRouterProvider, $qProvider) {
 
         $stateProvider
-            .state('listUsers', {
-                url: '/users',
-                templateUrl: 'user/views/main.dashboard.view.html',
-                controller: 'UserCtrl as user',
+            .state('dashboard', {
+                url: '/dashboard',
+                templateUrl: 'dashboard/views/main.dashboard.view.html',
+                controller: 'DashboardCtrl as dash',
             })
 
 
@@ -37,19 +36,15 @@
     };
     /**End of Route Config**/
 
-    /** Controller UseCtrl FUNCTION
-     *
-     * @param UserService
-     * @param $state
-     */
-    function UserCtrl(UserService, $state) {
+
+    function DashboardCtrl(DashboardService, $state) {
 
         /**Scope Replace**/
         var vm = this;
         /***/
 
         vm.getAllUsers = function () {
-            UserService.getAllUsers().then(function (data) {
+          DashboardService.getAllUsers().then(function (data) {
                 vm.users = data;
                 console.log(vm.users);
             });
