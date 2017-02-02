@@ -9,7 +9,6 @@ angular.module('ATSApp', [
 
 
 
-])
-    .config(['$urlRouterProvider', function ($urlRouterProvider) {
-        $urlRouterProvider.otherwise('/dashboard');
+]).config(['$urlRouterProvider', function ($urlRouterProvider) {
+        $urlRouterProvider.otherwise('/home');
 }]);
