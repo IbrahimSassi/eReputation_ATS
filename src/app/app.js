@@ -3,19 +3,13 @@
 // Declare app level module which depends on views, and components
 angular.module('ATSApp', [
     'ATSApp.user',
+    'ATSApp.dashboard',
     'ngResource',
+    'ui.router',
+
 
 
 ])
     .config(['$urlRouterProvider', function ($urlRouterProvider) {
-        $urlRouterProvider.otherwise('/user');
-}])
-  .run(function ($rootScope, $state, UserService) {
-    $rootScope.$on("$stateChangeStart", function (event, toState) {
-      if (!toState.register ) {
-        $rootScope.userpage = false;
-        event.preventDefault();
-      }
-
-    });
-  });
+        $urlRouterProvider.otherwise('/dashboard');
+}]);
