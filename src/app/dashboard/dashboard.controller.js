@@ -4,6 +4,7 @@
     /**My Module init**/
     angular
         .module('ATSApp.dashboard', [
+          'ui.router',
 
         ])
         .config(config)

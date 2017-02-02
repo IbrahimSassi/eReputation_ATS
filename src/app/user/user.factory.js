@@ -5,7 +5,7 @@
   'use strict';
 
   angular
-    .module('ATSApp.user')
+    .module('ATSApp-front.user')
     .factory('UserFactory', UserFactory);
 
   UserFactory.$inject = ['$resource'];

@@ -5,7 +5,7 @@
   'use strict';
 
   angular
-    .module('ATSApp.user')
+    .module('ATSApp-front.user')
     .service('UserService', UserServiceFN);
 
   UserServiceFN.$inject = ['UserFactory'];

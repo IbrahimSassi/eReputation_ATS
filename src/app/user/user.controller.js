@@ -7,7 +7,7 @@
 
   /**My Module init**/
   angular
-    .module('ATSApp.user', [
+    .module('ATSApp-front.user', [
       'ui.router',
 
     ])
