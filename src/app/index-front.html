@@ -43,7 +43,15 @@
 
   <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css" rel="stylesheet"/>
 
+  <style>
+    body {
+      background:  url("assets/images/bg1.jpg") no-repeat fixed center ;
+      background-position-x: 0px;
+      background-position-y: 0px;
+      background-size: cover;
 
+    }
+  </style>
 </head>
 
 <body class="cyan">
@@ -55,28 +63,36 @@
 </div>
 <!-- End Page Loading -->
 
+<div class="row col s12">
 
 
-<div id="login-page" class="row">
+
+  <div id="login-page" class="row">
   <div class="col s12 z-depth-4 card-panel">
     <form class="login-form col s12">
+      <div class="row">
+        <div class="input-field col s12 center">
+          <img src="assets/images/full-logo.png" alt="" class="circle responsive-img valign profile-image-login">
+          <p class="center login-form-text">Registration To Digital Reputation</p>
+        </div>
+      </div>
 
       <div class="row">
         <div class="input-field col s12 center">
-          <h4>Register</h4>
-          <p class="center">Who are you?</p>
-<div class="row margin col s12">
-          <ul>
-            <li class="tab col s6 left"> <p>
-              <input ng-model="accountType" name="typeGroup" type="radio" id="individual" value="individual"/>
-              <label for="individual">Individual</label>
-            </p></li>
-            <li class="tab col s6 right"> <p>
-              <input ng-model="accountType" name="typeGroup" type="radio" id="business" href="#bu" value="business"/>
-              <label for="business">Business</label>
-            </p></li>
-          </ul>
-</div>
+
+
+          <div class="row margin col s12">
+            <ul>
+              <li class="tab col s6 left"> <p>
+                <input ng-model="accountType" name="typeGroup" type="radio" id="individual" value="individual"/>
+                <label for="individual">Individual</label>
+              </p></li>
+              <li class="tab col s6 right"> <p>
+                <input ng-model="accountType" name="typeGroup" type="radio" id="business" href="#bu" value="business"/>
+                <label for="business">Business</label>
+              </p></li>
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -84,62 +100,62 @@
 
 
       <div ng-if="accountType=='individual' || accountType==null">
-      <div>
+        <div>
+          <div class="row margin">
+
+            <div class="input-field col s6">
+              <i class="mdi-social-person-outline prefix"></i>
+              <input id="firstName" type="text">
+              <label for="firstName" class="center-align">First Name</label>
+            </div>
+
+            <div class="input-field col s6">
+              <i class="mdi-social-person-outline prefix"></i>
+              <input id="lastName" type="text">
+              <label for="lastName" class="center-align">Last Name</label>
+            </div>
+
+          </div>
+        </div>
+
+
         <div class="row margin">
-
-          <div class="input-field col s6">
-            <i class="mdi-social-person-outline prefix"></i>
-            <input id="firstName" type="text">
-            <label for="firstName" class="center-align">First Name</label>
+          <div class="input-field col s12">
+            <i class="mdi-action-account-circle prefix"></i>
+            <input id="username" type="text">
+            <label for="username" class="center-align">Username</label>
           </div>
-
-          <div class="input-field col s6">
-            <i class="mdi-social-person-outline prefix"></i>
-            <input id="lastName" type="text">
-            <label for="lastName" class="center-align">Last Name</label>
+        </div>
+        <div class="row margin">
+          <div class="input-field col s12">
+            <i class="mdi-communication-email prefix"></i>
+            <input id="email" type="email">
+            <label for="email" class="center-align">Email</label>
           </div>
+        </div>
 
+        <div class="row margin">
+          <div class="input-field col s12">
+            <i class="mdi-action-lock-outline prefix"></i>
+            <input id="password" type="password">
+            <label for="password">Password</label>
+          </div>
         </div>
-      </div>
-
-
-      <div class="row margin">
-        <div class="input-field col s12">
-          <i class="mdi-action-account-circle prefix"></i>
-          <input id="username" type="text">
-          <label for="username" class="center-align">Username</label>
+        <div class="row margin">
+          <div class="input-field col s12">
+            <i class="mdi-action-lock-outline prefix"></i>
+            <input id="password-again" type="password">
+            <label for="password-again">Password again</label>
+          </div>
         </div>
-      </div>
-      <div class="row margin">
-        <div class="input-field col s12">
-          <i class="mdi-communication-email prefix"></i>
-          <input id="email" type="email">
-          <label for="email" class="center-align">Email</label>
+        <div class="row">
+          <div class="input-field col s12">
+            <a href="index.html" class="btn waves-effect waves-light col s12">Register Now</a>
+          </div>
+          <div class="input-field col s12">
+            <p class="margin center medium-small sign-up">Already have an account? <a href="page-login.html">Login</a></p>
+          </div>
         </div>
-      </div>
-
-      <div class="row margin">
-        <div class="input-field col s12">
-          <i class="mdi-action-lock-outline prefix"></i>
-          <input id="password" type="password">
-          <label for="password">Password</label>
-        </div>
-      </div>
-      <div class="row margin">
-        <div class="input-field col s12">
-          <i class="mdi-action-lock-outline prefix"></i>
-          <input id="password-again" type="password">
-          <label for="password-again">Password again</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <a href="index.html" class="btn waves-effect waves-light col s12">Register Now</a>
-        </div>
-        <div class="input-field col s12">
-          <p class="margin center medium-small sign-up">Already have an account? <a href="page-login.html">Login</a></p>
-        </div>
-      </div>
       </div>
 
       <!-- ************************************************************************** Business ************************************************************************** -->
@@ -155,7 +171,7 @@
             </div>
 
             <div class="input-field col s6">
-              <i class="mdi-social-person prefix"></i>
+              <i class="mdi-social-people prefix"></i>
               <select>
                 <option value="" disabled selected>Number Of Employees</option>
                 <option value="1">1-10</option>
@@ -178,6 +194,21 @@
             <label for="businessEmail" class="center-align">Business Email</label>
           </div>
         </div>
+
+
+
+        <div class="row margin">
+          <div class="input-field col s12">
+            <i class="mdi-communication-business prefix"></i>
+            <select id="businessType">
+              <option value="" disabled selected>Business Type</option>
+              <option value="1">Production</option>
+            </select>
+
+          </div>
+        </div>
+
+
 
         <div class="row margin">
           <div class="input-field col s12">
@@ -212,6 +243,7 @@
   </div>
 </div>
 
+</div>
 
 <div ui-view></div>
 
