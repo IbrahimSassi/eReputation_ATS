@@ -1,4 +1,4 @@
-Highcharts.chart('container', {
+Highcharts.chart('ola', {
 
   chart: {
     type: 'bubble',

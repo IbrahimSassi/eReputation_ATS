@@ -46,10 +46,11 @@
     var vm = this;
     /***/
     $rootScope.dash = true;
-    $ocLazyLoad.load('https://code.highcharts.com/highcharts.js');
-    $ocLazyLoad.load('https://code.highcharts.com/highcharts-more.js');
-    $ocLazyLoad.load('https://code.highcharts.com/modules/exporting.js');
+    $ocLazyLoad.load('../../assets/js/ch/highcharts.js');
+    $ocLazyLoad.load('../../assets/js/ch/highcharts-more.js');
+    $ocLazyLoad.load('../../assets/js/ch/exporting.js');
     $ocLazyLoad.load('../../assets/js/highcharts.js');
+    $ocLazyLoad.load('../../assets/js/high2.js');
 
     vm.getAllUsers = function () {
       DashboardService.getAllUsers().then(function (data) {
