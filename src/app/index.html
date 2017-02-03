@@ -185,7 +185,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="bold"><a href="index.html" class="waves-effect waves-cyan"><i
+                <li class="bold"><a ui-sref="dashboard" class="waves-effect waves-cyan"><i
                         class="mdi-action-dashboard"></i> Dashboard</a>
                 </li>
                 <li class="no-padding">
@@ -463,7 +463,7 @@
                         <div class="col s12 m12 l12">
                             <h5 class="breadcrumbs-title">Blank Page</h5>
                             <ol class="breadcrumbs">
-                                <li><a href="index.html">Dashboard</a></li>
+                                <li><a ui-sref="dashboard">Dashboard</a></li>
                                 <li><a href="#">Pages</a></li>
                                 <li class="active">Blank Page</li>
                             </ol>
@@ -704,6 +704,10 @@ Scripts
 <script src="dashboard/dashboard.factory.js"></script>
 <script src="dashboard/dashboard.service.js"></script>
 
+
+
+
+
 <!--/*End of User Module Scripts*/-->
 
 <!--Ibrahim Modules starts-->
@@ -738,6 +742,18 @@ Scripts
 <script type="text/javascript" src="assets/js/plugins/chartjs/chart.min.js"></script>
 <script type="text/javascript" src="assets/js/plugins/chartjs/chart-script.js"></script>
 <!--End Dashboard js-->
+
+<span ng-if="dash">
+
+<style>
+  .highcharts-tooltip h3 {
+    margin: 0.3em 0;
+  }
+</style>
+
+<div id="container" style="height: 400px; min-width: 310px; max-width: 600px; margin: 0 auto"></div>
+
+</span>
 
 </body>
 

@@ -16,13 +16,26 @@ angular.module('ATSApp', [
   .run(function ($rootScope, $state, angularLoad) {
 
 
-    // angularLoad.loadScript('campaign/campaign.controller.js').then(function () {
-    //   angularLoad.loadScript('assets/js/pages/wizard/widgets.min.js').then(function () {
+    angularLoad.loadScript('campaign/campaign.controller.js').then(function () {
+      angularLoad.loadScript('assets/js/pages/wizard/widgets.min.js').then(function () {
+
+        angularLoad.loadScript('campaign/campaign.service.js').then(function () {
+        }).catch(function () {
+          // There was some error loading the script. Meh
+        });
+
+      }).catch(function () {
+        // There was some error loading the script. Meh
+      });
+    }).catch(function () {
+      // There was some error loading the script. Meh
+    });
+
+
+    // angularLoad.loadScript('dashboard/dashboard.controller.js').then(function () {
+    //       angularLoad.loadScript('dashboard/dashboard.factory.js').then(function () {
+    //         angularLoad.loadScript('dashboard/dashboard.service.js').then(function () {
     //
-    //     angularLoad.loadScript('campaign/campaign.service.js').then(function () {
-    //     }).catch(function () {
-    //       // There was some error loading the script. Meh
-    //     });
     //
     //   }).catch(function () {
     //     // There was some error loading the script. Meh
@@ -30,14 +43,16 @@ angular.module('ATSApp', [
     // }).catch(function () {
     //   // There was some error loading the script. Meh
     // });
+    // }).catch(function () {
+    //   // There was some error loading the script. Meh
+    // });
 
 
     $rootScope.$on("$stateChangeStart", function (event, toState) {
-      // if (!toState.comp) {
-      //   $rootScope.comp = false;
-      //   $rootScope.compo = false;
-      //   event.preventDefault();
-      // }
+      if (!toState.dash) {
+        $rootScope.dash = false;
+        event.preventDefault();
+      }
 
     });
   })
