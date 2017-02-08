@@ -44,15 +44,16 @@
       ['bbbb', 5], ['hello world', 6], ['this is a test', 7]];
 
     /**Scope Replace**/
+
     $ocLazyLoad.load('../../assets/js/pages/wizard/material-preloader/js/materialPreloader.min.js');
     $ocLazyLoad.load('../../assets/js/pages/wizard/jquery-blockui/jquery.blockui.js');
     $ocLazyLoad.load('../../assets/js/pages/wizard/jquery-validation/jquery.validate.js');
     $ocLazyLoad.load('../../assets/js/pages/wizard/jquery-steps/jquery.steps.min.js');
-    $ocLazyLoad.load('../../assets/js/pages/wizard/form-wizard.js');
 
     $ocLazyLoad.load('../../assets/js/pages/wizard/sugar.min.js');
     $ocLazyLoad.load('../../assets/js/pages/wizard/widgets.min.js');
 
+    $ocLazyLoad.load('../../assets/js/pages/wizard/form-wizard.js');
 
     vm.channels = [
       {

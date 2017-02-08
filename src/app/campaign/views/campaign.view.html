@@ -353,13 +353,25 @@
           <section>
             <div class="wizard-content">
               <div class="row ">
+                <div class="col m10 s12 center-align">
+
+                  <select  class="country">
+                    <option value="">Existing Channel ...</option>
+                    <option value="AF">https://www.washingtonpost.com/</option>
+                    <option value="AF">https://www.nytimes.com/</option>
+
+
+                  </select>
+
+                </div>
+
 
                 <div class="col m10 s12 center-align">
 
                   <div class="input-field">
 
                     <input type="text" class="autocomplete"
-                           placeholder="autocomplete"
+                           placeholder="Add Channel"
                            data-source="url:options.json"
                            data-mode="simple"
                            ng-model="vm.newChannel.link"
@@ -367,11 +379,10 @@
                     <!--{{ vm.OPTIONS}}-->
                     <!--data-source="[['aaaa', 1], ['aaab', 2], ['aabb', 3], ['abbb', 4],-->
                     <!--['bbbb', 5], ['hello world', 6], ['this is a test', 7]]"-->
-
-
                   </div>
-
-
+                  <br>
+                  <br>
+                  <br>
                   <div ng-repeat="channel in vm.channels" class="chip white-text"
                        ng-class="{'blue': channel.src=='facebook',
                        'red': channel.src=='google+',

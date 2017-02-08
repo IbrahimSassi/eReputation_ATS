@@ -1,6 +1,6 @@
 
 Highcharts.chart({
-  colors: ['#e74c3c','#95a5a6','#2ecc71'],
+  colors: ['#2ecc71','#95a5a6','#e74c3c'],
   chart: {
     renderTo: 'npn',
     type: 'column'
