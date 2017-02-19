@@ -25,7 +25,7 @@
     $stateProvider
       .state('dashboard', {
         url: '/dashboard',
-        templateUrl: 'dashboard/views/main.dashboard.view.html',
+        templateUrl: 'angular/app/dashboard/views/main.dashboard.view.html',
         controller: 'DashboardCtrl as dash',
         dash: true
       })
@@ -55,9 +55,9 @@
 
 
     /** Scripts Loading first Refresh **/
-    angularLoad.loadScript('assets/js/charts/highcharts.js').then(function () {
-      angularLoad.loadScript('assets/js/charts/exporting.js').then(function () {
-        angularLoad.loadScript('assets/js/charts/column.js').then(function () {
+    angularLoad.loadScript('angular/app/assets/js/charts/highcharts.js').then(function () {
+      angularLoad.loadScript('angular/app/assets/js/charts/exporting.js').then(function () {
+        angularLoad.loadScript('angular/app/assets/js/charts/column.js').then(function () {
 
           console.log('all /dashboard scripts loaded OK');
         })

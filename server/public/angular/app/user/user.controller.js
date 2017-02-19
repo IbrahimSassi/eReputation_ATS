@@ -29,7 +29,7 @@
     $stateProvider
       .state('home', {
         url: '/home',
-        templateUrl: 'user/views/register.view.html',
+        templateUrl: 'angular/app/user/views/register.view.html',
         controller: 'UserCtrl as user',
         register:true
       })

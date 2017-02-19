@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ATSApp-front">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Home</title>
+  <!-- Favicons-->
+  <link rel="icon" href="angular/app/images/favicon/favicon-32x32.png" sizes="32x32">
+  <!-- CORE CSS-->
+  <link href="angular/app/assets/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="angular/app/assets/css/style.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <!-- Custome CSS-->
+  <link href="angular/app/assets/css/custom/custom.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="angular/app/assets/css/layouts/page-center.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
+  <link href="angular/app/assets/js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="angular/app/assets/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      background:  url("angular/app/assets/images/bg1.jpg") no-repeat fixed center ;
+      background-position-x: 0px;
+      background-position-y: 0px;
+      background-size: cover;
+    }
+  </style>
+</head>
+<body class="cyan">
+<!-- Start Page Loading -->
+<div id="loader-wrapper">
+  <div id="loader"></div>
+  <div class="loader-section section-left"></div>
+  <div class="loader-section section-right"></div>
+</div>
+<!-- End Page Loading -->
+<div class="row col s12">
+  <div id="login-page" class="row">
+    <div class="col s12 z-depth-4 card-panel">
+      <form class="login-form col s12">
+        <div class="row">
+          <div class="input-field col s12 center">
+            <img src="angular/app/assets/images/full-logo.png" alt="" class="circle responsive-img valign profile-image-login">
+            <p class="center login-form-text">Registration To Digital Reputation</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12 center">
+            <div class="row margin col s12">
+              <ul>
+                <li class="tab col s6 left">
+                  <p>
+                    <input ng-model="accountType" name="typeGroup" type="radio" id="individual" value="individual"/>
+                    <label for="individual">Individual</label>
+                  </p>
+                </li>
+                <li class="tab col s6 right">
+                  <p>
+                    <input ng-model="accountType" name="typeGroup" type="radio" id="business" href="#bu" value="business"/>
+                    <label for="business">Business</label>
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div ng-if="accountType=='individual' || accountType==null">
+          <div>
+            <div class="row margin">
+              <div class="input-field col s6">
+                <i class="mdi-social-person-outline prefix"></i>
+                <input id="firstName" type="text">
+                <label for="firstName" class="center-align">First Name</label>
+              </div>
+              <div class="input-field col s6">
+                <i class="mdi-social-person-outline prefix"></i>
+                <input id="lastName" type="text">
+                <label for="lastName" class="center-align">Last Name</label>
+              </div>
+            </div>
+          </div>
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="mdi-action-account-circle prefix"></i>
+              <input id="username" type="text">
+              <label for="username" class="center-align">Username</label>
+            </div>
+          </div>
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="mdi-communication-email prefix"></i>
+              <input id="email" type="email">
+              <label for="email" class="center-align">Email</label>
+            </div>
+          </div>
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="mdi-action-lock-outline prefix"></i>
+              <input id="password" type="password">
+              <label for="password">Password</label>
+            </div>
+          </div>
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="mdi-action-lock-outline prefix"></i>
+              <input id="password-again" type="password">
+              <label for="password-again">Password again</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <a href="/admin" class="btn waves-effect waves-light col s12">Register Now</a>
+            </div>
+            <div class="input-field col s12">
+              <p class="margin center medium-small sign-up">Already have an account? <a href="page-login.html">Login</a></p>
+            </div>
+          </div>
+        </div>
+        <!-- ************************************************************************** Business ************************************************************************** -->
+        <div ng-if="accountType=='business'">
+          <div>
+            <div class="row margin">
+              <div class="input-field col s6">
+                <i class="mdi-social-person-outline prefix"></i>
+                <input id="businessName" type="text">
+                <label for="businessName" class="center-align">Business Name</label>
+              </div>
+              <div class="input-field col s6">
+                <i class="mdi-social-people prefix"></i>
+                <select>
+                  <option value="" disabled selected>Number Of Employees</option>
+                  <option value="1">1-10</option>
+                  <option value="2">10-100</option>
+                  <option value="3">100-1000</option>
+                  <option value="3">1000+</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="mdi-communication-email prefix"></i>
+              <input id="businessEmail" type="email">
+              <label for="businessEmail" class="center-align">Business Email</label>
+            </div>
+          </div>
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="mdi-communication-business prefix"></i>
+              <select id="businessType">
+                <option value="" disabled selected>Business Type</option>
+                <option value="1">Production</option>
+              </select>
+            </div>
+          </div>
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="mdi-action-lock-outline prefix"></i>
+              <input id="businessPassword" type="password">
+              <label for="businessPassword">Password</label>
+            </div>
+          </div>
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="mdi-action-lock-outline prefix"></i>
+              <input id="businessPassword-again" type="password">
+              <label for="businessPassword-again">Password again</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <a href="/admin" class="btn waves-effect waves-light col s12">Register Now</a>
+            </div>
+            <div class="input-field col s12">
+              <p class="margin center medium-small sign-up">Already have an account? <a href="page-login.html">Login</a></p>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div ui-view></div>
+<!-- ================================================
+   Scripts
+   ================================================ -->
+<script src="angular/app/assets/js/jquery-2.1.1.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('select').material_select()
+  })
+</script>
+<script src="angular/app/bower_components/angular/angular.js"></script>
+<script src="angular/app/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="angular/app/bower_components/angular-resource/angular-resource.js"></script>
+<script src="angular/app/app-front.js"></script>
+<!-- jQuery Library -->
+<script type="text/javascript" src="angular/app/assets/js/plugins/jquery-1.11.2.min.js"></script>
+<!--materialize js-->
+<script type="text/javascript" src="angular/app/assets/js/materialize.min.js"></script>
+<!--prism-->
+<script type="text/javascript" src="angular/app/assets/js/plugins/prism/prism.js"></script>
+<!--scrollbar-->
+<script type="text/javascript" src="angular/app/assets/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<!--plugins.js - Some Specific JS codes for Plugin Settings-->
+<script type="text/javascript" src="angular/app/assets/js/plugins.min.js"></script>
+<!--custom-script.js - Add your own theme custom JS-->
+<script type="text/javascript" src="angular/app/assets/js/custom-script.js"></script>
+<!--/*User Module Scripts*/-->
+<script src="angular/app/user/user.controller.js"></script>
+<script src="angular/app/user/user.factory.js"></script>
+<script src="angular/app/user/user.service.js"></script>
+<!--/*End of User Module Scripts*/-->
+</body>
+</html>
