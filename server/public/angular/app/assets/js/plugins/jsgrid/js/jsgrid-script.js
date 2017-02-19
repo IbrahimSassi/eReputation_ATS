@@ -168,7 +168,7 @@ $(function() {
                         var deferred = $.Deferred();
          
                         $.ajax({
-                            url: 'http://api.randomuser.me/?results=40',
+                            url: 'http://API.randomuser.me/?results=40',
                             dataType: 'json',
                             success: function(data){
                                 deferred.resolve(data.results);

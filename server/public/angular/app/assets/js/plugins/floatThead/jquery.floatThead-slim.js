@@ -37,7 +37,7 @@
     floatContainerClass: 'floatThead-container',
     copyTableClass: true, //copy 'class' attribute from table into the floated table so that the styles match.
     enableAria: false, //will copy header text from the floated header back into the table for screen readers. Might cause the css styling to be off. beware!
-    autoReflow: false, //(undocumented) - use MutationObserver api to reflow automatically when internal table DOM changes
+    autoReflow: false, //(undocumented) - use MutationObserver API to reflow automatically when internal table DOM changes
     debug: false //print possible issues (that don't prevent script loading) to console, if console exists.
   };
 

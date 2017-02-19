@@ -72,7 +72,7 @@
   /**
    * Initiate a new introduction/guide from an element in the page
    *
-   * @api private
+   * @API private
    * @method _introForElement
    * @param {Object} targetElm
    * @returns {Boolean} Success or not?
@@ -258,7 +258,7 @@
 
  /*
    * makes a copy of the object
-   * @api private
+   * @API private
    * @method _cloneObject
   */
   function _cloneObject(object) {
@@ -278,7 +278,7 @@
   /**
    * Go to specific step of introduction
    *
-   * @api private
+   * @API private
    * @method _goToStep
    */
   function _goToStep(step) {
@@ -292,7 +292,7 @@
   /**
    * Go to next step on intro
    *
-   * @api private
+   * @API private
    * @method _nextStep
    */
   function _nextStep() {
@@ -325,7 +325,7 @@
   /**
    * Go to previous step on intro
    *
-   * @api private
+   * @API private
    * @method _nextStep
    */
   function _previousStep() {
@@ -346,7 +346,7 @@
   /**
    * Exit from intro
    *
-   * @api private
+   * @API private
    * @method _exitIntro
    * @param {Object} targetElement
    */
@@ -417,7 +417,7 @@
   /**
    * Render tooltip box in the page
    *
-   * @api private
+   * @API private
    * @method _placeTooltip
    * @param {HTMLElement} targetElement
    * @param {HTMLElement} tooltipLayer
@@ -662,7 +662,7 @@
   /**
    * Update the position of the helper layer on the screen
    *
-   * @api private
+   * @API private
    * @method _setHelperLayerPosition
    * @param {Object} helperLayer
    */
@@ -691,7 +691,7 @@
   /**
    * Add disableinteraction layer and adjust the size and position of the layer
    *
-   * @api private
+   * @API private
    * @method _disableInteraction
    */
   function _disableInteraction () {
@@ -708,7 +708,7 @@
   /**
    * Show an element on the page
    *
-   * @api private
+   * @API private
    * @method _showElement
    * @param {Object} targetElement
    */
@@ -1027,7 +1027,7 @@
    * Get an element CSS property on the page
    * Thanks to JavaScript Kit: http://www.javascriptkit.com/dhtmltutors/dhtmlcascade4.shtml
    *
-   * @api private
+   * @API private
    * @method _getPropValue
    * @param {Object} element
    * @param {String} propName
@@ -1053,7 +1053,7 @@
    * Provides a cross-browser way to get the screen dimensions
    * via: http://stackoverflow.com/questions/5864467/internet-explorer-innerheight
    *
-   * @api private
+   * @API private
    * @method _getWinSize
    * @returns {Object} width and height attributes
    */
@@ -1070,7 +1070,7 @@
    * Add overlay layer to the page
    * http://stackoverflow.com/questions/123999/how-to-tell-if-a-dom-element-is-visible-in-the-current-viewport
    *
-   * @api private
+   * @API private
    * @method _elementInViewport
    * @param {Object} el
    */
@@ -1088,7 +1088,7 @@
   /**
    * Add overlay layer to the page
    *
-   * @api private
+   * @API private
    * @method _addOverlayLayer
    * @param {Object} targetElm
    */
@@ -1138,7 +1138,7 @@
    * Get an element position on the page
    * Thanks to `meouw`: http://stackoverflow.com/a/442474/375966
    *
-   * @api private
+   * @API private
    * @method _getOffset
    * @param {Object} element
    * @returns Element's position info
@@ -1171,7 +1171,7 @@
   /**
    * Gets the current progress percentage
    *
-   * @api private
+   * @API private
    * @method _getProgress
    * @returns current progress percentage
    */
