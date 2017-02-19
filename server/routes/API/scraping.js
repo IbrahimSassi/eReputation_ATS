@@ -4,15 +4,7 @@ var request = require('request');
 var cheerio = require('cheerio');
 var router = express.Router();
 
-// function getNodesThatContain(text) {
-//     var textNodes = $(document).find(":not(iframe, script)")
-//         .contents().filter(
-//             function() {
-//                 return this.nodeType == 3
-//                     && this.textContent.indexOf(text) > -1;
-//             });
-//     return textNodes.parent();
-// };
+//http://localhost:3000/api/scraping
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
