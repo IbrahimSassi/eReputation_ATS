@@ -1,42 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="ATSApp">
-
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="msapplication-tap-highlight" content="no">
-  <meta name="description"
-        content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
-  <meta name="keywords"
-        content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
   <title>Ereputation</title>
-
   <!-- Favicons-->
   <link rel="icon" href="assets/images/favicon/favicon-32x32.png" sizes="32x32">
-  <!-- Favicons-->
-  <link rel="apple-touch-icon-precomposed" href="assets/images/favicon/apple-touch-icon-152x152.png">
-  <!-- For iPhone -->
-  <meta name="msapplication-TileColor" content="#00bcd4">
-  <meta name="msapplication-TileImage" content="assets/images/favicon/mstile-144x144.png">
-  <!-- For Windows Phone -->
-
-
   <!-- CORE CSS-->
   <link href="assets/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection">
   <link href="assets/css/style.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <!-- Custome CSS-->
-  <link href="assets/css/custom/custom.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <link href="assets/css/page/wizard/wizard.css" type="text/css" rel="stylesheet" media="screen,projection">
-
-  <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-  <link href="assets/js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <link href="assets/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet"
-        media="screen,projection">
-  <link href="assets/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet"
+  <link href="assets/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js" type="text/css" rel="stylesheet"
         media="screen,projection">
 </head>
-
 <body>
 <!-- Start Page Loading -->
 <div id="loader-wrapper">
@@ -45,20 +21,19 @@
   <div class="loader-section section-right"></div>
 </div>
 <!-- End Page Loading -->
-
-
 <!-- //////////////////////////////////////////////////////////////////////////// -->
-
 <!-- START HEADER -->
 <header id="header" class="page-topbar">
   <!-- start header nav-->
-  <div class="navbar-fixed">
+  <div class="navbar-fixed" >
     <nav class="navbar-color" style="background-color: #444444">
       <div class="nav-wrapper">
         <ul class="left">
-          <li><h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><img
-            src="assets/images/logo.png" alt="materialize logo"></a> <span
-            class="logo-text">Materialize</span></h1></li>
+          <li>
+            <h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><img
+              src="assets/images/logo.png" alt="materialize logo"></a> <span
+              class="logo-text">Materialize</span></h1>
+          </li>
         </ul>
         <div class="header-search-wrapper hide-on-med-and-down">
           <i class="mdi-action-search"></i>
@@ -77,7 +52,6 @@
                  data-activates="notifications-dropdown"><i class="mdi-social-notifications">
             <small class="notification-badge">5</small>
           </i>
-
           </a>
           </li>
           <li><a href="#" data-activates="chat-out"
@@ -103,7 +77,6 @@
             <a href="#!"><img src="assets/images/flag-icons/Germany.png" alt="German"/> <span
               class="language-select">German</span></a>
           </li>
-
         </ul>
         <!-- notifications-dropdown -->
         <ul id="notifications-dropdown" class="dropdown-content">
@@ -138,14 +111,11 @@
   <!-- end header nav-->
 </header>
 <!-- END HEADER -->
-
 <!-- //////////////////////////////////////////////////////////////////////////// -->
-
 <!-- START MAIN -->
 <div id="main">
   <!-- START WRAPPER -->
-  <div class="wrapper">
-
+  <div class="wrapper" >
     <!-- START LEFT SIDEBAR NAV-->
     <aside id="left-sidebar-nav">
       <ul id="slide-out" class="side-nav fixed leftside-navigation">
@@ -171,7 +141,6 @@
               </ul>
               <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#"
                  data-activates="profile-dropdown"
-
               >John Doe<i
                 class="mdi-navigation-arrow-drop-down right"></i></a>
               <p class="user-roal">Administrator</p>
@@ -185,264 +154,18 @@
           <ul class="collapsible collapsible-accordion">
             <li class="bold"><a ui-sref="campaignCreate" class="collapsible-header waves-effect waves-cyan"><i
               class="mdi-action-view-carousel"></i> Create Campaign</a>
-              <!--<div class="collapsible-body">-->
-              <!--<ul>-->
-              <!--<li><a href="layout-fullscreen.html">Full Screen</a>-->
-              <!--</li>-->
-              <!--<li><a href="layout-horizontal-menu.html">Horizontal Menu</a>-->
-              <!--</li>-->
-              <!--</ul>-->
-              <!--</div>-->
             </li>
           </ul>
         </li>
-        <!--<li class="bold"><a href="app-email.html" class="waves-effect waves-cyan"><i-->
-        <!--class="mdi-communication-email"></i> Mailbox <span class="new badge">4</span></a>-->
-        <!--</li>-->
-        <!--<li class="bold"><a href="app-calendar.html" class="waves-effect waves-cyan"><i-->
-        <!--class="mdi-editor-insert-invitation"></i> Calender</a>-->
-        <!--</li>-->
-        <!--<li class="no-padding">-->
-        <!--<ul class="collapsible collapsible-accordion">-->
-        <!--<li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i-->
-        <!--class="mdi-action-invert-colors"></i> CSS</a>-->
-        <!--<div class="collapsible-body">-->
-        <!--<ul>-->
-        <!--<li><a href="assets/css-typography.html">Typography</a>-->
-        <!--</li>-->
-        <!--<li><a href="assets/css-icons.html">Icons</a>-->
-        <!--</li>-->
-        <!--<li><a href="assets/css-animations.html">Animations</a>-->
-        <!--</li>-->
-        <!--<li><a href="assets/css-shadow.html">Shadow</a>-->
-        <!--</li>-->
-        <!--<li><a href="assets/css-media.html">Media</a>-->
-        <!--</li>-->
-        <!--<li><a href="assets/css-sass.html">Sass</a>-->
-        <!--</li>-->
-        <!--</ul>-->
-        <!--</div>-->
-        <!--</li>-->
-        <!--<li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i-->
-        <!--class="mdi-image-palette"></i> UI Elements</a>-->
-        <!--<div class="collapsible-body">-->
-        <!--<ul>-->
-        <!--<li><a href="ui-alerts.html">Alerts</a>-->
-        <!--</li>-->
-        <!--<li><a href="ui-buttons.html">Buttons</a>-->
-        <!--</li>-->
-        <!--<li><a href="ui-badges.html">Badges</a>-->
-        <!--</li>-->
-        <!--<li><a href="ui-breadcrumbs.html">Breadcrumbs</a>-->
-        <!--</li>-->
-        <!--<li><a href="ui-collections.html">Collections</a>-->
-        <!--</li>-->
-        <!--<li><a href="ui-collapsibles.html">Collapsibles</a>-->
-        <!--</li>-->
-        <!--<li><a href="ui-tabs.html">Tabs</a>-->
-        <!--</li>-->
-        <!--<li><a href="ui-navbar.html">Navbar</a>-->
-        <!--</li>-->
-        <!--<li><a href="ui-pagination.html">Pagination</a>-->
-        <!--</li>-->
-        <!--<li><a href="ui-preloader.html">Preloader</a>-->
-        <!--</li>-->
-        <!--<li><a href="ui-toasts.html">Toasts</a>-->
-        <!--</li>-->
-        <!--<li><a href="ui-tooltip.html">Tooltip</a>-->
-        <!--</li>-->
-        <!--<li><a href="ui-waves.html">Waves</a>-->
-        <!--</li>-->
-        <!--</ul>-->
-        <!--</div>-->
-        <!--</li>-->
-        <!--<li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i-->
-        <!--class="mdi-av-queue"></i> Advanced UI <span class="new badge"></span></a>-->
-        <!--<div class="collapsible-body">-->
-        <!--<ul>-->
-        <!--<li><a href="advanced-ui-chips.html">Chips</a>-->
-        <!--</li>-->
-        <!--<li><a href="advanced-ui-cards.html">Cards</a>-->
-        <!--</li>-->
-        <!--<li><a href="advanced-ui-modals.html">Modals</a>-->
-        <!--</li>-->
-        <!--<li><a href="advanced-ui-media.html">Media</a>-->
-        <!--</li>-->
-        <!--<li><a href="advanced-ui-range-slider.html">Range Slider</a>-->
-        <!--</li>-->
-        <!--<li><a href="advanced-ui-sweetalert.html">SweetAlert</a>-->
-        <!--</li>-->
-        <!--<li><a href="advanced-ui-nestable.html">Shortable & Nestable</a>-->
-        <!--</li>-->
-        <!--<li><a href="advanced-ui-translation.html">Language Translation</a>-->
-        <!--</li>-->
-        <!--<li><a href="advanced-ui-highlight.html">Highlight</a>-->
-        <!--</li>-->
-        <!--</ul>-->
-        <!--</div>-->
-        <!--</li>-->
-        <!--<li class="bold"><a href="app-widget.html" class="waves-effect waves-cyan"><i-->
-        <!--class="mdi-device-now-widgets"></i> Widgets</a>-->
-        <!--</li>-->
-        <!--<li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i-->
-        <!--class="mdi-editor-border-all"></i> Tables</a>-->
-        <!--<div class="collapsible-body">-->
-        <!--<ul>-->
-        <!--<li><a href="table-basic.html">Basic Tables</a>-->
-        <!--</li>-->
-        <!--<li><a href="table-data.html">Data Tables</a>-->
-        <!--</li>-->
-        <!--<li><a href="table-jsgrid.html">jsGrid</a>-->
-        <!--</li>-->
-        <!--<li><a href="table-editable.html">Editable Table</a>-->
-        <!--</li>-->
-        <!--<li><a href="table-floatThead.html">floatThead</a>-->
-        <!--</li>-->
-        <!--</ul>-->
-        <!--</div>-->
-        <!--</li>-->
-        <!--<li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i-->
-        <!--class="mdi-editor-insert-comment"></i> Forms <span class="new badge"></span></a>-->
-        <!--<div class="collapsible-body">-->
-        <!--<ul>-->
-        <!--<li><a href="form-elements.html">Form Elements</a>-->
-        <!--</li>-->
-        <!--<li><a href="form-layouts.html">Form Layouts</a>-->
-        <!--</li>-->
-        <!--<li><a href="form-validation.html">Form Validations</a>-->
-        <!--</li>-->
-        <!--<li><a href="form-masks.html">Form Masks</a>-->
-        <!--</li>-->
-        <!--<li><a href="form-file-uploads.html">File Uploads</a>-->
-        <!--</li>-->
-        <!--</ul>-->
-        <!--</div>-->
-        <!--</li>-->
-        <!--<li class="bold"><a class="collapsible-header  waves-effect waves-cyan active"><i-->
-        <!--class="mdi-social-pages"></i> Pages</a>-->
-        <!--<div class="collapsible-body">-->
-        <!--<ul>-->
-        <!--<li><a href="page-contact.html">Contact Page</a>-->
-        <!--</li>-->
-        <!--<li><a href="page-todo.html">ToDos</a>-->
-        <!--</li>-->
-        <!--<li><a href="page-blog-1.html">Blog Type 1</a>-->
-        <!--</li>-->
-        <!--<li><a href="page-blog-2.html">Blog Type 2</a>-->
-        <!--</li>-->
-        <!--<li><a href="page-404.html">404</a>-->
-        <!--</li>-->
-        <!--<li><a href="page-500.html">500</a>-->
-        <!--</li>-->
-        <!--<li class="active"><a href="page-blank.html">Blank</a>-->
-        <!--</li>-->
-        <!--</ul>-->
-        <!--</div>-->
-        <!--</li>-->
-        <!--<li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i-->
-        <!--class="mdi-action-shopping-cart"></i> eCommers</a>-->
-        <!--<div class="collapsible-body">-->
-        <!--<ul>-->
-        <!--<li><a href="eCommerce-products-page.html">Products Page</a>-->
-        <!--</li>-->
-        <!--<li><a href="eCommerce-pricing.html">Pricing Table</a>-->
-        <!--</li>-->
-        <!--<li><a href="eCommerce-invoice.html">Invoice</a>-->
-        <!--</li>-->
-        <!--</ul>-->
-        <!--</div>-->
-        <!--</li>-->
-        <!--<li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i-->
-        <!--class="mdi-image-image"></i> Medias</a>-->
-        <!--<div class="collapsible-body">-->
-        <!--<ul>-->
-        <!--<li><a href="media-gallary-page.html">Gallery Page</a>-->
-        <!--</li>-->
-        <!--<li><a href="media-hover-effects.html">Image Hover Effects</a>-->
-        <!--</li>-->
-        <!--</ul>-->
-        <!--</div>-->
-        <!--</li>-->
-        <!--<li class="bold"><a class="collapsible-header  waves-effect waves-cyan"><i-->
-        <!--class="mdi-action-account-circle"></i> User</a>-->
-        <!--<div class="collapsible-body">-->
-        <!--<ul>-->
-        <!--<li><a href="user-profile-page.html">User Profile</a>-->
-        <!--</li>-->
-        <!--<li><a href="user-login.html">Login</a>-->
-        <!--</li>-->
-        <!--<li><a href="user-register.html">Register</a>-->
-        <!--</li>-->
-        <!--<li><a href="user-forgot-password.html">Forgot Password</a>-->
-        <!--</li>-->
-        <!--<li><a href="user-lock-screen.html">Lock Screen</a>-->
-        <!--</li>-->
-
-        <!--</ul>-->
-        <!--</div>-->
-        <!--</li>-->
-
-        <!--<li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i-->
-        <!--class="mdi-editor-insert-chart"></i> Charts</a>-->
-        <!--<div class="collapsible-body">-->
-        <!--<ul>-->
-        <!--<li><a href="charts-chartjs.html">Chart JS</a>-->
-        <!--</li>-->
-        <!--<li><a href="charts-chartist.html">Chartist</a>-->
-        <!--</li>-->
-        <!--<li><a href="charts-morris.html">Morris Charts</a>-->
-        <!--</li>-->
-        <!--<li><a href="charts-xcharts.html">xCharts</a>-->
-        <!--</li>-->
-        <!--<li><a href="charts-flotcharts.html">Flot Charts</a>-->
-        <!--</li>-->
-        <!--<li><a href="charts-sparklines.html">Sparkline Charts</a>-->
-        <!--</li>-->
-        <!--</ul>-->
-        <!--</div>-->
-        <!--</li>-->
-        <!--</ul>-->
-        <!--</li>-->
-        <!--<li class="li-hover">-->
-        <!--<div class="divider"></div>-->
-        <!--</li>-->
-        <!--<li class="li-hover"><p class="ultra-small margin more-text">MORE</p></li>-->
-        <!--<li><a href="angular-ui.html"><i class="mdi-action-verified-user"></i> Angular UI <span-->
-        <!--class="new badge"></span></a>-->
-        <!--</li>-->
-        <!--<li><a href="assets/css-grid.html"><i class="mdi-image-grid-on"></i> Grid</a>-->
-        <!--</li>-->
-        <!--<li><a href="assets/css-color.html"><i class="mdi-editor-format-color-fill"></i> Color</a>-->
-        <!--</li>-->
-        <!--<li><a href="assets/css-helpers.html"><i class="mdi-communication-live-help"></i> Helpers</a>-->
-        <!--</li>-->
-        <!--<li><a href="changelogs.html"><i class="mdi-action-swap-vert-circle"></i> Changelogs</a>-->
-        <!--</li>-->
-        <!--<li class="li-hover">-->
-        <!--<div class="divider"></div>-->
-        <!--</li>-->
-        <!--<li class="li-hover"><p class="ultra-small margin more-text">Daily Sales</p></li>-->
-        <!--<li class="li-hover">-->
-        <!--<div class="row">-->
-        <!--<div class="col s12 m12 l12">-->
-        <!--<div class="sample-chart-wrapper">-->
-        <!--<div class="ct-chart ct-golden-section" id="ct2-chart"></div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</li>-->
-        <!--</ul>-->
         <a href="#" data-activates="slide-out"
            class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only cyan"><i
           class="mdi-navigation-menu"></i></a>
+      </ul>
     </aside>
     <!-- END LEFT SIDEBAR NAV-->
-
     <!-- //////////////////////////////////////////////////////////////////////////// -->
-
     <!-- START CONTENT -->
     <section id="content">
-
       <!--breadcrumbs start-->
       <div id="breadcrumbs-wrapper">
         <!-- Search for small screen -->
@@ -465,145 +188,15 @@
         </div>
       </div>
       <!--breadcrumbs end-->
-
-
       <!--start container-->
       <div class="container">
         <div class="section">
-
-
+          <!-- UI VIEW -->
+          <!-- //////////////////////////////////////////////////////////////////////////// -->
+          <!-- START HEADER -->
           <div ui-view></div>
-
-          <span ng-if="dash">
-
-<script src="assets/js/ch/highcharts.js"></script>
-<script src="assets/js/ch/highcharts-more.js"></script>
-<script src="assets/js/ch/exporting.js"></script>
-            <!-- HTML -->
-<div class="center-align" style="margin-left: 20%">
-   <div class="row">
-
-                  <div class="col s12 m8 l3">
-<div id="hf" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
-                  </div>
-
-   <div class="col s12 m8 l3">
-<div id="ages" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
-                  </div>
-
- </div>
-
-              <div class="row">
-
-                  <div class="col s12 m8 l3">
-<div>
-<div id="npn" style="height: 400px; min-width: 600px; max-width: 600px;"></div>
-</div>
-                  </div>
-              </div>
-              <div class="row">
-    <div class="col s12 m8 l3">
-<div>
-<div id="ola" style="height: 400px; min-width: 600px; max-width: 600px;"></div>
-</div>
-    </div>
-              </div>
-
-            <center><h4>Top Authors</h4></center>
-
-            <div id="chartdiv"></div>
-
-
-</div>
-            <!-- Styles -->
-<style>
-#chartdiv {
-  width: 100%;
-  height: 500px;
-}
-</style>
-
-            <!-- Resources -->
-<script src="assets/js/ch/amcharts.js"></script>
-<script src="assets/js/ch/serial.js"></script>
-<script src="assets/js/ch/export.min.js"></script>
-<link rel="stylesheet" href="assets/css/export.css" type="text/css" media="all"/>
-<script src="assets/js/ch/light.js"></script>
-
-            <!-- Chart code -->
-<script>
-var chart = AmCharts.makeChart("chartdiv",
-  {
-    "type": "serial",
-    "theme": "light",
-    "dataProvider": [{
-      "name": "John",
-      "points": 35654,
-      "color": "#7F8DA9",
-      "bullet": "https://www.amcharts.com/lib/images/faces/A04.png"
-    }, {
-      "name": "Damon",
-      "points": 65456,
-      "color": "#FEC514",
-      "bullet": "https://www.amcharts.com/lib/images/faces/C02.png"
-    }, {
-      "name": "Patrick",
-      "points": 45724,
-      "color": "#DB4C3C",
-      "bullet": "https://www.amcharts.com/lib/images/faces/D02.png"
-    }, {
-      "name": "Mark",
-      "points": 13654,
-      "color": "#DAF0FD",
-      "bullet": "https://www.amcharts.com/lib/images/faces/E01.png"
-    }],
-    "valueAxes": [{
-      "maximum": 80000,
-      "minimum": 0,
-      "axisAlpha": 0,
-      "dashLength": 4,
-      "position": "left"
-    }],
-    "startDuration": 1,
-    "graphs": [{
-      "balloonText": "<span style='font-size:13px;'>[[category]]: <b>[[value]]</b></span>",
-      "bulletOffset": 10,
-      "bulletSize": 52,
-      "colorField": "color",
-      "cornerRadiusTop": 8,
-      "customBulletField": "bullet",
-      "fillAlphas": 0.8,
-      "lineAlpha": 0,
-      "type": "column",
-      "valueField": "points"
-    }],
-    "marginTop": 0,
-    "marginRight": 0,
-    "marginLeft": 0,
-    "marginBottom": 0,
-    "autoMargins": false,
-    "categoryField": "name",
-    "categoryAxis": {
-      "axisAlpha": 0,
-      "gridAlpha": 0,
-      "inside": true,
-      "tickLength": 0
-    },
-    "export": {
-      "enabled": true
-    }
-  });
-</script>
-</span>
-
-
-
-
-
-          <div class="divider"></div>
-
-
-          <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+          <!-- END  UI VIEW -->
+          <!-- //////////////////////////////////////////////////////////////////////////// -->
         </div>
         <!-- Floating Action Button -->
         <div class="fixed-action-btn" style="bottom: 50px; right: 19px;">
@@ -626,7 +219,6 @@ var chart = AmCharts.makeChart("chartdiv",
       <!--end container-->
     </section>
     <!-- END CONTENT -->
-
     <!-- //////////////////////////////////////////////////////////////////////////// -->
     <!-- START RIGHT SIDEBAR NAV-->
     <aside id="right-sidebar-nav">
@@ -781,85 +373,56 @@ var chart = AmCharts.makeChart("chartdiv",
       </ul>
     </aside>
     <!-- LEFT RIGHT SIDEBAR NAV-->
-
   </div>
   <!-- END WRAPPER -->
-
 </div>
 <!-- END MAIN -->
-
-
 <!-- //////////////////////////////////////////////////////////////////////////// -->
-
 <!-- START FOOTER -->
 <footer class="page-footer">
   <div class="footer-copyright">
     <div class="container">
-            <span>Copyright © 2015 <a class="grey-text text-lighten-4"
-                                      href="http://themeforest.net/user/geekslabs/portfolio?ref=geekslabs"
-                                      target="_blank">GeeksLabs</a> All rights reserved.</span>
+               <span>Copyright © 2015 <a class="grey-text text-lighten-4"
+                                         href="http://themeforest.net/user/geekslabs/portfolio?ref=geekslabs"
+                                         target="_blank">GeeksLabs</a> All rights reserved.</span>
       <span class="right"> Design and Developed by <a class="grey-text text-lighten-4"
-                                                      href="http://geekslabs.com/">GeeksLabs</a></span>
+                                                      href="">Brogrammers</a></span>
     </div>
   </div>
 </footer>
 <!-- END FOOTER -->
-
-
 <!-- ================================================
-Scripts
-================================================ -->
+   Scripts
+   ================================================ -->
+<!-- jQuery Library  MUST BE FIRST * -->
+<script type="text/javascript" src="assets/js/plugins/jquery-1.11.2.min.js"></script>
+<!--Best Script Loader Ever * -->
+<script src="assets/js/scriptLoader.js"></script>
 
-<script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-<script src="bower_components/angular-resource/angular-resource.js"></script>
-<script src="bower_components/angular-load/angular-load.js"></script>
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="bower_components/angular-resource/angular-resource.min.js"></script>
+<script src="bower_components/angular-load/angular-load.min.js"></script>
+<!--Delete OClazyLoad after your correct your code-->
 <script src="bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
-
-
 <script src="app.js"></script>
-
-
 <!--/*User Module Scripts*/-->
 <script src="dashboard/dashboard.controller.js"></script>
 <script src="dashboard/dashboard.factory.js"></script>
 <script src="dashboard/dashboard.service.js"></script>
-
 <!--/*End of User Module Scripts*/-->
-
 <!--Ibrahim Modules starts-->
-
 <script src="campaign/campaign.controller.js"></script>
 <script src="campaign/campaign.service.js"></script>
 <script src="components/prevent-default.directive.js"></script>
-
 <!--Ibrahim Modules ends-->
-
-
-<!-- jQuery Library -->
-<script type="text/javascript" src="assets/js/plugins/jquery-1.11.2.min.js"></script>
-
-
 <!--materialize js-->
 <script type="text/javascript" src="assets/js/materialize.min.js"></script>
-<!--prism
-<script type="text/javascript" src="assets/js/prism/prism.js"></script>-->
 <!--scrollbar-->
-<script type="text/javascript" src="assets/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-<!-- chartist -->
-<!--<script type="text/javascript" src="assets/js/plugins/chartist-js/chartist.min.js"></script>-->
-
+<!--<script type="text/javascript" src="assets/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>-->
 <!--plugins.js - Some Specific JS codes for Plugin Settings-->
 <script type="text/javascript" src="assets/js/plugins.min.js"></script>
 <!--custom-script.js - Add your own theme custom JS-->
 <script type="text/javascript" src="assets/js/custom-script.js"></script>
-
-
-<!--&lt;!&ndash;Dashboard import&ndash;&gt;-->
-<!--<script type="text/javascript" src="assets/js/plugins/chartjs/chart.min.js"></script>-->
-<!--<script type="text/javascript" src="assets/js/plugins/chartjs/chart-script.js"></script>-->
-<!--&lt;!&ndash;End Dashboard js&ndash;&gt;-->
-
 </body>
-
 </html>

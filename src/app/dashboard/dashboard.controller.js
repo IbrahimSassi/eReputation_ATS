@@ -5,7 +5,6 @@
   angular
     .module('ATSApp.dashboard', [
       'ui.router',
-      'oc.lazyLoad'
 
     ])
     .config(config)
@@ -16,7 +15,7 @@
   /**Injection**/
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$qProvider'];
 
-  DashboardCtrl.$inject = ['DashboardService', '$state', '$ocLazyLoad','$rootScope'];
+  DashboardCtrl.$inject = ['DashboardService', '$state', 'angularLoad'];
   /**End Of Injection**/
 
 
@@ -40,17 +39,10 @@
   /**End of Route Config**/
 
 
-  function DashboardCtrl(DashboardService, $state, $ocLazyLoad,$rootScope) {
+  function DashboardCtrl(DashboardService, $state, angularLoad) {
 
     /**Scope Replace**/
     var vm = this;
-    /***/
-    $rootScope.dash = true;
-    $ocLazyLoad.load('../../assets/js/ch/highcharts.js');
-    $ocLazyLoad.load('../../assets/js/ch/highcharts-more.js');
-    $ocLazyLoad.load('../../assets/js/ch/exporting.js');
-    $ocLazyLoad.load('../../assets/js/highcharts.js');
-    $ocLazyLoad.load('../../assets/js/high2.js');
 
     vm.getAllUsers = function () {
       DashboardService.getAllUsers().then(function (data) {
@@ -58,8 +50,28 @@
         console.log(vm.users);
       });
 
-    }
+    };
 
+
+
+    /** Scripts Loading first Refresh **/
+    angularLoad.loadScript('assets/js/charts/highcharts.js').then(function () {
+      angularLoad.loadScript('assets/js/charts/exporting.js').then(function () {
+        angularLoad.loadScript('assets/js/charts/column.js').then(function () {
+
+          console.log('all /dashboard scripts loaded OK');
+        })
+          .catch(function () {
+            console.log('err script 3');
+          });
+      })
+        .catch(function () {
+          console.log('err script 2');
+        });
+    }).catch(function () {
+      console.log('err script 1');
+    });
+    /** END of Scripts Loading first Refresh **/
 
   };
 
