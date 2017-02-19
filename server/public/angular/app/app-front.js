@@ -5,9 +5,10 @@ angular.module('ATSApp-front', [
   'ATSApp-front.user',
   'ngResource',
   'ui.router',
+  'angularLoad'
 
 
 
 ]).config(['$urlRouterProvider', function ($urlRouterProvider) {
-  $urlRouterProvider.otherwise('/home');
+  $urlRouterProvider.otherwise('/register');
 }]);

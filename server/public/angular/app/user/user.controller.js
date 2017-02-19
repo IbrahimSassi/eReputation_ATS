@@ -19,7 +19,7 @@
   /**Injection**/
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$qProvider'];
 
-  UserCtrl.$inject = ['UserService', '$state','$rootScope'];
+  UserCtrl.$inject = ['UserService', '$state','$rootScope','angularLoad'];
   /**End Of Injection**/
 
 
@@ -27,8 +27,8 @@
   function config($stateProvider, $urlRouterProvider, $qProvider) {
 
     $stateProvider
-      .state('home', {
-        url: '/home',
+      .state('register', {
+        url: '/register',
         templateUrl: 'angular/app/user/views/register.view.html',
         controller: 'UserCtrl as user',
         register:true
@@ -47,7 +47,7 @@
    * @param UserService
    * @param $state
    */
-  function UserCtrl(UserService, $state,$rootScope) {
+  function UserCtrl(UserService, $state,$rootScope,angularLoad) {
 
     /**Scope Replace**/
     var vm = this;
@@ -58,8 +58,7 @@
         vm.users = data;
         console.log(vm.users);
       });
-
-    }
+    };
 
 
   };
