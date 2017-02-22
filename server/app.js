@@ -12,7 +12,7 @@ var TestFacebookScraping = require('./routes/TestFacebookScraping');
 
 /** APIS*/
 var scraping = require('./routes/API/scraping');
-var twitterScraping = require('./routes/API/twitterScraping');
+var twitterScraping = require('./routes/API/twitterScraping/twitterScraping');
 /**End APIS*/
 var ejs = require('ejs');
 
