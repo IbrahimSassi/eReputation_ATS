@@ -47,6 +47,22 @@ router.get('/streaming', function(req, res) {
 
 
 
+  router.get('/about',function (req,res) {
+
+    client.get('search/tweets', {q: 'Mohamed Firas Ouertani'}, function(error, tweets, response) {
+
+      //JSON
+      res.json(tweets);
+      //console.log("This is it: ",tweets);
+
+    });
+
+
+  });
+
+
+
+
 });
 
 
