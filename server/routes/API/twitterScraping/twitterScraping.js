@@ -29,5 +29,27 @@ var client = new TwitterStream({
   access_token_secret: config.twitter.access_token_secret
 });
 
+router.get('/streaming', function(req, res) {
+
+
+  client.stream('statuses/filter', {track: 'Michael Jackson'},  function(stream) {
+
+    stream.on('data', function(tweet) {
+      //console.log(tweet);
+      //JSON Streaming
+      res.json(tweet);
+    });
+
+    stream.on('error', function(error) {
+      console.log(error);
+    });
+  });
+
+
+
+});
+
+
+
 
 module.exports = router;
