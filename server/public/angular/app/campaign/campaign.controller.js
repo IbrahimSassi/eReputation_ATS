@@ -111,51 +111,51 @@
     // $ocLazyLoad.load('angular/app/assets/js/pages/wizard/form-wizard.js');
 
     /** Scripts Loading first Refresh **/
-    angularLoad.loadScript('angular/app/assets/js/pages/wizard/material-preloader/js/materialPreloader.min.js').then(function () {
-      angularLoad.loadScript('angular/app/assets/js/pages/wizard/jquery-blockui/jquery.blockui.js').then(function () {
-        angularLoad.loadScript('angular/app/assets/js/pages/wizard/jquery-validation/jquery.validate.js').then(function () {
-          angularLoad.loadScript('angular/app/assets/js/pages/wizard/jquery-steps/jquery.steps.min.js').then(function () {
-            angularLoad.loadScript('angular/app/assets/js/pages/wizard/sugar.min.js').then(function () {
-              angularLoad.loadScript('angular/app/assets/js/pages/wizard/widgets.min.js').then(function () {
-                angularLoad.loadScript('angular/app/assets/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js').then(function () {
-                  angularLoad.loadScript('angular/app/assets/js/pages/wizard/form-wizard.js').then(function () {
-                      console.log("scripts load succefully")
-                  })
-                    .catch(function () {
-                      console.log('err script 3');
-                    });
-
-                })
-                  .catch(function () {
-                    console.log('err script 3');
-                  });
-
-              })
-                .catch(function () {
-                  console.log('err script 3');
-                });
-
-            })
-              .catch(function () {
-                console.log('err script 3');
-              });
-
-          })
-            .catch(function () {
-              console.log('err script 3');
-            });
-
-        })
-          .catch(function () {
-            console.log('err script 3');
-          });
-      })
-        .catch(function () {
-          console.log('err script 2');
-        });
-    }).catch(function () {
-      console.log('err script 1');
-    });
+    // angularLoad.loadScript('angular/app/assets/js/pages/wizard/material-preloader/js/materialPreloader.min.js').then(function () {
+    //   angularLoad.loadScript('angular/app/assets/js/pages/wizard/jquery-blockui/jquery.blockui.js').then(function () {
+    //     angularLoad.loadScript('angular/app/assets/js/pages/wizard/jquery-validation/jquery.validate.js').then(function () {
+    //       angularLoad.loadScript('angular/app/assets/js/pages/wizard/jquery-steps/jquery.steps.min.js').then(function () {
+    //         angularLoad.loadScript('angular/app/assets/js/pages/wizard/sugar.min.js').then(function () {
+    //           angularLoad.loadScript('angular/app/assets/js/pages/wizard/widgets.min.js').then(function () {
+    //             angularLoad.loadScript('angular/app/assets/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js').then(function () {
+    //               angularLoad.loadScript('angular/app/assets/js/pages/wizard/form-wizard.js').then(function () {
+    //                   console.log("scripts load succefully")
+    //               })
+    //                 .catch(function () {
+    //                   console.log('err script 3');
+    //                 });
+    //
+    //             })
+    //               .catch(function () {
+    //                 console.log('err script 3');
+    //               });
+    //
+    //           })
+    //             .catch(function () {
+    //               console.log('err script 3');
+    //             });
+    //
+    //         })
+    //           .catch(function () {
+    //             console.log('err script 3');
+    //           });
+    //
+    //       })
+    //         .catch(function () {
+    //           console.log('err script 3');
+    //         });
+    //
+    //     })
+    //       .catch(function () {
+    //         console.log('err script 3');
+    //       });
+    //   })
+    //     .catch(function () {
+    //       console.log('err script 2');
+    //     });
+    // }).catch(function () {
+    //   console.log('err script 1');
+    // });
     /** END of Scripts Loading first Refresh **/
 
 
