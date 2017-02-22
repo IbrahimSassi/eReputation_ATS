@@ -6,7 +6,7 @@ var router = express.Router();
 var Twit = require('twit');
 var config = require('../twitterScraping/config');
 
-// instantiate Twit module
+// instantiate Twitter module
 var twitter = new Twit(config.twitter);
 
 var TWEET_COUNT = 15;
