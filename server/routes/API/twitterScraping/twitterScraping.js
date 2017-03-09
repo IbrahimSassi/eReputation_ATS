@@ -3,24 +3,14 @@
  */
 var express = require('express');
 var router = express.Router();
-var Twit = require('twit');
 var config = require('../twitterScraping/config');
+var Tweet     = require('../../../models/tweet');
 
-// instantiate Twitter module
+// instantiate Twit module
+var Twit = require('twit');
 var twitter = new Twit(config.twitter);
 
-var TWEET_COUNT = 15;
-var MAX_WIDTH = 305;
-var OEMBED_URL = 'statuses/oembed';
-var USER_TIMELINE_URL = 'statuses/user_timeline';
-
-/**
- * GET tweets json.
- */
-
-
-
-
+// instantiate Twitter module
 var TwitterStream = require('twitter');
 var client = new TwitterStream({
   consumer_key: config.twitter.consumer_key,
@@ -29,10 +19,13 @@ var client = new TwitterStream({
   access_token_secret: config.twitter.access_token_secret
 });
 
+
+
+
 router.get('/streaming', function(req, res) {
 
 
-  client.stream('statuses/filter', {track: 'Michael Jackson',limit:{"track":2}},  function(stream) {
+  client.stream('statuses/filter', {track: 'Michael Jackson'},  function(stream) {
 
     stream.on('data', function(tweet) {
       //console.log(tweet);
@@ -52,10 +45,11 @@ router.get('/streaming', function(req, res) {
 
 router.get('/about',function (req,res) {
 
-  client.get('search/tweets', {q: 'from:MedFirasOuert', count:100}, function(error, tweets, response) {
-
+  //client.get('search/tweets', {q: '"happy hour" until:2017-03-02', count:100}, function(error, tweets, response) {
+    //client.get('search/tweets', {q: 'from:CoryBooker max_id:836661171746930700 until:2017-03-01', count:100}, function(error, tweets, response) {
+  client.get('search/tweets', {q: 'from:CoryBooker max_id:836661171746930700 until:2017-03-01', count:100}, function(error, tweets, response) {
     //JSON
-    res.json({a:tweets});
+    res.json(tweets);
     //console.log("This is it: ",tweets);
 
   });
@@ -66,78 +60,45 @@ router.get('/about',function (req,res) {
 
 
 
+router.get('/timeline/:user',function (req,res) {
 
-router.get('/user_timeline/:user', function(req, res) {
-/*
-  var oEmbedTweets = [], tweets = [],
+  client.get('statuses/user_timeline', {screen_name:req.params.user, count:100}, function(error, tweets, response) {
 
-    params = {
-      screen_name: req.params.user, // the user id passed in as part of the route
-      count: TWEET_COUNT // how many tweets to return
-    };
+    res.json(tweets);
 
-  // the max_id is passed in via a query string param
-  if(req.query.max_id) {
-    params.max_id = req.query.max_id;
-  }
-*/
-
-  // request data
-  twitter.get(USER_TIMELINE_URL, function (err, data, resp) {
-
-   // tweets = data;
-    //JSON
-    res.json(data);
-    /*var i = 0, len = tweets.length;
-
-    for(i; i < len; i++) {
-      getOEmbed(tweets[i]);
-    }*/
   });
 
-  /**
-   * requests the oEmbed html
-   */
-/*
-  function getOEmbed (tweet) {
 
-    // oEmbed request params
-    var params = {
-      "id": tweet.id_str,
-      "maxwidth": MAX_WIDTH,
-      "hide_thread": true,
-      "omit_script": true
-    };
 
-    // request data
-    twitter.get(OEMBED_URL, params, function (err, data, resp) {
-      tweet.oEmbed = data;
-      oEmbedTweets.push(tweet);
 
-      // do we have oEmbed HTML for all Tweets?
-      if (oEmbedTweets.length == tweets.length) {
-        res.setHeader('Content-Type', 'application/json');
-        res.send(oEmbedTweets);
-      }
-    });
-  }
-  */
 });
 
 
 
-router.get('/abna',function (req,res) {
+
+router.get('/stream',function (req,res) {
+
   //get tweet by place bounded box
-/*
-  var sanFrancisco = [ '7.52448164229', '30.3075560572', '11.4887874691', '37.3499944118' ]
+
+  var Tunisia = [ '7.52448164229', '30.3075560572', '11.4887874691', '37.3499944118' ]
+  var sanFrancisco = [ '-122.75', '36.8', '-121.75', '37.8' ]
+
 
   var stream = twitter.stream('statuses/filter', { locations: sanFrancisco})
 
-  stream.on('tweet', function (tweet) {
-    console.log(tweet)
+  stream.on('tweet', function (data) {
+    console.log(data)
+    var tweet = new Tweet();
+    tweet.text = data.text;
+    tweet.save(function(err) {
+      if (err)
+        res.send(err);
+
+      //res.json({ message: 'User created!' });
+    });
 
   })
-*/
+
 
 // Streamin about a specific twwet
 /*
@@ -149,9 +110,7 @@ router.get('/abna',function (req,res) {
   })
 */
 
-  twitter.get('search/tweets', { q: 'banana since:2011-07-11', count: 100 }, function(err, data, response) {
-    res.json(data)
-  })
+
 
 
 });
