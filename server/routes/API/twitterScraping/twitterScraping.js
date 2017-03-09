@@ -5,7 +5,7 @@ var express = require('express');
 var router = express.Router();
 var config = require('../twitterScraping/config');
 var Tweet     = require('../../../models/tweet');
-
+var sentiment = require('sentiment');
 // instantiate Twit module
 var Twit = require('twit');
 var twitter = new Twit(config.twitter);
@@ -87,9 +87,18 @@ router.get('/stream',function (req,res) {
   var stream = twitter.stream('statuses/filter', { locations: sanFrancisco})
 
   stream.on('tweet', function (data) {
-    console.log(data)
+    analyzeV = sentiment(data.text);
+    console.log("**********************************************************")
+    console.log(data.text)
+    console.log(analyzeV)
+    console.log("**********************************************************")
     var tweet = new Tweet();
     tweet.text = data.text;
+    tweet.screenName = data.user.screen_name;
+    tweet.createdAt = data.user.created_at;
+    tweet.positive = analyzeV.positive;
+    tweet.negative = analyzeV.negative;
+    tweet.score = analyzeV.score;
     tweet.save(function(err) {
       if (err)
         res.send(err);
