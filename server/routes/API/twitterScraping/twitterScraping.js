@@ -32,7 +32,7 @@ var client = new TwitterStream({
 router.get('/streaming', function(req, res) {
 
 
-  client.stream('statuses/filter', {track: 'Michael Jackson'},  function(stream) {
+  client.stream('statuses/filter', {track: 'Michael Jackson',limit:{"track":2}},  function(stream) {
 
     stream.on('data', function(tweet) {
       //console.log(tweet);
@@ -52,10 +52,10 @@ router.get('/streaming', function(req, res) {
 
 router.get('/about',function (req,res) {
 
-  client.get('search/tweets', {q: 'Mohamed Firas Ouertani'}, function(error, tweets, response) {
+  client.get('search/tweets', {q: 'from:MedFirasOuert', count:100}, function(error, tweets, response) {
 
     //JSON
-    res.json(tweets);
+    res.json({a:tweets});
     //console.log("This is it: ",tweets);
 
   });
@@ -123,6 +123,39 @@ router.get('/user_timeline/:user', function(req, res) {
   }
   */
 });
+
+
+
+router.get('/abna',function (req,res) {
+  //get tweet by place bounded box
+/*
+  var sanFrancisco = [ '7.52448164229', '30.3075560572', '11.4887874691', '37.3499944118' ]
+
+  var stream = twitter.stream('statuses/filter', { locations: sanFrancisco})
+
+  stream.on('tweet', function (tweet) {
+    console.log(tweet)
+
+  })
+*/
+
+// Streamin about a specific twwet
+/*
+  var stream = twitter.stream('statuses/filter', {  track: ['fcb', 'psg', 'Barcelona', 'Paris Saint-Germain'] })
+
+  stream.on('tweet', function (tweet) {
+    console.log(tweet)
+
+  })
+*/
+
+  twitter.get('search/tweets', { q: 'banana since:2011-07-11', count: 100 }, function(err, data, response) {
+    res.json(data)
+  })
+
+
+});
+
 
 
 
