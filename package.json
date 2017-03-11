@@ -38,6 +38,7 @@
     "ejs": "^2.5.6",
     "express": "~4.14.1",
     "google": "^2.1.0",
+    "google-translate-api": "^2.2.2",
     "jade": "~1.11.0",
     "mongoose": "^4.8.6",
     "morgan": "~1.7.0",

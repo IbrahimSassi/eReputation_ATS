@@ -13,6 +13,7 @@ var TestFacebookScraping = require('./routes/TestFacebookScraping');
 /** APIS*/
 var webScraping = require('./routes/API/webScraping/index');
 var twitterScraping = require('./routes/API/twitterScraping/twitterScraping');
+var wwsa = require('./routes/API/wwsa/index');
 /**End APIS*/
 
 var ejs = require('ejs');
@@ -42,6 +43,7 @@ app.use('/users', users);
 app.use('/TestFacebookScraping', TestFacebookScraping);
 app.use('/API/webScraping', webScraping);
 app.use('/API/twitterScraping', twitterScraping);
+app.use('/API/wwsa', wwsa);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
