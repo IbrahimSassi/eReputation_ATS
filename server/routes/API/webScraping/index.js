@@ -16,7 +16,6 @@ router.post('/', function (request, result, next) {
   /**End of Vars Definition*/
 
 
-
   /**Queries Definition*/
   var searchQueryChannles = "";
   var searchQueryKeywords = "";
@@ -78,7 +77,7 @@ router.post('/', function (request, result, next) {
 
         /**Get Post Full Body*/
         if (postBodyVerif === true) {
-          var myPromise =scraper.scrapeArticle(url, allResult, link).then(function (content) {
+          var myPromise = scraper.scrapeArticle(url, allResult, link).then(function (content) {
             //console.log(content);
             return content;
           });
@@ -112,46 +111,29 @@ router.post('/', function (request, result, next) {
 
 });
 
-router.get('/', function(req, res, next) {
-  // var jsonString=JSON.stringify({
-  //   "channels": [
-  //     "www.mosaiquefm.net"
-  //   ],
-  //   "keywords": [
-  //     {
-  //       "w": "football",
-  //       "inTitle": true,
-  //       "inText": true,
-  //       "state": "active"
-  //     },
-  //     {
-  //       "w": "football",
-  //       "inTitle": false,
-  //       "inText": true,
-  //       "state": "active"
-  //     }
-  //   ],
-  //   "minPostNb": 2,
-  //   "postBody": true
-  // });
-  // res.send("this_method_work_with_post_exemple_body : \n\n "+JSON.stringify(JSON.parse(jsonString),null,2)+"");
-
-  myRequest({
-    url: 'http://apidemo.theysay.io/api/v1/sentiment', //URL to hit
-    method: 'POST', // specify the request type
-    headers: { // speciyfy the headers
-      'Content-Type': 'application/json'
-    },
-    body: '{"text": "i love this product", "level": "sentence"}' //Set the body as a string
-  }, function(error, response, body){
-    if(error) {
-      console.log(error);
-    } else {
-      console.log(response.statusCode, body);
-      res.json(JSON.parse(body));
-
-    }
+router.get('/', function (req, res, next) {
+  var jsonString = JSON.stringify({
+    "channels": [
+      "www.mosaiquefm.net"
+    ],
+    "keywords": [
+      {
+        "w": "football",
+        "inTitle": true,
+        "inText": true,
+        "state": "active"
+      },
+      {
+        "w": "football",
+        "inTitle": false,
+        "inText": true,
+        "state": "active"
+      }
+    ],
+    "minPostNb": 2,
+    "postBody": true
   });
+  res.send("this_method_work_with_post_exemple_body : \n\n " + JSON.stringify(JSON.parse(jsonString), null, 2) + "");
 
 });
 
