@@ -11,9 +11,10 @@ var users = require('./routes/users');
 var TestFacebookScraping = require('./routes/TestFacebookScraping');
 
 /** APIS*/
-var scraping = require('./routes/API/scraping');
+var webScraping = require('./routes/API/webScraping/index');
 var twitterScraping = require('./routes/API/twitterScraping/twitterScraping');
 /**End APIS*/
+
 var ejs = require('ejs');
 
 var app = express();
@@ -39,7 +40,7 @@ app.use('/admin', admin);
 app.use('/', index);
 app.use('/users', users);
 app.use('/TestFacebookScraping', TestFacebookScraping);
-app.use('/API/scraping', scraping);
+app.use('/API/webScraping', webScraping);
 app.use('/API/twitterScraping', twitterScraping);
 
 // catch 404 and forward to error handler
