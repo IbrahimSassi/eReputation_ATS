@@ -13,6 +13,7 @@ var TestFacebookScraping = require('./routes/TestFacebookScraping');
 /** APIS*/
 var webScraping = require('./routes/API/webScraping/index');
 var twitterScraping = require('./routes/API/twitterScraping/twitterScraping');
+var facebookScraping = require('./routes/API/facebookScraping');
 var wwsa = require('./routes/API/wwsa/index');
 /**End APIS*/
 
@@ -42,6 +43,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/TestFacebookScraping', TestFacebookScraping);
 app.use('/API/webScraping', webScraping);
+app.use('/API/facebookScraping', facebookScraping);
 app.use('/API/twitterScraping', twitterScraping);
 app.use('/API/wwsa', wwsa);
 
