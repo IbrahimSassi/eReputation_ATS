@@ -53,13 +53,15 @@ router.get('/posts/:id/reactions', function (req, res, next) {
 });
 
 
-router.get('/page/:id/insights', function (req, res, next) {
+router.get('/page/:id/insights/:token', function (req, res, next) {
 
   var page_id = req.params.id;
   var node = page_id ;
   var fields = "/insights?metric=['page_storytellers_by_age_gender']";
 
-  var page_access_token = "EAACEdEose0cBANSadQiZC3xcXAizcdMdm3Ibx6TwbafBLttSQ3BNRpMCoJ8HWRyqt8ZAflCbC8nvxNkVpOv0vGQH7Xqz5O5YQr33lo2ogNpPkPupZCWNhX69SLsykvUMLmmMyBY4HxprVGg0cbEJZBtOBCR5FyvxeetO22qk6JujnNcGg9zYkqthMLNn2LcZD";
+
+  // var page_access_token = "EAACEdEose0cBANSadQiZC3xcXAizcdMdm3Ibx6TwbafBLttSQ3BNRpMCoJ8HWRyqt8ZAflCbC8nvxNkVpOv0vGQH7Xqz5O5YQr33lo2ogNpPkPupZCWNhX69SLsykvUMLmmMyBY4HxprVGg0cbEJZBtOBCR5FyvxeetO22qk6JujnNcGg9zYkqthMLNn2LcZD";
+  var page_access_token = req.params.token;
   var parameters = "&access_token=" + page_access_token;
   var url = base + node + fields + parameters;
   console.log(url);
