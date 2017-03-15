@@ -12,7 +12,6 @@
   function statusChangeCallback(response) {
     console.log('statusChangeCallback');
     console.log(response);
-    document.cookie = "token="+response.authResponse.accessToken;
 
     // The response object is returned with a status field that lets the
     // app know the current login status of the person.
@@ -20,6 +19,8 @@
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
+      document.cookie = "token="+response.authResponse.accessToken;
+
       testAPI();
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
@@ -331,8 +332,8 @@ the FB.login() function when clicked.
 <button onclick="showComments()">Show Comments</button>
 <br>
 
-<button onclick="show_page_storytellers_by_age_gender()">Show The number of People Talking About the Page by user age and gender
-</button>
+<!--<button onclick="show_page_storytellers_by_age_gender()">Show The number of People Talking About the Page by user age and gender-->
+<!--</button>-->
 <br>
 
 
@@ -373,8 +374,9 @@ For example, if someone sees a Page update in News Feed and then sees that same 
 <button onclick="show_post_impressions_unique()">Show The number of people who saw a specific Post
 </button>
 
+<br>
 
-<a href="javascript:void(0)" onclick="openUrl('token')">Testing Insights with backend</a>
+<button onclick="openUrl('token')">Show The number of People Talking About the Page by user age and gender</button>
 
 
 <div id="status">

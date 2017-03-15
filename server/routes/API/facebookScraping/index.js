@@ -16,13 +16,14 @@ router.get('/', function (req, res, next) {
 });
 
 
-router.get('/posts', function (req, res, next) {
+router.get('/posts/:id', function (req, res, next) {
 
-  var page_id = "mosaiquefm";
+  // var page_id = "mosaiquefm";
+  var page_id = req.params.id;
   var node = page_id + "/posts";
   var fields = "/?fields=message,link,created_time,type,name,id," +
     "comments,shares,reactions" +
-    ".limit(0).summary(true)"
+    ".limit(0).summary(true)";
   var parameters = "&access_token=" + ACCESS_TOKEN;
   var url = base + node + fields + parameters;
   console.log(url);
@@ -64,7 +65,7 @@ router.get('/1page/:id/insights/:token', extendToken, function (req, res, next) 
 
   var page_id = req.params.id;
   var node = page_id;
-  var fields = "/insights?metric=['page_impressions']";
+  var fields = "/insights?metric=['page_storytellers_by_age_gender']";
   //All Metrics :
   //https://developers.facebook.com/docs/graph-api/reference/v2.5/insights#metrics
 
@@ -79,6 +80,7 @@ router.get('/1page/:id/insights/:token', extendToken, function (req, res, next) 
     console.log("url", url);
     request(url, function (error, response, body) {
       if (!error && response.statusCode == 200) {
+        JSON.parse(body).data.LongLivedToken=page_ACCESS_TOKEN;
         res.json(JSON.parse(body));
       }
     })
@@ -91,7 +93,7 @@ router.get('/2page/:id/insights/:token', function (req, res, next) {
 
   var page_id = req.params.id;
   var node = page_id;
-  var fields = "/insights?metric=['page_impressions']";
+  var fields = "/insights?metric=['page_storytellers_by_age_gender']";
 
 
   var page_ACCESS_TOKEN = req.params.token;
