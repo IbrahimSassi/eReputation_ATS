@@ -8,11 +8,13 @@ var bodyParser = require('body-parser');
 var admin = require('./routes/admin');
 var index = require('./routes/index');
 var users = require('./routes/users');
+var TestFacebookScraping = require('./routes/TestFacebookScraping');
 
 /** APIS*/
 var webScraping = require('./routes/API/webScraping/index');
 var twitterScraping = require('./routes/API/twitterScraping/twitterScraping');
 var facebookScraping = require('./routes/API/facebookScraping');
+var twitter = require('./routes/API/twitterScraping/twitter');
 var wwsa = require('./routes/API/wwsa/index');
 /**End APIS*/
 
@@ -41,8 +43,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/admin', admin);
 app.use('/', index);
 app.use('/users', users);
+app.use('/TestFacebookScraping', TestFacebookScraping);
 app.use('/API/webScraping', webScraping);
-app.use('/API/facebookScraping', facebookScraping);
 app.use('/API/twitterScraping', twitterScraping);
 app.use('/API/wwsa', wwsa);
 

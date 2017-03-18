@@ -8,12 +8,7 @@ var TweetSchema   = new Schema({
   text: String,
   screenName: String,
   createdAt: String,
-  positive: [String],
-  nagative: [String],
-  score: String,
-  profilePicture: String,
-  creationDate: { type: Date, default: Date.now },
-  badge: String
+
 
 });
 

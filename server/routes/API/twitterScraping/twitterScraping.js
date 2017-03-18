@@ -1,6 +1,7 @@
 /**
  * Created by MrFirases on 2/22/2017.
  */
+
 var express = require('express');
 var router = express.Router();
 var config = require('../twitterScraping/config');
@@ -44,10 +45,12 @@ router.get('/streaming', function(req, res) {
 
 
 router.get('/about',function (req,res) {
-
+  var sanFrancisco = [ '-122.75', '36.8', '-121.75', '37.8' ]
   //client.get('search/tweets', {q: '"happy hour" until:2017-03-02', count:100}, function(error, tweets, response) {
     //client.get('search/tweets', {q: 'from:CoryBooker max_id:836661171746930700 until:2017-03-01', count:100}, function(error, tweets, response) {
-  client.get('search/tweets', {q: 'from:CoryBooker max_id:836661171746930700 until:2017-03-01', count:100}, function(error, tweets, response) {
+  //client.get('search/tweets', {q: 'love OR hate max_id:836661171746930700 until:2017-03-01', count:100}, function(error, tweets, response) {
+  client.get('search/tweets', {q: 'delicious #cocacola', count:10 }, function(error, tweets, response) {
+
     //JSON
     res.json(tweets);
     //console.log("This is it: ",tweets);
@@ -87,7 +90,8 @@ router.get('/stream',function (req,res) {
   var stream = twitter.stream('statuses/filter', { locations: sanFrancisco})
 
   stream.on('tweet', function (data) {
-    analyzeV = sentiment(data.text);
+    console.log(data)
+    /*analyzeV = sentiment(data.text);
     console.log("**********************************************************")
     console.log(data.text)
     console.log(analyzeV)
@@ -99,13 +103,14 @@ router.get('/stream',function (req,res) {
     tweet.positive = analyzeV.positive;
     tweet.negative = analyzeV.negative;
     tweet.score = analyzeV.score;
+
     tweet.save(function(err) {
       if (err)
         res.send(err);
 
       //res.json({ message: 'User created!' });
     });
-
+     */
   })
 
 
