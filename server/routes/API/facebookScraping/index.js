@@ -4,11 +4,11 @@ var request = require('request');
 var extendToken = require('./extendLLT.middleware');
 
 
-const APP_ID = "583444071825924"
+const APP_ID = "583444071825924";
 const APP_SECRET = "3e89611dc939876324bd42ea67ec5eb2";
 const ACCESS_TOKEN = APP_ID + "|" + APP_SECRET;
 
-const base = "https://graph.facebook.com/v2.8/"
+const base = "https://graph.facebook.com/v2.8/";
 
 
 router.get('/', function (req, res, next) {
@@ -71,7 +71,7 @@ router.get('/1page/:id/insights/:token', extendToken, function (req, res, next) 
 
 
   req.ExtendedToken.then(function (value) {
-    console.log("toooken", value)
+    console.log("toooken", value);
 
     //Dynamic TOKEN Sended in the request
     var page_ACCESS_TOKEN = value;

@@ -3,10 +3,9 @@
  */
 
 var request = require('request');
-const APP_ID = "583444071825924"
+const APP_ID = "583444071825924";
 const APP_SECRET = "3e89611dc939876324bd42ea67ec5eb2";
-
-const base = "https://graph.facebook.com/v2.8/"
+const base = "https://graph.facebook.com/v2.8/";
 
 
 module.exports = function (req,res,next) {
@@ -20,7 +19,7 @@ module.exports = function (req,res,next) {
 
   var url = base + node;
 
-  console.log("before **",req.params.token)
+  console.log("before **",req.params.token);
 
 var promise = new Promise(function (resolve,reject) {
   request(url, function (error, response, body) {
@@ -41,4 +40,4 @@ var promise = new Promise(function (resolve,reject) {
 
 
 
-}
+};

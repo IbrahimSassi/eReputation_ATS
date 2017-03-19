@@ -8,7 +8,6 @@ var bodyParser = require('body-parser');
 var admin = require('./routes/admin');
 var index = require('./routes/index');
 var users = require('./routes/users');
-var TestFacebookScraping = require('./routes/TestFacebookScraping');
 
 /** APIS*/
 var webScraping = require('./routes/API/webScraping/index');
@@ -43,10 +42,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/admin', admin);
 app.use('/', index);
 app.use('/users', users);
-app.use('/TestFacebookScraping', TestFacebookScraping);
-app.use('/API/webScraping', webScraping);
-app.use('/API/twitterScraping', twitterScraping);
-app.use('/API/wwsa', wwsa);
+app.use('/api/facebookScraping', facebookScraping);
+app.use('/api/webScraping', webScraping);
+app.use('/api/twitterScraping', twitterScraping);
+app.use('/api/wwsa', wwsa);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
