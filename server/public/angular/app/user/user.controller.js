@@ -33,7 +33,12 @@
         controller: 'UserCtrl as user',
         register:true
       })
-
+      .state('login', {
+        url: '/login',
+        templateUrl: 'angular/app/user/views/login.view.html',
+        controller: 'UserCtrl as user',
+        login:true
+      })
 
     ;
     $qProvider.errorOnUnhandledRejections(false);
@@ -59,8 +64,12 @@
         console.log(vm.users);
       });
     };
-
-
+    vm.goToRegister = function () {
+      $state.go('register', {eventIDD: 1});
+    };
+    vm.goToLogin = function () {
+      $state.go('login', {eventIDD: 1});
+    };
   };
 
   /**End UserCtrl Function**/

@@ -85,12 +85,13 @@
               <a href="/admin" class="btn waves-effect waves-light col s12">Register Now</a>
             </div>
             <div class="input-field col s12">
-              <p class="margin center medium-small sign-up">Already have an account? <a href="page-login.html">Login</a></p>
+              <p class="margin center medium-small sign-up">Already have an account? <a href="" ng-click="user.goToLogin()">Login</a></p>
             </div>
           </div>
         </div>
         <!-- ************************************************************************** Business ************************************************************************** -->
         <div ng-if="accountType=='business'">
+
           <div>
             <div class="row margin">
               <div class="input-field col s6">
@@ -98,15 +99,10 @@
                 <input id="businessName" type="text">
                 <label for="businessName" class="center-align">Business Name</label>
               </div>
-              <div class="input-field col s1">          <i class="mdi-social-people prefix"></i></div>
-              <div class="input-field col s5">
-                <select class="browser-default">
-                  <option value="" selected>N° of Employees</option>
-                  <option value="1">1-10</option>
-                  <option value="2">10-100</option>
-                  <option value="3">100-1000</option>
-                  <option value="3">1000+</option>
-                </select>
+              <div class="input-field col s6">
+                <i class="mdi-social-people prefix"></i>
+                <input id="employeesNumber" type="text">
+                <label for="employeesNumber" class="center-align">N° of Employees</label>
               </div>
             </div>
           </div>
@@ -121,8 +117,8 @@
             <div class="input-field col s1"> <i class="mdi-communication-business prefix"></i></div>
             <div class="input-field col s11">
               <select class="browser-default" id="businessType">
-                <option value=""  selected>Business Type</option>
-                <option value="1">Production</option>
+                <option value="1"  selected>Business Type</option>
+                <option value="2">Production</option>
               </select>
             </div>
           </div>
@@ -145,7 +141,7 @@
               <a href="/admin" class="btn waves-effect waves-light col s12">Register Now</a>
             </div>
             <div class="input-field col s12">
-              <p class="margin center medium-small sign-up">Already have an account? <a href="page-login.html">Login</a></p>
+              <p class="margin center medium-small sign-up">Already have an account? <a href="" ng-click="user.goToLogin()">Login</a></p>
             </div>
           </div>
         </div>
