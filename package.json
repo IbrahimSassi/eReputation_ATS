@@ -41,6 +41,7 @@
     "google": "^2.1.0",
     "google-translate-api": "^2.2.2",
     "jade": "~1.11.0",
+    "lodash": "^4.17.4",
     "mongoose": "^4.8.6",
     "morgan": "~1.7.0",
     "nodemon": "^1.11.0",

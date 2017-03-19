@@ -15,6 +15,10 @@ var twitterScraping = require('./routes/API/twitterScraping/twitterScraping');
 var facebookScraping = require('./routes/API/facebookScraping');
 var twitter = require('./routes/API/twitterScraping/twitter');
 var wwsa = require('./routes/API/wwsa/index');
+
+//Real Work Starts
+var channel = require('./routes/API/channel');
+
 /**End APIS*/
 
 var ejs = require('ejs');
@@ -46,6 +50,7 @@ app.use('/api/facebookScraping', facebookScraping);
 app.use('/api/webScraping', webScraping);
 app.use('/api/twitterScraping', twitterScraping);
 app.use('/api/wwsa', wwsa);
+app.use('/api/channels', channel);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
