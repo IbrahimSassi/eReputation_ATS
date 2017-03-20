@@ -9,9 +9,7 @@ module.exports = {
       url: 'https://www.facebook.com/mosaiquefm/',
       type: 'facebook',
       created_time: new Date(),
-      created_by: {
-        _id: 1
-      }
+      userId: 1
     },
     {
       _id: '2',
@@ -19,9 +17,7 @@ module.exports = {
       url: 'https://www.facebook.com/techcrunch',
       type: 'facebook',
       created_time: "2017-03-19T11:06:33+0000",
-      created_by: {
-        _id: 2
-      }
+      userId: 2
     },
     {
       _id: '3',
@@ -29,9 +25,7 @@ module.exports = {
       url: 'https://twitter.com/IbrahimSassi12',
       type: 'twitter',
       created_time: "2017-03-19T10:51:12+0000",
-      created_by: {
-        _id: 1
-      }
+      userId: 1
 
 
     }, {
@@ -41,9 +35,7 @@ module.exports = {
       type: 'facebook',
       access_token: "",
       created_time: "2017-03-18T10:51:13+0000",
-      created_by: {
-        _id: 1
-      }
+      userId: 1
 
 
     }
