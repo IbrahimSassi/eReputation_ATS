@@ -147,14 +147,26 @@
             </div>
           </div>
         </li>
-        <li class="bold"><a ui-sref="dashboard" class="waves-effect waves-cyan"><i
+        <li ui-sref-active="active" class="bold"><a ui-sref="dashboard" class="waves-effect waves-cyan"><i
           class="mdi-action-dashboard"></i> Dashboard</a>
         </li>
         <li class="no-padding">
           <ul class="collapsible collapsible-accordion">
-            <li class="bold"><a ui-sref="campaignCreate" class="collapsible-header waves-effect waves-cyan"><i
-              class="mdi-action-view-carousel"></i> Create Campaign</a>
-            </li>
+            <ul class="collapsible collapsible-accordion">
+              <li class="bold">
+                <a class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-track-changes"></i> Manage
+                  Campaign</a>
+                <div class="collapsible-body">
+                  <ul>
+                    <li ui-sref-active="active"><a ui-sref="campaignCreate">Create Campaign</a>
+                    </li>
+                    <li><a href="layout-horizontal-menu.html">Horizontal Menu</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+
           </ul>
         </li>
         <a href="#" data-activates="slide-out"
@@ -201,21 +213,21 @@
           <!-- //////////////////////////////////////////////////////////////////////////// -->
         </div>
         <!-- Floating Action Button -->
-        <div class="fixed-action-btn" style="bottom: 50px; right: 19px;">
-          <a class="btn-floating btn-large">
-            <i class="mdi-action-stars"></i>
-          </a>
-          <ul>
-            <li><a href="assets/css-helpers.html" class="btn-floating red"><i
-              class="large mdi-communication-live-help"></i></a></li>
-            <li><a href="app-widget.html" class="btn-floating yellow darken-1"><i
-              class="large mdi-device-now-widgets"></i></a></li>
-            <li><a href="app-calendar.html" class="btn-floating green"><i
-              class="large mdi-editor-insert-invitation"></i></a></li>
-            <li><a href="app-email.html" class="btn-floating blue"><i
-              class="large mdi-communication-email"></i></a></li>
-          </ul>
-        </div>
+        <!--<div class="fixed-action-btn" style="bottom: 50px; right: 19px;">-->
+        <!--<a class="btn-floating btn-large">-->
+        <!--<i class="mdi-action-stars"></i>-->
+        <!--</a>-->
+        <!--<ul>-->
+        <!--<li><a href="assets/css-helpers.html" class="btn-floating red"><i-->
+        <!--class="large mdi-communication-live-help"></i></a></li>-->
+        <!--<li><a href="app-widget.html" class="btn-floating yellow darken-1"><i-->
+        <!--class="large mdi-device-now-widgets"></i></a></li>-->
+        <!--<li><a href="app-calendar.html" class="btn-floating green"><i-->
+        <!--class="large mdi-editor-insert-invitation"></i></a></li>-->
+        <!--<li><a href="app-email.html" class="btn-floating blue"><i-->
+        <!--class="large mdi-communication-email"></i></a></li>-->
+        <!--</ul>-->
+        <!--</div>-->
         <!-- Floating Action Button -->
       </div>
       <!--end container-->
@@ -388,7 +400,7 @@
                                          href="#"
                                          target="_blank"></a> All rights reserved.</span>
       <span class="right"> Designed and Developed by <a class="grey-text text-lighten-4"
-                                                      href="">Brogrammers</a></span>
+                                                        href="">Brogrammers</a></span>
     </div>
   </div>
 </footer>
@@ -413,12 +425,15 @@
 <script src="angular/app/dashboard/dashboard.factory.js"></script>
 <script src="angular/app/dashboard/dashboard.service.js"></script>
 <!--/*End of User Module Scripts*/-->
-<!--Ibrahim Modules starts-->
+
+<!--Hakim Campaign Modules starts-->
 <script src="angular/app/campaign/campaign.controller.js"></script>
+<script src="angular/app/campaign/campaign.factory.js"></script>
 <script src="angular/app/campaign/campaign.service.js"></script>
 <script src="angular/app/components/prevent-default.directive.js"></script>
+<!--Hakim Campaign Modules ends-->
 
-
+<!--Ibrahim Modules-->
 <script src="angular/app/channel/channel.controller.js"></script>
 <script src="angular/app/channel/controllers/detail-channel.controller.js"></script>
 <script src="angular/app/channel/controllers/create-channel.controller.js"></script>
@@ -426,6 +441,7 @@
 <script src="angular/app/channel/channel.factory.js"></script>
 
 <!--Ibrahim Modules ends-->
+
 <!--materialize js-->
 <script type="text/javascript" src="angular/app/assets/js/materialize.min.js"></script>
 <script type="text/javascript" src="angular/app/assets/js/plugins/angular-materialize.js"></script>
