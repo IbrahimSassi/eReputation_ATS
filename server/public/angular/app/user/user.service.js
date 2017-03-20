@@ -57,15 +57,29 @@
     };
 
      var register = function(user) {
-      return $http.post('/users/register', user).then(function(data,err){
-        saveToken(data.token);
-      });
+      return $http.post('/users/register', user).then(successCallback, errorCallback);
+
+
+
+       function successCallback(response){
+         saveToken(response.data.token);
+       }
+       function errorCallback(error){
+         //error code
+       }
     };
 
      var login = function(user) {
-      return $http.post('/users/login', user).success(function(data) {
-        saveToken(data.token);
-      });
+      return $http.post('/users/login', user).then(successCallback, errorCallback);
+
+
+
+       function successCallback(response){
+         saveToken(response.data.token);
+       }
+       function errorCallback(error){
+         //error code
+       }
     };
 
     var logout = function() {

@@ -90,11 +90,8 @@
     vm.onSubmitLogin = function () {
       UserService
         .login(vm.credentialsLogin)
-        .error(function(err){
-          alert(err);
-        })
         .then(function(){
-          $location.path('profile');
+          $location.path('register');
         });
     };
 

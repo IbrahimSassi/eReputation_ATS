@@ -30,6 +30,8 @@ console.log('Entred to save'+req.body.email);
     var token;
     token = user.generateJwt();
     res.status(200);
+    console.log('token: '+token);
+
     res.json({
       "token" : token
     });
