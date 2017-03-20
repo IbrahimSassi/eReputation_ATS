@@ -6,50 +6,51 @@
 
   angular
     .module('ATSApp.channel')
-    .factory('ChannelFactory', ChannelFactoryFN);
+    .service('ChannelService', ChannelServiceFN);
 
-  ChannelFactoryFN.$inject = ['$resource'];
+  ChannelServiceFN.$inject = ['ChannelFactory', '$http'];
 
   /* @ngInject */
-  function ChannelFactoryFN($resource) {
-    return $resource('/api/channels/:id',
-      {id: '@id'},
-      {
-        'update': {method: 'PUT'},
-        'getEventsByOrganization': {
-          url: 'http://localhost:18080/Eventify-web/rest/organization/:idOrganization/events',
-          method: 'GET',
-          params: {
-            idOrganization: '@idOrganization',
-          },
-          isArray: true
+  function ChannelServiceFN(ChannelFactory, $http) {
 
 
-        },
-        'getMyRate': {
-          url: 'http://localhost:18080/Eventify-web/rest/events/:idEvent/rate',
-          method: 'GET',
-          params: {
-            idOrganization: '@idEvent',
-          },
-          isArray: false
+    this.addChannel = addChannelFN;
+    this.updateChannel = updateChannelFN;
+    this.deleteChannel = deleteChannelFN;
+    this.getChannelByID = getChannelByIDFN;
+    this.getChannelsByUser = getChannelsByUserFN;
 
 
-        },
-        'getMyTickets': {
-          url: 'http://localhost:18080/Eventify-web/rest/events/:idEvent/tickets',
-          method: 'GET',
-          params: {
-            idEvent: '@idEvent',
-          },
-          isArray: true
+
+    function addChannelFN(channel) {
+      //channel = new ChannelFactory(channel);
+      return ChannelFactory.save(channel).$promise;
+    }
+
+    function updateChannelFN(channel) {
+      console.log(ChannelFactory.update({id: channel.id}, channel));
+      console.log("Updated");
+    }
+
+    function deleteChannelFN(channel) {
+      return channel.$delete();
+    }
 
 
-        }
+    function getChannelByIDFN(idChannel) {
+      //console.log('id channel',idChannel);
+      // console.log(ChannelFactory.get({id:idChannel}));
+      return ChannelFactory.get({id: idChannel});
+    }
 
 
-      }
-    );
+    function getChannelsByUserFN(userId) {
+
+      return ChannelFactory.getChannelsByUser({userId: userId}).$promise;
+    }
+
+
+
   }
 
 })();
