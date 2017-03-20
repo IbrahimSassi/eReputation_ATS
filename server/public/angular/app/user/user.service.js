@@ -8,10 +8,10 @@
     .module('ATSApp-front.user')
     .service('UserService', UserServiceFN);
 
-  UserServiceFN.$inject = ['UserFactory'];
+  UserServiceFN.$inject = ['UserFactory','$http', '$window'];
 
 
-  function UserServiceFN(UserFactory) {
+  function UserServiceFN(UserFactory,$http, $window) {
 
 
     this.getAllUsers = function () {
@@ -19,6 +19,85 @@
       return UserFactory.query().$promise;
 
     }
+
+    var saveToken = function (token) {
+      $window.localStorage['mean-token'] = token;
+    };
+
+    var getToken = function () {
+      return $window.localStorage['mean-token'];
+    };
+
+    var isLoggedIn = function() {
+      var token = getToken();
+      var payload;
+
+      if(token){
+        payload = token.split('.')[1];
+        payload = $window.atob(payload);
+        payload = JSON.parse(payload);
+
+        return payload.exp > Date.now() / 1000;
+      } else {
+        return false;
+      }
+    };
+
+    var currentUser = function() {
+      if(isLoggedIn()){
+        var token = getToken();
+        var payload = token.split('.')[1];
+        payload = $window.atob(payload);
+        payload = JSON.parse(payload);
+        return {
+          email : payload.email,
+          name : payload.name
+        };
+      }
+    };
+
+     var register = function(user) {
+      return $http.post('/users/register', user).then(successCallback, errorCallback);
+
+
+
+       function successCallback(response){
+         saveToken(response.data.token);
+       }
+       function errorCallback(error){
+         //error code
+       }
+    };
+
+     var login = function(user) {
+      return $http.post('/users/login', user).then(successCallback, errorCallback);
+
+
+
+       function successCallback(response){
+         saveToken(response.data.token);
+       }
+       function errorCallback(error){
+         //error code
+       }
+    };
+
+    var logout = function() {
+      $window.localStorage.removeItem('mean-token');
+    };
+
+    return {
+      currentUser : currentUser,
+      saveToken : saveToken,
+      getToken : getToken,
+      isLoggedIn : isLoggedIn,
+      register : register,
+      login : login,
+      logout : logout
+    };
+
+
+
 
 
   }

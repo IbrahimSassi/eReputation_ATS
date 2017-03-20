@@ -19,7 +19,7 @@
   /**Injection**/
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$qProvider'];
 
-  UserCtrl.$inject = ['UserService', '$state','$rootScope','angularLoad'];
+  UserCtrl.$inject = ['UserService', '$state','$rootScope','angularLoad','$location'];
   /**End Of Injection**/
 
 
@@ -52,11 +52,12 @@
    * @param UserService
    * @param $state
    */
-  function UserCtrl(UserService, $state,$rootScope,angularLoad) {
+  function UserCtrl(UserService, $state,$rootScope,angularLoad,$location) {
 
     /**Scope Replace**/
     var vm = this;
     /***/
+
     $rootScope.userpage=true;
     vm.getAllUsers = function () {
       UserService.getAllUsers().then(function (data) {
@@ -64,14 +65,40 @@
         console.log(vm.users);
       });
     };
-    vm.goToRegister = function () {
-      $state.go('register', {eventIDD: 1});
-    };
-    vm.goToLogin = function () {
-      $state.go('login', {eventIDD: 1});
-    };
-  };
 
+
+
+    vm.credentialsRegister = {
+      username : "",
+      email : "",
+      password : ""
+    };
+
+    vm.credentialsLogin = {
+      email : "",
+      password : ""
+    };
+    vm.onSubmitRegister = function () {
+      console.log('Submitting registration'+vm.credentialsRegister.email);
+      UserService
+        .register(vm.credentialsRegister)
+        .then(function(){
+          alert('done');
+        });
+    };
+
+    vm.onSubmitLogin = function () {
+      UserService
+        .login(vm.credentialsLogin)
+        .then(function(){
+          $location.path('register');
+        });
+    };
+
+
+
+
+  };
   /**End UserCtrl Function**/
 
 })();
