@@ -35,6 +35,7 @@ var mongoose   = require('mongoose');
 // mongoose.connect('mongodb://:@localhost:27017/ats');
 mongoose.connect('mongodb://bro:brobro0055@ds157469.mlab.com:57469/ats-digital');
 
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));

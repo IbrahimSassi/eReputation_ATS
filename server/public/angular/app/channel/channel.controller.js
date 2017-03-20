@@ -6,7 +6,8 @@
 
   angular
     .module('ATSApp.channel', [
-      'ui.router'
+      'ui.router',
+      'ui.materialize'
       //TODO
       // 'angular-loading-bar'
       // 'ngAnimate',
@@ -71,6 +72,14 @@
       })
     }
 
-  };
+
+    vm.deleteChannel = function (channel) {
+      ChannelService.deleteChannel(channel).then(function () {
+        init();
+      })
+    }
+
+
+  }
 
 })();

@@ -26,29 +26,32 @@
     //On Init Start
     var vm = this;
     vm.title = 'Channel List';
+    vm.selectedChannel = {};
+    // vm.availableOptions = [
+    //   {id: '1', name: 'facebook'},
+    //   {id: '2', name: 'twitter'},
+    //   {id: '3', name: 'website'}
+    // ];
 
     init();
 
     function init() {
       vm.channelId = $stateParams.channelId;
-      console.log(vm.channelId);
       vm.userConnectedId = 1;
 
+      ChannelService.getChannelByID(vm.channelId).then(function (channel) {
+        vm.selectedChannel = channel;
+      });
 
     }
 
-    // ** Init end **//
 
-    // ** Channel Detail start **/
-
-
-    //getting channel id passed in params to get channel
-
-    // vm.getSelectedChannel = function () {
-    //
-    // };
+    vm.editChannel = function () {
+      ChannelService.updateChannel(vm.selectedChannel);
+      $state.go('channels');
+    }
 
 
-  };
+  }
 
 })();

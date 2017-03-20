@@ -21,26 +21,25 @@
     this.getChannelsByUser = getChannelsByUserFN;
 
 
-
     function addChannelFN(channel) {
       //channel = new ChannelFactory(channel);
       return ChannelFactory.save(channel).$promise;
     }
 
     function updateChannelFN(channel) {
-      console.log(ChannelFactory.update({id: channel.id}, channel));
+      console.log(ChannelFactory.update({id: channel._id}, channel));
       console.log("Updated");
     }
 
     function deleteChannelFN(channel) {
-      return channel.$delete();
+      // channel = new ChannelFactory(channel);
+      return channel.$delete({id:channel._id});
+
     }
 
 
     function getChannelByIDFN(idChannel) {
-      //console.log('id channel',idChannel);
-      // console.log(ChannelFactory.get({id:idChannel}));
-      return ChannelFactory.get({id: idChannel});
+      return ChannelFactory.get({id: idChannel}).$promise;
     }
 
 
@@ -48,7 +47,6 @@
 
       return ChannelFactory.getChannelsByUser({userId: userId}).$promise;
     }
-
 
 
   }
