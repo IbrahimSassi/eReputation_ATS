@@ -7,7 +7,6 @@ var extendToken = require('./extendLLT.middleware');
 const APP_ID = "583444071825924";
 const APP_SECRET = "3e89611dc939876324bd42ea67ec5eb2";
 const ACCESS_TOKEN = APP_ID + "|" + APP_SECRET;
-
 const base = "https://graph.facebook.com/v2.8/";
 
 
@@ -61,7 +60,7 @@ router.get('/posts/:id/reactions', function (req, res, next) {
 
 
 //Used for the First Time to get the long-lived token from the short one
-router.get('/1page/:id/insights/:token', extendToken, function (req, res, next) {
+router.get('/page/:id/insights/:token', extendToken, function (req, res, next) {
 
   var page_id = req.params.id;
   var node = page_id;

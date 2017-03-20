@@ -8,7 +8,7 @@ module.exports = {
       name: 'mosaique fm',
       url: 'https://www.facebook.com/mosaiquefm/',
       type: 'facebook',
-      created_time: new Date(),
+      dateCreation: new Date(),
       userId: 1,
       personnel:false
 
@@ -18,7 +18,7 @@ module.exports = {
       name: 'tech crunch',
       url: 'https://www.facebook.com/techcrunch',
       type: 'facebook',
-      created_time: "2017-03-19T11:06:33+0000",
+      dateCreation: "2017-03-19T11:06:33+0000",
       userId: 2,
       personnel:false
 
@@ -28,7 +28,7 @@ module.exports = {
       name: 'ibrahim sassi',
       url: 'https://twitter.com/IbrahimSassi12',
       type: 'twitter',
-      created_time: "2017-03-19T10:51:12+0000",
+      dateCreation: "2017-03-19T10:51:12+0000",
       userId: 1,
       personnel:false
 
@@ -39,7 +39,7 @@ module.exports = {
       url: 'https://www.facebook.com/monster.wow.officiel',
       type: 'facebook',
       access_token: "",
-      created_time: "2017-03-18T10:51:13+0000",
+      dateCreation: "2017-03-18T10:51:13+0000",
       userId: 1,
       personnel:false
 
@@ -49,7 +49,7 @@ module.exports = {
       name: 'Forbes',
       url: 'https://www.forbes.com',
       type: 'website',
-      created_time: "2017-03-18T10:51:13+0000",
+      dateCreation: "2017-03-18T10:51:13+0000",
       userId: 1,
       personnel:true
     }

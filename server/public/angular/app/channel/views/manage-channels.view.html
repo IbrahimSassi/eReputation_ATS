@@ -1,38 +1,43 @@
-<h1>Manage Channels</h1>
-<ul id="modals-demo" class="collection">
-  <li class="collection-item avatar" ng-repeat="channel in vm.myChannels">
-    <i ng-if="channel.type=='facebook'" class="fa fa-facebook circle blue-grey"></i>
-    <i ng-if="channel.type=='website'" class="fa fa-globe circle"></i>
-    <i ng-if="channel.type=='twitter'" class="fa fa-twitter circle light-blue"></i>
-    <i ng-if="channel.type=='google-plus'" class="fa fa-google-plus circle red"></i>
+<div>
+  <h1>Manage Channels</h1>
+  <ul id="modals-demo" class="collection">
+    <li class="collection-item avatar" ng-repeat="channel in vm.myChannels">
+      <i ng-if="channel.type=='facebook'" class="fa fa-facebook circle blue darken-4"></i>
+      <i ng-if="channel.type=='website'" class="fa fa-globe circle"></i>
+      <i ng-if="channel.type=='twitter'" class="fa fa-twitter circle light-blue"></i>
+      <i ng-if="channel.type=='google-plus'" class="fa fa-google-plus circle red"></i>
 
 
-    <span class="title">{{channel.name | uppercase}}</span>
-    <p>Url : {{channel.url }} <a target="_blank" href="{{channel.url}}"><i class="fa fa-external-link"></i></a>
-      <br>Type : {{channel.type | uppercase}}
-    </p>
-    <a ui-sref="channel-detail({channelId:channel._id})" class="ui-priority-secondary">Edit <i style="font-size: larger"
-                                                                                               class="fa fa-edit"></i></a>
+      <span class="title">{{channel.name | uppercase}}</span>
+      <p>Url : {{channel.url }} <a target="_blank" href="{{channel.url}}"><i class="fa fa-external-link"></i></a>
+        <br>
+        <!--<span class="blue darken-4" style="border-radius: 0.1cm;padding: 1px;color: white;" >{{channel.type | uppercase}}</span>-->
+      </p>
+      <a ui-sref="channel-detail({channelId:channel._id})" class="ui-priority-secondary">Edit <i
+        style="font-size: larger"
+        class="fa fa-edit"></i></a>
 
-    <a prevent-default href="#removeModal-{{channel._id}}" class="secondary-content" modal><i style="font-size: xx-large" class="fa fa-remove"></i></a>
-  </li>
+      <a prevent-default href="#removeModal-{{channel._id}}" class="secondary-content" modal><i
+        style="font-size: xx-large" class="fa fa-remove"></i></a>
+    </li>
 
-</ul>
+  </ul>
 
 
-<div id="removeModal-{{channel._id}}" class="modal" ng-repeat="channel in vm.myChannels">
-  <div class="modal-content red darken-1 white-text">
-    <p> Do you really want to delete this channel , {{channel.name}} ?</p>
+  <div id="removeModal-{{channel._id}}" class="modal" ng-repeat="channel in vm.myChannels">
+    <div class="modal-content red darken-1 white-text">
+      <p> Do you really want to delete this channel , {{channel.name}} ?</p>
+    </div>
+    <div class="modal-footer ">
+      <a prevent-default href="#" class="waves-effect waves-red btn-flat modal-action modal-close">Disagree</a>
+      <a
+        ng-click="vm.deleteChannel(channel)"
+        class="waves-effect waves-green btn-flat modal-action modal-close"
+        message="Channel Deleted"
+        duration="3000"
+        toast='click'
+      >Agree</a>
+    </div>
   </div>
-  <div class="modal-footer ">
-    <a prevent-default href="#" class="waves-effect waves-red btn-flat modal-action modal-close">Disagree</a>
-    <a
-      ng-click="vm.deleteChannel(channel)"
-      class="waves-effect waves-green btn-flat modal-action modal-close"
-      message="Channel Deleted"
-      duration="3000"
-      toast='click'
-    >Agree</a>
-  </div>
+
 </div>
-

@@ -41,11 +41,11 @@
         controller: 'DetailChannel as vm',
         cache: false
       })
-      // .state('newChannel', {
-      //   url: '/channels/new',
-      //   templateUrl: 'angular/app/channel/views/create-channel.html',
-      //   controller: 'CreateChannelCtrl as vm'
-      // })
+      .state('newChannel', {
+        url: '/channels/new',
+        templateUrl: 'angular/app/channel/views/create-channel.view.html',
+        controller: 'CreateChannelCtrl as vm'
+      })
       .state("otherwise", {url: '/channels/all'})
     ;
 
@@ -71,7 +71,6 @@
         console.log(vm.myChannels)
       })
     }
-
 
     vm.deleteChannel = function (channel) {
       ChannelService.deleteChannel(channel).then(function () {
