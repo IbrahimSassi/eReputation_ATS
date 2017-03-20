@@ -1,6 +1,7 @@
 /**
- * Created by Ibrahim on 01/02/2017.
+ * Created by HP on 20/03/2017.
  */
+
 (function () {
   'use strict';
 
@@ -8,11 +9,17 @@
     .module('ATSApp.campaign')
     .service('CampaignService', CampaignServiceFN);
 
-  CampaignServiceFN.$inject = [];
+  CampaignServiceFN.$inject = ['CampaignFactory'];
 
 
-  function CampaignServiceFN() {
+  function CampaignServiceFN(CampaignFactory) {
 
+
+    this.getAllUsers = function () {
+
+      return CampaignFactory.query().$promise;
+
+    }
 
 
   }

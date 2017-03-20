@@ -4,6 +4,7 @@
 angular.module('ATSApp', [
   'ATSApp.dashboard',
   'ATSApp.campaign',
+  'ATSApp.channel',
   'ngResource',
   'angularLoad',
   'ui.router'
