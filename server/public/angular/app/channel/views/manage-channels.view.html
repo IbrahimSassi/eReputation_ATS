@@ -1,1 +1,18 @@
 <h1>Manage Channels</h1>
+<ul class="collection">
+  <li class="collection-item avatar" ng-repeat="channel in vm.myChannels">
+    <i ng-if="channel.type=='facebook'" class="fa fa-facebook circle blue-grey"></i>
+    <i ng-if="channel.type=='website'" class="fa fa-globe circle"></i>
+    <i ng-if="channel.type=='twitter'" class="fa fa-twitter circle light-blue"></i>
+    <i ng-if="channel.type=='google-plus'" class="fa fa-google-plus circle red"></i>
+
+
+    <span class="title">{{channel.name | uppercase}}</span>
+    <p>Url : {{channel.url }}
+      <br>Type : {{channel.type | uppercase}}
+    </p>
+    <a ui-sref="channel-detail({channelId:channel._id})" class="secondary-content"><i style="font-size: xx-large" class="fa fa-edit"></i></a>
+  </li>
+
+</ul>
+
