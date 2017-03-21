@@ -49,17 +49,19 @@
 
 
     vm.createChannel = function (form) {
-      ChannelService.addChannel(vm.channel)
-        .then(function (result) {
-          console.log("result", result);
-          $state.go('channels');
-          var $toastContent = $('<span class="green-text">New Channel has just created</span>');
-          var rounded = "rounded"
-          Materialize.toast($toastContent, 3000, rounded);
 
+      if(form)
+      {
+        ChannelService.addChannel(vm.channel)
+          .then(function (result) {
+            console.log("result", result);
+            $state.go('channels');
+            var $toastContent = $('<span class="green-text">New Channel has just created</span>');
+            var rounded = "rounded"
+            Materialize.toast($toastContent, 3000, rounded);
+          });
+      }
 
-
-        });
     };
 
     vm.getPermissions = function () {
@@ -73,6 +75,11 @@
             vm.channel.accessToken = newLongToken.longToken;
             data.user.accounts.data.forEach(function (page) {
               vm.myFacebookPages.push({value: page.id, text: page.name})
+
+              var $toastContent = $('<span class="green-text">Your permission has granted , now pick a page</span>');
+              var rounded = "rounded"
+              Materialize.toast($toastContent, 3000, rounded);
+
             });
           })
 

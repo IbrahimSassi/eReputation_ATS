@@ -7,9 +7,22 @@
           <div class="row">
             <div class="input-field col s12">
               <i class="mdi-action-account-circle prefix"></i>
-              <input ng-required="true"  ng-model="vm.channel.name" id="name" type="text" ng-minlength="5">
+              <input
+                name="name"
+                ng-required="true"
+                ng-model="vm.channel.name"
+                id="name"
+                type="text" ng-minlength="5"
+                ng-class="{ 'error' : channelForm.name.$invalid && !channelForm.name.$pristine }"
+              >
               <label for="name">Name</label>
+              <div ng-show="channelForm.name.$error.minlength" id="card-alert" class="card red col m11 s11 l11 push-s1 push-l1 push-m1">
+                <div class="card-content white-text">
+                  <p>The name is too short.</p>
+                </div>
+              </div>
             </div>
+
           </div>
 
 
@@ -22,10 +35,7 @@
                    tooltipped
                    class="btn-floating waves-effect waves-light blue"
                    data-position="bottom" data-delay="50" data-tooltip="Check it , if its your own page">
-
                 </i>
-
-
               </label>
               <br>
             </div>
@@ -46,13 +56,19 @@
               </select>
               <label for="type">Type</label>
             </div>
-            <div style="margin-top: 15px;" class="input-field col s3">
+            <div ng-if="vm.channel.personnel" style="margin-top: 15px;" class="input-field col s3">
               <button ng-if="vm.channel.type=='facebook'"
                       ng-click="vm.getPermissions()"
                       class="btn light-blue darken-4 waves-effect waves-light right">
                 <i class="fa fa-facebook-official"></i> Give permission
               </button>
             </div>
+              <div ng-show="channelForm.type.$invalid && !channelForm.type.$pristine" id="card-alert1" class="card red col m11 s11 l11 push-s1 push-l1 push-m1">
+              <div class="card-content white-text">
+                <p>The type is required.</p>
+              </div>
+            </div>
+
           </div>
 
 
@@ -72,7 +88,7 @@
 
             <div class="input-field col s11">
               <select ng-required="true"  ng-model="vm.channel.url" name="page" id="page" material-select watch>
-                <option value="" selected disabled>Choose an option</option>
+                <option value="" selected >Choose an option</option>
                 <option ng-repeat="page in vm.myFacebookPages" value="{{page.value}}">{{page.text}}</option>
               </select>
               <label for="page">Page</label>
@@ -89,6 +105,8 @@
                   class="btn cyan waves-effect waves-light right"
                   type="submit"
                 >Submit
+                  <!--ng-disabled="channelForm.$invalid"-->
+
                   <i class="mdi-content-send right"></i>
                 </button>
 
