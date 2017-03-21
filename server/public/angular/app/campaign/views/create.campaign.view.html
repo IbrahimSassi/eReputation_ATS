@@ -1,0 +1,139 @@
+<div class="col s12 m8 l9">
+  <ul class="collapsible popout collapsible-accordion" data-collapsible="accordion">
+    <li>
+      <div class="collapsible-header active"><i class="mdi-action-info-outline"></i>CAMPAIGN INFO</div>
+      <div class="collapsible-body">
+        <div class="col s12 m12 l6">
+          <div class="card-panel">
+            <!--<h4 class="header2">Form with icon prefixes</h4>-->
+            <div class="row">
+              <form class="col s12">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <i class="mdi-image-edit prefix"></i>
+                    <input id="c_n" type="text">
+                    <label for="c_n">Campaign Name</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <i class="mdi-editor-insert-link prefix"></i>
+                    <input id="c_url" type="url">
+                    <label for="c_url">Main Website</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <i class="mdi-image-timer prefix"></i>
+                    <input id="datestart" type="date" class="datepicker">
+                    <label for="datestart">Date start</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <i class="mdi-image-timer-off prefix"></i>
+                    <input id="dateend" type="date" class="datepicker">
+                    <label for="dateend">Date end</label>
+                  </div>
+                </div>
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <i class="mdi-maps-local-phone prefix"></i>
+                      <input id="c_phone" type="tel">
+                      <label for="c_phone">Phone Number</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <i class="mdi-action-subject prefix"></i>
+                      <textarea id="c_desc" class="materialize-textarea"></textarea>
+                      <label for="c_desc">Description</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <button class="btn grey darken-3 waves-effect waves-light right" type="submit" name="action">Next
+                        <i class="mdi-image-navigate-next right"></i>
+                      </button>
+                    </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="mdi-action-language"></i>ASSIGN CHANNELS</div>
+      <div class="collapsible-body">
+        <div class="col s12 m12 l6">
+          <div class="card-panel">
+            <!--<h4 class="header2">Form with icon prefixes</h4>-->
+            <div class="row">
+              <form class="col s12">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <i class="mdi-image-edit prefix"></i>
+                    <input id="c_n" type="text">
+                    <label for="c_n">Campaign Name</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s6">
+                    <button class="btn grey darken-3 waves-effect waves-light left" type="submit" name="action">Previous
+                      <i class="mdi-image-navigate-before left"></i>
+                    </button>
+                  </div>
+                  <div class="input-field col s6">
+                    <button class="btn grey darken-3 waves-effect waves-light right" type="submit" name="action">Next
+                      <i class="mdi-image-navigate-next right"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="mdi-action-book"></i>KEYWORDS</div>
+      <div class="collapsible-body">
+        <div class="col s12 m12 l6">
+          <div class="card-panel">
+            <!--<h4 class="header2">Form with icon prefixes</h4>-->
+            <div class="row">
+              <form class="col s12">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <i class="mdi-image-edit prefix"></i>
+                    <input id="c_n" type="text">
+                    <label for="c_n">Campaign Name</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s6">
+                    <button class="btn grey darken-3 waves-effect waves-light left" type="submit" name="action">Previous
+                      <i class="mdi-image-navigate-before left"></i>
+                    </button>
+                  </div>
+                  <div class="input-field col s6">
+                    <button class="btn grey darken-3 waves-effect waves-light right" type="submit" name="action">Next
+                      <i class="mdi-image-navigate-next right"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+
+<script>
+  loadScriptOnlyIfNotLoaded("angular/app/assets/js/materialize.min.js");
+  loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins.min.js");
+</script>

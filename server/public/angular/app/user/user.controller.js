@@ -83,7 +83,6 @@
       UserService
         .register(vm.credentialsRegister)
         .then(function(){
-          alert('done');
         });
     };
 
@@ -91,11 +90,16 @@
       UserService
         .login(vm.credentialsLogin)
         .then(function(){
-          $location.path('register');
+          $location.path('profile');
         });
     };
 
-
+    vm.goToRegister = function () {
+      $location.path('register');
+    };
+    vm.goToLogin = function () {
+      $location.path('login');
+    };
 
 
   };

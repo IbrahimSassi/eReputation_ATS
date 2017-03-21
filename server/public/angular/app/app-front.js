@@ -3,6 +3,7 @@
 // Declare app level module which depends on views, and components
 angular.module('ATSApp-front', [
   'ATSApp-front.user',
+  'ATSApp-front.profile',
   'ngResource',
   'ui.router',
   'angularLoad'
@@ -11,4 +12,17 @@ angular.module('ATSApp-front', [
 
 ]).config(['$urlRouterProvider', function ($urlRouterProvider) {
   $urlRouterProvider.otherwise('/register');
-}]);
+}])
+  .run(function ($rootScope, $state,$location, UserService) {
+
+    $rootScope.$on('$stateChangeStart', function(event, nextRoute, currentRoute) {
+      if ($location.path() === '/profile' && !UserService.isLoggedIn()) {
+        $location.path('/login');
+      }
+      console.log('hehehehehe')
+
+    });
+
+
+
+});
