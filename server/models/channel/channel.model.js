@@ -71,6 +71,7 @@ module.exports.createChannelModel = function (newChannel, callback) {
   channel.type = newChannel.type;
   channel.personal = newChannel.personal;
   channel.accessToken = newChannel.accessToken;
+  channel.userId = newChannel.userId;
   channel.save(callback);
 
 };
@@ -84,6 +85,7 @@ module.exports.updateChannelModel = function (id, data, callback) {
   var type = data.type;
   var personal = data.personal;
   var accessToken = data.accessToken;
+  var userId = data.userId;
 
   // var query = {_id: id};
 
@@ -98,6 +100,7 @@ module.exports.updateChannelModel = function (id, data, callback) {
       channel.personal = personal;
       channel.accessToken = accessToken;
       channel.updatingDate = "heyy";
+      channel.userId = userId;
       channel.save(callback);
 
     }

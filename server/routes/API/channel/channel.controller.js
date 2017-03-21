@@ -14,7 +14,7 @@ exports.getAllChannels = function (req, res, next) {
       return handleError(res, err);
     }
     if (!docs) {
-      return res.send(404);
+      return res.status(404).send();
     }
     console.log(docs);
     res.status(200)
@@ -31,7 +31,7 @@ exports.getChannelById = function (req, res, next) {
       return handleError(res, err);
     }
     if (!docs) {
-      return res.send(404);
+      return res.status(404).send();
     }
     console.log(docs);
     res.status(200)
@@ -47,7 +47,7 @@ exports.allChannelsByOwner = function (req, res, next) {
     if (err) return handleError(res, err);
 
     if (!docs) {
-      return res.send(404);
+      return res.status(404).send();
     }
     console.log(docs);
     res.status(200)
@@ -60,7 +60,7 @@ exports.allChannelsByOwner = function (req, res, next) {
 exports.createChannel = function (req, res, next) {
 
   Channel.createChannelModel(req.body, function (err, item) {
-    if (err) return handleError();
+    if (err) return handleError(res, err);
     else {
       console.log('Success channel saved');
       console.log(item);
@@ -89,11 +89,11 @@ exports.updateChannel = function (req, res, next) {
 exports.deleteChannel = function (req, res, next) {
   Channel.removeChannelModel(req.params.id, function (err, channel) {
     if (err) return handleError(res, err);
-    return res.send(204);
+    return res.status(204).send();
   });
 };
 
 
 function handleError(res, err) {
-  return res.send(500, err);
+  return res.status(500).send(err);
 }

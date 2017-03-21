@@ -60,7 +60,7 @@
     //On Init Start
     var vm = this;
     vm.myChannels = [];
-    vm.connectedUserId = 1;
+    vm.connectedUserId = "58cee43b68af191fec669521";
     vm.title = 'Channel List';
 
     init();
