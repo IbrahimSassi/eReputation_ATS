@@ -1,0 +1,146 @@
+<style>
+  body {
+    background:  url("angular/app/assets/images/bg1.jpg") no-repeat fixed center ;
+    background-position-x: 0px;
+    background-position-y: 0px;
+    background-size: cover;
+  }
+</style>
+<link rel="stylesheet" href="angular/app/assets/css/m-select.css">
+<div class="row col s12">
+  <div id="login-page" class="row">
+    <div class="col s12 z-depth-4 card-panel">
+      <form class="login-form col s12" ng-submit="user.onSubmitRegister()">
+        <div class="row">
+          <div class="input-field col s12 center">
+            <img src="angular/app/assets/images/full-logo.png" alt="" class="circle responsive-img valign profile-image-login">
+            <p class="center login-form-text">Registration To Digital Reputation</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12 center">
+            <div class="row margin col s12">
+              <ul>
+                <li class="tab col s6 left">
+                  <p>
+                    <input ng-model="accountType" name="typeGroup" type="radio" id="individual" value="individual"/>
+                    <label for="individual">Individual</label>
+                  </p>
+                </li>
+                <li class="tab col s6 right">
+                  <p>
+                    <input ng-model="accountType" name="typeGroup" type="radio" id="business" href="#bu" value="business"/>
+                    <label for="business">Business</label>
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div ng-if="accountType=='individual' || accountType==null">
+          <div>
+            <div class="row margin">
+              <div class="input-field col s6">
+                <i class="mdi-social-person-outline prefix"></i>
+                <input id="firstName" type="text" >
+                <label for="firstName" class="center-align">First Name</label>
+              </div>
+              <div class="input-field col s6">
+                <i class="mdi-social-person-outline prefix"></i>
+                <input id="lastName" type="text">
+                <label for="lastName" class="center-align">Last Name</label>
+              </div>
+            </div>
+          </div>
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="mdi-action-account-circle prefix"></i>
+              <input id="username" type="text" ng-model="user.credentialsRegister.username">
+              <label for="username" class="center-align">Username</label>
+            </div>
+          </div>
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="mdi-communication-email prefix"></i>
+              <input id="email" type="email" ng-model="user.credentialsRegister.email">
+              <label for="email" class="center-align">Email</label>
+            </div>
+          </div>
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="mdi-action-lock-outline prefix"></i>
+              <input id="password" type="password" ng-model="user.credentialsRegister.password">
+              <label for="password">Password</label>
+            </div>
+          </div>
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="mdi-action-lock-outline prefix"></i>
+              <input id="password-again" type="password">
+              <label for="password-again">Password again</label>
+            </div>
+          </div>
+
+        </div>
+        <!-- ************************************************************************** Business ************************************************************************** -->
+        <div ng-if="accountType=='business'">
+
+          <div>
+            <div class="row margin">
+              <div class="input-field col s6">
+                <i class="mdi-social-person-outline prefix"></i>
+                <input id="businessName" type="text">
+                <label for="businessName" class="center-align">Business Name</label>
+              </div>
+              <div class="input-field col s6">
+                <i class="mdi-social-people prefix"></i>
+                <input id="employeesNumber" type="text">
+                <label for="employeesNumber" class="center-align">N° of Employees</label>
+              </div>
+            </div>
+          </div>
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="mdi-communication-email prefix"></i>
+              <input id="businessEmail" type="email">
+              <label for="businessEmail" class="center-align">Business Email</label>
+            </div>
+          </div>
+          <div class="row margin">
+            <div class="input-field col s1"> <i class="mdi-communication-business prefix"></i></div>
+            <div class="input-field col s11">
+              <select class="browser-default" id="businessType">
+                <option value="1"  selected>Business Type</option>
+                <option value="2">Production</option>
+              </select>
+            </div>
+          </div>
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="mdi-action-lock-outline prefix"></i>
+              <input id="businessPassword" type="password">
+              <label for="businessPassword">Password</label>
+            </div>
+          </div>
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="mdi-action-lock-outline prefix"></i>
+              <input id="businessPassword-again" type="password">
+              <label for="businessPassword-again">Password again</label>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <button class="btn waves-effect waves-light col s12" type="submit" name="action">Register Now
+            </button>
+          </div>
+          <div class="input-field col s12">
+            <p class="margin center medium-small sign-up">Already have an account? <a href="" ng-click="user.goToLogin()">Login</a></p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

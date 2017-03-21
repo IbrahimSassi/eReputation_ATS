@@ -4,11 +4,15 @@
 #ESPRIT | ATS_Digital
 
 
-## FrontEnd
-Run `npm start` for a dev server. Navigate to `http://localhost:8000/`. The app will automatically DOWNLOAD all Dependencies and start the project.
+## After Cloning 
+##### 1.  Run `npm start` directly it will download all needed dependency.
 
-## Backend
-Lunch your MongoDb server with `mongod` 
-Go to `server/` and run `nodemon server.js` #UnderDevelopement
+##### 2. it will ask for angular version chose : Angular `1.6.2` 
+
+##### 3. Navigate to `http://localhost:3000/`.
+
+
+ALL APIs are under this path : `http://localhost:3000/api/`
+
 
 
