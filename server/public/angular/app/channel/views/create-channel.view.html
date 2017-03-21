@@ -3,12 +3,12 @@
   <div class="col s12 m12 l12">
     <div class="card-panel">
       <div class="row">
-        <div class="col s12">
+        <form name="channelForm" ng-submit="vm.createChannel(channelForm.$valid)" class="col s12" novalidate>
           <div class="row">
             <div class="input-field col s12">
               <i class="mdi-action-account-circle prefix"></i>
-              <input ng-model="vm.channel.name" id="first_name" type="text">
-              <label for="first_name">Name</label>
+              <input ng-required="true"  ng-model="vm.channel.name" id="name" type="text" ng-minlength="5">
+              <label for="name">Name</label>
             </div>
           </div>
 
@@ -38,7 +38,7 @@
               <i class="fa fa-globe prefix"></i>
             </div>
             <div class="input-field col s8">
-              <select name="type" ng-model="vm.channel.type" id="type" material-select watch>
+              <select ng-required="true"  name="type" ng-model="vm.channel.type" id="type" material-select watch>
                 <option value="" selected disabled>Choose an option</option>
                 <option value="facebook">Facebook</option>
                 <option value="twitter">Twitter</option>
@@ -56,12 +56,26 @@
           </div>
 
 
-
           <div class="row" ng-if="!vm.channel.personnel">
             <div class="input-field col s12">
               <i class="fa fa-link prefix"></i>
               <input ng-model="vm.channel.url" id="url" type="url">
               <label for="url">Url</label>
+            </div>
+          </div>
+
+
+          <div class="row" ng-if="vm.channel.personnel && vm.myFacebookPages.length">
+            <div class="input-field col s1">
+              <i class="fa fa-facebook prefix"></i>
+            </div>
+
+            <div class="input-field col s11">
+              <select ng-required="true"  ng-model="vm.channel.url" name="page" id="page" material-select watch>
+                <option value="" selected disabled>Choose an option</option>
+                <option ng-repeat="page in vm.myFacebookPages" value="{{page.value}}">{{page.text}}</option>
+              </select>
+              <label for="page">Page</label>
             </div>
           </div>
 
@@ -73,10 +87,7 @@
               <div class="input-field col s12">
                 <button
                   class="btn cyan waves-effect waves-light right"
-                  ng-click="vm.createChannel()"
-                  message="New Channel Created"
-                  duration="3000"
-                  toast='click'
+                  type="submit"
                 >Submit
                   <i class="mdi-content-send right"></i>
                 </button>
@@ -84,7 +95,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
