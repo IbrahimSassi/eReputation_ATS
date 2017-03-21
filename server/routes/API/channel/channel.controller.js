@@ -1,16 +1,15 @@
 /**
  * Created by Ibrahim on 19/03/2017.
  */
-
 'use strict';
 
 // var _ = require('lodash');
 var Channel = require('../../../models/channel/channel.model');
 
 
-exports.allChannels = function (req, res, next) {
+exports.getAllChannels = function (req, res, next) {
 
-  Channel.getChannels(function (err, docs) {
+  Channel.getChannelsModel(function (err, docs) {
     if (err) {
       return handleError(res, err);
     }
@@ -25,9 +24,9 @@ exports.allChannels = function (req, res, next) {
 };
 
 
-exports.channelById = function (req, res, next) {
+exports.getChannelById = function (req, res, next) {
 
-  Channel.getChannelById(req.params.id, function (err, docs) {
+  Channel.getChannelByIdModel(req.params.id, function (err, docs) {
     if (err) {
       return handleError(res, err);
     }
@@ -44,7 +43,7 @@ exports.channelById = function (req, res, next) {
 
 exports.allChannelsByOwner = function (req, res, next) {
 
-  Channel.getChannelByOwner(req.params.id, function (err, docs) {
+  Channel.getChannelByOwnerModel(req.params.id, function (err, docs) {
     if (err) {
       return handleError(res, err);
     }
@@ -61,10 +60,11 @@ exports.allChannelsByOwner = function (req, res, next) {
 
 exports.createChannel = function (req, res, next) {
 
-  Channel.createChannel(req.body, function (err, item) {
-    if (err) {
-      console.log('error occured in saving channel');
-    } else {
+  console.log("get called");
+  console.log(req.body)
+  Channel.createChannelModel(req.body, function (err, item) {
+    if (err) return handleError();
+    else {
       console.log('Success channel saved');
       console.log(item);
       res.status(201)
@@ -77,10 +77,9 @@ exports.createChannel = function (req, res, next) {
 
 exports.updateChannel = function (req, res, next) {
 
-  Channel.updateChannel(res.params.id, req.body, function (err, item) {
-    if (err) {
-      console.log('error occured in updating channel');
-    } else {
+  Channel.updateChannelModel(req.params.id, req.body, function (err, item) {
+    if (err) return handleError();
+    else {
       console.log('Success channel updated');
       console.log(item);
       res.status(201)
@@ -91,8 +90,8 @@ exports.updateChannel = function (req, res, next) {
 
 
 exports.deleteChannel = function (req, res, next) {
-  Channel.removeChannel(req.params.id, function (err, channel) {
-    if (err) return res.send(500, err);
+  Channel.removeChannelModel(req.params.id, function (err, channel) {
+    if (err) return handleError();
     return res.send(204);
   });
 };

@@ -35,7 +35,7 @@
       url: "",
       type: "",
       accessToken: "",
-      personnel: false,
+      personal: false,
       userId: vm.connectedUserId
     };
 

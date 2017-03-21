@@ -29,8 +29,8 @@
           <div class="row">
             <div class="input-field col s12">
               <i class="fa fa-users prefix"></i>
-              <input id="personnel" type="checkbox" ng-model="vm.channel.personnel">
-              <label for="personnel">Personnel
+              <input id="personal" type="checkbox" ng-model="vm.channel.personal">
+              <label for="personal">Personnel
                 <i class="mdi-action-help"
                    tooltipped
                    class="btn-floating waves-effect waves-light blue"
@@ -56,7 +56,7 @@
               </select>
               <label for="type">Type</label>
             </div>
-            <div ng-if="vm.channel.personnel" style="margin-top: 15px;" class="input-field col s3">
+            <div ng-if="vm.channel.personal" style="margin-top: 15px;" class="input-field col s3">
               <button ng-if="vm.channel.type=='facebook'"
                       ng-click="vm.getPermissions()"
                       class="btn light-blue darken-4 waves-effect waves-light right">
@@ -72,7 +72,7 @@
           </div>
 
 
-          <div class="row" ng-if="!vm.channel.personnel">
+          <div class="row" ng-if="!vm.channel.personal">
             <div class="input-field col s12">
               <i class="fa fa-link prefix"></i>
               <input ng-model="vm.channel.url" id="url" type="url">
@@ -81,7 +81,7 @@
           </div>
 
 
-          <div class="row" ng-if="vm.channel.personnel && vm.myFacebookPages.length">
+          <div class="row" ng-if="vm.channel.personal && vm.myFacebookPages.length">
             <div class="input-field col s1">
               <i class="fa fa-facebook prefix"></i>
             </div>
