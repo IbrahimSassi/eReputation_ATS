@@ -50,7 +50,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/admin', admin);
 app.use('/', index);
 app.use('/users', users);
-app.use('/api/facebookScraping', facebookScraping);
+app.use('/api/facebook', facebookScraping);
 app.use('/api/webScraping', webScraping);
 app.use('/api/twitterScraping', twitterScraping);
 app.use('/api/wwsa', wwsa);

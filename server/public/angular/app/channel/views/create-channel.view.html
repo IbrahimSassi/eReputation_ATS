@@ -11,13 +11,28 @@
               <label for="first_name">Name</label>
             </div>
           </div>
+
+
           <div class="row">
             <div class="input-field col s12">
-              <i class="fa fa-link prefix"></i>
-              <input ng-model="vm.channel.url" id="url" type="url">
-              <label for="url">Url</label>
+              <i class="fa fa-users prefix"></i>
+              <input id="personnel" type="checkbox" ng-model="vm.channel.personnel">
+              <label for="personnel">Personnel
+                <i class="mdi-action-help"
+                   tooltipped
+                   class="btn-floating waves-effect waves-light blue"
+                   data-position="bottom" data-delay="50" data-tooltip="Check it , if its your own page">
+
+                </i>
+
+
+              </label>
+              <br>
             </div>
           </div>
+
+          <br>
+
           <div class="row">
             <div class="input-field col s1">
               <i class="fa fa-globe prefix"></i>
@@ -33,27 +48,25 @@
             </div>
             <div style="margin-top: 15px;" class="input-field col s3">
               <button ng-if="vm.channel.type=='facebook'"
+                      ng-click="vm.getPermissions()"
                       class="btn light-blue darken-4 waves-effect waves-light right">
                 <i class="fa fa-facebook-official"></i> Give permission
               </button>
             </div>
           </div>
-          <div class="row">
+
+
+
+          <div class="row" ng-if="!vm.channel.personnel">
             <div class="input-field col s12">
-              <i  class="fa fa-users prefix"></i>
-              <input id="personnel" type="checkbox" ng-model="vm.channel.personnel">
-              <label for="personnel">Personnel
-                <i class="mdi-action-help"
-                   tooltipped
-                   class="btn-floating waves-effect waves-light blue"
-                   data-position="bottom" data-delay="50" data-tooltip="Check it , if its your own page">
-
-                </i>
-
-
-              </label>
-              <br>
+              <i class="fa fa-link prefix"></i>
+              <input ng-model="vm.channel.url" id="url" type="url">
+              <label for="url">Url</label>
             </div>
+          </div>
+
+          <div class="row">
+            <div id="status"></div>
           </div>
           <div class="row">
             <div class="row">

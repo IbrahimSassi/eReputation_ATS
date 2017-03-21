@@ -38,7 +38,7 @@ module.exports = {
       name: 'Monster WoW',
       url: 'https://www.facebook.com/monster.wow.officiel',
       type: 'facebook',
-      access_token: "",
+      accessToken: "",
       dateCreation: "2017-03-18T10:51:13+0000",
       userId: 1,
       personnel:false
@@ -55,3 +55,4 @@ module.exports = {
     }
   ]
 };
+

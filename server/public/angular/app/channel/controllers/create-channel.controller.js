@@ -14,7 +14,8 @@
     'ChannelService',
     '$state',
     '$stateParams',
-    '$rootScope'
+    '$rootScope',
+    'FacebookService'
   ];
 
 
@@ -22,7 +23,8 @@
   function CreateChannelFN(ChannelService,
                            $state,
                            $stateParams,
-                           $rootScope) {
+                           $rootScope,
+                           FacebookService) {
     //On Init Start
     var vm = this;
 
@@ -32,7 +34,7 @@
       name: "",
       url: "",
       type: "",
-      access_token: "",
+      accessToken: "",
       personnel: false,
       userId : vm.connectedUserId
     };
@@ -45,12 +47,27 @@
 
 
     vm.createChannel = function () {
-      ChannelService.addChannel(vm.channel).then(function (result) {
+      ChannelService.addChannel(vm.channel)
+        .then(function (result) {
         console.log("result", result);
         $state.go('channels');
 
       });
-    }
+    };
+
+    vm.getPermissions = function () {
+      FacebookService.initFacebookApi()
+        .then(function (data) {
+        console.log("here we are token  + user ,,promise bouh kalb",data);
+        var token = data.authResponse.accessToken;
+
+        FacebookService.getLongLivedToken(token).then(function (newLongToken) {
+          console.log(newLongToken);
+          vm.channel.accessToken =newLongToken.longToken;
+        })
+
+      });
+    };
 
 
   }

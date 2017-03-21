@@ -1,5 +1,6 @@
 <div>
   <h1>Manage Channels</h1>
+
   <ul id="modals-demo" class="collection">
     <li class="collection-item avatar" ng-repeat="channel in vm.myChannels">
       <i ng-if="channel.type=='facebook'" class="fa fa-facebook circle blue darken-4"></i>
@@ -22,6 +23,7 @@
     </li>
 
   </ul>
+  <a ui-sref="newChannel" class="btn-floating btn-large btn-move-up waves-effect waves-light darken-2 left"><i class="mdi-content-add activator"></i></a>
 
 
   <div id="removeModal-{{channel._id}}" class="modal" ng-repeat="channel in vm.myChannels">

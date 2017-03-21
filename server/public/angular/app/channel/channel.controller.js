@@ -7,7 +7,8 @@
   angular
     .module('ATSApp.channel', [
       'ui.router',
-      'ui.materialize'
+      'ui.materialize',
+      'ATSApp.facebook',
       //TODO
       // 'angular-loading-bar'
       // 'ngAnimate',
