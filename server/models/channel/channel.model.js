@@ -2,8 +2,9 @@
  * Created by Ibrahim on 21/03/2017.
  */
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-var channelSchema = mongoose.Schema({
+var channelSchema = new Schema({
 
   name: {
     type: String
@@ -29,6 +30,10 @@ var channelSchema = mongoose.Schema({
   }
   , accessToken: {
     type: String
+  },
+  userId: {
+    type: Schema.ObjectId,
+    ref: 'User'
   }
 });
 
@@ -48,13 +53,12 @@ module.exports.getChannelById = function (id, callback) {
 
 };
 
-//Get Channel By Owner channels
+// Get Channel By Owner
 
-// module.exports.getChannelByCategory = function (type, callback) {
-//   var query = {type: type};
-//
-//   Channel.find(query, callback);
-// }
+module.exports.getChannelByOwner = function (userId, callback) {
+  var query = {userId: userId};
+  Channel.find(query, callback);
+};
 
 
 //Add Channel
