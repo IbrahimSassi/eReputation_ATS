@@ -107,7 +107,6 @@ module.exports.updateChannelModel = function (id, data, callback) {
 
 
 //Delete Channel
-
 module.exports.removeChannelModel = function (id, callback) {
 
   Channel.find({_id: id}).remove(callback);

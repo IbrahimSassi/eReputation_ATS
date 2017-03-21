@@ -44,9 +44,8 @@ exports.getChannelById = function (req, res, next) {
 exports.allChannelsByOwner = function (req, res, next) {
 
   Channel.getChannelByOwnerModel(req.params.id, function (err, docs) {
-    if (err) {
-      return handleError(res, err);
-    }
+    if (err) return handleError(res, err);
+
     if (!docs) {
       return res.send(404);
     }
@@ -60,8 +59,6 @@ exports.allChannelsByOwner = function (req, res, next) {
 
 exports.createChannel = function (req, res, next) {
 
-  console.log("get called");
-  console.log(req.body)
   Channel.createChannelModel(req.body, function (err, item) {
     if (err) return handleError();
     else {
@@ -78,7 +75,7 @@ exports.createChannel = function (req, res, next) {
 exports.updateChannel = function (req, res, next) {
 
   Channel.updateChannelModel(req.params.id, req.body, function (err, item) {
-    if (err) return handleError();
+    if (err) return handleError(res, err);
     else {
       console.log('Success channel updated');
       console.log(item);
@@ -91,7 +88,7 @@ exports.updateChannel = function (req, res, next) {
 
 exports.deleteChannel = function (req, res, next) {
   Channel.removeChannelModel(req.params.id, function (err, channel) {
-    if (err) return handleError();
+    if (err) return handleError(res, err);
     return res.send(204);
   });
 };
