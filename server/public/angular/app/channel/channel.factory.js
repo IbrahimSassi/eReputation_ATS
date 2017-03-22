@@ -23,8 +23,14 @@
             userId: '@userId',
           },
           isArray: true
-
-
+        },
+        'getSimilarChannels': {
+          url: '/api/channels/similar/:url',
+          method: 'GET',
+          params: {
+            url: '@url',
+          },
+          isArray: true
         }
       }
     );

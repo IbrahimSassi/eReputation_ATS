@@ -75,9 +75,18 @@
           <div class="row" ng-if="!vm.channel.personal">
             <div class="input-field col s12">
               <i class="fa fa-link prefix"></i>
-              <input ng-model="vm.channel.url" id="url" type="url">
+              <input ng-model="vm.channel.url" id="url" type="url" >
+              <!--ng-change="vm.getSimalarChannels()"-->
               <label for="url">Url</label>
             </div>
+          </div>
+
+          <div class="row" ng-if="vm.similarChannels.length">
+            <div class="chip" ng-repeat="c in vm.similarChannels">
+              {{c.Site}}
+              <i class="material-icons mdi-navigation-close"></i>
+            </div>
+
           </div>
 
 
