@@ -1,1 +1,123 @@
 <h1>Create Channel</h1>
+<div class="row">
+  <div class="col s12 m12 l12">
+    <div class="card-panel">
+      <div class="row">
+        <form name="channelForm" ng-submit="vm.createChannel(channelForm.$valid)" class="col s12" novalidate>
+          <div class="row">
+            <div class="input-field col s12">
+              <i class="mdi-action-account-circle prefix"></i>
+              <input
+                name="name"
+                ng-required="true"
+                ng-model="vm.channel.name"
+                id="name"
+                type="text" ng-minlength="5"
+                ng-class="{ 'error' : channelForm.name.$invalid && !channelForm.name.$pristine }"
+              >
+              <label for="name">Name</label>
+              <div ng-show="channelForm.name.$error.minlength" id="card-alert" class="card red col m11 s11 l11 push-s1 push-l1 push-m1">
+                <div class="card-content white-text">
+                  <p>The name is too short.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="row">
+            <div class="input-field col s12">
+              <i class="fa fa-users prefix"></i>
+              <input id="personal" type="checkbox" ng-model="vm.channel.personal">
+              <label for="personal">Personnel
+                <i class="mdi-action-help"
+                   tooltipped
+                   class="btn-floating waves-effect waves-light blue"
+                   data-position="bottom" data-delay="50" data-tooltip="Check it , if its your own page">
+                </i>
+              </label>
+              <br>
+            </div>
+          </div>
+
+          <br>
+
+          <div class="row">
+            <div class="input-field col s1">
+              <i class="fa fa-globe prefix"></i>
+            </div>
+            <div class="input-field col s8">
+              <select ng-required="true"  name="type" ng-model="vm.channel.type" id="type" material-select watch>
+                <option value="" selected disabled>Choose an option</option>
+                <option value="facebook">Facebook</option>
+                <option value="twitter">Twitter</option>
+                <option value="website">Website/Blogs</option>
+              </select>
+              <label for="type">Type</label>
+            </div>
+            <div ng-if="vm.channel.personal" style="margin-top: 15px;" class="input-field col s3">
+              <button ng-if="vm.channel.type=='facebook'"
+                      ng-click="vm.getPermissions()"
+                      class="btn light-blue darken-4 waves-effect waves-light right">
+                <i class="fa fa-facebook-official"></i> Give permission
+              </button>
+            </div>
+              <div ng-show="channelForm.type.$invalid && !channelForm.type.$pristine" id="card-alert1" class="card red col m11 s11 l11 push-s1 push-l1 push-m1">
+              <div class="card-content white-text">
+                <p>The type is required.</p>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="row" ng-if="!vm.channel.personal">
+            <div class="input-field col s12">
+              <i class="fa fa-link prefix"></i>
+              <input ng-model="vm.channel.url" id="url" type="url">
+              <label for="url">Url</label>
+            </div>
+          </div>
+
+
+          <div class="row" ng-if="vm.channel.personal && vm.myFacebookPages.length">
+            <div class="input-field col s1">
+              <i class="fa fa-facebook prefix"></i>
+            </div>
+
+            <div class="input-field col s11">
+              <select ng-required="true"  ng-model="vm.channel.url" name="page" id="page" material-select watch>
+                <option value="" selected >Choose an option</option>
+                <option ng-repeat="page in vm.myFacebookPages" value="{{page.value}}">{{page.text}}</option>
+              </select>
+              <label for="page">Page</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div id="status"></div>
+          </div>
+          <div class="row">
+            <div class="row">
+              <div class="input-field col s12">
+                <button
+                  class="btn cyan waves-effect waves-light right"
+                  type="submit"
+                >Submit
+                  <!--ng-disabled="channelForm.$invalid"-->
+
+                  <i class="mdi-content-send right"></i>
+                </button>
+
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--<script type="text/javascript" src="angular/app/assets/js/plugins.min.js"></script>-->

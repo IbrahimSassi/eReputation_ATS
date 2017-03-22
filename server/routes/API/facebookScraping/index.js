@@ -7,12 +7,19 @@ var extendToken = require('./extendLLT.middleware');
 const APP_ID = "583444071825924";
 const APP_SECRET = "3e89611dc939876324bd42ea67ec5eb2";
 const ACCESS_TOKEN = APP_ID + "|" + APP_SECRET;
-
 const base = "https://graph.facebook.com/v2.8/";
 
 
 router.get('/', function (req, res, next) {
   res.render('TestFacebookScraping', {});
+});
+
+
+router.get('/token/:token', extendToken, function (req, res, next) {
+  req.ExtendedToken.then(function (value) {
+    console.log("toooken", value);
+    res.json({longToken:value});
+  })
 });
 
 
@@ -60,41 +67,12 @@ router.get('/posts/:id/reactions', function (req, res, next) {
 });
 
 
-//Used for the First Time to get the long-lived token from the short one
-router.get('/1page/:id/insights/:token', extendToken, function (req, res, next) {
-
-  var page_id = req.params.id;
-  var node = page_id;
-  var fields = "/insights?metric=['page_storytellers_by_age_gender']";
-  //All Metrics :
-  //https://developers.facebook.com/docs/graph-api/reference/v2.5/insights#metrics
-
-
-  req.ExtendedToken.then(function (value) {
-    console.log("toooken", value);
-
-    //Dynamic TOKEN Sended in the request
-    var page_ACCESS_TOKEN = value;
-    var parameters = "&access_token=" + page_ACCESS_TOKEN;
-    var url = base + node + fields + parameters;
-    console.log("url", url);
-    request(url, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        JSON.parse(body).data.LongLivedToken=page_ACCESS_TOKEN;
-        res.json(JSON.parse(body));
-      }
-    })
-  })
-});
-
-
 //used from second and Onwards to use direct the long lived token
-router.get('/2page/:id/insights/:token', function (req, res, next) {
+router.get('/page/:id/insights/:token', function (req, res, next) {
 
   var page_id = req.params.id;
   var node = page_id;
   var fields = "/insights?metric=['page_storytellers_by_age_gender']";
-
 
   var page_ACCESS_TOKEN = req.params.token;
   var parameters = "&access_token=" + page_ACCESS_TOKEN;

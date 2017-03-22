@@ -7,25 +7,39 @@
 
   angular
     .module('ATSApp.channel')
-    .controller('DetailChannel', CreateChannelFN);
+    .controller('CreateChannelCtrl', CreateChannelFN);
 
 
   CreateChannelFN.$inject = [
     'ChannelService',
     '$state',
     '$stateParams',
-    '$rootScope'
+    '$rootScope',
+    'FacebookService'
   ];
 
 
   /* @ngInject */
   function CreateChannelFN(ChannelService,
-                         $state,
-                         $stateParams,
-                         $rootScope) {
+                           $state,
+                           $stateParams,
+                           $rootScope,
+                           FacebookService) {
     //On Init Start
     var vm = this;
+
+    vm.connectedUserId = "58cee43b68af191fec669521";
     vm.title = 'Create Channel';
+    vm.channel = {
+      name: "",
+      url: "",
+      type: "",
+      accessToken: "",
+      personal: false,
+      userId: vm.connectedUserId
+    };
+
+    vm.myFacebookPages = [];
 
     init();
 
@@ -34,10 +48,43 @@
     }
 
 
-    vm.createChannel = function () {
-      ChannelService.addChannel(vm.selectedChannel);
-      $state.go('channels');
-    }
+    vm.createChannel = function (form) {
+
+      if(form)
+      {
+        ChannelService.addChannel(vm.channel)
+          .then(function (result) {
+            console.log("result", result);
+            $state.go('channels');
+            var $toastContent = $('<span class="green-text">New Channel has just created</span>');
+            var rounded = "rounded"
+            Materialize.toast($toastContent, 3000, rounded);
+          });
+      }
+
+    };
+
+    vm.getPermissions = function () {
+      FacebookService.initFacebookApi()
+        .then(function (data) {
+          console.log("here we are token  + user ,,promise bouh kalb", data);
+          var token = data.authResponse.accessToken;
+
+          FacebookService.getLongLivedToken(token).then(function (newLongToken) {
+            console.log(newLongToken);
+            vm.channel.accessToken = newLongToken.longToken;
+            data.user.accounts.data.forEach(function (page) {
+              vm.myFacebookPages.push({value: page.id, text: page.name})
+
+              var $toastContent = $('<span class="green-text">Your permission has granted , now pick a page</span>');
+              var rounded = "rounded"
+              Materialize.toast($toastContent, 3000, rounded);
+
+            });
+          })
+
+        });
+    };
 
 
   }

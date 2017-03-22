@@ -23,6 +23,8 @@
 
     function addChannelFN(channel) {
       //channel = new ChannelFactory(channel);
+      // channel.dateCreation = new Date();
+      console.log("channel",channel);
       return ChannelFactory.save(channel).$promise;
     }
 
