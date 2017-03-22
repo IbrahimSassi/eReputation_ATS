@@ -47,6 +47,13 @@ UserSchema.methods.generateJwt = function() {
     _id: this._id,
     email: this.email,
     username: this.username,
+    firstName: this.firstName,
+    lastName: this.lastName,
+    businessName: this.businessName,
+    employeesNumber: this.employeesNumber,
+    sector: this.sector,
+    accountType: this.accountType,
+    creationDate:this.creationDate,
     exp: parseInt(expiry.getTime() / 1000),
   }, "MY_SECRET"); // DO NOT KEEP YOUR SECRET IN THE CODE!
 };

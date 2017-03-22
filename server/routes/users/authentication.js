@@ -20,9 +20,21 @@ module.exports.register = function(req, res) {
   // }
 
   var user = new User();
-console.log('Entred to save'+req.body.email);
+console.log('He we save'+req.body.email);
   user.username = req.body.username;
   user.email = req.body.email;
+  user.firstName= req.body.firstName;
+  user.lastName= req.body.lastName;
+  user.businessName= req.body.businessName;
+  user.employeesNumber= req.body.employeesNumber;
+  user.sector= req.body.businessType;
+  user.accountType= req.body.accountType;
+  user.creationDate= new Date();
+
+
+
+
+
 
   user.setPassword(req.body.password);
 
@@ -64,6 +76,7 @@ module.exports.login = function(req, res) {
       res.json({
         "token" : token
       });
+
     } else {
       // If user is not found
       res.status(401).json(info);

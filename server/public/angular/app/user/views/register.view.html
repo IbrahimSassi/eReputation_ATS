@@ -23,13 +23,13 @@
               <ul>
                 <li class="tab col s6 left">
                   <p>
-                    <input ng-model="accountType" name="typeGroup" type="radio" id="individual" value="individual"/>
+                    <input ng-model="accountType" ng-change="user.clearcredentialsRegister(); user.setIndividual();" name="typeGroup" type="radio" id="individual" value="individual"/>
                     <label for="individual">Individual</label>
                   </p>
                 </li>
                 <li class="tab col s6 right">
                   <p>
-                    <input ng-model="accountType" name="typeGroup" type="radio" id="business" href="#bu" value="business"/>
+                    <input ng-model="accountType" ng-change="user.clearcredentialsRegister(); user.setBusiness();" name="typeGroup" type="radio" id="business" href="#bu" value="business"/>
                     <label for="business">Business</label>
                   </p>
                 </li>
@@ -42,12 +42,12 @@
             <div class="row margin">
               <div class="input-field col s6">
                 <i class="mdi-social-person-outline prefix"></i>
-                <input id="firstName" type="text" >
+                <input id="firstName" ng-model="user.credentialsRegister.firstName" type="text" required>
                 <label for="firstName" class="center-align">First Name</label>
               </div>
               <div class="input-field col s6">
                 <i class="mdi-social-person-outline prefix"></i>
-                <input id="lastName" type="text">
+                <input id="lastName" ng-model="user.credentialsRegister.lastName" type="text" required>
                 <label for="lastName" class="center-align">Last Name</label>
               </div>
             </div>
@@ -55,28 +55,28 @@
           <div class="row margin">
             <div class="input-field col s12">
               <i class="mdi-action-account-circle prefix"></i>
-              <input id="username" type="text" ng-model="user.credentialsRegister.username">
+              <input id="username" type="text" ng-model="user.credentialsRegister.username" required>
               <label for="username" class="center-align">Username</label>
             </div>
           </div>
           <div class="row margin">
             <div class="input-field col s12">
               <i class="mdi-communication-email prefix"></i>
-              <input id="email" type="email" ng-model="user.credentialsRegister.email">
+              <input id="email" type="email" ng-model="user.credentialsRegister.email" required>
               <label for="email" class="center-align">Email</label>
             </div>
           </div>
           <div class="row margin">
             <div class="input-field col s12">
               <i class="mdi-action-lock-outline prefix"></i>
-              <input id="password" type="password" ng-model="user.credentialsRegister.password">
+              <input id="password" type="password" ng-model="user.credentialsRegister.password" required>
               <label for="password">Password</label>
             </div>
           </div>
           <div class="row margin">
             <div class="input-field col s12">
               <i class="mdi-action-lock-outline prefix"></i>
-              <input id="password-again" type="password">
+              <input id="password-again" ng-model="user.credentialsRegister.passwordAgain" type="password" required>
               <label for="password-again">Password again</label>
             </div>
           </div>
@@ -89,12 +89,12 @@
             <div class="row margin">
               <div class="input-field col s6">
                 <i class="mdi-social-person-outline prefix"></i>
-                <input id="businessName" type="text">
+                <input id="businessName" type="text" ng-model="user.credentialsRegister.businessName" required>
                 <label for="businessName" class="center-align">Business Name</label>
               </div>
               <div class="input-field col s6">
                 <i class="mdi-social-people prefix"></i>
-                <input id="employeesNumber" type="text">
+                <input id="employeesNumber" type="text" ng-model="user.credentialsRegister.employeesNumber" required>
                 <label for="employeesNumber" class="center-align">N° of Employees</label>
               </div>
             </div>
@@ -102,30 +102,30 @@
           <div class="row margin">
             <div class="input-field col s12">
               <i class="mdi-communication-email prefix"></i>
-              <input id="businessEmail" type="email">
+              <input id="businessEmail" type="email" ng-model="user.credentialsRegister.email" required>
               <label for="businessEmail" class="center-align">Business Email</label>
             </div>
           </div>
           <div class="row margin">
             <div class="input-field col s1"> <i class="mdi-communication-business prefix"></i></div>
             <div class="input-field col s11">
-              <select class="browser-default" id="businessType">
+              <select class="browser-default" id="businessType" ng-model="user.credentialsRegister.businessType" required>
                 <option value="1"  selected>Business Type</option>
-                <option value="2">Production</option>
+                <option value="Production">Production</option>
               </select>
             </div>
           </div>
           <div class="row margin">
             <div class="input-field col s12">
               <i class="mdi-action-lock-outline prefix"></i>
-              <input id="businessPassword" type="password">
+              <input id="businessPassword" type="password" ng-model="user.credentialsRegister.password" required>
               <label for="businessPassword">Password</label>
             </div>
           </div>
           <div class="row margin">
             <div class="input-field col s12">
               <i class="mdi-action-lock-outline prefix"></i>
-              <input id="businessPassword-again" type="password">
+              <input id="businessPassword-again" type="password" ng-model="user.credentialsRegister.passwordAgain" required>
               <label for="businessPassword-again">Password again</label>
             </div>
           </div>
