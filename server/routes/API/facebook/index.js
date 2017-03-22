@@ -2,12 +2,8 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var extendToken = require('./extendLLT.middleware');
+var config = require('../../../config/facebook.config');
 
-
-const APP_ID = "583444071825924";
-const APP_SECRET = "3e89611dc939876324bd42ea67ec5eb2";
-const ACCESS_TOKEN = APP_ID + "|" + APP_SECRET;
-const base = "https://graph.facebook.com/v2.8/";
 
 
 router.get('/', function (req, res, next) {
@@ -31,7 +27,7 @@ router.get('/posts/:id', function (req, res, next) {
   var fields = "/?fields=message,link,created_time,type,name,id," +
     "comments,shares,reactions" +
     ".limit(0).summary(true)";
-  var parameters = "&access_token=" + ACCESS_TOKEN;
+  var parameters = "&access_token=" + config.ACCESS_TOKEN;
   var url = base + node + fields + parameters;
   console.log(url);
   request(url, function (error, response, body) {
@@ -54,7 +50,7 @@ router.get('/posts/:id/reactions', function (req, res, next) {
     "reactions.type(HAHA).limit(0).summary(total_count).as(haha)," +
     "reactions.type(SAD).limit(0).summary(total_count).as(sad)," +
     "reactions.type(ANGRY).limit(0).summary(total_count).as(angry)";
-  var parameters = "&access_token=" + ACCESS_TOKEN;
+  var parameters = "&access_token=" + config.ACCESS_TOKEN;
   var url = base + node + fields + parameters;
   console.log(url);
   request(url, function (error, response, body) {
