@@ -25,7 +25,7 @@
     function addChannelFN(channel) {
       //channel = new ChannelFactory(channel);
       // channel.dateCreation = new Date();
-      console.log("channel",channel);
+      console.log("channel", channel);
       return ChannelFactory.save(channel).$promise;
     }
 
@@ -36,7 +36,7 @@
 
     function deleteChannelFN(channel) {
       // channel = new ChannelFactory(channel);
-      return channel.$delete({id:channel._id});
+      return channel.$delete({id: channel._id});
 
     }
 
@@ -51,7 +51,7 @@
     }
 
     function getSimilarChannelsFN(url) {
-      return ChannelFactory.getSimilarChannels({url:url}).$promise;
+      return ChannelFactory.getSimilarChannels({url: url}).$promise;
     }
 
 

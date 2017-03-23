@@ -19,6 +19,8 @@ router.get('/token/:token', extendToken, function (req, res, next) {
 });
 
 
+
+
 router.get('/posts/:id', function (req, res, next) {
 
   // var page_id = "mosaiquefm";
@@ -27,6 +29,25 @@ router.get('/posts/:id', function (req, res, next) {
   var fields = "/?fields=message,link,created_time,type,name,id," +
     "comments,shares,reactions" +
     ".limit(0).summary(true)";
+  var parameters = "&access_token=" + config.ACCESS_TOKEN;
+  var url = base + node + fields + parameters;
+  console.log(url);
+  request(url, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      res.json(JSON.parse(body));
+    }
+  })
+
+
+});
+
+
+router.get('/posts/:id/comments', function (req, res, next) {
+
+  // var page_id = "mosaiquefm";
+  var page_id = req.params.id;
+  var node = page_id + "/posts";
+  var fields = "/?fields=comments" ;
   var parameters = "&access_token=" + config.ACCESS_TOKEN;
   var url = base + node + fields + parameters;
   console.log(url);
@@ -63,8 +84,7 @@ router.get('/posts/:id/reactions', function (req, res, next) {
 });
 
 
-//used from second and Onwards to use direct the long lived token
-router.get('/page/:id/insights/:token', function (req, res, next) {
+router.get('/page/:id/insights/:token/byAgeGender', function (req, res, next) {
 
   var page_id = req.params.id;
   var node = page_id;
@@ -80,6 +100,24 @@ router.get('/page/:id/insights/:token', function (req, res, next) {
     }
   })
 
+});
+
+
+router.get('/page/:id/insights/:token/byStoryType', function (req, res, next) {
+
+  var page_id = req.params.id;
+  var node = page_id;
+  var fields = "/insights?metric=['page_storytellers_by_story_type']";
+
+  var page_ACCESS_TOKEN = req.params.token;
+  var parameters = "&access_token=" + page_ACCESS_TOKEN;
+  var url = base + node + fields + parameters;
+  console.log("url", url);
+  request(url, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      res.json(JSON.parse(body));
+    }
+  })
 
 });
 

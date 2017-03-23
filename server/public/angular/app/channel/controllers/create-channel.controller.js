@@ -41,6 +41,8 @@
 
     vm.myFacebookPages = [];
     vm.similarChannels = [];
+    vm.gettedUrl = "";
+
     init();
 
     function init() {
@@ -87,13 +89,14 @@
 
 
     vm.getSimalarChannels = function () {
-      if (vm.channel.url && vm.channel.url.length > 7 && (vm.channel.url.indexOf("http") > -1 || vm.channel.url.indexOf("www") > -1 )) {
-        console.log("get called");
-        if (extractDomain(vm.channel.url).indexOf("undefined") <= -1 && extractDomain(vm.channel.url) != "http")
-          console.log(extractDomain(vm.channel.url));
+
+      if (vm.gettedUrl != vm.channel.url) {
+        vm.gettedUrl = vm.channel.url;
+        if (vm.channel.url && vm.channel.url.length > 7 && (vm.channel.url.indexOf("http") > -1 || vm.channel.url.indexOf("www") > -1 )) {
+          if (extractDomain(vm.channel.url).indexOf("undefined") <= -1 && extractDomain(vm.channel.url) != "http")
+            console.log(extractDomain(vm.channel.url));
           ChannelService.getSimilarChannels(extractDomain(vm.channel.url)).then(function (data) {
-            if(data.length)
-            {
+            if (data.length) {
               console.log(data);
               vm.similarChannels = data;
             }
@@ -101,8 +104,10 @@
           })
 
 
+        }
       }
-    }
+
+    };
 
 
     function extractDomain(url) {
