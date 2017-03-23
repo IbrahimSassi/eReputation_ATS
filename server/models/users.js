@@ -23,9 +23,13 @@ var UserSchema   = new Schema({
 
   businessName: String,
   employeesNumber: String,
-  sector: String,
+  businessType: String,
   accountType: String,
-  creationDate:String
+  creationDate:String,
+  businessID:String,
+  picture:String,
+  address:String,
+  state:String
 });
 
 
@@ -51,9 +55,13 @@ UserSchema.methods.generateJwt = function() {
     lastName: this.lastName,
     businessName: this.businessName,
     employeesNumber: this.employeesNumber,
-    sector: this.sector,
+    businessType: this.businessType,
     accountType: this.accountType,
     creationDate:this.creationDate,
+    businessID:this.businessID,
+    picture:this.picture,
+    address:this.address,
+    state:this.state,
     exp: parseInt(expiry.getTime() / 1000),
   }, "MY_SECRET"); // DO NOT KEEP YOUR SECRET IN THE CODE!
 };
