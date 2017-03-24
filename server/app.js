@@ -13,18 +13,20 @@ var users = require('./routes/users/index');
 /** APIS*/
 var webScraping = require('./routes/API/webScraping/index');
 var twitterScraping = require('./routes/API/twitterScraping/twitterScraping');
-var facebookScraping = require('./routes/API/facebookScraping');
+var facebook = require('./routes/API/facebook');
 var twitter = require('./routes/API/twitterScraping/twitter');
 var wwsa = require('./routes/API/wwsa/index');
 
 //Real Work Starts
 var channel = require('./routes/API/channel');
+var campaign = require('./routes/API/campaign')
 
 /**End APIS*/
 
 var ejs = require('ejs');
 
 var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -34,10 +36,12 @@ app.engine('html', ejs.renderFile);
 //MongoDB Connection
 var mongoose   = require('mongoose');
 mongoose.connect('mongodb://bro:brobro0055@ds157469.mlab.com:57469/ats-digital');
+// mongoose.connect('mongodb://localhost:27017/ats-digital-local');
 
 //Adding passport require
 require('./config/passport');
 app.use(passport.initialize());
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -50,11 +54,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/admin', admin);
 app.use('/', index);
 app.use('/users', users);
-app.use('/api/facebookScraping', facebookScraping);
+app.use('/api/facebook', facebook);
 app.use('/api/webScraping', webScraping);
 app.use('/api/twitterScraping', twitterScraping);
 app.use('/api/wwsa', wwsa);
 app.use('/api/channels', channel);
+app.use('/api/campaigns', campaign);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

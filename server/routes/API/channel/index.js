@@ -3,46 +3,26 @@
  */
 var express = require('express');
 var router = express.Router();
-var channels = require('../../../models/channel/channel.mockApi');
-
-/* GET users listing. */
-router.get('/', function (req, res, next) {
-  channels.getAllChannels().then(function (data) {
-    res.json(data);
-  })
-});
+var controller = require('./channel.controller');
+var channelHelper = require('../helpers/channel.helper');
 
 
-router.get('/:id', function (req, res, next) {
+// CRUD
+router.get('/', controller.getAllChannels);
 
-  channels.getChannelById(req.params.id).then(function (data) {
-    res.json(data);
-  })
-});
+router.get('/:id', controller.getChannelById);
 
-router.get('/user/:id', function (req, res, next) {
-  channels.getChannelByOwner(req.params.id).then(function (data) {
-    res.json(data);
+router.get('/user/:id', controller.allChannelsByOwner);
 
-  })
-});
+router.post('/', controller.createChannel);
 
-router.post('/', function (req, res, next) {
-  channels.saveChannel(req.body).then(function (data) {
-    res.sendStatus(201);
-  });
-});
+router.delete('/:id', controller.deleteChannel);
 
-router.delete('/:id', function (req, res, next) {
-  channels.deleteChannel(req.params.id).then(function () {
-    res.status(200).end();
-  });
-});
+router.put('/:id', controller.updateChannel);
 
-router.put('/:id', function (req, res, next) {
-  channels.saveChannel(req.body).then(function () {
-    res.status(200).end();
-  });
-});
+//Others
+router.get('/similar/:url', channelHelper.getSimilarWebsite);
+
+
 
 module.exports = router;

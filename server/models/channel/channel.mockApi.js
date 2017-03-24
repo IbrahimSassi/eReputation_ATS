@@ -31,11 +31,10 @@ var ChannelApi = {
   getChannelById: function (id) {
     return new Promise(function (resolve,reject) {
       setTimeout(function () {
-
         var channel = _.find(channels, {_id: id});
-        resolve(_clone(channel));
+        resolve(channel);
 
-      });
+      },1000);
     })
   },
   getChannelByOwner: function (id) {

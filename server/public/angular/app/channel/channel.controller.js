@@ -7,7 +7,8 @@
   angular
     .module('ATSApp.channel', [
       'ui.router',
-      'ui.materialize'
+      'ui.materialize',
+      'ATSApp.facebook',
       //TODO
       // 'angular-loading-bar'
       // 'ngAnimate',
@@ -41,11 +42,11 @@
         controller: 'DetailChannel as vm',
         cache: false
       })
-      // .state('newChannel', {
-      //   url: '/channels/new',
-      //   templateUrl: 'angular/app/channel/views/create-channel.html',
-      //   controller: 'CreateChannelCtrl as vm'
-      // })
+      .state('newChannel', {
+        url: '/channels/new',
+        templateUrl: 'angular/app/channel/views/create-channel.view.html',
+        controller: 'CreateChannelCtrl as vm'
+      })
       .state("otherwise", {url: '/channels/all'})
     ;
 
@@ -59,7 +60,7 @@
     //On Init Start
     var vm = this;
     vm.myChannels = [];
-    vm.connectedUserId = 1;
+    vm.connectedUserId = "58cee43b68af191fec669521";
     vm.title = 'Channel List';
 
     init();
@@ -71,7 +72,6 @@
         console.log(vm.myChannels)
       })
     }
-
 
     vm.deleteChannel = function (channel) {
       ChannelService.deleteChannel(channel).then(function () {

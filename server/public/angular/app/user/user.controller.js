@@ -66,12 +66,41 @@
       });
     };
 
+    vm.clearcredentialsRegister = function () {
 
+      vm.credentialsRegister = {
+        username : "",
+        email : "",
+        password : "",
 
+        firstName: "",
+        lastName: "",
+        passwordAgain: "",
+        businessName: "",
+        employeesNumber: "",
+        businessType: "",
+        accountType: ""
+      };
+
+    };
+    vm.setIndividual = function () {
+      vm.credentialsRegister.accountType = "individual"
+    };
+    vm.setBusiness= function () {
+      vm.credentialsRegister.accountType = "business"
+    };
     vm.credentialsRegister = {
       username : "",
       email : "",
-      password : ""
+      password : "",
+
+      firstName: "",
+      lastName: "",
+      passwordAgain: "",
+      businessName: "",
+      employeesNumber: "",
+      businessType: "",
+      accountType: "individual"
     };
 
     vm.credentialsLogin = {
@@ -79,7 +108,17 @@
       password : ""
     };
     vm.onSubmitRegister = function () {
-      console.log('Submitting registration'+vm.credentialsRegister.email);
+      console.log('Email: '+vm.credentialsRegister.email);
+      console.log('FirstName: '+vm.credentialsRegister.firstName);
+      console.log('lastName: '+vm.credentialsRegister.lastName);
+      console.log('username: '+vm.credentialsRegister.username);
+      console.log('password: '+vm.credentialsRegister.password);
+      console.log('passwordAgain: '+vm.credentialsRegister.passwordAgain);
+      console.log('businessName: '+vm.credentialsRegister.businessName);
+      console.log('employeesNumber: '+vm.credentialsRegister.employeesNumber);
+      console.log('businessType: '+vm.credentialsRegister.businessType);
+      console.log('accountType: '+vm.credentialsRegister.accountType);
+
       UserService
         .register(vm.credentialsRegister)
         .then(function(){

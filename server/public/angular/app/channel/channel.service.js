@@ -19,10 +19,13 @@
     this.deleteChannel = deleteChannelFN;
     this.getChannelByID = getChannelByIDFN;
     this.getChannelsByUser = getChannelsByUserFN;
+    this.getSimilarChannels = getSimilarChannelsFN;
 
 
     function addChannelFN(channel) {
       //channel = new ChannelFactory(channel);
+      // channel.dateCreation = new Date();
+      console.log("channel", channel);
       return ChannelFactory.save(channel).$promise;
     }
 
@@ -33,10 +36,9 @@
 
     function deleteChannelFN(channel) {
       // channel = new ChannelFactory(channel);
-      return channel.$delete({id:channel._id});
+      return channel.$delete({id: channel._id});
 
     }
-
 
     function getChannelByIDFN(idChannel) {
       return ChannelFactory.get({id: idChannel}).$promise;
@@ -46,6 +48,10 @@
     function getChannelsByUserFN(userId) {
 
       return ChannelFactory.getChannelsByUser({userId: userId}).$promise;
+    }
+
+    function getSimilarChannelsFN(url) {
+      return ChannelFactory.getSimilarChannels({url: url}).$promise;
     }
 
 
