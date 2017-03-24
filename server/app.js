@@ -19,6 +19,7 @@ var wwsa = require('./routes/API/wwsa/index');
 
 //Real Work Starts
 var channel = require('./routes/API/channel');
+var campaign = require('./routes/API/campaign')
 
 /**End APIS*/
 
@@ -58,6 +59,7 @@ app.use('/api/webScraping', webScraping);
 app.use('/api/twitterScraping', twitterScraping);
 app.use('/api/wwsa', wwsa);
 app.use('/api/channels', channel);
+app.use('/api/campaigns', campaign);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
