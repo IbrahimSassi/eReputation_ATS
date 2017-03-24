@@ -2,12 +2,11 @@
  * Created by Ibrahim on 14/03/2017.
  */
 var request = require('request');
-var config = require('../../../config/facebook.config');
+var config = require('../../../../config/facebook.config.js');
 
 
 module.exports = function (req, res, next) {
 
-  console.log("middle")
   var node = "oauth/access_token?" +
     "client_id=" + config.APP_ID + "&" +
     "client_secret=" + config.APP_SECRET + "&" +
