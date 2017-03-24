@@ -61,4 +61,56 @@ router.delete('/:id', function (req, res, next) {
 
 });
 
+/**-------------------------------------*/
+router.get('/:id/keywords', function (req, res, next) {
+
+  CampaignModel.findAllKeywordsFromCampaign(req.params.id).then(function (data) {
+    res.status(200).json(data);
+  }).catch(function (err) {
+    res.status(204).json(err);
+  });
+
+});
+router.get('/:id/keywords/:idKeyword', function (req, res, next) {
+
+  CampaignModel.findKeywordsByIdFromCampaign(req.params.id,req.params.idKeyword).then(function (data) {
+    res.status(200).json(data);
+  }).catch(function (err) {
+    res.status(204).json(err);
+  });
+
+});
+
+router.delete('/:id/keywords/:idKeyword', function (req, res, next) {
+
+  CampaignModel.removeKeywordsByIdFromCampaign(req.params.id,req.params.idKeyword).then(function (data) {
+    res.status(200).json(data);
+  }).catch(function (err) {
+    res.status(204).json(err);
+  });
+
+});
+
+
+router.post('/:id/keywords/', function (req, res, next) {
+
+  CampaignModel.addKeywordsByIdFromCampaign(req.params.id,req.body).then(function (data) {
+    res.status(200).json(data);
+  }).catch(function (err) {
+    res.status(204).json(err);
+  });
+
+});
+
+router.put('/:id/keywords/:idKeyword', function (req, res, next) {
+
+  CampaignModel.updateKeywordsByIdFromCampaign(req.params.id,req.params.idKeyword,req.body).then(function (data) {
+    res.status(200).json(data);
+  }).catch(function (err) {
+    res.status(204).json(err);
+  });
+
+});
+
+
 module.exports = router;
