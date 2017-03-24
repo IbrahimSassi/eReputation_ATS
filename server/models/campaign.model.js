@@ -169,7 +169,7 @@ module.exports.findAllKeywordsFromCampaign = function (campaignId) {
   });
 };
 
-//find all keywords by id from campaign
+//find keywords by id from campaign
 
 module.exports.findKeywordsByIdFromCampaign = function (campaignId, keywordId) {
   return new Promise(function (resolve, reject) {
