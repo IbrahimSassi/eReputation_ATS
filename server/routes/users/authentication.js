@@ -20,9 +20,22 @@ module.exports.register = function(req, res) {
   // }
 
   var user = new User();
-console.log('Entred to save'+req.body.email);
+console.log('He we save'+req.body.email);
   user.username = req.body.username;
   user.email = req.body.email;
+  user.firstName= req.body.firstName;
+  user.lastName= req.body.lastName;
+  user.businessName= req.body.businessName;
+  user.employeesNumber= req.body.employeesNumber;
+  user.businessType= req.body.businessType;
+  user.accountType= req.body.accountType;
+  user.creationDate= new Date();
+  user.state = "NOTVALID";
+
+
+
+
+
 
   user.setPassword(req.body.password);
 
@@ -47,7 +60,6 @@ module.exports.login = function(req, res) {
   //   });
   //   return;
   // }
-
   passport.authenticate('local', function(err, user, info){
     var token;
 
@@ -59,11 +71,13 @@ module.exports.login = function(req, res) {
 
     // If a user is found
     if(user){
+      console.log("Password: ",user.validPassword("000000"));
       token = user.generateJwt();
       res.status(200);
       res.json({
         "token" : token
       });
+
     } else {
       // If user is not found
       res.status(401).json(info);

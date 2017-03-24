@@ -5,12 +5,53 @@
     background-position-y: 0px;
     background-size: cover;
   }
+
+</style>
+<style type="text/css">
+  .input-field div.error{
+    position: relative;
+    top: -1rem;
+    left: 3rem;
+    font-size: 0.8rem;
+    color:firebrick;
+    -webkit-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+    transform: translateY(0%);
+  }
+
+  .left-alert input[type=text] + label:after,
+  .left-alert input[type=password] + label:after,
+  .left-alert input[type=email] + label:after,
+  .left-alert input[type=url] + label:after,
+  .left-alert input[type=time] + label:after,
+  .left-alert input[type=date] + label:after,
+  .left-alert input[type=datetime-local] + label:after,
+  .left-alert input[type=tel] + label:after,
+  .left-alert input[type=number] + label:after,
+  .left-alert input[type=search] + label:after,
+  .left-alert textarea.materialize-textarea + label:after{
+    left:0px;
+  }
+  .right-alert input[type=text] + label:after,
+  .right-alert input[type=password] + label:after,
+  .right-alert input[type=email] + label:after,
+  .right-alert input[type=url] + label:after,
+  .right-alert input[type=time] + label:after,
+  .right-alert input[type=date] + label:after,
+  .right-alert input[type=datetime-local] + label:after,
+  .right-alert input[type=tel] + label:after,
+  .right-alert input[type=number] + label:after,
+  .right-alert input[type=search] + label:after,
+  .right-alert textarea.materialize-textarea + label:after{
+    right:70px;
+  }
 </style>
 <link rel="stylesheet" href="angular/app/assets/css/m-select.css">
 <div class="row col s12">
   <div id="login-page" class="row">
     <div class="col s12 z-depth-4 card-panel">
-      <form class="login-form col s12" ng-submit="user.onSubmitRegister()">
+      <form class="login-form col s12 formValidate" id="formValidate" ng-submit="user.onSubmitRegister()">
         <div class="row">
           <div class="input-field col s12 center">
             <img src="angular/app/assets/images/full-logo.png" alt="" class="circle responsive-img valign profile-image-login">
@@ -23,13 +64,13 @@
               <ul>
                 <li class="tab col s6 left">
                   <p>
-                    <input ng-model="accountType" name="typeGroup" type="radio" id="individual" value="individual"/>
+                    <input ng-model="accountType" ng-change="user.clearcredentialsRegister(); user.setIndividual();" name="typeGroup" type="radio" id="individual" value="individual"/>
                     <label for="individual">Individual</label>
                   </p>
                 </li>
                 <li class="tab col s6 right">
                   <p>
-                    <input ng-model="accountType" name="typeGroup" type="radio" id="business" href="#bu" value="business"/>
+                    <input ng-model="accountType" ng-change="user.clearcredentialsRegister(); user.setBusiness();" name="typeGroup" type="radio" id="business" href="#bu" value="business"/>
                     <label for="business">Business</label>
                   </p>
                 </li>
@@ -42,91 +83,132 @@
             <div class="row margin">
               <div class="input-field col s6">
                 <i class="mdi-social-person-outline prefix"></i>
-                <input id="firstName" type="text" >
+                <input id="firstName" name="firstName" ng-model="user.credentialsRegister.firstName" type="text" required data-error=".errorfirstName">
                 <label for="firstName" class="center-align">First Name</label>
+                <div class="errorfirstName"></div>
               </div>
               <div class="input-field col s6">
                 <i class="mdi-social-person-outline prefix"></i>
-                <input id="lastName" type="text">
+                <input id="lastName" name="lastName" ng-model="user.credentialsRegister.lastName" type="text" required data-error=".errorlastName">
                 <label for="lastName" class="center-align">Last Name</label>
+                <div class="errorlastName"></div>
               </div>
             </div>
           </div>
           <div class="row margin">
             <div class="input-field col s12">
               <i class="mdi-action-account-circle prefix"></i>
-              <input id="username" type="text" ng-model="user.credentialsRegister.username">
+              <input id="username" name="username" type="text" ng-model="user.credentialsRegister.username" data-error=".errorUsername">
               <label for="username" class="center-align">Username</label>
+              <div class="errorUsername"></div>
             </div>
           </div>
           <div class="row margin">
             <div class="input-field col s12">
               <i class="mdi-communication-email prefix"></i>
-              <input id="email" type="email" ng-model="user.credentialsRegister.email">
+              <input id="email" type="email" name="email" ng-model="user.credentialsRegister.email" required data-error=".erroremail">
               <label for="email" class="center-align">Email</label>
+              <div class="erroremail"></div>
             </div>
           </div>
           <div class="row margin">
             <div class="input-field col s12">
               <i class="mdi-action-lock-outline prefix"></i>
-              <input id="password" type="password" ng-model="user.credentialsRegister.password">
+              <input id="password" type="password" name="password" ng-model="user.credentialsRegister.password" required data-error=".errorpassword">
               <label for="password">Password</label>
+              <div class="errorpassword"></div>
             </div>
           </div>
           <div class="row margin">
             <div class="input-field col s12">
               <i class="mdi-action-lock-outline prefix"></i>
-              <input id="password-again" type="password">
-              <label for="password-again">Password again</label>
+              <input id="passwordAgain" name="passwordAgain" ng-model="user.credentialsRegister.passwordAgain" type="password" data-error=".errorpasswordAgain">
+              <label for="passwordAgain">Password again</label>
+              <div class="errorpasswordAgain"></div>
             </div>
           </div>
 
         </div>
         <!-- ************************************************************************** Business ************************************************************************** -->
-        <div ng-if="accountType=='business'">
+        <div ng-show="accountType=='business'">
 
           <div>
             <div class="row margin">
               <div class="input-field col s6">
                 <i class="mdi-social-person-outline prefix"></i>
-                <input id="businessName" type="text">
+                <input id="businessName" name="businessName" type="text" ng-model="user.credentialsRegister.businessName" data-error=".businessName">
                 <label for="businessName" class="center-align">Business Name</label>
+                <div class="businessName"></div>
               </div>
-              <div class="input-field col s6">
-                <i class="mdi-social-people prefix"></i>
-                <input id="employeesNumber" type="text">
-                <label for="employeesNumber" class="center-align">N° of Employees</label>
-              </div>
+                <div class="input-field col s6">
+                  <i class="mdi-social-people prefix"></i>
+                  <select id="employeesNumber" name="employeesNumber" ng-model="user.credentialsRegister.employeesNumber" data-error=".employeesNumber">
+                    <option value="0"  selected disabled>N° of Employees</option>
+                    <option value="1 - 10">1 - 10</option>
+                    <option value="10 - 100">10 - 100</option>
+                    <option value="100 - 1000">100 - 1000</option>
+                    <option value="+1000">+1000</option>
+                  </select>
+                  <div class="employeesNumber"></div>
+                </div>
+
             </div>
           </div>
           <div class="row margin">
             <div class="input-field col s12">
               <i class="mdi-communication-email prefix"></i>
-              <input id="businessEmail" type="email">
+              <input id="businessEmail" name="businessEmail" type="email" ng-model="user.credentialsRegister.email" data-error=".businessEmail">
               <label for="businessEmail" class="center-align">Business Email</label>
+              <div class="businessEmail"></div>
             </div>
           </div>
           <div class="row margin">
             <div class="input-field col s1"> <i class="mdi-communication-business prefix"></i></div>
             <div class="input-field col s11">
-              <select class="browser-default" id="businessType">
-                <option value="1"  selected>Business Type</option>
-                <option value="2">Production</option>
+              <select  id="businessType" name="businessType" ng-model="user.credentialsRegister.businessType" data-error=".businessType">
+                <option value="1"  selected disabled>Business Type</option>
+                <option value="1">Aerospace</option>
+                <option value="">Select your organization's industry...</option><option value="2">Agriculture/Forestry</option>
+                <option value="3">Automotive</option>
+                <option value="4">Business Services/Consulting</option>
+                <option value="5">Communications/Telecom supplier</option>
+                <option value="6">Computer/Software/Technology manufacturer</option>
+                <option value="7">Computer/Technology reseller</option>
+                <option value="8">Computer services/consulting</option>
+                <option value="9">Education</option>
+                <option value="10">Electronics</option>
+                <option value="11">Government</option>
+                <option value="12">Healthcare/Health services</option>
+                <option value="13">Manufacturing/Industrial (non-computer related)</option>
+                <option value="14">Manufacturing consumer goods</option>
+                <option value="15">Financial/Banking/Insurance/Real Estate/Legal</option>
+                <option value="16">Retail/Wholesale</option>
+                <option value="17">Oil/Gas/Mining/Other natural resources</option>
+                <option value="18">Publishing/Broadcast/Media</option>
+                <option value="19">Service Provider (ASP, ESP, Web Hosting)</option>
+                <option value="20">VAR/VAD/Systems or Network Integrator</option>
+                <option value="22">Transportation/Distribution</option>
+                <option value="23">Travel/Hospitality/Recreation/Entertainment</option>
+                <option value="24">Utility</option>
+                <option value="21">Other</option>
               </select>
+              <div class="businessType"></div>
             </div>
           </div>
           <div class="row margin">
             <div class="input-field col s12">
               <i class="mdi-action-lock-outline prefix"></i>
-              <input id="businessPassword" type="password">
+              <input id="businessPassword" name="businessPassword" type="password" ng-model="user.credentialsRegister.password" data-error=".businessPassword">
               <label for="businessPassword">Password</label>
+              <div class="businessPassword"></div>
             </div>
           </div>
           <div class="row margin">
             <div class="input-field col s12">
               <i class="mdi-action-lock-outline prefix"></i>
-              <input id="businessPassword-again" type="password">
-              <label for="businessPassword-again">Password again</label>
+              <input id="businessPasswordAgain" name="businessPasswordAgain" type="password" ng-model="user.credentialsRegister.passwordAgain" data-error=".businessPasswordAgain">
+              <label for="businessPasswordAgain">Password again</label>
+              <div class="businessPasswordAgain"></div>
             </div>
           </div>
 
@@ -144,3 +226,96 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+
+  $("#formValidate").validate({
+    rules: {
+      username: {
+        required: true,
+        minlength: 5
+      },
+      firstName: {
+        required: true
+      },
+      lastName: {
+        required: true
+      },
+      email: {
+        required: true,
+        email:true
+      },
+      password: {
+        required: true,
+        minlength: 6
+      },
+      passwordAgain: {
+        required: true,
+        minlength: 6,
+        equalTo: "#password"
+      }
+
+
+
+      ,
+      businessName: {
+        required: true,
+        minlength: 5,
+      },
+      employeesNumber: {
+        required: true,
+      },
+      businessEmail: {
+        required: true,
+        email: true,
+      },
+      businessType: {
+        required: true,
+      },
+      businessPassword: {
+        required: true,
+        minlength: 6,
+      },
+      businessPasswordAgain: {
+        required: true,
+        minlength: 6,
+        equalTo: "#businessPassword"
+      }
+    },
+    //For custom messages
+    messages: {
+      username:{
+        required: "Enter a username",
+        minlength: "Enter at least 5 characters"
+      },
+      firstName:{
+        required: "Enter you first name"
+      },
+      lastName:{
+        required: "Enter your last name"
+      },
+      businessName:{
+        required: "Enter your Business Name"
+      }
+    },
+    errorElement : 'div',
+    errorPlacement: function(error, element) {
+      var placement = $(element).data('error');
+      if (placement) {
+
+        $(placement).append(error)
+      } else {
+        error.insertAfter(element);
+      }
+    }
+  });
+
+
+
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('select').material_select();
+  });
+
+</script>

@@ -19,7 +19,7 @@ angular.module('ATSApp-front', [
       if ($location.path() === '/profile' && !UserService.isLoggedIn()) {
         $location.path('/login');
       }
-      console.log('hehehehehe')
+
 
     });
 
