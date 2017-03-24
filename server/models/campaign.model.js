@@ -57,7 +57,8 @@ var campaignSchema = new Schema({
       },
       importance: {
         type: String,
-        enum: ['high', 'low', 'medium']
+        enum: ['high', 'low', 'medium'],
+        required: true
       },
       creationDate: {
         type: Date,
