@@ -59,22 +59,15 @@
 
 
     /** Scripts Loading first Refresh **/
-    // angularLoad.loadScript('angular/app/assets/js/charts/highcharts.js').then(function () {
-    //   angularLoad.loadScript('angular/app/assets/js/charts/exporting.js').then(function () {
-    //     angularLoad.loadScript('angular/app/assets/js/charts/column.js').then(function () {
-    //
-    //       console.log('all /dashboard scripts loaded OK');
-    //     })
-    //       .catch(function () {
-    //         console.log('err script 3');
-    //       });
-    //   })
-    //     .catch(function () {
-    //       console.log('err script 2');
-    //     });
-    // }).catch(function () {
-    //   console.log('err script 1');
-    // });
+    angularLoad.loadScript('angular/app/assets/js/charts/ggleloader.js').then(function () {
+      angularLoad.loadScript('angular/app/assets/js/charts/chartTest.js').then(function () {
+
+      }).catch(function () {
+        console.log('err script 1');
+      });
+    }).catch(function () {
+      console.log('err script 1');
+    });
     /** END of Scripts Loading first Refresh **/
 
   };

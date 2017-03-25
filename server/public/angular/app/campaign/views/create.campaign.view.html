@@ -157,19 +157,31 @@
   </ul>
 </div>
 
+<!--insights test -->
+<script>
+  loadScriptOnlyIfNotLoaded('angular/app/assets/js/charts/ggleloader.js')
+  loadScriptOnlyIfNotLoaded('angular/app/assets/js/charts/chartTest.js')
+</script>
+
+<div id="chart_div" style="width: 100%; height: 500px;"></div>
+
+
+<!-- END insights test -->
 
 <script>
   loadScriptOnlyIfNotLoaded("angular/app/assets/js/materialize.min.js");
   loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins.min.js");
-  loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins/jquery-validation/jquery.validate.min.js");
-  loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins/jquery-validation/additional-methods.min.js");
+//  loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins/jquery-validation/jquery.validate.min.js");
+//  loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins/jquery-validation/additional-methods.min.js");
 </script>
+
+
 
 <script>
   function validateAndGoNext(next) {
-    if (validateInfoForm() && npm("#info-campaign-form").validate()) {
+
       $(next).trigger('click');
-    }
+
 
   }
 
