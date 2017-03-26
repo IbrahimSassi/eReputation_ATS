@@ -19,7 +19,7 @@
   /**Injection**/
   config.$inject = ['$stateProvider', '$qProvider'];
 
-  CampaignCtrl.$inject = ['CampaignService', '$state', 'angularLoad'];
+  CampaignCtrl.$inject = ['CampaignService', '$state', 'angularLoad','$scope'];
   /**End Of Injection**/
 
 
@@ -31,7 +31,11 @@
         url: '/campaign/create',
         templateUrl: '../angular/app/campaign/views/create.campaign.view.html',
         controller: 'CampaignCtrl as camp',
-        dash: true
+      })
+      .state('campaignList', {
+        url: '/campaign/list',
+        templateUrl: '../angular/app/campaign/views/list.campaign.view.html',
+        controller: 'CampaignCtrl as camp',
       })
 
 
@@ -43,35 +47,34 @@
   /**End of Route Config**/
 
 
-  function CampaignCtrl(CampaignService, $state, angularLoad) {
+  function CampaignCtrl(CampaignService, $state, angularLoad,$scope) {
 
     /**Scope Replace**/
     var vm = this;
 
-    vm.getAllUsers = function () {
-      CampaignService.getAllUsers().then(function (data) {
-        vm.users = data;
-       // console.log(vm.users);
+    vm.getAllCampaigns = function () {
+      CampaignService.getAllCampaigns().then(function (data) {
+        vm.campaigns = data;
+        //$scope.myId='58d5810511260618b0196d4e';
+        console.log(vm.campaigns);
       });
+    };
+
+    vm.deleteCampaign = function (campaign) {
+      CampaignService.deleteCampaign(campaign);
+      vm.getAllCampaigns();
 
     };
 
 
 
     /** Scripts Loading first Refresh **/
-    // angularLoad.loadScript('angular/app/assets/js/charts/highcharts.js').then(function () {
-    //   angularLoad.loadScript('angular/app/assets/js/charts/exporting.js').then(function () {
-    //     angularLoad.loadScript('angular/app/assets/js/charts/column.js').then(function () {
+    // angularLoad.loadScript('angular/app/assets/js/charts/ggleloader.js').then(function () {
+    //   angularLoad.loadScript('angular/app/assets/js/charts/chartTest.js').then(function () {
     //
-    //       console.log('all /dashboard scripts loaded OK');
-    //     })
-    //       .catch(function () {
-    //         console.log('err script 3');
-    //       });
-    //   })
-    //     .catch(function () {
-    //       console.log('err script 2');
-    //     });
+    //   }).catch(function () {
+    //     console.log('err script 1');
+    //   });
     // }).catch(function () {
     //   console.log('err script 1');
     // });
