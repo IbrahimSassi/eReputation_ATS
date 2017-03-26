@@ -25,7 +25,7 @@
             var sliderValues = [];
             //--------------
             //First Value in the table
-            sliderValues.push(moment(scope.dateOn).format("YYYY MMM Do"));
+            sliderValues.push(moment(scope.dateOn,'DD/MM/YYYY').format("YYYY MMM Do"));
 
             //Other Value in the table
             for (var i = 0; i < sliderLength; i++) {
@@ -43,9 +43,7 @@
 
             }
             //last value in the table
-            sliderValues.push(moment(scope.dateEnd).format("YYYY MMM Do"));
-;
-
+            sliderValues.push(moment(scope.dateEnd,'DD/MM/YYYY').format("YYYY MMM Do"));
             var myElem = "#range" + scope.myId;
             $(myElem).ionRangeSlider({
 
