@@ -12,42 +12,92 @@
                 <div class="row">
                   <div class="input-field col s12">
                     <i class="mdi-image-edit prefix"></i>
-                    <input required id="c_n" type="text">
+                    <input ng-model="camp.channelToAdd.name" required id="c_n" type="text">
                     <label for="c_n">Campaign Name</label>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s12">
                     <i class="mdi-editor-insert-link prefix"></i>
-                    <input required id="c_url" type="url">
+                    <input ng-model="camp.channelToAdd.url" required id="c_url" type="url">
                     <label for="c_url">Main Website</label>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s12">
                     <i class="mdi-image-timer prefix"></i>
-                    <input required id="datestart" type="date" class="datepicker">
-                    <label for="datestart">Date start</label>
+                    <!--<input ng-model="camp.channelToAdd.dateStart" required id="datestart" type="date" >-->
+                    <input input-date
+                           type="text"
+                           name="created"
+                           id="inputCreated"
+                           ng-model="camp.channelToAdd.dateStart"
+                           container="body"
+                           format="dd/mm/yyyy"
+                           months-full="{{ month }}"
+                           months-short="{{ monthShort }}"
+                           weekdays-full="{{ weekdaysFull }}"
+                           weekdays-short="{{ weekdaysShort }}"
+                           weekdays-letter="{{ weekdaysLetter }}"
+                           disable="disable"
+                           min="{{ minDate }}"
+                           max="{{ maxDate }}"
+                           today="today"
+                           clear="clear"
+                           close="close"
+                           select-years="15"
+                           on-start="onStart()"
+                           on-render="onRender()"
+                           on-open="onOpen()"
+                           on-close="onClose()"
+                           on-set="onSet()"
+                           on-stop="onStop()" />
+                    <label for="inputCreated">Date start</label>
+
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s12">
                     <i class="mdi-image-timer-off prefix"></i>
-                    <input required id="dateend" type="date" class="datepicker">
-                    <label for="dateend">Date end</label>
+                    <input input-date
+                           type="text"
+                           name="created"
+                           id="inputEnd"
+                           ng-model="camp.channelToAdd.dateEnd"
+                           container="body"
+                           format="dd/mm/yyyy"
+                           months-full="{{ month }}"
+                           months-short="{{ monthShort }}"
+                           weekdays-full="{{ weekdaysFull }}"
+                           weekdays-short="{{ weekdaysShort }}"
+                           weekdays-letter="{{ weekdaysLetter }}"
+                           disable="disable"
+                           min="{{ minDate }}"
+                           max="{{ maxDate }}"
+                           today="today"
+                           clear="clear"
+                           close="close"
+                           select-years="15"
+                           on-start="onStart()"
+                           on-render="onRender()"
+                           on-open="onOpen()"
+                           on-close="onClose()"
+                           on-set="onSet()"
+                           on-stop="onStop()" />
+                    <label for="inputEnd">Date end</label>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s12">
                     <i class="mdi-maps-local-phone prefix"></i>
-                    <input id="c_phone" type="tel">
+                    <input ng-model="camp.channelToAdd.phoneNumber" id="c_phone" type="tel">
                     <label for="c_phone">Phone Number</label>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s12">
                     <i class="mdi-action-subject prefix"></i>
-                    <textarea required id="c_desc" class="materialize-textarea"></textarea>
+                    <textarea ng-model="camp.channelToAdd.description" required id="c_desc" class="materialize-textarea"></textarea>
                     <label for="c_desc">Description</label>
                   </div>
                 </div>
@@ -143,7 +193,7 @@
                     </button>
                   </div>
                   <div class="input-field col s6">
-                    <button class="btn grey darken-3 waves-effect waves-light right" type="submit" name="action">Next
+                    <button ng-click="camp.addCampaign(camp.channelToAdd)"  class="btn grey darken-3 waves-effect waves-light right" type="submit" name="action">Next
                       <i class="mdi-image-navigate-next right"></i>
                     </button>
                   </div>
@@ -184,11 +234,11 @@
 
 
   }
-
-  function validateInfoForm() {
-    return $("#c_n").valid() && $("#c_url").valid() && $("#datestart").valid()
-      && $("#dateend").valid() && $("#c_phone").valid() && $("#c_desc").valid();
-  }
+//
+//  function validateInfoForm() {
+//    return $("#c_n").valid() && $("#c_url").valid() && $("#datestart").valid()
+//      && $("#dateend").valid() && $("#c_phone").valid() && $("#c_desc").valid();
+//  }
 
 </script>
 
