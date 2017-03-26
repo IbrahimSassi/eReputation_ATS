@@ -6,7 +6,7 @@
   'use strict';
 
   angular
-    .module('ATSApp.facebook', [])
+    .module('ATSApp.facebook',[])
     .config(config)
     .controller('FacebookController', FacebookControllerFN);
 
@@ -18,8 +18,8 @@
   function config($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('test', {
-        url: '/test/charts',
-        templateUrl: 'angular/app/facebook/views/testingInsights.html',
+        url: '/facebook/analytics',
+        templateUrl: 'angular/app/facebook/views/facebookAnalytics.view.html',
         controller: 'FacebookController as vm',
         cache: false
       })
@@ -38,6 +38,10 @@
     ////////////////
 
     function activate() {
+
+      var currentTime = new Date();
+      vm.currentDate = currentTime;
+
 
       // vm.dataSource = {
       //   chart: {
@@ -94,9 +98,15 @@
       //   }
       // };
 
-
-
     }
+
+    //
+    // vm.onSet = function () {
+    //   console.log("salem")
+    //   console.log(vm.currentDate)
+    // }
+
+
   }
 
 })();

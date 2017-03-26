@@ -30,8 +30,8 @@
     }
 
     function updateChannelFN(channel) {
-      console.log(ChannelFactory.update({id: channel._id}, channel));
-      console.log("Updated");
+      return ChannelFactory.update({id: channel._id}, channel).$promise;
+      // console.log("Updated");
     }
 
     function deleteChannelFN(channel) {

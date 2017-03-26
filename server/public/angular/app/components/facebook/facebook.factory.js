@@ -5,7 +5,7 @@
   'use strict';
 
   angular
-    .module('ATSApp.facebook',[])
+    .module('ATSApp.facebook')
     .factory('FacebookFactory', FacebookFactoryFN);
 
   FacebookFactoryFN.$inject = ['$resource'];

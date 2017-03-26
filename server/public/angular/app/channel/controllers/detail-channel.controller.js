@@ -37,7 +37,7 @@
 
     function init() {
       vm.channelId = $stateParams.channelId;
-      vm.userConnectedId = 1;
+      vm.userConnectedId = "58d3dc815d391346a06f48c3";
 
       ChannelService.getChannelByID(vm.channelId).then(function (channel) {
         vm.selectedChannel = channel;
@@ -47,8 +47,18 @@
 
 
     vm.editChannel = function () {
-      ChannelService.updateChannel(vm.selectedChannel);
-      $state.go('channels');
+      ChannelService.updateChannel(vm.selectedChannel).then(function (data, err) {
+        if (err) {
+          console.log(err)
+          Materialize.toast("There were an error", 3000, "rounded");
+          return;
+        }
+        console.log(data)
+        Materialize.toast("Channel Updated", 3000, "rounded");
+        $state.go('channels');
+
+
+      });
     }
 
 

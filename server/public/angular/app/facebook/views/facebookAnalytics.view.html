@@ -1,0 +1,54 @@
+<h1>Analytics</h1>
+
+<div class="row">
+
+<div class="col s6 m6 l6">
+  <input input-date
+         type="text"
+         name="created"
+         id="since"
+         ng-model="vm.currentDate"
+         format="dd-mm-yyyy"
+         today="today"
+         clear="clear"
+         close="close"
+         select-years="15"
+
+  />
+
+</div>
+<div class="col s6 m6 l6">
+  <input input-date
+         type="text"
+         name="created"
+         id="until"
+         ng-model="vm.currentDate"
+         format="dd-mm-yyyy"
+         today="today"
+         clear="clear"
+         close="close"
+         select-years="15"
+
+  />
+
+</div>
+
+</div>
+
+
+
+
+
+<!--<div >-->
+<!--<fusioncharts-->
+<!--width= "100%"-->
+<!--height= "400"-->
+<!--type= "column2d"-->
+<!--dataFormat= "json"-->
+<!--dataSource= "{{vm.dataSource}}"-->
+<!--events="vm.events"-->
+<!--&gt;-->
+<!--</fusioncharts>-->
+<!--</div>-->
+
+<!--<div class="statusbar" >{{ vm.selectedValue }}</div>-->

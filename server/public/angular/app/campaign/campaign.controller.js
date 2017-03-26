@@ -19,7 +19,7 @@
   /**Injection**/
   config.$inject = ['$stateProvider', '$qProvider'];
 
-  CampaignCtrl.$inject = ['CampaignService', '$state', 'angularLoad','$scope'];
+  CampaignCtrl.$inject = ['CampaignService', '$state', 'angularLoad', '$scope'];
   /**End Of Injection**/
 
 
@@ -30,12 +30,12 @@
       .state('campaignCreate', {
         url: '/campaign/create',
         templateUrl: '../angular/app/campaign/views/create.campaign.view.html',
-        controller: 'CampaignCtrl as camp',
+        controller: 'CampaignCtrl as camp'
       })
       .state('campaignList', {
         url: '/campaign/list',
         templateUrl: '../angular/app/campaign/views/list.campaign.view.html',
-        controller: 'CampaignCtrl as camp',
+        controller: 'CampaignCtrl as camp'
       })
 
 
@@ -43,11 +43,11 @@
     $qProvider.errorOnUnhandledRejections(false);
 
 
-  };
+  }
   /**End of Route Config**/
 
 
-  function CampaignCtrl(CampaignService, $state, angularLoad,$scope) {
+  function CampaignCtrl(CampaignService, $state, angularLoad, $scope) {
 
     /**Scope Replace**/
     var vm = this;
@@ -65,7 +65,6 @@
       vm.getAllCampaigns();
 
     };
-
 
 
     /** Scripts Loading first Refresh **/

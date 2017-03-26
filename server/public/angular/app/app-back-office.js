@@ -8,11 +8,15 @@ angular.module('ATSApp', [
   'ATSApp.facebook',
   'ngResource',
   'angularLoad',
+  'ui.materialize',
   // 'ng-fusioncharts',
   'ui.router'
 
 
 ])
-  .config(['$urlRouterProvider', function ($urlRouterProvider) {
-    $urlRouterProvider.otherwise('/test/charts');
-  }]);
+  .config(['$urlRouterProvider',
+    function ($urlRouterProvider) {
+      $urlRouterProvider.otherwise('/users');
+
+
+    }]);

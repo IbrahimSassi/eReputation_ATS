@@ -49,7 +49,7 @@ exports.allChannelsByOwner = function (req, res, next) {
     if (!docs) {
       return res.status(404).send();
     }
-    console.log(docs);
+    // console.log(docs);
     res.status(200)
       .json(docs);
   });
@@ -74,12 +74,14 @@ exports.createChannel = function (req, res, next) {
 
 exports.updateChannel = function (req, res, next) {
 
+  console.log(req.body)
+  console.log(req.params.id)
   Channel.updateChannelModel(req.params.id, req.body, function (err, item) {
     if (err) return handleError(res, err);
     else {
       console.log('Success channel updated');
       console.log(item);
-      res.status(201)
+      res.status(200)
         .json(item);
     }
   })

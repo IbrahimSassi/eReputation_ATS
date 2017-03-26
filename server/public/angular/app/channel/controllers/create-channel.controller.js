@@ -15,7 +15,8 @@
     '$state',
     '$stateParams',
     '$rootScope',
-    'FacebookService'
+    'FacebookService',
+    '$filter'
   ];
 
 
@@ -24,11 +25,12 @@
                            $state,
                            $stateParams,
                            $rootScope,
-                           FacebookService) {
+                           FacebookService,
+                           $filter) {
     //On Init Start
     var vm = this;
 
-    vm.connectedUserId = "58cee43b68af191fec669521";
+    vm.connectedUserId = "58d3dc815d391346a06f48c3";
     vm.title = 'Create Channel';
     vm.channel = {
       name: "",
@@ -42,17 +44,42 @@
     vm.myFacebookPages = [];
     vm.similarChannels = [];
     vm.gettedUrl = "";
-
+    vm.myChannels = [];
     init();
 
     function init() {
+      ChannelService.getChannelsByUser(vm.connectedUserId).then(function (data) {
+        vm.myChannels = data;
+        console.log(vm.myChannels)
+      })
 
     }
 
 
     vm.createChannel = function (form) {
 
-      if (form) {
+      var itemByName = $filter('filter')(vm.myChannels, {name: vm.channel.name})[0];
+      var itemByUrl = $filter('filter')(vm.myChannels, {url: vm.channel.url})[0];
+
+      if (!form.$valid) {
+        Materialize.toast("Fill all fields", 3000, "rounded");
+        return;
+      }
+
+      console.log(itemByName)
+      console.log(itemByUrl)
+      if (itemByName && itemByName.name == vm.channel.name) {
+
+        Materialize.toast("This name exists", 3000, "rounded");
+        return;
+      }
+
+      if (itemByUrl && itemByUrl.url == vm.channel.url) {
+        Materialize.toast("This url exists", 3000, "rounded");
+        return;
+      }
+
+
         ChannelService.addChannel(vm.channel)
           .then(function (result) {
             console.log("result", result);
@@ -61,7 +88,7 @@
             var rounded = "rounded"
             Materialize.toast($toastContent, 3000, rounded);
           });
-      }
+
 
     };
 

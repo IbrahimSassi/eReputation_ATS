@@ -46,6 +46,7 @@
     "jade": "~1.11.0",
     "jsonwebtoken": "^7.3.0",
     "lodash": "^4.17.4",
+    "moment": "^2.18.1",
     "mongoose": "^4.8.6",
     "morgan": "~1.7.0",
     "nodemon": "^1.11.0",

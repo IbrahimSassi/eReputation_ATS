@@ -7,7 +7,7 @@
   angular
     .module('ATSApp.channel', [
       'ui.router',
-      'ui.materialize',
+      // 'ui.materialize',
       'ATSApp.facebook',
       //TODO
       // 'angular-loading-bar'
@@ -60,7 +60,7 @@
     //On Init Start
     var vm = this;
     vm.myChannels = [];
-    vm.connectedUserId = "58cee43b68af191fec669521";
+    vm.connectedUserId = "58d3dc815d391346a06f48c3";
     vm.title = 'Channel List';
 
     init();
