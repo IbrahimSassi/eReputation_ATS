@@ -65,7 +65,65 @@
       vm.getAllCampaigns();
 
     };
+    var myCampaign = {
+      "name": "Iphone 87",
+      "url": "https://www.apple.com/iphone/olaola",
+      "description": "iphone 7 campaign ola",
+      "dateStart": "2017-03-24T23:00:00.000Z",
+      "dateEnd": "2017-06-04T23:00:00.000Z",
+      "phoneNumber": "0088414652",
+      "userId": "58d3dc815d391346a06f48c3",
+      "location": [
+        {
+          "latitude": 123.123,
+          "longitude": 55.55
+        }
+      ],
+      "keywords": [
+        {
+          "content": "Iphone 8 price",
+          "importance": "low"
+        }
+      ],
+      "channels": [
+        {
+          "channelId": "58d1825eb8224d1ee822642f"
+        }
+      ]
+    }
 
+    vm.addCampaign = function (campaign) {
+      campaign.dateStart= moment(campaign.dateStart,'DD/MM/YYYY');
+      campaign.dateEnd=moment(campaign.dateEnd,'DD/MM/YYYY');
+      campaign.userId = '58d3dc815d391346a06f48c3';
+
+      campaign.location = [
+        {
+          "latitude": 123.123,
+          "longitude": 55.55
+        }
+      ];
+      campaign.keywords = [
+        {
+          "content": "Iphone 8 price",
+          "importance": "low"
+        }
+      ];
+      campaign.channels = [
+        {
+          "channelId": "58d1825eb8224d1ee822642f"
+        }
+      ];
+
+
+      CampaignService.addCampaign(campaign).then(function (data) {
+        console.log("Campaign Added");
+        console.log(data);
+      }).catch(function (err) {
+        console.log("NOT Campaign Added");
+        console.log(data);
+      });
+    };
 
     /** Scripts Loading first Refresh **/
     // angularLoad.loadScript('angular/app/assets/js/charts/ggleloader.js').then(function () {

@@ -13,20 +13,29 @@
 
 
   function CampaignServiceFN(CampaignFactory) {
-
-
+    /**
+     *  Get All Campaigns
+     * @returns {*|Function}
+     */
     this.getAllCampaigns = function () {
-
       return CampaignFactory.query().$promise;
-
     }
-
-    this.deleteCampaign =function (campaign) {
+    /**
+     * Delete Campaign
+     * @param campaign
+     * @returns {*}
+     */
+    this.deleteCampaign = function (campaign) {
       return campaign.$delete({id: campaign._id});
     }
-
-
-
+    /**
+     * Add Campaign
+     * @param campaign
+     * @returns {*|Function}
+     */
+    this.addCampaign = function (campaign) {
+      return CampaignFactory.save(campaign).$promise;
+    }
 
 
   }
