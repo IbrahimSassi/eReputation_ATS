@@ -25,6 +25,19 @@
           // , isArray: true
 
 
+        },
+        'getFansPage': {
+          url: '/api/facebook/page/:pageId/fans/:token/:since/:until',
+          method: 'GET',
+          params: {
+            pageId: '@pageId',
+            token: '@token',
+            since: '@since',
+            until: '@until'
+          }
+          // , isArray: true
+
+
         }
       }
     );

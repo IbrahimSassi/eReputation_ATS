@@ -1,43 +1,69 @@
 <h1>Analytics</h1>
 
 <div class="row">
+  <div class="col s1 m1 l1">
+    Since
+  </div>
+  <div class="col s5 m5 l5">
+    <input input-date
+           type="text"
+           name="created"
+           id="since"
+           ng-model="vm.since"
+           format="mmmm d, yyyy"
+           today="today"
+           clear="clear"
+           close="close"
+           select-years="15"
+           ng-change="vm.onChange()"
+    />
 
-<div class="col s6 m6 l6">
-  <input input-date
-         type="text"
-         name="created"
-         id="since"
-         ng-model="vm.currentDate"
-         format="dd-mm-yyyy"
-         today="today"
-         clear="clear"
-         close="close"
-         select-years="15"
+  </div>
+  <div class="col s1 m1 l1">
+    Until
+  </div>
 
-  />
+  <div class="col s5 m5 l5">
+    <input input-date
+           type="text"
+           name="created"
+           id="until"
+           ng-model="vm.until"
+           format="mmmm d, yyyy"
+           today="today"
+           clear="clear"
+           close="close"
+           select-years="15"
+           ng-change="vm.onChange()"
+
+    />
+
+  </div>
 
 </div>
-<div class="col s6 m6 l6">
-  <input input-date
-         type="text"
-         name="created"
-         id="until"
-         ng-model="vm.currentDate"
-         format="dd-mm-yyyy"
-         today="today"
-         clear="clear"
-         close="close"
-         select-years="15"
 
-  />
 
+<div class="card-move-up waves-effect waves-block waves-light">
+  <div class="move-up cyan darken-1">
+    <div>
+      <span class="chart-title white-text">Facebook Fans</span>
+      <!--<div class="chart-revenue cyan darken-2 white-text">-->
+        <!--<p class="chart-revenue-total">$4,500.85</p>-->
+        <!--<p class="chart-revenue-per"><i class="mdi-navigation-arrow-drop-up"></i> 21.80 %</p>-->
+      <!--</div>-->
+      <!--<div class="switch chart-revenue-switch right">-->
+        <!--<label class="cyan-text text-lighten-5">-->
+          <!--Month-->
+          <!--<input type="checkbox">-->
+          <!--<span class="lever"></span> Year-->
+        <!--</label>-->
+      <!--</div>-->
+    </div>
+    <div class="trending-line-chart-wrapper">
+      <canvas id="trending-line-chart" height="70"></canvas>
+    </div>
+  </div>
 </div>
-
-</div>
-
-
-
-
 
 <!--<div >-->
 <!--<fusioncharts-->
@@ -52,3 +78,9 @@
 <!--</div>-->
 
 <!--<div class="statusbar" >{{ vm.selectedValue }}</div>-->
+
+<!-- chartist -->
+<!--<script type="text/javascript" src="angular/app/assets/js/plugins/chartist-js/chartist.min.js"></script>-->
+<!-- chartjs -->
+<script type="text/javascript" src="angular/app/assets/js/plugins/chartjs/chart.min.js"></script>
+<!--<script type="text/javascript" src="angular/app/assets/js/plugins/chartjs/chart-script.js"></script>-->
