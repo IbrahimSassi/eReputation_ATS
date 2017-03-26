@@ -66,6 +66,9 @@ var facebookPostsProvider = new Schema({
   },
   name: {
     type: String
+  },
+  link :{
+    type : String
   }
   , reactions: {
     type: Array
