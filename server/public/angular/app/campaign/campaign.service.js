@@ -15,11 +15,18 @@
   function CampaignServiceFN(CampaignFactory) {
 
 
-    this.getAllUsers = function () {
+    this.getAllCampaigns = function () {
 
       return CampaignFactory.query().$promise;
 
     }
+
+    this.deleteCampaign =function (campaign) {
+      return campaign.$delete({id: campaign._id});
+    }
+
+
+
 
 
   }

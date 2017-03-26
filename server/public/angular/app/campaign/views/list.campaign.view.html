@@ -1,0 +1,59 @@
+<span ng-init="camp.getAllCampaigns()"></span>
+<link href="angular/app/assets/js/plugins/ionRangeSlider/css/ion.rangeSlider.css" type="text/css" rel="stylesheet"
+      media="screen,projection">
+<link href="angular/app/assets/js/plugins/ionRangeSlider/css/ion.rangeSlider.skinFlat.css" type="text/css"
+      rel="stylesheet" media="screen,projection">
+<link href="angular/app/assets/js/plugins/sweetalert/sweetalert.css" type="text/css" rel="stylesheet" media="screen,projection">
+<script type="text/javascript" src="angular/app/assets/js/plugins/ionRangeSlider/js/ion.rangeSlider.js"></script>
+<script type="text/javascript" src="angular/app/assets/js/plugins/sweetalert/sweetalert.min.js"></script>
+<div class="row">
+   <span ng-repeat="c in camp.campaigns">
+      <div class="col s12 m4 4">
+         <div class="card ">
+            <div class="card-content darken-4-text">
+              <!--<input id="campaign_id" type="hidden">-->
+               <span class="card-title"><h5>{{c.name}}</h5></span>
+               <blockquote style="border-left: 5px solid #757575;">{{c.description | limitTo: 40 }}
+                 {{c.description.length>40 ?'[...]':''}}</blockquote>
+               <p style="margin: 15px;">
+                 <date-display date-on="{{c.dateStart | date :'dd/MM/yyyy' }}"
+                               date-end="{{c.dateEnd | date :'dd/MM/yyyy'}}" my-id="{{c._id}}"></date-display>
+               </p>
+
+            </div>
+
+            <div class="card-action right">
+               <a style="margin: 5px" class="btn-floating waves-effect grey darken-1 waves-light"><i
+                 class="mdi-action-settings"></i></a>
+               <a id="realDelete{{c._id}}" style="display: none" ng-click="camp.deleteCampaign(c)" style="margin: 5px" class="btn-floating waves-effect grey darken-1 waves-light"><i
+                 class="mdi-action-delete"></i></a>
+              <confirmation-alert my-id="{{c._id}}"></confirmation-alert>
+            </div>
+         </div>
+      </div>
+
+
+   </span>
+</div>
+
+<script>
+//  $('.btn-warning-confirm').click(function(){
+//    swal({
+//        title: "Are you sure?",
+//        text: "You will not be able to recover this imaginary file!",
+//        type: "warning",
+//        showCancelButton: true,
+//        confirmButtonColor: '#DD6B55',
+//        confirmButtonText: 'Yes, delete it!',
+//        closeOnConfirm: false
+//      },
+//      function(){
+//        swal("Deleted!", "Your imaginary file has been deleted!", "success");
+//      });
+//  });
+</script>
+
+
+
+
+

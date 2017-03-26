@@ -160,7 +160,7 @@
                   <ul>
                     <li ui-sref-active="active"><a ui-sref="campaignCreate">Create Campaign</a>
                     </li>
-                    <li><a href="layout-horizontal-menu.html">Horizontal Menu</a>
+                    <li ui-sref-active="active" ><a ui-sref="campaignList" >Show Campaigns</a>
                     </li>
                   </ul>
                 </div>
@@ -423,6 +423,7 @@
 <script src="angular/app/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="angular/app/bower_components/angular-resource/angular-resource.min.js"></script>
 <script src="angular/app/bower_components/angular-load/angular-load.min.js"></script>
+<script src="angular/app/bower_components/moment/min/moment.min.js"></script>
 <!--Delete OClazyLoad after your correct your code-->
 <script src="angular/app/bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
 <script src="angular/app/app-back-office.js"></script>
@@ -436,7 +437,8 @@
 <script src="angular/app/campaign/campaign.controller.js"></script>
 <script src="angular/app/campaign/campaign.factory.js"></script>
 <script src="angular/app/campaign/campaign.service.js"></script>
-<script src="angular/app/components/prevent-default.directive.js"></script>
+<script src="angular/app/components/campaign/date.display.directive.js"></script>
+<script src="angular/app/components/campaign/confirmationAlert.directive.js"></script>
 <!--Hakim Campaign Modules ends-->
 
 <!--Ibrahim Modules-->
