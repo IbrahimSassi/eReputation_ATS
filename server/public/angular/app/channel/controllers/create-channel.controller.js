@@ -93,6 +93,7 @@
     };
 
     vm.getPermissions = function () {
+      console.log("getPermissions");
       FacebookService.initFacebookApi()
         .then(function (data) {
           console.log("here we are token  + user ,,promise bouh kalb", data);

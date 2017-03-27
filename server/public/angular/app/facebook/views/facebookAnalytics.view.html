@@ -1,6 +1,12 @@
 <h1>Analytics</h1>
 
 <div class="row">
+  <select ng-change="vm.onSelect()" ng-model="vm.selectedChannel._id" name="" id="" material-select watch>
+    <option value="" selected disabled>Pick a page</option>
+    <option ng-repeat="channel in vm.myChannels" value="{{channel._id}}">{{channel.name}}</option>
+  </select>
+</div>
+<div class="row">
   <div class="col s1 m1 l1">
     Since
   </div>

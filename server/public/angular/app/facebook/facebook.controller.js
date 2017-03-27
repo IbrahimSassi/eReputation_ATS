@@ -10,7 +10,7 @@
     .config(config)
     .controller('FacebookController', FacebookControllerFN);
 
-  FacebookControllerFN.$inject = ['$scope', 'FacebookService'];
+  FacebookControllerFN.$inject = ['$scope', 'FacebookService', 'ChannelService', '$filter'];
   config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 
@@ -29,10 +29,12 @@
 
 
   /* @ngInject */
-  function FacebookControllerFN($scope, FacebookService) {
+  function FacebookControllerFN($scope, FacebookService, ChannelService, $filter) {
     var vm = this;
     vm.title = 'FacebookController';
-
+    vm.connectedUserId = "58d3dc815d391346a06f48c3";
+    vm.selectedChannel = {};
+    vm.myChannels = [];
     vm.pageFans = [];
     vm.labels = [];
     vm.data = [];
@@ -53,7 +55,14 @@
       console.log(vm.since);
       console.log(vm.until);
 
-      initFacebookChart();
+      ChannelService.getChannelsByUser(vm.connectedUserId).then(function (myChannels) {
+        vm.myChannels = $filter('filter')(myChannels, {type: 'facebook', personal: true});
+        console.log(vm.myChannels)
+        // vm.selectedChannel = vm.myChannels[1];
+      });
+
+
+      // initFacebookChart();
 
 
       // vm.dataSource = {
@@ -119,13 +128,11 @@
       console.log("onChange", vm.since);
       console.log("onChange", vm.until);
 
-      if (new Date(vm.since) > new Date(vm.until))
-      {
+      if (new Date(vm.since) > new Date(vm.until)) {
         Materialize.toast("Until Date Must be greater than since", 3000, "rounded");
 
       }
-      else
-      {
+      else {
         vm.labels = [];
         vm.data = [];
         initFacebookChart();
@@ -138,12 +145,24 @@
     };
 
 
+    vm.onSelect = function () {
+      // console.log(vm.selectedChannel._id)
+      ChannelService.getChannelByID(vm.selectedChannel._id).then(function (item) {
+        vm.selectedChannel = item;
+        initFacebookChart()
+      });
+
+    }
+
+
     function initFacebookChart() {
 
 
+
+
       FacebookService.getFansPage(
-        "139623179562642",
-        "EAAISo6ilwgQBALiqOmcuZCv9CRM99uK5ZAjqHE0qdJPnBooITPJYGZA7VWeUivkBqPjPvojZBMt5KQMhLf1WFKkqZB4avkZCwN9gv8XRvKteUKUZBairbebZAKNZB3XXV87MnAxa2tcKCOXvGAHdWZBkirEPaIP7swSN0QkPtOPZAoWdO7mb9ZCDFQIDZByeFT9NBh7IZD",
+        vm.selectedChannel.url,
+        vm.selectedChannel.accessToken,
         moment(new Date(vm.since)).format("DD-MM-YYYY"),
         moment(new Date(vm.until)).add(1, 'days').format("DD-MM-YYYY")
       ).then(function (insights) {
