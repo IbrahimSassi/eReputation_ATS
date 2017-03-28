@@ -18,7 +18,7 @@
   /**Injection**/
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$qProvider'];
 
-  LoginCtrl.$inject = ['UserService', '$state','$rootScope','angularLoad','$location'];
+  LoginCtrl.$inject = ['UserService', '$state','$rootScope','angularLoad','$location','$window'];
   /**End Of Injection**/
 
 
@@ -45,7 +45,7 @@
    * @param UserService
    * @param $state
    */
-  function LoginCtrl(UserService, $state,$rootScope,angularLoad,$location) {
+  function LoginCtrl(UserService, $state,$rootScope,angularLoad,$location,$window) {
 
     /**Scope Replace**/
     var vm = this;
@@ -70,7 +70,7 @@
         {
           vm.errorInvalid = false;
         UserService.saveToken(response.data.token);
-
+         $window.location.href = '/admin';
 
         }
       }
