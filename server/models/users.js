@@ -6,10 +6,10 @@ var Schema       = mongoose.Schema;
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 
+var options = { discriminatorKey: 'kind' };
+
 var UserSchema   = new Schema({
-  username: String,
-  firstName: String,
-  lastName: String,
+
 
 
   email: {
@@ -21,17 +21,27 @@ var UserSchema   = new Schema({
   salt: String,
 
 
-  businessName: String,
-  employeesNumber: String,
-  businessType: String,
-  accountType: String,
+
   creationDate:String,
-  businessID:String,
   picture:String,
   address:String,
   state:String
-});
+},options);
 
+var individualSchema = new Schema({
+  username: String,
+  firstName: String,
+  lastName: String,
+
+},options);
+
+var businessSchema = new Schema({
+  businessName: String,
+  employeesNumber: String,
+  businessType: String,
+  businessID:String,
+
+},options);
 
 UserSchema.methods.setPassword = function(password){
   this.salt = crypto.randomBytes(16).toString('hex');
@@ -66,4 +76,6 @@ UserSchema.methods.generateJwt = function() {
   }, "MY_SECRET"); // DO NOT KEEP YOUR SECRET IN THE CODE!
 };
 
-module.exports = mongoose.model('User', UserSchema);
+var User = module.exports = mongoose.model('User', UserSchema);
+module.exports.Individual= User.discriminator('Individual',individualSchema);
+module.exports.Business= User.discriminator('Business',businessSchema);

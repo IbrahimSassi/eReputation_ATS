@@ -3,7 +3,6 @@
 // Declare app level module which depends on views, and components
 angular.module('ATSApp-front', [
   'ATSApp-front.user',
-  'ATSApp-front.profile',
   'ngResource',
   'ui.router',
   'angularLoad'

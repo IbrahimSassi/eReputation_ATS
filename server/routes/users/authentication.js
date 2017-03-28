@@ -4,7 +4,9 @@
 var passport = require('passport');
 var mongoose = require('mongoose');
 var User = require('../../models/users');
+//*************************************************************
 
+//*************************************************************
 var sendJSONresponse = function(res, status, content) {
   res.status(status);
   res.json(content);
@@ -12,25 +14,40 @@ var sendJSONresponse = function(res, status, content) {
 
 module.exports.register = function(req, res) {
 
+  console.log('He we save'+req.body.email);
+
+
+
+
+
   // if(!req.body.name || !req.body.email || !req.body.password) {
   //   sendJSONresponse(res, 400, {
   //     "message": "All fields required"
   //   });
   //   return;
   // }
-
-  var user = new User();
-console.log('He we save'+req.body.email);
+if (req.body.accountType == 'individual')
+{
+  var user = new User.Individual();
   user.username = req.body.username;
   user.email = req.body.email;
   user.firstName= req.body.firstName;
   user.lastName= req.body.lastName;
+  user.creationDate= new Date();
+  user.state = "INACTIVE";
+}
+else if (req.body.accountType == 'business')
+{
+  var user = new User.Business();
+  user.email = req.body.email;
   user.businessName= req.body.businessName;
   user.employeesNumber= req.body.employeesNumber;
   user.businessType= req.body.businessType;
   user.accountType= req.body.accountType;
   user.creationDate= new Date();
-  user.state = "NOTVALID";
+  user.state = "INACTIVE";
+}
+
 
 
 
@@ -60,6 +77,7 @@ module.exports.login = function(req, res) {
   //   });
   //   return;
   // }
+
   passport.authenticate('local', function(err, user, info){
     var token;
 

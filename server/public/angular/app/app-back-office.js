@@ -5,11 +5,8 @@ angular.module('ATSApp', [
   'ATSApp.dashboard',
   'ATSApp.campaign',
   'ATSApp.channel',
-  'ATSApp.facebook',
   'ngResource',
   'angularLoad',
-  'ui.materialize',
-  // 'ng-fusioncharts',
   'ui.router'
 
 

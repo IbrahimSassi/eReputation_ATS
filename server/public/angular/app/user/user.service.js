@@ -70,16 +70,7 @@
     };
 
      var login = function(user) {
-      return $http.post('/users/login', user).then(successCallback, errorCallback);
-
-
-
-       function successCallback(response){
-         saveToken(response.data.token);
-       }
-       function errorCallback(error){
-         //error code
-       }
+      return $http.post('/users/login', user)
     };
 
     var logout = function() {

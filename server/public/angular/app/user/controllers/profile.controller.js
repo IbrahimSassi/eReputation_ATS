@@ -10,7 +10,7 @@
 
   /**My Module init**/
   angular
-    .module('ATSApp-front.profile', [
+    .module('ATSApp.profile', [
       'ui.router',
 
     ])
@@ -22,7 +22,7 @@
   /**Injection**/
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$qProvider'];
 
-  ProfileCtrl.$inject = ['meanData', '$state','$rootScope','angularLoad','$location','UserService'];
+  ProfileCtrl.$inject = ['ProfileService', '$state','$rootScope','angularLoad','$location'];
   /**End Of Injection**/
 
 
@@ -48,20 +48,21 @@
    * @param UserService
    * @param $state
    */
-  function ProfileCtrl(meanData, $state,$rootScope,angularLoad,$location,UserService) {
+  function ProfileCtrl(ProfileService, $state,$rootScope,angularLoad,$location) {
 
     /**Scope Replace**/
     var vm = this;
     /***/
+    vm.user = $rootScope.currentUser;
+    vm.userDoc = {};
 
-    vm.user = {};
-
-    meanData.getProfile().then(successCallback, errorCallback);
+    ProfileService.getProfile().then(successCallback, errorCallback);
 
 
 
     function successCallback(response){
-      vm.user = response.data;
+      vm.userDoc = response.data
+
     }
     function errorCallback(error){
       //error code
@@ -70,7 +71,7 @@
 
 
     vm.logout = function () {
-      UserService.logout();
+      ProfileService.logout();
       $location.path('login');
     };
 
