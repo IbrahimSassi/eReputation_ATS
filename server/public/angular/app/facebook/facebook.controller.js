@@ -152,7 +152,7 @@
         initFacebookChart()
       });
 
-    }
+    };
 
 
     function initFacebookChart() {

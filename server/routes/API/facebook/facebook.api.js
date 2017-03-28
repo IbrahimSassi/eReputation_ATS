@@ -66,21 +66,19 @@ module.exports.getReactionsByPost = function (req, res, next) {
 };
 
 
-module.exports.getFansPage = function (req, res, next) {
+module.exports.pageInsights = function (req, res, next) {
 
   var page_id = req.params.id;
   var node = page_id;
-  var fields = "/insights?metric=['page_fans']" +
+  var fields = "/insights?metric=['" + req.params.metric + "']" +
     "&limit=100&since=" + req.params.since + "&until=" + req.params.until;
   var parameters = "&access_token=" + req.params.token;
   var url = config.base + node + fields + parameters;
 
-  console.log("heeyy",url)
-
   request(url, function (error, response, body) {
 
     if (!error && response.statusCode == 200) {
-      console.log(JSON.parse(body))
+      // console.log(JSON.parse(body))
       res.json(JSON.parse(body));
     }
   });

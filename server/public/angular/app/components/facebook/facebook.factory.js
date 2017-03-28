@@ -26,11 +26,12 @@
 
 
         },
-        'getFansPage': {
-          url: '/api/facebook/page/:pageId/fans/:token/:since/:until',
+        'facebookInsights': {
+          url: '/api/facebook/page/:pageId/insights/:metric/:token/:since/:until',
           method: 'GET',
           params: {
             pageId: '@pageId',
+            metric: '@metric',
             token: '@token',
             since: '@since',
             until: '@until'
