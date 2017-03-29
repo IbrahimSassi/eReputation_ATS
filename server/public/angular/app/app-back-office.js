@@ -8,7 +8,8 @@ angular.module('ATSApp', [
   'ATSApp.profile',
   'ngResource',
   'angularLoad',
-  'ui.router'
+  'ui.router',
+  'ATSApp.wwsa'
 
 
 ])
