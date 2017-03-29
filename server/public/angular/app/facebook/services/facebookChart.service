@@ -1,0 +1,19 @@
+/**
+ * Created by Ibrahim on 29/03/2017.
+ */
+(function () {
+  'use strict';
+
+  angular
+    .module('ATSApp.facebook')
+    .service('FacebookChartService', FacebookChartServiceFN);
+
+  FacebookChartServiceFN.$inject = [];
+
+  /* @ngInject */
+  function FacebookChartServiceFN() {
+
+
+  }
+
+})();

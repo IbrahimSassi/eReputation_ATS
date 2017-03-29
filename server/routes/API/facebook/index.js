@@ -22,7 +22,6 @@ router.get('/posts/:id/reactions', facebookApi.getReactionsByPost);
 
 router.get('/page/:id/insights/:metric/:token/:since/:until', facebookApi.pageInsights);
 
-
 router.post('/add/posts', facebookPosts.saveFacebookPosts);
 
 module.exports = router;
