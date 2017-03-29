@@ -56,7 +56,7 @@
 
     /** Scripts Loading first Refresh **/
     angularLoad.loadScript('angular/app/assets/js/charts/ggleloader.js').then(function () {
-      angularLoad.loadScript('angular/app/assets/js/charts/chartTest.js').then(function () {
+      angularLoad.loadScript('angular/app/assets/js/charts/narimen/columnchart.js').then(function () {
 
       }).catch(function () {
         console.log('err script 1');
