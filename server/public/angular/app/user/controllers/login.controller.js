@@ -49,6 +49,7 @@
     /***/
 
     vm.errorInvalid = false;
+    vm.errorInactive = false;
 
     vm.credentialsLogin = {
       email : "",
@@ -69,8 +70,14 @@
         $window.location.href = '/admin';
       }
       function errorCallback(error){
+        //alert(error.status)
         console.log("error",error)
-        vm.errorInvalid = true;
+        if (error.status ==400)
+        {
+          vm.errorInactive = true;
+        }
+        else if (error.status ==401)
+          vm.errorInvalid = true;
       }
     };
     vm.goToRegister = function () {

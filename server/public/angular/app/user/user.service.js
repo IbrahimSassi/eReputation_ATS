@@ -69,7 +69,9 @@
     var logout = function() {
       $window.localStorage.removeItem('mean-token');
     };
-
+    var SendVerificationEmail = function(email) {
+      return UserFactory.SendVerificationEmail({email:email}).$promise;
+    };
     return {
       currentUser : currentUser,
       saveToken : saveToken,
@@ -77,7 +79,8 @@
       isLoggedIn : isLoggedIn,
       register : register,
       login : login,
-      logout : logout
+      logout : logout,
+      SendVerificationEmail : SendVerificationEmail
     };
 
 

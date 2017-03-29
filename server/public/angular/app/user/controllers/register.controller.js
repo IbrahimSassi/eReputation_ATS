@@ -103,12 +103,13 @@
 
       function successCallback(response){
         console.log("succ",response)
-        UserService.saveToken(response.token);
-        $window.location.href = '/admin';
-        console.log(response)
+        swal("Your account was successfully created!", "We sent you an email! Please confirm your registration", "success");
+        UserService.SendVerificationEmail(vm.credentialsRegister.email).then(function (data) {
+          console.log('Email: ',data)
+        })
       }
       function errorCallback(error){
-        console.log("error",error)
+        console.log("error",error);
         if(error.status==401)
         {
         vm.emailExists = true;

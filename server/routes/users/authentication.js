@@ -104,7 +104,7 @@ module.exports.login = function(req, res) {
     }
 
     // If a user is found
-    if(user){
+    if(user && user.state != 'INACTIVE'){
       console.log("Password: ",user.validPassword("000000"));
       token = user.generateJwt();
       res.status(200);
@@ -112,7 +112,10 @@ module.exports.login = function(req, res) {
         "token" : token
       });
 
-    } else {
+    }
+    else if (user.state == 'INACTIVE')
+    {res.status(400).json({warning:'Please confirm your email address'});}
+    else {
       // If user is not found
       res.status(401).json(info);
     }

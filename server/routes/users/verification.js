@@ -9,7 +9,7 @@ var mailsender = require('mailsender');
 var fs = require('fs')
 var Styliner = require('styliner');
 
-router.get('/generate/:email', function(req, res, next) {
+router.post('/generate/:email', function(req, res, next) {
 
   var token = jwt.sign({
     exp: Math.floor(Date.now() / 1000) + (60 * 60),
@@ -23,7 +23,7 @@ router.get('/generate/:email', function(req, res, next) {
       console.log(err);
     }
     else {
-      data = data  + '<a style="color:red;" href="http://localhost:3000/users/verification/validate/'+token+'">Verification Link</a>';
+      data = data  + '<a style="color:cadetblue;" href="http://localhost:3000/users/verification/validate/'+token+'">Verification Link</a>';
       sendmail(data)
 
 
@@ -41,7 +41,7 @@ router.get('/generate/:email', function(req, res, next) {
   }
 
 
-  res.json({ "token": token});
+  res.status(200).json({ "token": token});
 });
 
 

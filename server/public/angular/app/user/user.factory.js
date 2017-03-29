@@ -26,6 +26,13 @@
         'Login': {
           url: '/users/LOGIN',
           method: 'POST'
+        },
+        'SendVerificationEmail': {
+          url: '/users/verification/generate/:email',
+          method: 'POST',
+          params: {
+            email: '@email',
+          },
         }
       }
     );
