@@ -16,7 +16,7 @@
   /**Injection**/
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$qProvider'];
 
-  RegisterCtrl.$inject = ['UserService', '$state','$rootScope','angularLoad','$location'];
+  RegisterCtrl.$inject = ['UserService', '$state','$rootScope','angularLoad','$location','$window'];
   /**End Of Injection**/
 
 
@@ -37,12 +37,14 @@
 
   };
 
-  function RegisterCtrl(UserService, $state,$rootScope,angularLoad,$location) {
+  function RegisterCtrl(UserService, $state,$rootScope,angularLoad,$location,$window) {
 
     /**Scope Replace**/
     var vm = this;
     /***/
 
+    vm.emailExists = false;
+    vm.AllFieldsRequired = false;
     vm.clearcredentialsRegister = function () {
 
       vm.credentialsRegister = {
@@ -95,8 +97,23 @@
 
       UserService
         .register(vm.credentialsRegister)
-        .then(function(){
-        });
+        .then(successCallback, errorCallback);
+
+
+
+      function successCallback(response){
+        UserService.saveToken(response.data.token);
+        $window.location.href = '/admin';
+        console.log(response.status)
+      }
+      function errorCallback(error){
+        if(error.status==401)
+        {
+        vm.emailExists = true;
+        }
+        else
+          vm.AllFieldsRequired = true;
+      }
     };
 
     vm.goToLogin = function () {

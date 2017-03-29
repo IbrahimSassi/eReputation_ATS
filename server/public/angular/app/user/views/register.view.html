@@ -58,6 +58,11 @@
             <p class="center login-form-text">Registration To Digital Reputation</p>
           </div>
         </div>
+        <div class="row margin" ng-show="user.AllFieldsRequired">
+          <div class=" col s12 center">
+            <a style="color: red;" class="center">All Fields Are Required.</a>
+          </div>
+        </div>
         <div class="row">
           <div class="input-field col s12 center">
             <div class="row margin col s12">
@@ -111,6 +116,11 @@
               <div class="erroremail"></div>
             </div>
           </div>
+          <div class="row margin" ng-show="user.emailExists">
+            <div class=" col s12">
+              <a style="color: red;">Email address already exists.</a>
+            </div>
+          </div>
           <div class="row margin">
             <div class="input-field col s12">
               <i class="mdi-action-lock-outline prefix"></i>
@@ -160,6 +170,11 @@
               <input id="businessEmail" name="businessEmail" type="email" ng-model="user.credentialsRegister.email" data-error=".businessEmail">
               <label for="businessEmail" class="center-align">Business Email</label>
               <div class="businessEmail"></div>
+            </div>
+          </div>
+          <div class="row margin" ng-show="user.emailExists">
+            <div class=" col s12">
+              <a style="color: red;">Email address already exists.</a>
             </div>
           </div>
           <div class="row margin">

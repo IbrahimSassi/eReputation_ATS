@@ -5,6 +5,7 @@ angular.module('ATSApp', [
   'ATSApp.dashboard',
   'ATSApp.campaign',
   'ATSApp.channel',
+  'ATSApp.profile',
   'ngResource',
   'angularLoad',
   'ui.router'
@@ -16,4 +17,13 @@ angular.module('ATSApp', [
       $urlRouterProvider.otherwise('/users');
 
 
-    }]);
+    }])
+  .run(function ($rootScope, $state,$location, ProfileService) {
+    if (ProfileService.isLoggedIn()) {
+
+      $rootScope.currentUser = ProfileService.currentUser();
+      console.log("Hey Brogrammers! This is the connected user: ",$rootScope.currentUser);
+    }
+    else {
+      //$state.go('login');
+    }});

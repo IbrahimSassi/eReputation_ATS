@@ -12,11 +12,12 @@ angular.module('ATSApp-front', [
 ]).config(['$urlRouterProvider', function ($urlRouterProvider) {
   $urlRouterProvider.otherwise('/register');
 }])
-  .run(function ($rootScope, $state,$location, UserService) {
+  .run(function ($rootScope, $state,$location, UserService,$window) {
 
     $rootScope.$on('$stateChangeStart', function(event, nextRoute, currentRoute) {
-      if ($location.path() === '/profile' && !UserService.isLoggedIn()) {
-        $location.path('/login');
+
+      if (UserService.isLoggedIn() && ($location.path('/login') || $location.path('/register'))) {
+        $window.location.href = '/admin';
       }
 
 

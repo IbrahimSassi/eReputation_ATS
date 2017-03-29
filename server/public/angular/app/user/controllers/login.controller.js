@@ -41,9 +41,6 @@
   /**End of Route Config**/
 
   /** Controller UseCtrl FUNCTION
-   *
-   * @param UserService
-   * @param $state
    */
   function LoginCtrl(UserService, $state,$rootScope,angularLoad,$location,$window) {
 
