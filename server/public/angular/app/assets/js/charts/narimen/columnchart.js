@@ -66,8 +66,32 @@ function drawChart2() {
   chart.draw(data, options);
 }
 
+
+
+
+function drawChart3() {
+  var data = google.visualization.arrayToDataTable([
+    ['Task', 'Hours per Day'],
+    ['Work',     11],
+    ['Eat',      2],
+    ['Commute',  2],
+    ['Watch TV', 2],
+    ['Sleep',    7]
+  ]);
+
+  var options = {
+    title: 'My Daily Activities',
+    is3D: true,
+  };
+
+  var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+  chart.draw(data, options);
+}
+
+
 google.charts.setOnLoadCallback(
   function() { // Anonymous function that calls drawChart1 and drawChart2
+    drawChart3();
     drawChart2();
     drawChart1();
 
