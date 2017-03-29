@@ -59,9 +59,11 @@
           businessName: payload.businessName,
           employeesNumber: payload.employeesNumber,
           businessType: payload.businessType,
-          accountType: payload.accountType,
+          accountType: payload.kind,
           creationDate: payload.creationDate,
-          state : payload.state
+          state : payload.state,
+          kind : payload.kind,
+          expiration: payload.exp
         };
       }
     };

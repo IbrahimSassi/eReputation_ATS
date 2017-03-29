@@ -57,11 +57,13 @@
     };
 
      var register = function(user) {
-      return $http.post('/users/register', user)
+      //return $http.post('/users/register', user)
+       return UserFactory.Register(user).$promise;
     };
 
      var login = function(user) {
-      return $http.post('/users/login', user)
+      //return $http.post('/users/login', user)
+       return UserFactory.Login(user).$promise;
     };
 
     var logout = function() {

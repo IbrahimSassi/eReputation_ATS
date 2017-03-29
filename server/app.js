@@ -9,6 +9,8 @@ var passport = require('passport');
 var admin = require('./routes/admin');
 var index = require('./routes/index');
 var users = require('./routes/users/index');
+var usersVerification = require('./routes/users/verification');
+
 
 /** APIS*/
 var webScraping = require('./routes/API/webScraping/index');
@@ -62,6 +64,7 @@ app.use('/api/twitterScraping', twitterScraping);
 app.use('/api/wwsa', wwsa);
 app.use('/api/channels', channel);
 app.use('/api/campaigns', campaign);
+app.use('/users/verification', usersVerification);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

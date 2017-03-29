@@ -14,11 +14,19 @@
   function UserFactory($resource) {
 
     /** Change The Link To your Rest URL From the JAVA EE APP*/
-    return $resource('https://jsonplaceholder.typicode.com/posts/:id',
+    return $resource('/users/register',
 
       {id: '@id'},
       {
-        'update': {method: 'PUT'}
+        'update': {method: 'PUT'},
+        'Register': {
+          url: '/users/register',
+          method: 'POST'
+        },
+        'Login': {
+          url: '/users/LOGIN',
+          method: 'POST'
+        }
       }
     );
 

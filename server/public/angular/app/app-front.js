@@ -25,4 +25,5 @@ angular.module('ATSApp-front', [
 
 
 
-});
+
+  });

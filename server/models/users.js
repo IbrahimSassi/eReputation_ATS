@@ -72,6 +72,7 @@ UserSchema.methods.generateJwt = function() {
     picture:this.picture,
     address:this.address,
     state:this.state,
+    kind: this.kind,
     exp: parseInt(expiry.getTime() / 1000),
   }, "MY_SECRET"); // DO NOT KEEP YOUR SECRET IN THE CODE!
 };

@@ -18,7 +18,14 @@ angular.module('ATSApp', [
 
 
     }])
-  .run(function ($rootScope, $state,$location, ProfileService) {
+  .run(function ($rootScope, $state,$location, ProfileService,$window) {
+
+    $rootScope.logOut= function()
+    {
+      ProfileService.logout();
+      $window.location.href = '/#!/login';
+    }
+
     if (ProfileService.isLoggedIn()) {
 
       $rootScope.currentUser = ProfileService.currentUser();

@@ -13,15 +13,25 @@ var sendJSONresponse = function(res, status, content) {
   res.json(content);
 };
 
+
+/**
+ * Passport Register
+ * @param req
+ * @param res
+ */
+
 module.exports.register = function(req, res) {
 
-  if(req.body.accountType == 'individual' && !req.body.email || !req.body.password || !req.body.username || !req.body.firstName || !req.body.lastName) {
+  /**
+   * All Field Verification
+   */
+  if(req.body.accountType == 'individual' && (!req.body.email || !req.body.password || !req.body.username || !req.body.firstName || !req.body.lastName)) {
     sendJSONresponse(res, 400, {
       "message": "All fields required"
      });
      return;
    }
-  if((req.body.accountType == 'business') && (!req.body.email || !req.body.password || !req.body.businessName || !req.body.employeesNumber || !req.body.businessType)) {
+  if(req.body.accountType == 'business' && (!req.body.email || !req.body.password || !req.body.businessName || !req.body.employeesNumber || !req.body.businessType)) {
     sendJSONresponse(res, 400, {
       "message": "All fields required"
     });
@@ -76,14 +86,13 @@ module.exports.register = function(req, res) {
 
 };
 
-module.exports.login = function(req, res) {
+/**
+ * Passport Login
+ * @param req
+ * @param res
+ */
 
-  // if(!req.body.email || !req.body.password) {
-  //   sendJSONresponse(res, 400, {
-  //     "message": "All fields required"
-  //   });
-  //   return;
-  // }
+module.exports.login = function(req, res) {
 
   passport.authenticate('local', function(err, user, info){
     var token;
