@@ -63,16 +63,13 @@
 
 
       function successCallback(response){
-        if(response.status == 200)
-        {
-          vm.errorInvalid = false;
-        UserService.saveToken(response.data.token);
-         $window.location.href = '/admin';
-
-        }
+        console.log("succ",response)
+        vm.errorInvalid = false;
+        UserService.saveToken(response.token);
+        $window.location.href = '/admin';
       }
       function errorCallback(error){
-        console.log(error)
+        console.log("error",error)
         vm.errorInvalid = true;
       }
     };

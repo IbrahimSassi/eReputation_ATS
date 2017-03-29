@@ -102,11 +102,13 @@
 
 
       function successCallback(response){
-        UserService.saveToken(response.data.token);
+        console.log("succ",response)
+        UserService.saveToken(response.token);
         $window.location.href = '/admin';
-        console.log(response.status)
+        console.log(response)
       }
       function errorCallback(error){
+        console.log("error",error)
         if(error.status==401)
         {
         vm.emailExists = true;
