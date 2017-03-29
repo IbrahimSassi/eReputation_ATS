@@ -1,10 +1,14 @@
 /**
  * Created by ninou on 3/29/2017.
  */
-google.charts.load('current', {'packages':['bar']});
-google.charts.setOnLoadCallback(drawChart);
 
-function drawChart() {
+/***
+ *  CHART 1
+ */
+
+google.charts.load('current', {'packages':['corechart','bar']});
+
+function drawChart1() {
   var data = google.visualization.arrayToDataTable([
     ['Year', 'Sales', 'Expenses', 'Profit'],
     ['2014', 1000, 400, 200],
@@ -38,3 +42,34 @@ function drawChart() {
     }
   }
 }
+
+/***
+ *  CHART 2
+ */
+
+function drawChart2() {
+  var data = google.visualization.arrayToDataTable([
+    ['Year', 'Sales', 'Expenses'],
+    ['2013',  1000,      400],
+    ['2014',  1170,      460],
+    ['2015',  660,       1120],
+    ['2016',  1030,      540]
+  ]);
+
+  var options = {
+    title: 'Company Performance',
+    hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+    vAxis: {minValue: 0}
+  };
+
+  var chart = new google.visualization.AreaChart(document.getElementById('chart_test'));
+  chart.draw(data, options);
+}
+
+google.charts.setOnLoadCallback(
+  function() { // Anonymous function that calls drawChart1 and drawChart2
+    drawChart2();
+    drawChart1();
+
+
+  });
