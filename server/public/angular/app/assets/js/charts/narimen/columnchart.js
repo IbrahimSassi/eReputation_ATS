@@ -12,7 +12,7 @@ google.charts.load('current', {'packages':['corechart','bar']});
 
 function drawStacked() {
   var data = google.visualization.arrayToDataTable([
-    ['Genre',  'Positive', 'Negative', 'Neutal', { role: 'annotation' } ],
+    ['Genre',  'Positive', 'Neutal', 'Negative', { role: 'annotation' } ],
     ['03/30/2017', 10, 24, 20, ''],
     ['03/29/2017', 16, 22, 43,''],
     ['03/28/2017', 28, 19, 29, '']
@@ -20,6 +20,7 @@ function drawStacked() {
 
   var options = {
     title: 'Overview about How people reacts between 3/28/2017 and 3/30/2017',
+    colors: ['#04B404', '#F7FE2E','#DF0101' ],
     chartArea: {width: '50%'},
     isStacked: 'percent',
     height: 300,
@@ -39,15 +40,14 @@ function drawStacked() {
 function donutChart() {
   var data = google.visualization.arrayToDataTable([
     ['Etat', 'percent'],
-    ['instagram',     11],
-    ['facebook',      82],
-    ['mosaique',  42],
-    ['Blog',  18],
-    ['tweeter',  32]
+    ['positive',     11],
+    ['neutal',      82],
+    ['negative',  42]
   ]);
 
   var options = {
-    title: 'overall mentions | Publications by Media',
+    title: 'overall mentions ',
+    colors: ['#04B404', '#F7FE2E','#DF0101' ],
     pieHole: 0.4,
 
   };
@@ -57,9 +57,38 @@ function donutChart() {
 }
 
 
+function drawVisualization() {
+  // Some raw data (not necessarily accurate)
+  var data = google.visualization.arrayToDataTable([
+    ['Month', 'Positive', 'Neutal', 'Negative', 'Average'],
+    ['2017/05',  165,      938,         522,             614.6],
+    ['2017/06',  135,      1120,        599,             682],
+    ['2017/07',  157,      1167,        587,             623],
+    ['2017/08',  139,      1110,        615,             609.4],
+    ['2017/09',  136,      691,         629,             569.6]
+  ]);
+
+  var options = {
+    title : 'Number of Tweets by Time and sentiment',
+    colors: ['#04B404', '#F7FE2E','#DF0101','#0404B4' ],
+    vAxis: {title: 'Motions'},
+    hAxis: {title: 'Month'},
+    seriesType: 'bars',
+    series: {3: {type: 'line'}}
+  };
+
+  var chart = new google.visualization.ComboChart(document.getElementById('chart_div3'));
+  chart.draw(data, options);
+}
+
+
+
+
+
 
 google.charts.setOnLoadCallback(
   function() { // Anonymous function that calls drawChart1 and drawChart2
+    drawVisualization();
     donutChart();
     drawStacked();
 
