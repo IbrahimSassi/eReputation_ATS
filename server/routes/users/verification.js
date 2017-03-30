@@ -23,8 +23,8 @@ router.post('/generate/:email', function(req, res, next) {
       console.log(err);
     }
     else {
-      data = data  + '<a style="color:cadetblue;" href="http://localhost:3000/users/verification/validate/'+token+'">Verification Link</a>';
-      sendmail(data)
+      data = data  + '<a style="color:cadetblue;" href="http://localhost:3000/#!/emailconfirmation/'+token+'">Verification Link</a>';
+      sendmail(data,req.params.email)
 
 
     }
@@ -32,14 +32,13 @@ router.post('/generate/:email', function(req, res, next) {
   });
 
 
-  function sendmail (body) {
+  function sendmail (body,to) {
     mailsender
       .from('mohamedfiras.ouertani@esprit.tn', 'MFO11889162')
-      .to('profirases@gmail.com')
+      .to(to)
       .body('subject',body,true)
   .send();
   }
-
 
   res.status(200).json({ "token": token});
 });
@@ -47,15 +46,23 @@ router.post('/generate/:email', function(req, res, next) {
 
 router.get('/validate/:token', function(req, res, next) {
 
+  console.log('token:',req.params.token)
   jwt.verify(req.params.token, 'emailverification', function(err, decoded) {
 
+    if (err)
+    {
+      res.status(401).json({ "Error": 'Token Expired or incorrect'});
+    }
+    else
+    {
     User.update({ email: decoded.email }, { $set: { state: 'Activated' }}, function (err, user) {
       if (err) return res.status(401);
 
+      res.status(200).json({ "email": decoded.email});
 
     });
+    }
 
-    res.json({ "email": decoded.email});
   });
 
 

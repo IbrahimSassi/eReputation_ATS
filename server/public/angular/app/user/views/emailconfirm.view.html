@@ -1,0 +1,17 @@
+<div class="row col s12">
+
+  <div id="card-alertsuccess" class="card green" ng-show="EmailConfirmCtrl.success">
+    <div class="card-content white-text">
+      <span class="card-title white-text darken-1"><i class="mdi-social-notifications"></i>  Congratulation!</span>
+      <p>Your email was successfully confirmed.</p>
+    </div>
+  </div>
+
+  <div id="card-alertechec" class="card red" ng-show="EmailConfirmCtrl.echec">
+    <div class="card-content white-text">
+      <span class="card-title white-text darken-1"><i class="mdi-social-notifications"></i>  Unfortunately!</span>
+      <p>An error according while confirming your email! Invalid or expired token.</p>
+    </div>
+  </div>
+
+</div>
