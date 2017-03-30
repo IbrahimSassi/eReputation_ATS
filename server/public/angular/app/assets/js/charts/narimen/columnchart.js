@@ -8,92 +8,61 @@
 
 google.charts.load('current', {'packages':['corechart','bar']});
 
-function drawChart1() {
+
+
+function drawStacked() {
   var data = google.visualization.arrayToDataTable([
-    ['Year', 'Sales', 'Expenses', 'Profit'],
-    ['2014', 1000, 400, 200],
-    ['2015', 1170, 460, 250],
-    ['2016', 660, 1120, 300],
-    ['2017', 1030, 540, 350]
+    ['Genre',  'Positive', 'Negative', 'Neutal', { role: 'annotation' } ],
+    ['03/30/2017', 10, 24, 20, ''],
+    ['03/29/2017', 16, 22, 43,''],
+    ['03/28/2017', 28, 19, 29, '']
   ]);
 
   var options = {
-    chart: {
-      title: 'Company Performance',
-      subtitle: 'Sales, Expenses, and Profit: 2014-2017',
-    },
-    bars: 'vertical',
-    vAxis: {format: 'decimal'},
-    height: 400,
-    colors: ['#1b9e77', '#d95f02', '#7570b3']
-  };
-
-  var chart = new google.charts.Bar(document.getElementById('chart_div'));
-
-  chart.draw(data, google.charts.Bar.convertOptions(options));
-
-  var btns = document.getElementById('btn-group');
-
-  btns.onclick = function (e) {
-
-    if (e.target.tagName === 'BUTTON') {
-      options.vAxis.format = e.target.id === 'none' ? '' : e.target.id;
-      chart.draw(data, google.charts.Bar.convertOptions(options));
+    title: 'Overview about How people reacts between 3/28/2017 and 3/30/2017',
+    chartArea: {width: '50%'},
+    isStacked: 'percent',
+    height: 300,
+    legend: {position: 'top', maxLines: 3},
+    hAxis: {
+      minValue: 0,
+      ticks: [0, .3, .6, .9, 1]
     }
-  }
-}
-
-/***
- *  CHART 2
- */
-
-function drawChart2() {
-  var data = google.visualization.arrayToDataTable([
-    ['Year', 'Sales', 'Expenses'],
-    ['2013',  1000,      400],
-    ['2014',  1170,      460],
-    ['2015',  660,       1120],
-    ['2016',  1030,      540]
-  ]);
-
-  var options = {
-    title: 'Company Performance',
-    hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
-    vAxis: {minValue: 0}
   };
 
-  var chart = new google.visualization.AreaChart(document.getElementById('chart_test'));
+
+  var chart = new google.visualization.BarChart(document.getElementById('stacked_chart_div'));
   chart.draw(data, options);
 }
 
 
-
-
-function drawChart3() {
+function donutChart() {
   var data = google.visualization.arrayToDataTable([
-    ['Task', 'Hours per Day'],
-    ['Work',     11],
-    ['Eat',      2],
-    ['Commute',  2],
-    ['Watch TV', 2],
-    ['Sleep',    7]
+    ['Etat', 'percent'],
+    ['instagram',     11],
+    ['facebook',      82],
+    ['mosaique',  42],
+    ['Blog',  18],
+    ['tweeter',  32]
   ]);
 
   var options = {
-    title: 'My Daily Activities',
-    is3D: true,
+    title: 'overall mentions | Publications by Media',
+    pieHole: 0.4,
+
   };
 
-  var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+  var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
   chart.draw(data, options);
 }
+
 
 
 google.charts.setOnLoadCallback(
   function() { // Anonymous function that calls drawChart1 and drawChart2
-    drawChart3();
-    drawChart2();
-    drawChart1();
+    donutChart();
+    drawStacked();
+
 
 
   });
