@@ -49,8 +49,8 @@
     vm.dataPageStoriesByType = [];
 
 
-    vm.labels = ["January", "February", "March", "April", "May", "June", "July"];
-    vm.data = [65, 59, 80, 81, 56, 55, 40];
+    // vm.labels = ["January", "February", "March", "April", "May", "June", "July"];
+    // vm.data = [65, 59, 80, 81, 56, 55, 40];
     activate();
 
     ////////////////
@@ -92,7 +92,9 @@
       else {
         vm.labelsPageFans = [];
         vm.dataPageFans = [];
-        //initPageFansInsights();
+        initPageFansInsights();
+        initPageStoriesByStoryType();
+
       }
 
       // console.log("sinceTransformed",new Date(vm.since));
@@ -103,10 +105,14 @@
 
 
     vm.onSelect = function () {
+      // $scope.labelsPageFans = [];
+      // $scope.dataPageFans = [];
       // console.log(vm.selectedChannel._id)
       ChannelService.getChannelByID(vm.selectedChannel._id).then(function (item) {
         vm.selectedChannel = item;
-        //initPageFansInsights()
+        vm.labelsPageFans = [];
+        vm.dataPageFans = [];
+        initPageFansInsights();
         initPageStoriesByStoryType()
 
       });
@@ -126,11 +132,13 @@
         // console.log(stories.data[2].values);
         vm.pageStories = stories.data[2].values;
 
-        Object.keys(stories.data[2].values[0].value).map(function (key) {
-          vm.labelsPageStoriesByType.push(key)
-          vm.dataPageStoriesByType.push(stories.data[2].values[0].value[key])
-          return stories.data[2].values[0].value[key]
-        });
+        console.log("vm.pageStories",vm.pageStories)
+
+        // Object.keys(stories.data[2].values[0].value).map(function (key) {
+        //   vm.labelsPageStoriesByType.push(key)
+        //   vm.dataPageStoriesByType.push(stories.data[2].values[0].value[key])
+        //   return stories.data[2].values[0].value[key]
+        // });
 
         // stories.data[2].values[0].forEach(function (story) {
         //   console.log(story)
@@ -143,38 +151,6 @@
         //
         // })
       })
-
-
-      var radarChartData = {
-        labels: vm.labelsPageStoriesByType,
-        datasets: [
-          {
-            label: "First dataset",
-            fillColor: "rgba(255,255,255,0.2)",
-            strokeColor: "#fff",
-            pointColor: "#00796b",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "#fff",
-            data: vm.dataPageStoriesByType
-          }
-        ]
-      };
-
-      setTimeout(function () {
-        window.trendingRadarChart = new Chart(document.getElementById("trending-radar-chart").getContext("2d")).Radar(radarChartData, {
-
-          angleLineColor: "rgba(255,255,255,0.5)",//String - Colour of the angle line
-          pointLabelFontFamily: "'Roboto','Helvetica Neue', 'Helvetica', 'Arial', sans-serif",// String - Tooltip title font declaration for the scale label
-          pointLabelFontColor: "#fff",//String - Point label font colour
-          pointDotRadius: 4,
-          animationSteps: 15,
-          pointDotStrokeWidth: 2,
-          pointLabelFontSize: 12,
-          responsive: true
-        });
-
-      },1000)
 
 
     }
@@ -192,15 +168,13 @@
         // vm.pageFans = insights.data[0].values;
         console.log("data", insights);
         insights.data[0].values.forEach(function (fans) {
-
           vm.labelsPageFans.push(moment(fans.end_time).format("DD-MM-YYYY"));
           vm.dataPageFans.push(fans.value);
+
         });
 
 
       });
-
-
 
     }
 

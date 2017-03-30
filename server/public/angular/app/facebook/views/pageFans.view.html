@@ -65,23 +65,19 @@
       <!--</label>-->
       <!--</div>-->
     </div>
-    <!--<div class="trending-line-chart-wrapper">-->
-      <!--<canvas id="trending-line-chart" height="70"></canvas>-->
-    <!--</div>-->
-    <line-chart labels="{{vm.labelsPageFans}}" data="{{vm.dataPageFans}}"></line-chart>
+    <line-chart line-labels="{{vm.labelsPageFans}}" line-data="{{vm.dataPageFans}}"></line-chart>
 
   </div>
 </div>
 
 <div class="row">
 
-  <div class="col s12 m4 l4">
+  <div ng-repeat="story in vm.pageStories" class="col s12 m4 l4">
+  <!--<div class="col s12 m4 l4">-->
     <div class="card">
       <div class="card-move-up teal waves-effect waves-block waves-light">
-        <div class="move-up">
-          <p class="margin white-text">Page Stories By Story Type</p>
-          <canvas id="trending-radar-chart" height="114"></canvas>
-        </div>
+        <radar-chart labels="{{story.end_time}}" data="{{story}}"></radar-chart>
+
       </div>
       <div class="card-content  teal darken-2">
         <a class="btn-floating btn-move-up waves-effect waves-light darken-2 right"><i
@@ -147,13 +143,6 @@
         </table>
       </div>
     </div>
-  </div>
-</div>
-
-
-<div class="card-move-up waves-effect waves-block waves-light">
-  <div class="move-up cyan darken-1">
-    <line-chart labels="{{vm.labels}}" data="{{vm.data}}"></line-chart>
   </div>
 </div>
 
