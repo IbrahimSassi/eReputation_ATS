@@ -52,6 +52,7 @@
         payload = $window.atob(payload);
         payload = JSON.parse(payload);
         return {
+          _id : payload._id,
           username : payload.username,
           firstName : payload.firstName,
           lastName: payload.lastName,
