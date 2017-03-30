@@ -12,7 +12,7 @@ google.charts.load('current', {'packages':['corechart','bar']});
 
 function drawStacked() {
   var data = google.visualization.arrayToDataTable([
-    ['Genre',  'Positive', 'Neutal', 'Negative', { role: 'annotation' } ],
+    ['Genre',  'Positive', 'Neutral', 'Negative', { role: 'annotation' } ],
     ['03/30/2017', 10, 24, 20, ''],
     ['03/29/2017', 16, 22, 43,''],
     ['03/28/2017', 28, 19, 29, '']
@@ -41,7 +41,7 @@ function donutChart() {
   var data = google.visualization.arrayToDataTable([
     ['Etat', 'percent'],
     ['positive',     11],
-    ['neutal',      82],
+    ['neutral',      82],
     ['negative',  42]
   ]);
 
@@ -60,7 +60,7 @@ function donutChart() {
 function drawVisualization() {
   // Some raw data (not necessarily accurate)
   var data = google.visualization.arrayToDataTable([
-    ['Month', 'Positive', 'Neutal', 'Negative', 'Average'],
+    ['Month', 'Positive', 'Neutral', 'Negative', 'Average'],
     ['2017/05',  165,      938,         522,             614.6],
     ['2017/06',  135,      1120,        599,             682],
     ['2017/07',  157,      1167,        587,             623],
