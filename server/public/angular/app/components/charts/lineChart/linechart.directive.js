@@ -24,42 +24,56 @@
 
 
   function lineChartCtrl($scope) {
-    console.log("hello world")
-    console.log(this)
-    console.log($scope)
+    // console.log("hello world")
+    // console.log(this)
+    // console.log($scope)
+    $scope.lineLabels = []
+    $scope.lineData = []
+    // $scope.lineLabels = ["Apple", "Samsung", "SONY", "Motorola", "Nokia", "Microsoft", "Xiaomi"]
+    // $scope.lineData = [100, 50, 20, 40, 80, 50, 80]
     $scope.now = Date.now();
+    var FacebookFansLineChart;
+
+
     updateData();
 
-    $scope.$watch('lineData', function (newValue, oldValue) {
-      // console.log('newValue line', newValue)
-      // console.log('oldValue line', oldValue)
-      updateData()
-    });
-
-
-
+    //
+    // setInterval(function () {
+    //   console.log("get called")
+    //   console.log(typeof $scope.FacebookFansLineChart)
+    //
+    //   if (typeof $scope.FacebookFansLineChart != "undefined") {
+    //     console.log("helooo")
+    //     // Update one of the points in the second dataset
+    //     $scope.FacebookFansLineChart.datasets[0].points =  JSON.parse($scope.lineData);
+    //     $scope.FacebookFansLineChart.labels = JSON.parse($scope.lineLabels);
+    //     $scope.FacebookFansLineChart.update();
+    //   }
+    //
+    // }, 1000);
 
     function updateData() {
-      var data = {
-        labels: JSON.parse($scope.lineLabels),
-        datasets: [
-          {
-            label: "fans",
-            fillColor: "rgba(128, 222, 234, 0.6)",
-            strokeColor: "#ffffff",
-            pointColor: "#00bcd4",
-            pointStrokeColor: "#ffffff",
-            pointHighlightFill: "#ffffff",
-            pointHighlightStroke: "#ffffff",
-            data: JSON.parse($scope.lineData)
-          }
-        ]
-      };
 
       setTimeout(function () {
+        $scope.data = {
+          labels: JSON.parse($scope.lineLabels),
+          datasets: [
+            {
+              label: "fans",
+              fillColor: "rgba(128, 222, 234, 0.6)",
+              strokeColor: "#ffffff",
+              pointColor: "#00bcd4",
+              pointStrokeColor: "#ffffff",
+              pointHighlightFill: "#ffffff",
+              pointHighlightStroke: "#ffffff",
+              data: JSON.parse($scope.lineData)
+            }
+          ]
+        };
 
-        var FacebookFansLineChart = document.getElementById("line-chart-component"+$scope.now).getContext("2d");
-        window.FacebookFansLineChart = new Chart(FacebookFansLineChart).Line(data, {
+
+        FacebookFansLineChart = document.getElementById("line-chart-component" + $scope.now).getContext("2d");
+        window.FacebookFansLineChart = new Chart(FacebookFansLineChart).Line($scope.data, {
           scaleShowGridLines: true,///Boolean - Whether grid lines are shown across the chart
           scaleGridLineColor: "rgba(255,255,255,0.4)",//String - Colour of the grid lines
           scaleGridLineWidth: 1,//Number - Width of the grid lines
@@ -97,7 +111,30 @@
 
       }, 1000);
 
+
     }
+
+
+    $scope.$watch('lineData', function (newValue, oldValue) {
+
+      console.log($scope.lineLabels)
+      console.log($scope.lineData)
+      // var localLabel = JSON.parse($scope.lineLabels);
+      // var localData = JSON.parse($scope.lineData);
+
+      updateData();
+      // if (typeof FacebookFansLineChart != "undefined") {
+      //   console.log(window.FacebookFansLineChart)
+      //   for (var i = 0; i < localLabel.length - 1; i++) {
+      //     window.FacebookFansLineChart.datasets[0].points[i].value = localData[i];
+      //     window.FacebookFansLineChart.datasets[0].points[i].label = localLabel[i];
+      //   }
+      //   $scope.data.labels = localLabel;
+      //   window.FacebookFansLineChart.update();
+      //
+      // }
+
+    });
 
 
   }

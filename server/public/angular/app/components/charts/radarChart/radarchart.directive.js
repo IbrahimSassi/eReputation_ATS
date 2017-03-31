@@ -17,41 +17,44 @@
         },
         templateUrl: 'angular/app/components/charts/radarChart/radarchart.template.html',
         link: function (scope, elem, attrs) {
-          // var vm = this;
-          // console.log("hello from radar");
-          // console.log("vm",vm);
-          console.log("label", scope.labels);
+          scope.date = "Between " + moment(new Date(scope.labels)).subtract(7, 'days').format("DD-MM-YYYY") + " and "
+            + moment(new Date(scope.labels)).format("DD-MM-YYYY");
+
           scope.now = Date.now() + Math.random();
           var localLabel = ["Chrome", "Mozilla", "Safari", "IE10", "iPhone"];
           var localData = [5, 6, 7, 8, 6];
+
+
+          var trendingRadarChart;
+
           // $scope.localLabel = ["a", "b", "c"];
           // $scope.localData = [1, 2, 3];
 
           updateData();
           //
           scope.$watch('data', function (newValue, oldValue) {
-            // console.log('newValue radar', newValue);
-            //   console.log('oldValue radar', oldValue);
-            //
-            //
-            //   Object.keys(JSON.parse(newValue).value).map(function (key) {
-            //
-            //     // console.log("key",key)
-            //     // console.log("value",JSON.parse(newValue).value[key])
-            //     $scope.localLabel.push(key)
-            //     $scope.localData.push(JSON.parse(newValue).value[key])
-            //     // return JSON.parse(newValue).value[key]
-            //   });
-            //
-            //   console.log("keys",Object.keys(JSON.parse(newValue).value));
-            //   console.log("values",Object.values(JSON.parse(newValue).value));
-            console.log
+
             localLabel = Object.keys(JSON.parse(newValue).value);
             localData = Object.values(JSON.parse(newValue).value);
 
-            console.log("keys", localLabel);
-            console.log("values", localData);
+            // setTimeout(function () {
             //
+            //   if (typeof window.trendingRadarChart != "undefined") {
+            //
+            //     console.log("window.trendingRadarChart", window.trendingRadarChart)
+            //
+            //     for (var i = 0; i < localData.length - 1; i++) {
+            //       console.log("localData[i]", [localData[i]])
+            //       window.trendingRadarChart.addData([localData[i]], localLabel[i]);
+            //       var y = window.trendingRadarChart.removeData();
+            //       // window.trendingRadarChart.datasets[0].points[i].value = localData[i]
+            //       // window.trendingRadarChart.datasets[0].points[i].label = localLabel[i]
+            //     }
+            //   }
+            //
+            // },1000)
+            // window.trendingRadarChart.removeData();
+
             updateData();
           });
 
@@ -84,7 +87,7 @@
 
 
               var id = "radar-chart-component" + "-" + scope.now;
-              console.log('id', id)
+              // console.log('id', id)
               window.trendingRadarChart = new Chart(document.getElementById(id.toString()).getContext("2d")).Radar(radarChartData, {
 
                 angleLineColor: "rgba(255,255,255,0.5)",//String - Colour of the angle line

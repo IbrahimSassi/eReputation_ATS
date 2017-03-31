@@ -17,10 +17,16 @@
   /* @ngInject */
   function config($stateProvider, $urlRouterProvider) {
     $stateProvider
-      .state('page_fans', {
-        url: '/facebook/pageFans',
+      .state('overview', {
+        url: '/facebook/overview',
         templateUrl: 'angular/app/facebook/views/pageFans.view.html',
         controller: 'FacebookController as vm',
+        cache: false
+      })
+      .state('facebookCommunity', {
+        url: '/facebook/community',
+        templateUrl: 'angular/app/facebook/views/facebookCommunity.view.html',
+        controller: 'FacebookCommunityController as vm',
         cache: false
       })
     // .state('page_stories_by_story_type', {
@@ -47,6 +53,7 @@
     vm.dataPageFans = [];
     vm.labelsPageStoriesByType = [];
     vm.dataPageStoriesByType = [];
+    vm.pageStorytellers = [];
 
 
     // vm.labels = ["January", "February", "March", "April", "May", "June", "July"];
@@ -96,24 +103,17 @@
         initPageStoriesByStoryType();
 
       }
-
-      // console.log("sinceTransformed",new Date(vm.since));
-      // console.log("UntilTransformed", new Date(vm.until));
-      // console.log("sinceTransformed",moment(new Date(vm.since)).format("DD-MM-YYYY"));
-      // console.log("UntilTransformed", moment(new Date(vm.until)).add(1, 'days').format("DD-MM-YYYY"));
     };
 
 
     vm.onSelect = function () {
-      // $scope.labelsPageFans = [];
-      // $scope.dataPageFans = [];
-      // console.log(vm.selectedChannel._id)
       ChannelService.getChannelByID(vm.selectedChannel._id).then(function (item) {
         vm.selectedChannel = item;
         vm.labelsPageFans = [];
         vm.dataPageFans = [];
-        initPageFansInsights();
-        initPageStoriesByStoryType()
+        // initPageFansInsights();
+        // initPageStoriesByStoryType()
+        initPageStorytellersByAgeGender()
 
       });
 
@@ -129,30 +129,27 @@
         moment(new Date(vm.since)).format("DD-MM-YYYY"),
         moment(new Date(vm.until)).add(1, 'days').format("DD-MM-YYYY")
       ).then(function (stories, err) {
-        // console.log(stories.data[2].values);
         vm.pageStories = stories.data[2].values;
 
         console.log("vm.pageStories",vm.pageStories)
 
-        // Object.keys(stories.data[2].values[0].value).map(function (key) {
-        //   vm.labelsPageStoriesByType.push(key)
-        //   vm.dataPageStoriesByType.push(stories.data[2].values[0].value[key])
-        //   return stories.data[2].values[0].value[key]
-        // });
-
-        // stories.data[2].values[0].forEach(function (story) {
-        //   console.log(story)
-        //   Object.keys(story.value).map(function(key){
-        //
-        //     vm.labelsPageStoriesByType.push(key)
-        //     vm.labelsPageStoriesByType.push(story.value[key])
-        //     return story.value[key]
-        //   });
-        //
-        // })
       })
 
 
+    }
+
+
+    function initPageStorytellersByAgeGender() {
+      FacebookService.getPageStorytellersByAgeGender(
+        vm.selectedChannel.url,
+        vm.selectedChannel.accessToken,
+        moment(new Date(vm.since)).format("DD-MM-YYYY"),
+        moment(new Date(vm.until)).add(1, 'days').format("DD-MM-YYYY")
+      ).then(function (insights1) {
+        vm.pageStorytellers = insights1.data[0].values;
+        console.log("insights1",vm.pageStorytellers);
+
+      })
     }
 
 
@@ -166,7 +163,7 @@
         moment(new Date(vm.until)).add(1, 'days').format("DD-MM-YYYY")
       ).then(function (insights) {
         // vm.pageFans = insights.data[0].values;
-        console.log("data", insights);
+        // console.log("data", insights);
         insights.data[0].values.forEach(function (fans) {
           vm.labelsPageFans.push(moment(fans.end_time).format("DD-MM-YYYY"));
           vm.dataPageFans.push(fans.value);
