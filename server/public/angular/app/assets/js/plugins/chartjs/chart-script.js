@@ -73,6 +73,8 @@ var doughnutData = [
 
 ];
 
+D
+
 /*
 Trending Bar Chart
 */

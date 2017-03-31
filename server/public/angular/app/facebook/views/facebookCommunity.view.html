@@ -62,20 +62,16 @@
     </select>
 
 
-
-
-
   </div>
 
 </div>
-
 
 
 <div class="row">
   <div class="col s12 m12 l12">
     <div class="card">
       <div class="card-move-up waves-effect waves-block waves-light">
-        <div class="move-up cyan darken-1">
+        <div class="move-up red darken-1">
           <div>
             <span class="chart-title white-text">Page Storytellers by Gender/Age</span>
             <!--<div class="chart-revenue cyan darken-2 white-text">-->
@@ -90,29 +86,15 @@
             <!--</label>-->
             <!--</div>-->
           </div>
-          <line-chart ng-if="vm.display" line-labels="{{vm.keys1}}" line-data="{{vm.values1}}"></line-chart>
+          <line-chart ng-if="vm.display" line-labels="{{vm.storytellersLabels}}"
+                      line-data="{{vm.storytellersData}}"></line-chart>
 
         </div>
       </div>
       <div class="card-content">
         <a class="btn-floating btn-move-up waves-effect waves-light darken-2 right"><i
           class="mdi-content-add activator"></i></a>
-        <div class="col s12 m3 l3">
-          <div id="doughnut-chart-wrapper">
-            <canvas id="doughnut-chart" height="200"></canvas>
-            <div class="doughnut-chart-status">
-              4500
-              <p class="ultra-small center-align">Sold</p>
-            </div>
-          </div>
-        </div>
-        <div class="col s12 m2 l2">
-          <ul class="doughnut-chart-legend">
-            <li class="mobile ultra-small"><span class="legend-color"></span>Mobile</li>
-            <li class="kitchen ultra-small"><span class="legend-color"></span> Kitchen</li>
-            <li class="home ultra-small"><span class="legend-color"></span> Home</li>
-          </ul>
-        </div>
+        <doughnut-chart doughnut-data="{{vm.TotalStoryByGender}}" ></doughnut-chart>
         <div class="col s12 m5 l6">
           <div class="trending-bar-chart-wrapper">
             <canvas id="trending-bar-chart" height="90"></canvas>
@@ -224,8 +206,6 @@
     </div>
   </div>
 </div>
-
-
 
 
 <script type="text/javascript" src="angular/app/assets/js/plugins/chartjs/chart.min.js"></script>

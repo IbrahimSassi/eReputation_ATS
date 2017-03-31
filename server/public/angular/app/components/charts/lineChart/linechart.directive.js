@@ -117,8 +117,8 @@
 
     $scope.$watch('lineData', function (newValue, oldValue) {
 
-      console.log($scope.lineLabels)
-      console.log($scope.lineData)
+      // console.log($scope.lineLabels)
+      // console.log($scope.lineData)
       // var localLabel = JSON.parse($scope.lineLabels);
       // var localData = JSON.parse($scope.lineData);
 

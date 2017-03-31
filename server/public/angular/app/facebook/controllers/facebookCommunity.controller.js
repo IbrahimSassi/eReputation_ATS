@@ -24,7 +24,8 @@
     vm.myChannels = [];
     vm.pageStorytellers = [];
     vm.Dates = [];
-    vm.display=false;
+    vm.TotalStoryByGender = {"Men": 0, "Women": 0}
+    vm.display = false;
     // vm.labels = ["January", "February", "March", "April", "May", "June", "July"];
     // vm.data = [65, 59, 80, 81, 56, 55, 40];
     activate();
@@ -70,12 +71,12 @@
     };
 
     vm.onChangeSelectedDate = function () {
-      console.log("onChangeeee");
-      console.log("onChange", vm.selectedDate);
-      vm.keys1 = Object.keys(vm.pageStorytellers[vm.selectedDate].value);
-      vm.values1 = Object.values(vm.pageStorytellers[vm.selectedDate].value);
-      console.log("keys", Object.keys(vm.pageStorytellers[vm.selectedDate].value));
-      console.log("values", Object.values(vm.pageStorytellers[vm.selectedDate].value));
+      // console.log("onChangeeee");
+      // console.log("onChange", vm.selectedDate);
+      vm.storytellersLabels = Object.keys(vm.pageStorytellers[vm.selectedDate].value);
+      vm.storytellersData = Object.values(vm.pageStorytellers[vm.selectedDate].value);
+      // console.log("keys", Object.keys(vm.pageStorytellers[vm.selectedDate].value));
+      // console.log("values", Object.values(vm.pageStorytellers[vm.selectedDate].value));
       vm.display = true
 
 
@@ -104,8 +105,32 @@
         vm.pageStorytellers = insights1.data[0].values;
         console.log("insights2", vm.pageStorytellers);
         vm.selectedDate = vm.pageStorytellers[0].end_time;
+        vm.Dates = [];
+        vm.TotalStoryByGender = [{label: "Men", value: 0}, {label: "Women", value: 0}]
         vm.pageStorytellers.forEach(function (obj) {
-          vm.Dates.push({value: obj.end_time, text: moment(obj.end_time).format("DD-MM-YYYY")})
+          // console.log("obj",obj)
+
+          vm.Dates.push({value: obj.end_time, text: moment(obj.end_time).format("DD-MM-YYYY")});
+          var TempKeys = Object.keys(obj.value);
+          var TempValues = Object.values(obj.value);
+          if (obj.value) {
+            for (var i = 0; i < TempKeys.length; i++) {
+              // console.log("TempKeys[i]",TempKeys[i])
+              // console.log("TempValues[i]",TempValues[i])
+              if (TempKeys[i].charAt(0) == "M") {
+                vm.TotalStoryByGender[0].value = vm.TotalStoryByGender[0].value + TempValues[i];
+
+              }
+              else {
+                // console.log(TempValues[i])
+                vm.TotalStoryByGender[1].value = vm.TotalStoryByGender[1].value + TempValues[i];
+
+              }
+              // console.log(vm.TotalStoryByGender)
+
+            }
+          }
+
         });
 
 

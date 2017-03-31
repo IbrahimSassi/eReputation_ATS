@@ -1,0 +1,13 @@
+<div class="col s12 m3 l3">
+  <div id="doughnut-chart-wrapper">
+    <canvas id="doughnut-chart" height="200"></canvas>
+    <div class="doughnut-chart-status">
+      {{doughnutData[0].value + doughnutData[1].value}}
+    </div>
+  </div>
+</div>
+<div class="col s12 m2 l2">
+  <ul class="doughnut-chart-legend" ng-if="JSON.parse(doughnutData).length">
+    <li ng-repeat="data in JSON.parse(doughnutData)" class="mobile ultra-small"><span class="legend-color"></span>{{data.label}}</li>
+  </ul>
+</div>
