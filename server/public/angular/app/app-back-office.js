@@ -21,10 +21,16 @@ angular.module('ATSApp', [
     }])
   .run(function ($rootScope, $state,$location, ProfileService,$window) {
 
-    $rootScope.logOut= function()
+    $rootScope.logOut = function()
     {
       ProfileService.logout();
       $window.location.href = '/#!/login';
+    }
+
+    $rootScope.goToProfile  = function()
+    {
+
+      $state.go('profile')
     }
 
     if (ProfileService.isLoggedIn()) {

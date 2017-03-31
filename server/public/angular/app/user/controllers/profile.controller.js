@@ -54,20 +54,17 @@
     var vm = this;
     /***/
     vm.user = $rootScope.currentUser;
+
+
+    /*
     vm.userDoc = {};
-
     ProfileService.getProfile().then(successCallback, errorCallback);
-
-
-
     function successCallback(response){
       vm.userDoc = response.data
-
     }
     function errorCallback(error){
-      //error code
     }
-
+    */
 
 
     vm.logout = function () {

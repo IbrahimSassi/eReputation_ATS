@@ -31,7 +31,6 @@ router.post('/generate/:email', function(req, res, next) {
 
   });
 
-
   function sendmail (body,to) {
     mailsender
       .from('mohamedfiras.ouertani@esprit.tn', 'MFO11889162')

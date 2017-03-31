@@ -24,8 +24,8 @@
             <div class="card-content">
               <div class="row">
                 <div class="col s3 offset-s2">
-                  <h4 ng-if="profile.user.accountType=='individual'" class="card-title grey-text text-darken-4">{{profile.user.firstName}} {{profile.user.lastName}}</h4>
-                  <h4 ng-if="profile.user.accountType=='business'" class="card-title grey-text text-darken-4">{{profile.user.businessName}}</h4>
+                  <h4 ng-if="profile.user.kind=='Individual'" class="card-title grey-text text-darken-4">{{profile.user.firstName}} {{profile.user.lastName}}</h4>
+                  <h4 ng-if="profile.user.kind=='Business'" class="card-title grey-text text-darken-4">{{profile.user.businessName}}</h4>
                   <p class="medium-small grey-text">Project Manager</p>
                 </div>
                 <div class="col s2 center-align">
@@ -80,26 +80,26 @@
               <ul id="profile-page-about-details" class="collection z-depth-1">
                 <li class="collection-item">
                   <div class="row">
-                    <div class="col s5 grey-text darken-1"><i class="mdi-action-wallet-travel"></i> Project</div>
-                    <div class="col s7 grey-text text-darken-4 right-align">ABC Name</div>
+                    <div class="col s5 grey-text darken-1"><i class="mdi-action-wallet-travel"></i> Business Type</div>
+                    <div class="col s7 grey-text text-darken-4 right-align"><div ng-if="profile.user.kind=='Business'">{{profile.user.businessType}}</div></div>
                   </div>
                 </li>
                 <li class="collection-item">
                   <div class="row">
-                    <div class="col s5 grey-text darken-1"><i class="mdi-social-poll"></i> Skills</div>
-                    <div class="col s7 grey-text text-darken-4 right-align">HTML, CSS</div>
+                    <div class="col s5 grey-text darken-1"><i class="mdi-social-poll"></i> Employees Number</div>
+                    <div class="col s7 grey-text text-darken-4 right-align"><div ng-if="profile.user.kind=='Business'">{{profile.user.employeesNumber}}</div></div>
                   </div>
                 </li>
                 <li class="collection-item">
                   <div class="row">
-                    <div class="col s5 grey-text darken-1"><i class="mdi-social-domain"></i> Lives in</div>
-                    <div class="col s7 grey-text text-darken-4 right-align">NY, USA</div>
+                    <div class="col s5 grey-text darken-1"><i class="mdi-social-domain"></i> Country</div>
+                    <div class="col s7 grey-text text-darken-4 right-align"><div ng-if="profile.user.kind=='Business'">{{profile.user.country}}</div></div>
                   </div>
                 </li>
                 <li class="collection-item">
                   <div class="row">
-                    <div class="col s5 grey-text darken-1"><i class="mdi-social-cake"></i> Birth date</div>
-                    <div class="col s7 grey-text text-darken-4 right-align">18th June, 1991</div>
+                    <div class="col s5 grey-text darken-1"><i class="mdi-social-cake"></i> Active Since</div>
+                    <div class="col s7 grey-text text-darken-4 right-align"><div ng-if="profile.user.kind=='Business'">{{profile.user.ActiveSince}}</div></div>
                   </div>
                 </li>
               </ul>
