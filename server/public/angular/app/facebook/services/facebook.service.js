@@ -269,7 +269,7 @@
     function getPageFansOnlineFN(pageId, token, since, until) {
       return FacebookFactory.facebookInsights({
         pageId: pageId,
-        metric: 'page_fans_online',
+        metric: 'page_fans_online_per_day',
         token: token,
         since: since,
         until: until

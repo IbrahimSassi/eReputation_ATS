@@ -11,13 +11,35 @@
               <label for="first_name">Name</label>
             </div>
           </div>
+
           <div class="row">
             <div class="input-field col s12">
-              <i class="mdi-communication-email prefix"></i>
+              <i class="fa fa-users prefix"></i>
+              <input id="personal" type="checkbox" ng-model="vm.selectedChannel.personal">
+              <label for="personal">Personnel
+                <i class="mdi-action-help"
+                   tooltipped
+                   class="btn-floating waves-effect waves-light blue"
+                   data-position="bottom" data-delay="50" data-tooltip="Check it , if its your own page">
+                </i>
+              </label>
+              <br>
+            </div>
+          </div>
+
+          <br>
+
+
+
+          <div class="row" ng-if="!vm.selectedChannel.personal">
+            <div class="input-field col s12">
+              <i class="fa fa-link prefix"></i>
               <input ng-model="vm.selectedChannel.url" id="url" type="url">
+              <!--ng-blur="vm.getSimalarChannels()"-->
               <label for="url">Url</label>
             </div>
           </div>
+
           <div class="row">
             <div class="input-field col s1">
               <i class="mdi-action-lock-outline prefix"></i>
@@ -30,12 +52,30 @@
               </select>
               <label for="type">Type</label>
             </div>
-            <div style="margin-top: 15px;" class="input-field col s3">
-              <button ng-if="vm.selectedChannel.type=='facebook'" class="btn light-blue darken-4 waves-effect waves-light right">
+            <div ng-if="vm.selectedChannel.personal" style="margin-top: 15px;" class="input-field col s3">
+              <button ng-if="vm.selectedChannel.type=='facebook'"
+                      class="btn light-blue darken-4 waves-effect waves-light right"
+                      ng-click="vm.getPermissions()"
+              >
                 <i class="fa fa-facebook-official"></i> Give permission
               </button>
             </div>
           </div>
+
+          <div class="row" ng-if="vm.selectedChannel.personal && vm.myFacebookPages.length">
+            <div class="input-field col s1">
+              <i class="fa fa-facebook prefix"></i>
+            </div>
+
+            <div class="input-field col s11">
+              <select ng-required="true" ng-model="vm.selectedChannel.url" name="page" id="page" material-select watch>
+                <option ng-repeat="page in vm.myFacebookPages" value="{{page.value}}">{{page.text}}</option>
+              </select>
+              <label for="page">Page</label>
+            </div>
+          </div>
+
+
           <div class="row">
             <div class="row">
               <div class="input-field col s12">

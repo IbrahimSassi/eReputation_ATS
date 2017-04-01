@@ -14,7 +14,8 @@
     'ChannelService',
     '$state',
     '$stateParams',
-    '$rootScope'
+    '$rootScope',
+    'FacebookService'
   ];
 
 
@@ -22,11 +23,13 @@
   function DetailChannel(ChannelService,
                          $state,
                          $stateParams,
-                         $rootScope) {
+                         $rootScope,
+                         FacebookService) {
     //On Init Start
     var vm = this;
     vm.title = 'Channel List';
     vm.selectedChannel = {};
+    vm.myFacebookPages = [];
     // vm.availableOptions = [
     //   {id: '1', name: 'facebook'},
     //   {id: '2', name: 'twitter'},
@@ -49,17 +52,41 @@
     vm.editChannel = function () {
       ChannelService.updateChannel(vm.selectedChannel).then(function (data, err) {
         if (err) {
-          console.log(err)
+          console.log(err);
           Materialize.toast("There were an error", 3000, "rounded");
           return;
         }
-        console.log(data)
+        console.log(data);
         Materialize.toast("Channel Updated", 3000, "rounded");
         $state.go('channels');
 
 
       });
-    }
+    };
+
+
+    vm.getPermissions = function () {
+      console.log("getPermissions");
+      FacebookService.initFacebookApi()
+        .then(function (data) {
+          console.log("here we are token  + user ,,promise bouh kalb", data);
+          var token = data.authResponse.accessToken;
+
+          FacebookService.getLongLivedToken(token).then(function (newLongToken) {
+            console.log(newLongToken);
+            vm.selectedChannel.accessToken = newLongToken.longToken;
+            data.user.accounts.data.forEach(function (page) {
+              vm.myFacebookPages.push({value: page.id, text: page.name});
+
+              var $toastContent = $('<span class="green-text">Your permission has granted , now pick a page</span>');
+              var rounded = "rounded";
+              Materialize.toast($toastContent, 3000, rounded);
+
+            });
+          })
+
+        });
+    };
 
 
   }

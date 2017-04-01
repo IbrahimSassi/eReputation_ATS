@@ -74,26 +74,9 @@
       <div class="card-content">
         <a class="btn-floating btn-move-up waves-effect waves-light darken-2 right"><i
           class="mdi-content-add activator"></i></a>
-        <div class="col s12 m3 l3">
-          <div id="doughnut-chart-wrapper">
-            <canvas id="doughnut-chart" height="200"></canvas>
-            <div class="doughnut-chart-status">
-              4500
-              <p class="ultra-small center-align">Sold</p>
-            </div>
-          </div>
-        </div>
-        <div class="col s12 m2 l2">
-          <ul class="doughnut-chart-legend">
-            <li class="mobile ultra-small"><span class="legend-color"></span>Mobile</li>
-            <li class="kitchen ultra-small"><span class="legend-color"></span> Kitchen</li>
-            <li class="home ultra-small"><span class="legend-color"></span> Home</li>
-          </ul>
-        </div>
-        <div class="col s12 m5 l6">
-          <div class="trending-bar-chart-wrapper">
-            <canvas id="trending-bar-chart" height="90"></canvas>
-          </div>
+        <div class="col s12 m12 l12">
+
+          <bar-chart bar-labels="{{vm.labelsPageFansOnline}}" bar-data="{{vm.dataPageFansOnline}}"></bar-chart>
         </div>
       </div>
       <div class="card-reveal">

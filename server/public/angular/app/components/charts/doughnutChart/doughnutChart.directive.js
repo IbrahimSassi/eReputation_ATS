@@ -24,10 +24,7 @@
 
 
   function doughnutChartCtrl($scope) {
-    $scope.doughnutData = JSON.parse($scope.doughnutData);
-    console.log("hello worlddd", $scope.doughnutData)
-
-
+    $scope.localData = JSON.parse($scope.doughnutData);
     updateData();
 
 
@@ -74,26 +71,27 @@
         var max = 6;
         var min = 0;
 
-        var doughnutData = [];
+        var localData = [];
 
 
         if (JSON.parse($scope.doughnutData).length) {
-          JSON.parse($scope.doughnutData).forEach(function (obj) {
+          JSON.parse($scope.doughnutData).forEach(function (obj, index) {
             console.log("obj", obj)
             var random = Math.floor(Math.random() * (max - min) + min);
-            doughnutData.push({
+            localData.push({
               color: colors[random].color,
               highlight: colors[random].highlight,
               value: obj.value,
               label: obj.label
-            })
+            });
+            $scope.localData[index].color = colors[random].color;
           });
 
 
         }
 
         var doughnutChart = document.getElementById("doughnut-chart").getContext("2d");
-        window.myDoughnut = new Chart(doughnutChart).Doughnut(doughnutData, {
+        window.myDoughnut = new Chart(doughnutChart).Doughnut(localData, {
           segmentStrokeColor: "#fff",
           tooltipTitleFontFamily: "'Roboto','Helvetica Neue', 'Helvetica', 'Arial', sans-serif",// String - Tooltip title font declaration for the scale label
           animationSteps: 15,
@@ -111,9 +109,12 @@
 
 
     $scope.$watch('doughnutData', function (newValue, oldValue) {
-      // $scope.doughnutData = JSON.parse($scope.doughnutData);
-
       updateData();
+
+      $scope.localData = JSON.parse($scope.doughnutData);
+        console.log($scope.localData)
+
+
 
     });
 
