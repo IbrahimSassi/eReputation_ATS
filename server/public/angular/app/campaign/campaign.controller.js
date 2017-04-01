@@ -19,7 +19,7 @@
   /**Injection**/
   config.$inject = ['$stateProvider', '$qProvider'];
 
-  CampaignCtrl.$inject = ['CampaignService', '$state', 'angularLoad', '$scope'];
+  CampaignCtrl.$inject = ['CampaignService', 'ChannelService', '$state', 'angularLoad', '$scope', '$rootScope','$q'];
   /**End Of Injection**/
 
 
@@ -44,10 +44,11 @@
 
 
   }
+
   /**End of Route Config**/
 
 
-  function CampaignCtrl(CampaignService, $state, angularLoad, $scope) {
+  function CampaignCtrl(CampaignService, ChannelService, $state, angularLoad, $scope, $rootScope,$q) {
 
     /**Scope Replace**/
     var vm = this;
@@ -65,37 +66,36 @@
       vm.getAllCampaigns();
 
     };
-    var myCampaign = {
-      "name": "Iphone 87",
-      "url": "https://www.apple.com/iphone/olaola",
-      "description": "iphone 7 campaign ola",
-      "dateStart": "2017-03-24T23:00:00.000Z",
-      "dateEnd": "2017-06-04T23:00:00.000Z",
-      "phoneNumber": "0088414652",
-      "userId": "58d3dc815d391346a06f48c3",
-      "location": [
-        {
-          "latitude": 123.123,
-          "longitude": 55.55
-        }
-      ],
-      "keywords": [
-        {
-          "content": "Iphone 8 price",
-          "importance": "low"
-        }
-      ],
-      "channels": [
-        {
-          "channelId": "58d1825eb8224d1ee822642f"
-        }
-      ]
+
+
+    // $rootScope.currentUser._id='58dcdfb7007df41d241782f7';
+
+
+    $scope.channels = [];
+
+    vm.addChannels = function (channel) {
+      if(vm.extractDomain(channel.url).toLowerCase().indexOf('facebook')!=-1
+        || vm.extractDomain(channel.url).toLowerCase().indexOf('twitter')!=-1 )
+      {}
+      else
+      {
+        channel.url=vm.extractDomain(channel.url);
+      }
+      ChannelService.addChannel(channel).then(function (dataChannel) {
+        console.log(dataChannel);
+        $scope.channels.push(dataChannel);
+      });
     }
 
+
     vm.addCampaign = function (campaign) {
-      campaign.dateStart= moment(campaign.dateStart,'DD/MM/YYYY');
-      campaign.dateEnd=moment(campaign.dateEnd,'DD/MM/YYYY');
-      campaign.userId = '58d3dc815d391346a06f48c3';
+      campaign.channel.userId = $rootScope.currentUser._id;
+
+      console.log(channels);
+      campaign.channels = channels;
+      campaign.dateStart = moment(campaign.dateStart, 'DD/MM/YYYY');
+      campaign.dateEnd = moment(campaign.dateEnd, 'DD/MM/YYYY');
+      campaign.userId = $rootScope.currentUser._id;
 
       campaign.location = [
         {
@@ -109,21 +109,79 @@
           "importance": "low"
         }
       ];
-      campaign.channels = [
-        {
-          "channelId": "58d1825eb8224d1ee822642f"
-        }
-      ];
-
+      campaign.channel.personal === undefined ? false : campaign.channel.personal;
 
       CampaignService.addCampaign(campaign).then(function (data) {
         console.log("Campaign Added");
         console.log(data);
       }).catch(function (err) {
-        console.log("NOT Campaign Added");
+        // console.log("NOT Campaign Added");
+        // console.log(data);
+      });
+
+
+    };
+
+    vm.getAllMyChannels = function () {
+      ChannelService.getChannelsByUser($rootScope.currentUser._id).then(function (data) {
         console.log(data);
+        vm.allMyChannels = data;
       });
     };
+
+    vm.setColor=function(url)
+    {
+      if(vm.extractDomain(url).toLowerCase().indexOf('facebook')!=-1)
+      {
+        return "light-blue darken-3";
+      }
+      else if(vm.extractDomain(url).toLowerCase().indexOf('twitter')!=-1)
+      {
+        return "cyan accent-3";
+      }
+      else
+      {
+        return "green lighten-1";
+      }
+
+
+    }
+
+
+   vm.extractDomain=  function(url) {
+      var domain;
+      //find & remove protocol (http, ftp, etc.) and get domain
+      if (url.indexOf("://") > -1) {
+        domain = url.split('/')[2];
+      }
+      else {
+        domain = url.split('/')[0];
+      }
+
+      //find & remove port number
+      domain = domain.split(':')[0];
+
+      return domain;
+    };
+
+
+
+    vm.isImage=function(src) {
+
+      var deferred = $q.defer();
+
+      var image = new Image();
+      image.onerror = function() {
+        deferred.resolve(false);
+      };
+      image.onload = function() {
+        deferred.resolve(true);
+      };
+      image.src = src;
+
+      return deferred.promise;
+    };
+
 
     /** Scripts Loading first Refresh **/
     // angularLoad.loadScript('angular/app/assets/js/charts/ggleloader.js').then(function () {
