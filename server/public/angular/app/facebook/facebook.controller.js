@@ -17,7 +17,7 @@
   /* @ngInject */
   function config($stateProvider, $urlRouterProvider) {
     $stateProvider
-      .state('overview', {
+      .state('facebookOverview', {
         url: '/facebook/overview',
         templateUrl: 'angular/app/facebook/views/overview.view.html',
         controller: 'FacebookController as vm',
@@ -75,8 +75,8 @@
       vm.since = moment().subtract(1, 'weeks');
       vm.until = moment();
 
-      console.log(vm.since);
-      console.log(vm.until);
+      // console.log(vm.since);
+      // console.log(vm.until);
 
       ChannelService.getChannelsByUser(vm.connectedUserId).then(function (myChannels) {
         vm.myChannels = $filter('filter')(myChannels, {type: 'facebook', personal: true});
@@ -105,16 +105,16 @@
       }
 
       else {
-        vm.labelsPageFans = [];
-        vm.dataPageFans = [];
         initPageFansInsights();
-        initPageStoriesByStoryType();
+        initPageStorytellersByAgeGender();
         initPageFansOnlinePerDayInsights();
         initPositiveFeedbackInsights();
         initNegativeFeedbackInsights();
         initPageActionsPostReactions();
+        initPageViewsTotalInsights();
         initPositiveFeedbackInsights();
         initNegativeFeedbackInsights();
+        initPageStoriesByStoryType();
 
 
       }
@@ -135,6 +135,7 @@
         initPageViewsTotalInsights();
         initPositiveFeedbackInsights();
         initNegativeFeedbackInsights();
+        initPageStoriesByStoryType();
 
       });
 
@@ -182,6 +183,7 @@
 
 
     function initPageFansInsights() {
+
 
       vm.labelsPageFans = [];
       vm.dataPageFans = [];

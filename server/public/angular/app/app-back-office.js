@@ -4,6 +4,8 @@
 angular.module('ATSApp', [
   'ATSApp.dashboard',
   'ATSApp.campaign',
+  'ATSApp.facebook',
+  'ui.materialize',
   'ATSApp.channel',
   'ATSApp.profile',
   'ngResource',

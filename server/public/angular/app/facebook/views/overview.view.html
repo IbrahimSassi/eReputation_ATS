@@ -84,6 +84,59 @@
 
 <h1>Analytics</h1>
 <hr>
+
+
+<div ng-if="vm.myChannels.length" class="row">
+  <select ng-change="vm.onSelect()" ng-model="vm.selectedChannel._id" name="" id="" material-select watch>
+    <option value="" selected disabled>Pick a page</option>
+    <option ng-repeat="channel in vm.myChannels" value="{{channel._id}}">{{channel.name}}</option>
+  </select>
+</div>
+<div ng-if="!vm.myChannels.length" class="row">
+  <div class="spinner icon-spinner-3" aria-hidden="true">Loading Page ...</div>
+</div>
+<div class="row">
+  <div class="col s1 m1 l1">
+    Since
+  </div>
+  <div class="col s5 m5 l5">
+    <input input-date
+           type="text"
+           name="created"
+           id="since"
+           ng-model="vm.since"
+           format="mmmm d, yyyy"
+           today="today"
+           clear="clear"
+           close="close"
+           select-years="15"
+           ng-change="vm.onChange()"
+    />
+
+  </div>
+  <div class="col s1 m1 l1">
+    Until
+  </div>
+
+  <div class="col s5 m5 l5">
+    <input input-date
+           type="text"
+           name="created"
+           id="until"
+           ng-model="vm.until"
+           format="mmmm d, yyyy"
+           today="today"
+           clear="clear"
+           close="close"
+           select-years="15"
+           ng-change="vm.onChange()"
+    />
+
+  </div>
+
+</div>
+
+
 <div id="card-stats">
   <div class="row">
     <div class="col s12 m6 l3">
@@ -155,54 +208,6 @@
       </div>
     </div>
   </div>
-</div>
-
-
-<div class="row">
-  <select ng-change="vm.onSelect()" ng-model="vm.selectedChannel._id" name="" id="" material-select watch>
-    <option value="" selected disabled>Pick a page</option>
-    <option ng-repeat="channel in vm.myChannels" value="{{channel._id}}">{{channel.name}}</option>
-  </select>
-</div>
-<div class="row">
-  <div class="col s1 m1 l1">
-    Since
-  </div>
-  <div class="col s5 m5 l5">
-    <input input-date
-           type="text"
-           name="created"
-           id="since"
-           ng-model="vm.since"
-           format="mmmm d, yyyy"
-           today="today"
-           clear="clear"
-           close="close"
-           select-years="15"
-           ng-change="vm.onChange()"
-    />
-
-  </div>
-  <div class="col s1 m1 l1">
-    Until
-  </div>
-
-  <div class="col s5 m5 l5">
-    <input input-date
-           type="text"
-           name="created"
-           id="until"
-           ng-model="vm.until"
-           format="mmmm d, yyyy"
-           today="today"
-           clear="clear"
-           close="close"
-           select-years="15"
-           ng-change="vm.onChange()"
-    />
-
-  </div>
-
 </div>
 
 

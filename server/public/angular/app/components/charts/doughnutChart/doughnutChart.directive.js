@@ -76,7 +76,7 @@
 
         if (JSON.parse($scope.doughnutData).length) {
           JSON.parse($scope.doughnutData).forEach(function (obj, index) {
-            console.log("obj", obj)
+            // console.log("obj", obj)
             var random = Math.floor(Math.random() * (max - min) + min);
             localData.push({
               color: colors[random].color,
