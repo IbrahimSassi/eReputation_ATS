@@ -25,7 +25,7 @@
 
   function doughnutChartCtrl($scope) {
     $scope.localData = JSON.parse($scope.doughnutData);
-    updateData();
+    // updateData();
 
 
     function updateData() {
@@ -84,7 +84,7 @@
               value: obj.value,
               label: obj.label
             });
-            $scope.localData[index].color = colors[random].color;
+            // $scope.localData[index].color = colors[random].color;
           });
 
 
@@ -109,10 +109,11 @@
 
 
     $scope.$watch('doughnutData', function (newValue, oldValue) {
+
       updateData();
 
       $scope.localData = JSON.parse($scope.doughnutData);
-        console.log($scope.localData)
+      //   console.log($scope.localData)
 
 
 

@@ -71,7 +71,7 @@
   <div class="col s12 m12 l12">
     <div class="card">
       <div class="card-move-up waves-effect waves-block waves-light">
-        <div class="move-up red darken-1">
+        <div class="move-up blue darken-1">
           <div>
             <span class="chart-title white-text">Page Storytellers by Gender/Age</span>
             <!--<div class="chart-revenue cyan darken-2 white-text">-->
@@ -86,17 +86,20 @@
             <!--</label>-->
             <!--</div>-->
           </div>
-          <line-chart ng-if="vm.display" line-labels="{{vm.storytellersLabels}}"
-                      line-data="{{vm.storytellersData}}"></line-chart>
+          <line-chart-curved ng-if="vm.display" line-labels="{{vm.storytellersLabels}}"
+                      line-data="{{vm.storytellersData}}"></line-chart-curved>
 
         </div>
       </div>
       <div class="card-content">
         <a class="btn-floating btn-move-up waves-effect waves-light darken-2 right"><i
           class="mdi-content-add activator"></i></a>
-        <doughnut-chart doughnut-data="{{vm.TotalStoryByGender}}" ></doughnut-chart>
-        <div class="col s12 m5 l6">
+        <div class="col s12 m3 l3">
+          <doughnut-chart doughnut-data="{{vm.TotalStoryByGender}}"></doughnut-chart>
+        </div>
+        <div ng-if="vm.dataPageEngagedUsers.length" class="col s12 m8 l8">
           <bar-chart bar-data="{{vm.dataPageEngagedUsers}}" bar-labels="{{vm.labelsPageEngagedUsers}}"></bar-chart>
+          <p>The number of people who engaged with your Page. Engagement includes any click.</p>
         </div>
       </div>
       <div class="card-reveal">

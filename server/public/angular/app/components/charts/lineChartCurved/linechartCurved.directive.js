@@ -6,24 +6,24 @@
 
   angular
     .module('ATSApp.facebook')
-    .directive("lineChart", function () {
+    .directive("lineChartCurved", function () {
       return {
         restrict: 'EA',
-        controller: 'lineChartCtrl',
+        controller: 'lineChartCurvedCtrl',
         controllerAs: 'vm',
         scope: {
           lineLabels: '@lineLabels',
           lineData: '@lineData'
         },
-        templateUrl: 'angular/app/components/charts/lineChart/linechart.template.html',
+        templateUrl: 'angular/app/components/charts/lineChartCurved/linechartCurved.template.html',
 
       };
     })
-    .controller('lineChartCtrl', lineChartCtrl);
+    .controller('lineChartCurvedCtrl', lineChartCurvedCtrl);
   ;
 
 
-  function lineChartCtrl($scope) {
+  function lineChartCurvedCtrl($scope) {
     // console.log("hello world")
     // console.log(this)
     // console.log($scope)

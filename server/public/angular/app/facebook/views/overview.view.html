@@ -1,4 +1,162 @@
+<style>
+  @font-face {
+    font-family: 'icomoon';
+    src: url('http://s3.amazonaws.com/icomoon.io/4/Loading/icomoon.eot?-9haulc');
+    src: url('http://s3.amazonaws.com/icomoon.io/4/Loading/icomoon.eot?#iefix-9haulc') format('embedded-opentype'),
+    url('http://s3.amazonaws.com/icomoon.io/4/Loading/icomoon.woff?-9haulc') format('woff'),
+    url('http://s3.amazonaws.com/icomoon.io/4/Loading/icomoon.ttf?-9haulc') format('truetype'),
+    url('http://s3.amazonaws.com/icomoon.io/4/Loading/icomoon.svg?-9haulc#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  [class^="icon-"], [class*=" icon-"] {
+    font-family: 'icomoon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .icon-spinner:before {
+    content: "\e000";
+  }
+
+  .icon-spinner-2:before {
+    content: "\e001";
+  }
+
+  .icon-spinner-3:before {
+    content: "\e002";
+  }
+
+  .icon-spinner-4:before {
+    content: "\e003";
+  }
+
+  .icon-spinner-5:before {
+    content: "\e004";
+  }
+
+  .icon-spinner-6:before {
+    content: "\e005";
+  }
+
+  .icon-spinner-7:before {
+    content: "\e006";
+  }
+
+  @keyframes anim-rotate {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .spinner {
+    display: inline-block;
+    font-size: 4em;
+    height: 1em;
+    line-height: 1;
+    margin: .5em;
+    animation: anim-rotate 2s infinite linear;
+    color: #fff;
+    text-shadow: 0 0 .25em rgba(255, 255, 255, .3);
+  }
+
+  .spinner--steps {
+    animation: anim-rotate 1s infinite steps(8);
+  }
+
+  .spinner--steps2 {
+    animation: anim-rotate 1s infinite steps(12);
+  }
+
+</style>
+
 <h1>Analytics</h1>
+<hr>
+<div id="card-stats">
+  <div class="row">
+    <div class="col s12 m6 l3">
+      <div class="card">
+        <div class="card-content  green white-text">
+          <p class="card-stats-title"><i class="mdi-action-trending-up"></i> Positive Feedback </p>
+          <h4 ng-if="vm.totalPositiveFeedback" class="card-stats-number"> {{ vm.totalPositiveFeedback }}</h4>
+          <h4 ng-if="!vm.totalPositiveFeedback" class="card-stats-number">
+            <div style="font-size: medium;" class="spinner icon-spinner-3" aria-hidden="true"></div>
+          </h4>
+          <p class="card-stats-compare">
+            <i class="mdi-hardware-keyboard-arrow-up"></i> 15% <span
+            class="green-text text-lighten-5">from last week</span>
+          </p>
+        </div>
+        <div class="card-action  green darken-2">
+          <div id="clients-bar" class="center-align"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 m6 l3">
+      <div class="card">
+        <div class="card-content red lighten-1 white-text">
+          <p class="card-stats-title"><i class="mdi-action-trending-down"></i> Negative Feedback</p>
+          <h4 ng-if="vm.totalNegativeFeedback" class="card-stats-number">{{vm.totalNegativeFeedback }}</h4>
+          <h4 ng-if="!vm.totalNegativeFeedback" class="card-stats-number">
+            <div style="font-size: medium;" class="spinner icon-spinner-3" aria-hidden="true"></div>
+          </h4>
+          <p class="card-stats-compare">
+            <i class="mdi-hardware-keyboard-arrow-down"></i> 3% <span class="deep-purple-text text-lighten-5">from last month</span>
+          </p>
+        </div>
+        <div class="card-action  pink darken-2">
+          <div id="invoice-line" class="center-align"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 m6 l3">
+      <div class="card">
+        <div class="card-content blue-grey white-text">
+          <p class="card-stats-title"><i class="mdi-social-group-add"></i> Total Fans</p>
+          <h4 class="card-stats-number">
+            <div style="font-size: medium;" class="spinner icon-spinner-3" aria-hidden="true"></div>
+          </h4>
+          <p class="card-stats-compare">
+            <i class="mdi-hardware-keyboard-arrow-up"></i> 80% <span class="blue-grey-text text-lighten-5">from yesterday</span>
+          </p>
+        </div>
+        <div class="card-action blue-grey darken-2">
+          <div id="profit-tristate" class="center-align"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 m6 l3">
+      <div class="card">
+        <div class="card-content purple white-text">
+          <p class="card-stats-title"><i class="mdi-editor-border-color"></i> Total Post</p>
+          <h4 class="card-stats-number">
+            <div style="font-size: medium;" class="spinner icon-spinner-3" aria-hidden="true"></div>
+          </h4>
+          <p class="card-stats-compare">
+            <i class="mdi-hardware-keyboard-arrow-up"></i> 70% <span
+            class="purple-text text-lighten-5">last month</span>
+          </p>
+        </div>
+        <div class="card-action purple darken-2">
+          <div id="sales-compositebar" class="center-align"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <div class="row">
   <select ng-change="vm.onSelect()" ng-model="vm.selectedChannel._id" name="" id="" material-select watch>
@@ -41,12 +199,12 @@
            close="close"
            select-years="15"
            ng-change="vm.onChange()"
-
     />
 
   </div>
 
 </div>
+
 
 <div class="row">
   <div class="col s12 m12 l12">
@@ -54,131 +212,47 @@
       <div class="card-move-up waves-effect waves-block waves-light">
         <div class="move-up cyan darken-1">
           <div>
-            <span class="chart-title white-text">Page Fans</span>
-            <!--<div class="chart-revenue cyan darken-2 white-text">-->
-            <!--<p class="chart-revenue-total">$4,500.85</p>-->
-            <!--<p class="chart-revenue-per"><i class="mdi-navigation-arrow-drop-up"></i> 21.80 %</p>-->
-            <!--</div>-->
-            <!--<div class="switch chart-revenue-switch right">-->
-            <!--<label class="cyan-text text-lighten-5">-->
-            <!--Month-->
-            <!--<input type="checkbox">-->
-            <!--<span class="lever"></span> Year-->
-            <!--</label>-->
-            <!--</div>-->
+            <p class="margin white-text">The total number of people who have liked your Page.</p>
           </div>
-          <line-chart line-labels="{{vm.labelsPageFans}}" line-data="{{vm.dataPageFans}}"></line-chart>
+          <div ng-if="vm.dataPageFans.length" class="card-content">
+            <line-chart-curved line-labels="{{vm.labelsPageFans}}" line-data="{{vm.dataPageFans}}"></line-chart-curved>
+          </div>
+          <div ng-if="!vm.dataPageFans.length" class="card-content center-align">
+            <div class="spinner icon-spinner-3" aria-hidden="true"></div>
+          </div>
 
         </div>
       </div>
-      <div class="card-content">
-        <a class="btn-floating btn-move-up waves-effect waves-light darken-2 right"><i
-          class="mdi-content-add activator"></i></a>
-        <div class="col s12 m12 l12">
-          <p>The number of your fans who saw any posts on Facebook on a given day.</p>
-          <bar-chart bar-labels="{{vm.labelsPageFansOnline}}" bar-data="{{vm.dataPageFansOnline}}"></bar-chart>
+      <div class="card-move-up waves-effect waves-block waves-light">
+        <div class="move-up cyan ">
+          <p class="margin white-text">The number of your fans who saw any posts on Facebook on a given day</p>
         </div>
       </div>
-      <div class="card-reveal">
-        <span class="card-title grey-text text-darken-4">Revenue by Month <i
-          class="mdi-navigation-close right"></i></span>
-        <table class="responsive-table">
-          <thead>
-          <tr>
-            <th data-field="id">ID</th>
-            <th data-field="month">Month</th>
-            <th data-field="item-sold">Item Sold</th>
-            <th data-field="item-price">Item Price</th>
-            <th data-field="total-profit">Total Profit</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>1</td>
-            <td>January</td>
-            <td>122</td>
-            <td>100</td>
-            <td>$122,00.00</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>February</td>
-            <td>122</td>
-            <td>100</td>
-            <td>$122,00.00</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>March</td>
-            <td>122</td>
-            <td>100</td>
-            <td>$122,00.00</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>April</td>
-            <td>122</td>
-            <td>100</td>
-            <td>$122,00.00</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>May</td>
-            <td>122</td>
-            <td>100</td>
-            <td>$122,00.00</td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td>June</td>
-            <td>122</td>
-            <td>100</td>
-            <td>$122,00.00</td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td>July</td>
-            <td>122</td>
-            <td>100</td>
-            <td>$122,00.00</td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td>August</td>
-            <td>122</td>
-            <td>100</td>
-            <td>$122,00.00</td>
-          </tr>
-          <tr>
-            <td>9</td>
-            <td>Septmber</td>
-            <td>122</td>
-            <td>100</td>
-            <td>$122,00.00</td>
-          </tr>
-          <tr>
-            <td>10</td>
-            <td>Octomber</td>
-            <td>122</td>
-            <td>100</td>
-            <td>$122,00.00</td>
-          </tr>
-          <tr>
-            <td>11</td>
-            <td>November</td>
-            <td>122</td>
-            <td>100</td>
-            <td>$122,00.00</td>
-          </tr>
-          <tr>
-            <td>12</td>
-            <td>December</td>
-            <td>122</td>
-            <td>100</td>
-            <td>$122,00.00</td>
-          </tr>
-          </tbody>
-        </table>
+      <div ng-if="vm.labelsPageFansOnline.length" class="card-content">
+        <bar-chart bar-labels="{{vm.labelsPageFansOnline}}" bar-data="{{vm.dataPageFansOnline}}"></bar-chart>
+      </div>
+      <div ng-if="!vm.labelsPageFansOnline.length" class="card-content center-align">
+        <div class="spinner icon-spinner-3 cyan-text" aria-hidden="true"></div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col s12 m12 l12">
+    <div class="card">
+      <div class="card-move-up teal waves-effect waves-block waves-light">
+        <div class="move-up">
+          <p class="margin white-text">The number of times a Page's profile has been viewed by logged in and logged out people.</p>
+        </div>
+      </div>
+      <div ng-if="vm.dataPageViews.length" class="card-content teal darken-2">
+        <line-chart line-labels="{{vm.labelsPageViews}}" line-data="{{vm.dataPageViews}}"></line-chart>
+      </div>
+      <div ng-if="!vm.dataPageViews.length" class="card-content teal darken-2 center-align">
+        <div class="spinner icon-spinner-3" aria-hidden="true"></div>
       </div>
 
     </div>
@@ -188,10 +262,13 @@
 
 <div class="row">
   <div class="col s12 m12 l12">
-    <div class="card">
-      <div class="card-content">
-        <p>The number of stories about your Page's stories, by Page story type</p>
+    <div class="card ">
+      <div class="card-move-up waves-effect waves-block waves-light">
+        <div class="move-up">
+          <p class="margin black-text">The number of stories about your Page's stories, by Page story type</p>
+        </div>
       </div>
+
       <div ng-repeat="story in vm.pageStories" class="col s12 m4 l4">
         <!--<div class="col s12 m4 l4">-->
         <div class="card">
@@ -199,71 +276,12 @@
             <radar-chart labels="{{story.end_time}}" data="{{story}}"></radar-chart>
 
           </div>
-          <div class="card-content  teal darken-2">
-            <a class="btn-floating btn-move-up waves-effect waves-light darken-2 right"><i
-              class="mdi-content-add activator"></i></a>
-            <div class="line-chart-wrapper">
-              <p class="margin white-text">Revenue by country</p>
-              <canvas id="line-chart" height="114"></canvas>
-            </div>
-          </div>
-          <div class="card-reveal">
-    <span class="card-title grey-text text-darken-4">Revenue by country <i
-      class="mdi-navigation-close right"></i></span>
-            <table class="responsive-table">
-              <thead>
-              <tr>
-                <th data-field="country-name">Country Name</th>
-                <th data-field="item-sold">Item Sold</th>
-                <th data-field="total-profit">Total Profit</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td>USA</td>
-                <td>65</td>
-                <td>$452.55</td>
-              </tr>
-              <tr>
-                <td>UK</td>
-                <td>76</td>
-                <td>$452.55</td>
-              </tr>
-              <tr>
-                <td>Canada</td>
-                <td>65</td>
-                <td>$452.55</td>
-              </tr>
-              <tr>
-                <td>Brazil</td>
-                <td>76</td>
-                <td>$452.55</td>
-              </tr>
-              <tr>
-                <td>India</td>
-                <td>65</td>
-                <td>$452.55</td>
-              </tr>
-              <tr>
-                <td>France</td>
-                <td>76</td>
-                <td>$452.55</td>
-              </tr>
-              <tr>
-                <td>Austrelia</td>
-                <td>65</td>
-                <td>$452.55</td>
-              </tr>
-              <tr>
-                <td>Russia</td>
-                <td>76</td>
-                <td>$452.55</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
         </div>
       </div>
+      <div ng-if="!vm.pageStories.length" class="card-content center-align">
+        <div class="spinner icon-spinner-3 cyan-text" aria-hidden="true"></div>
+      </div>
+
     </div>
   </div>
 </div>

@@ -12,11 +12,11 @@
     .module('ATSApp.facebook')
     .controller('FacebookCommunityController', FacebookCommunityControllerFN);
 
-  FacebookCommunityControllerFN.$inject = ['$scope', 'FacebookService', 'ChannelService', '$filter'];
+  FacebookCommunityControllerFN.$inject = ['$scope', 'FacebookService', 'ChannelService', '$filter', 'colorPickerService'];
 
 
   /* @ngInject */
-  function FacebookCommunityControllerFN($scope, FacebookService, ChannelService, $filter) {
+  function FacebookCommunityControllerFN($scope, FacebookService, ChannelService, $filter, colorPickerService) {
     var vm = this;
     vm.title = 'FacebookController';
     vm.connectedUserId = "58d3dc815d391346a06f48c3";
@@ -26,7 +26,7 @@
     vm.Dates = [];
     vm.labelsPageEngagedUsers = [];
     vm.dataPageEngagedUsers = [];
-    vm.TotalStoryByGender = [{label: "Men", value: 0, color: ""}, {label: "Women", value: 0, color: ""}]
+    vm.TotalStoryByGender = [{label: "Men", value: 0}, {label: "Women", value: 0}]
     vm.display = false;
     activate();
 
@@ -49,7 +49,9 @@
     vm.onChange = function () {
       if (new Date(vm.since) > new Date(vm.until)) {
         Materialize.toast("Until Date Must be greater than since", 3000, "rounded");
-
+      }
+      else if (new Date(vm.until) > new Date() || new Date(vm.since) > new Date()) {
+        Materialize.toast("Until Date or Since Date Can t be greater than today", 3000, "rounded");
       }
       else {
         initPageStorytellersByAgeGender();
@@ -95,7 +97,7 @@
 
         vm.selectedDate = vm.pageStorytellers[0].end_time;
         vm.Dates = [];
-        vm.TotalStoryByGender = [{label: "Men", value: 0, color: ""}, {label: "Women", value: 0, color: ""}]
+        vm.TotalStoryByGender = [{label: "Men", value: 0}, {label: "Women", value: 0}]
         vm.pageStorytellers.forEach(function (obj) {
           vm.Dates.push({value: obj.end_time, text: moment(obj.end_time).format("DD-MM-YYYY")});
           var TempKeys = Object.keys(obj.value);

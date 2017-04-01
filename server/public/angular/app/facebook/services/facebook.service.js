@@ -27,6 +27,7 @@
     this.getPageStorytellersByCountry = getPageStorytellersByCountryFN;
     this.getPageEngagedUsers = getPageEngagedUsersFN;
     this.getPageNegativeFeedbackByType = getPageNegativeFeedbackByTypeFN;
+    this.getPageNegativeFeedback = getPageNegativeFeedbackFN;
     this.getPagePositiveFeedbackByType = getPagePositiveFeedbackByTypeFN;
     this.getPageFansOnline = getPageFansOnlineFN;
     this.getPageActionsPostReactionsTotal = getPageActionsPostReactionsTotalFN;
@@ -248,6 +249,15 @@
       return FacebookFactory.facebookInsights({
         pageId: pageId,
         metric: 'page_negative_feedback_by_type',
+        token: token,
+        since: since,
+        until: until
+      }).$promise;
+    }
+    function getPageNegativeFeedbackFN(pageId, token, since, until) {
+      return FacebookFactory.facebookInsights({
+        pageId: pageId,
+        metric: 'page_negative_feedback',
         token: token,
         since: since,
         until: until

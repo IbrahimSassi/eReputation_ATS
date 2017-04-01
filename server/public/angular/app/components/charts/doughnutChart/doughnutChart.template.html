@@ -1,12 +1,15 @@
-<div class="col s12 m3 l3" >
   <div id="doughnut-chart-wrapper">
     <canvas id="doughnut-chart" height="200"></canvas>
-    <div class="doughnut-chart-status">
+    <div class="doughnut-chart-status" style="margin-top: -20px">
       {{localData[0].value + localData[1].value}}
-    </div>
-  </div>
-  <ul class="doughnut-chart-legend" ng-if="localData.length">
-    <li ng-repeat="data in localData track by $index" class="ultra-small"><span style="background-color: {{data.color}}" class="legend-color"></span>{{data.label}}</li>
-  </ul>
 
-</div>
+      <p class="ultra-small center-align">Total</p>
+    </div>
+
+  </div>
+  <ul class="doughnut-chart-legend center-align" ng-if="localData.length">
+    <li ng-repeat="data in localData track by $index" class="ultra-small">
+      <span style="background-color: {{data.color }}" class="legend-color">
+        {{data.label}} - {{data.value}}
+      </span></li>
+  </ul>
