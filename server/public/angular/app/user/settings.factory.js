@@ -1,17 +1,17 @@
 /**
- * Created by MrFirases on 2/2/2017.
+ * Created by MrFirases on 4/1/2017.
  */
 (function () {
   'use strict';
 
   angular
-    .module('ATSApp-front.user')
-    .factory('UserFactory', UserFactory);
+    .module('ATSApp.profile')
+    .factory('SettingsFactory', SettingsFactory);
 
-  UserFactory.$inject = ['$resource'];
+  SettingsFactory.$inject = ['$resource'];
 
   /* @ngInject */
-  function UserFactory($resource) {
+  function SettingsFactory($resource) {
 
     /** Change The Link To your Rest URL From the JAVA EE APP*/
     return $resource('/users/register',

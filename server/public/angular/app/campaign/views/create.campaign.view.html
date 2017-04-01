@@ -51,7 +51,7 @@
                            on-open="onOpen()"
                            on-close="onClose()"
                            on-set="onSet()"
-                           on-stop="onStop()" />
+                           on-stop="onStop()"/>
                     <label for="inputCreated">Date start</label>
 
                   </div>
@@ -83,7 +83,7 @@
                            on-open="onOpen()"
                            on-close="onClose()"
                            on-set="onSet()"
-                           on-stop="onStop()" />
+                           on-stop="onStop()"/>
                     <label for="inputEnd">Date end</label>
                   </div>
                 </div>
@@ -97,7 +97,8 @@
                 <div class="row">
                   <div class="input-field col s12">
                     <i class="mdi-action-subject prefix"></i>
-                    <textarea ng-model="camp.channelToAdd.description" required id="c_desc" class="materialize-textarea"></textarea>
+                    <textarea ng-model="camp.channelToAdd.description" required id="c_desc"
+                              class="materialize-textarea"></textarea>
                     <label for="c_desc">Description</label>
                   </div>
                 </div>
@@ -116,7 +117,8 @@
       </div>
     </li>
     <li>
-      <div id="assign-section" class="collapsible-header"><i class="mdi-action-language"></i>ASSIGN CHANNELS</div>
+      <div id="assign-section" class="collapsible-header"><i class="mdi-action-language"></i>ASSIGN CHANNELS
+      </div>
       <div class="collapsible-body">
         <div class="col s12 m12 l6">
           <div class="card-panel">
@@ -125,45 +127,65 @@
               <form class="col s12">
                 <div class="row">
                   <div class="input-field col s12">
-                    <i class="mdi-image-edit prefix"></i>
-                    <input id="ch_url" type="url">
-                    <label for="ch_url">Channel URL</label>
+                    <div class="input-field col s3 offset-s3">
+                      <input ng-model="showHideTest" ng-value="true"  class="with-gap" name="group1" type="radio"
+                             id="test3"/>
+                      <label for="test3">New Channel</label>
+
+                    </div>
+
+                    <div class="input-field col s4">
+                      <input ng-model="showHideTest" ng-value="false" class="with-gap" name="group1" type="radio"
+                             id="test4"/>
+                      <label for="test4">Assign Channel</label>
+                    </div>
+
                   </div>
-                </div>
-                <div class="row">
-                  <div class="input-field col s12">
-                    <i class="mdi-image-edit prefix"></i>
-                    <input id="ch_name" type="text">
-                    <label for="ch_name">Channel Name</label>
+                  <div ng-show="showHideTest">
+
+
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <i class="mdi-image-edit prefix"></i>
+                        <input id="ch_url" type="url">
+                        <label for="ch_url">Channel URL</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <i class="mdi-image-edit prefix"></i>
+                        <input id="ch_name" type="text">
+                        <label for="ch_name">Channel Name</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s1">
+                        <i class="mdi-image-edit prefix"></i>
+                      </div>
+                      <div class="input-field col s11">
+                        <select name="type" id="ch_type">
+                          <option value="" disabled selected>Type</option>
+                          <option value="facebook">Facebook</option>
+                          <option value="twitter">Twitter</option>
+                          <option value="website">Website/Blogs</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="input-field col s1">
-                    <i class="mdi-image-edit prefix"></i>
+                  <div class="row">
+                    <div class="input-field col s6">
+                      <button onclick="validateAndGoNext('#campaign-section')"
+                              class="btn grey darken-3 waves-effect waves-light left" name="action">Previous
+                        <i class="mdi-image-navigate-before left"></i>
+                      </button>
+                    </div>
+                    <div class="input-field col s6">
+                      <button onclick="validateAndGoNext('#keywords-section')"
+                              class="btn grey darken-3 waves-effect waves-light right" name="action">Next
+                        <i class="mdi-image-navigate-next right"></i>
+                      </button>
+                    </div>
                   </div>
-                  <div class="input-field col s11">
-                    <select name="type" id="ch_type">
-                      <option value="" disabled selected>Type</option>
-                      <option value="facebook">Facebook</option>
-                      <option value="twitter">Twitter</option>
-                      <option value="website">Website/Blogs</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="input-field col s6">
-                    <button onclick="validateAndGoNext('#campaign-section')"
-                            class="btn grey darken-3 waves-effect waves-light left" name="action">Previous
-                      <i class="mdi-image-navigate-before left"></i>
-                    </button>
-                  </div>
-                  <div class="input-field col s6">
-                    <button onclick="validateAndGoNext('#keywords-section')"
-                            class="btn grey darken-3 waves-effect waves-light right" name="action">Next
-                      <i class="mdi-image-navigate-next right"></i>
-                    </button>
-                  </div>
-                </div>
               </form>
             </div>
           </div>
@@ -182,7 +204,7 @@
                   <div class="input-field col s12">
                     <i class="mdi-image-edit prefix"></i>
                     <input id="c_nnn" type="text">
-                    <label for="c_n">Campaign Name</label>
+                    <label for="c_n">Keyword Name</label>
                   </div>
                 </div>
                 <div class="row">
@@ -193,7 +215,8 @@
                     </button>
                   </div>
                   <div class="input-field col s6">
-                    <button ng-click="camp.addCampaign(camp.channelToAdd)"  class="btn grey darken-3 waves-effect waves-light right" type="submit" name="action">Next
+                    <button ng-click="camp.addCampaign(camp.channelToAdd)"
+                            class="btn grey darken-3 waves-effect waves-light right" type="submit" name="action">Next
                       <i class="mdi-image-navigate-next right"></i>
                     </button>
                   </div>
@@ -209,8 +232,8 @@
 
 <!--insights test -->
 <!--<script>-->
-  <!--loadScriptOnlyIfNotLoaded('angular/app/assets/js/charts/ggleloader.js')-->
-  <!--loadScriptOnlyIfNotLoaded('angular/app/assets/js/charts/chartTest.js')-->
+<!--loadScriptOnlyIfNotLoaded('angular/app/assets/js/charts/ggleloader.js')-->
+<!--loadScriptOnlyIfNotLoaded('angular/app/assets/js/charts/chartTest.js')-->
 <!--</script>-->
 
 <!--<div id="chart_div" style="width: 100%; height: 500px;"></div>-->
@@ -221,24 +244,23 @@
 <script>
   loadScriptOnlyIfNotLoaded("angular/app/assets/js/materialize.min.js");
   loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins.min.js");
-//  loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins/jquery-validation/jquery.validate.min.js");
-//  loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins/jquery-validation/additional-methods.min.js");
+  //  loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins/jquery-validation/jquery.validate.min.js");
+  //  loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins/jquery-validation/additional-methods.min.js");
 </script>
-
 
 
 <script>
   function validateAndGoNext(next) {
 
-      $(next).trigger('click');
+    $(next).trigger('click');
 
 
   }
-//
-//  function validateInfoForm() {
-//    return $("#c_n").valid() && $("#c_url").valid() && $("#datestart").valid()
-//      && $("#dateend").valid() && $("#c_phone").valid() && $("#c_desc").valid();
-//  }
+  //
+  //  function validateInfoForm() {
+  //    return $("#c_n").valid() && $("#c_url").valid() && $("#datestart").valid()
+  //      && $("#dateend").valid() && $("#c_phone").valid() && $("#c_desc").valid();
+  //  }
 
 </script>
 

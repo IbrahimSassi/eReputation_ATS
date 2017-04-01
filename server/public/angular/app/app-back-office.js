@@ -5,12 +5,11 @@ angular.module('ATSApp', [
   'ATSApp.dashboard',
   'ATSApp.campaign',
   'ATSApp.channel',
-  'ATSApp.facebook',
+  'ATSApp.profile',
   'ngResource',
   'angularLoad',
-  'ui.materialize',
-  // 'ng-fusioncharts',
-  'ui.router'
+  'ui.router',
+  'ATSApp.wwsa'
 
 
 ])
@@ -19,4 +18,26 @@ angular.module('ATSApp', [
       $urlRouterProvider.otherwise('/users');
 
 
-    }]);
+    }])
+  .run(function ($rootScope, $state,$location, ProfileService,$window) {
+
+    $rootScope.logOut = function()
+    {
+      ProfileService.logout();
+      $window.location.href = '/#!/login';
+    }
+
+    $rootScope.goToProfile  = function()
+    {
+
+      $state.go('profile')
+    }
+
+    if (ProfileService.isLoggedIn()) {
+
+      $rootScope.currentUser = ProfileService.currentUser();
+      console.log("Hey Brogrammers! This is the connected user: ",$rootScope.currentUser);
+    }
+    else {
+      //$state.go('login');
+    }});

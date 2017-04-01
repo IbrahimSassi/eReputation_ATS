@@ -127,7 +127,7 @@
             </div>
             <div class="col col s8 m8 l8">
               <ul id="profile-dropdown" class="dropdown-content">
-                <li><a href="#"><i class="mdi-action-face-unlock"></i> Profile</a>
+                <li><a href="#" ng-click="goToProfile()"><i class="mdi-action-face-unlock"></i> Profile</a>
                 </li>
                 <li><a href="#"><i class="mdi-action-settings"></i> Settings</a>
                 </li>
@@ -136,7 +136,7 @@
                 <li class="divider"></li>
                 <li><a href="#"><i class="mdi-action-lock-outline"></i> Lock</a>
                 </li>
-                <li><a href="#"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
+                <li><a href="#" ng-click="logOut()"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
                 </li>
               </ul>
               <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#"
@@ -194,18 +194,7 @@
         </div>
 
         <!--TODO - This Must Be Deplaced to the view and be dynamic -->
-        <div class="container">
-          <div class="row">
-            <div class="col s12 m12 l12">
-              <h5 class="breadcrumbs-title">Blank Page</h5>
-              <ol class="breadcrumbs">
-                <li><a href="admin.html">Dashboard</a></li>
-                <li><a href="#">Pages</a></li>
-                <li class="active">Blank Page</li>
-              </ol>
-            </div>
-          </div>
-        </div>
+
       </div>
       <!--breadcrumbs end-->
       <!--start container-->
@@ -490,13 +479,28 @@
 <script src="angular/app/components/colorPicker.service.js"></script>
 
 
+<!--User Profile-->
+<script src="angular/app/user/controllers/profile.controller.js"></script>
+<script src="angular/app/user/profile.service.js"></script>
 
+<script src="angular/app/user/controllers/settings.controller.js"></script>
+<script src="angular/app/user/settings.factory.js"></script>
+<script src="angular/app/user/settings.service.js"></script>
+<!--End User Profile-->
 
 <!--Ibrahim Modules ends-->
+
+<!-- sentimental analysis start -->
+<script src="angular/app/sentimental_analysis/sentimental_analysis.controller.js"></script>
+<script src="angular/app/sentimental_analysis/sentimental_analysis.factory.js"></script>
+<script src="angular/app/sentimental_analysis/sentimental_analysis.service.js"></script>
+<!-- sentimental analysis end -->
 
 <!--materialize js-->
 <script type="text/javascript" src="angular/app/assets/js/materialize.min.js"></script>
 <script type="text/javascript" src="angular/app/assets/js/plugins/angular-materialize.js"></script>
+<script src="angular/app/bower_components/moment/min/moment.min.js"></script>
+<!--<script src="angular/app/bower_components/smDateTimeRangePicker/src/picker.js"></script>-->
 
 <!--scrollbar-->
 <script type="text/javascript" src="angular/app/assets/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>

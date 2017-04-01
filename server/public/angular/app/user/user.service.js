@@ -57,35 +57,21 @@
     };
 
      var register = function(user) {
-      return $http.post('/users/register', user).then(successCallback, errorCallback);
-
-
-
-       function successCallback(response){
-         saveToken(response.data.token);
-       }
-       function errorCallback(error){
-         //error code
-       }
+      //return $http.post('/users/register', user)
+       return UserFactory.Register(user).$promise;
     };
 
      var login = function(user) {
-      return $http.post('/users/login', user).then(successCallback, errorCallback);
-
-
-
-       function successCallback(response){
-         saveToken(response.data.token);
-       }
-       function errorCallback(error){
-         //error code
-       }
+      //return $http.post('/users/login', user)
+       return UserFactory.Login(user).$promise;
     };
 
     var logout = function() {
       $window.localStorage.removeItem('mean-token');
     };
-
+    var SendVerificationEmail = function(email) {
+      return UserFactory.SendVerificationEmail({email:email}).$promise;
+    };
     return {
       currentUser : currentUser,
       saveToken : saveToken,
@@ -93,7 +79,8 @@
       isLoggedIn : isLoggedIn,
       register : register,
       login : login,
-      logout : logout
+      logout : logout,
+      SendVerificationEmail : SendVerificationEmail
     };
 
 
