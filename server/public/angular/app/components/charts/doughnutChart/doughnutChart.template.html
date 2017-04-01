@@ -5,11 +5,8 @@
       {{localData[0].value + localData[1].value}}
     </div>
   </div>
-</div>
-<div class="col s12 m2 l2">
   <ul class="doughnut-chart-legend" ng-if="localData.length">
     <li ng-repeat="data in localData track by $index" class="ultra-small"><span style="background-color: {{data.color}}" class="legend-color"></span>{{data.label}}</li>
   </ul>
-</div>
 
-{{localData}}
+</div>

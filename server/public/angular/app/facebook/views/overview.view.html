@@ -56,15 +56,15 @@
           <div>
             <span class="chart-title white-text">Page Fans</span>
             <!--<div class="chart-revenue cyan darken-2 white-text">-->
-              <!--<p class="chart-revenue-total">$4,500.85</p>-->
-              <!--<p class="chart-revenue-per"><i class="mdi-navigation-arrow-drop-up"></i> 21.80 %</p>-->
+            <!--<p class="chart-revenue-total">$4,500.85</p>-->
+            <!--<p class="chart-revenue-per"><i class="mdi-navigation-arrow-drop-up"></i> 21.80 %</p>-->
             <!--</div>-->
             <!--<div class="switch chart-revenue-switch right">-->
-              <!--<label class="cyan-text text-lighten-5">-->
-                <!--Month-->
-                <!--<input type="checkbox">-->
-                <!--<span class="lever"></span> Year-->
-              <!--</label>-->
+            <!--<label class="cyan-text text-lighten-5">-->
+            <!--Month-->
+            <!--<input type="checkbox">-->
+            <!--<span class="lever"></span> Year-->
+            <!--</label>-->
             <!--</div>-->
           </div>
           <line-chart line-labels="{{vm.labelsPageFans}}" line-data="{{vm.dataPageFans}}"></line-chart>
@@ -75,7 +75,7 @@
         <a class="btn-floating btn-move-up waves-effect waves-light darken-2 right"><i
           class="mdi-content-add activator"></i></a>
         <div class="col s12 m12 l12">
-
+          <p>The number of your fans who saw any posts on Facebook on a given day.</p>
           <bar-chart bar-labels="{{vm.labelsPageFansOnline}}" bar-data="{{vm.dataPageFansOnline}}"></bar-chart>
         </div>
       </div>
@@ -187,81 +187,86 @@
 
 
 <div class="row">
-
-  <div ng-repeat="story in vm.pageStories" class="col s12 m4 l4">
-    <!--<div class="col s12 m4 l4">-->
+  <div class="col s12 m12 l12">
     <div class="card">
-      <div class="card-move-up teal waves-effect waves-block waves-light">
-        <radar-chart labels="{{story.end_time}}" data="{{story}}"></radar-chart>
+      <div class="card-content">
+        <p>The number of stories about your Page's stories, by Page story type</p>
+      </div>
+      <div ng-repeat="story in vm.pageStories" class="col s12 m4 l4">
+        <!--<div class="col s12 m4 l4">-->
+        <div class="card">
+          <div class="card-move-up teal waves-effect waves-block waves-light">
+            <radar-chart labels="{{story.end_time}}" data="{{story}}"></radar-chart>
 
-      </div>
-      <div class="card-content  teal darken-2">
-        <a class="btn-floating btn-move-up waves-effect waves-light darken-2 right"><i
-          class="mdi-content-add activator"></i></a>
-        <div class="line-chart-wrapper">
-          <p class="margin white-text">Revenue by country</p>
-          <canvas id="line-chart" height="114"></canvas>
-        </div>
-      </div>
-      <div class="card-reveal">
+          </div>
+          <div class="card-content  teal darken-2">
+            <a class="btn-floating btn-move-up waves-effect waves-light darken-2 right"><i
+              class="mdi-content-add activator"></i></a>
+            <div class="line-chart-wrapper">
+              <p class="margin white-text">Revenue by country</p>
+              <canvas id="line-chart" height="114"></canvas>
+            </div>
+          </div>
+          <div class="card-reveal">
     <span class="card-title grey-text text-darken-4">Revenue by country <i
       class="mdi-navigation-close right"></i></span>
-        <table class="responsive-table">
-          <thead>
-          <tr>
-            <th data-field="country-name">Country Name</th>
-            <th data-field="item-sold">Item Sold</th>
-            <th data-field="total-profit">Total Profit</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>USA</td>
-            <td>65</td>
-            <td>$452.55</td>
-          </tr>
-          <tr>
-            <td>UK</td>
-            <td>76</td>
-            <td>$452.55</td>
-          </tr>
-          <tr>
-            <td>Canada</td>
-            <td>65</td>
-            <td>$452.55</td>
-          </tr>
-          <tr>
-            <td>Brazil</td>
-            <td>76</td>
-            <td>$452.55</td>
-          </tr>
-          <tr>
-            <td>India</td>
-            <td>65</td>
-            <td>$452.55</td>
-          </tr>
-          <tr>
-            <td>France</td>
-            <td>76</td>
-            <td>$452.55</td>
-          </tr>
-          <tr>
-            <td>Austrelia</td>
-            <td>65</td>
-            <td>$452.55</td>
-          </tr>
-          <tr>
-            <td>Russia</td>
-            <td>76</td>
-            <td>$452.55</td>
-          </tr>
-          </tbody>
-        </table>
+            <table class="responsive-table">
+              <thead>
+              <tr>
+                <th data-field="country-name">Country Name</th>
+                <th data-field="item-sold">Item Sold</th>
+                <th data-field="total-profit">Total Profit</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>USA</td>
+                <td>65</td>
+                <td>$452.55</td>
+              </tr>
+              <tr>
+                <td>UK</td>
+                <td>76</td>
+                <td>$452.55</td>
+              </tr>
+              <tr>
+                <td>Canada</td>
+                <td>65</td>
+                <td>$452.55</td>
+              </tr>
+              <tr>
+                <td>Brazil</td>
+                <td>76</td>
+                <td>$452.55</td>
+              </tr>
+              <tr>
+                <td>India</td>
+                <td>65</td>
+                <td>$452.55</td>
+              </tr>
+              <tr>
+                <td>France</td>
+                <td>76</td>
+                <td>$452.55</td>
+              </tr>
+              <tr>
+                <td>Austrelia</td>
+                <td>65</td>
+                <td>$452.55</td>
+              </tr>
+              <tr>
+                <td>Russia</td>
+                <td>76</td>
+                <td>$452.55</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
 
 <!--<div >-->
 <!--<fusioncharts-->

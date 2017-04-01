@@ -24,6 +24,8 @@
     vm.myChannels = [];
     vm.pageStorytellers = [];
     vm.Dates = [];
+    vm.labelsPageEngagedUsers = [];
+    vm.dataPageEngagedUsers = [];
     vm.TotalStoryByGender = [{label: "Men", value: 0, color: ""}, {label: "Women", value: 0, color: ""}]
     vm.display = false;
     activate();
@@ -35,33 +37,23 @@
 
       vm.since = moment().subtract(1, 'weeks');
       vm.until = moment();
-      // vm.selectedDate = moment()
-      // console.log(vm.selectedDate);
 
       ChannelService.getChannelsByUser(vm.connectedUserId).then(function (myChannels) {
         vm.myChannels = $filter('filter')(myChannels, {type: 'facebook', personal: true});
-        console.log(vm.myChannels)
+        // console.log(vm.myChannels)
         // vm.selectedChannel = vm.myChannels[1];
       });
-
-
-      // initPageStorytellersByAgeGender();
-
-
     }
 
 
     vm.onChange = function () {
-      // console.log("onChange", vm.since);
-      // console.log("onChange", vm.until);
-
       if (new Date(vm.since) > new Date(vm.until)) {
         Materialize.toast("Until Date Must be greater than since", 3000, "rounded");
 
       }
       else {
-        initPageStorytellersByAgeGender()
-
+        initPageStorytellersByAgeGender();
+        initPageEngagedUsersInsights();
       }
     };
 
@@ -77,26 +69,23 @@
         vm.selectedChannel = item;
         // console.log(vm.selectedChannel);
         initPageStorytellersByAgeGender()
-
+        initPageEngagedUsersInsights();
       });
 
     };
 
 
     function initPageStorytellersByAgeGender() {
-      console.log("storytellers")
       FacebookService.getPageStorytellersByAgeGender(
         vm.selectedChannel.url,
         vm.selectedChannel.accessToken,
         moment(new Date(vm.since)).format("DD-MM-YYYY"),
         moment(new Date(vm.until)).add(1, 'days').format("DD-MM-YYYY")
       ).then(function (insights1) {
-        console.log("insights1", insights1);
 
         if (!insights1.data.length) {
           Materialize.toast("There is no data in this range", 3000, "rounded");
           return;
-
         }
 
         insights1.data.forEach(function (period) {
@@ -104,8 +93,6 @@
             vm.pageStorytellers = period.values;
         });
 
-        // vm.pageStorytellers = insights1.data[0].values;
-        console.log("insights2", vm.pageStorytellers);
         vm.selectedDate = vm.pageStorytellers[0].end_time;
         vm.Dates = [];
         vm.TotalStoryByGender = [{label: "Men", value: 0, color: ""}, {label: "Women", value: 0, color: ""}]
@@ -127,6 +114,27 @@
 
 
       });
+    }
+
+
+    function initPageEngagedUsersInsights() {
+      vm.labelsPageEngagedUsers = [];
+      vm.dataPageEngagedUsers = [];
+      FacebookService.getPageEngagedUsers(
+        vm.selectedChannel.url,
+        vm.selectedChannel.accessToken,
+        moment(new Date(vm.since)).format("DD-MM-YYYY"),
+        moment(new Date(vm.until)).add(1, 'days').format("DD-MM-YYYY")
+      ).then(function (PageEngagedUsersInsights) {
+        vm.PageEngagedUsers = PageEngagedUsersInsights.data[0].values;
+        vm.PageEngagedUsers.forEach(function (EngagedUsers) {
+          vm.labelsPageEngagedUsers.push(moment(EngagedUsers.end_time).format("DD-MM-YYYY"));
+          vm.dataPageEngagedUsers.push(EngagedUsers.value);
+
+        });
+
+      });
+
     }
 
 

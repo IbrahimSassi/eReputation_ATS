@@ -96,9 +96,7 @@
           class="mdi-content-add activator"></i></a>
         <doughnut-chart doughnut-data="{{vm.TotalStoryByGender}}" ></doughnut-chart>
         <div class="col s12 m5 l6">
-          <div class="trending-bar-chart-wrapper">
-            <canvas id="trending-bar-chart" height="90"></canvas>
-          </div>
+          <bar-chart bar-data="{{vm.dataPageEngagedUsers}}" bar-labels="{{vm.labelsPageEngagedUsers}}"></bar-chart>
         </div>
       </div>
       <div class="card-reveal">

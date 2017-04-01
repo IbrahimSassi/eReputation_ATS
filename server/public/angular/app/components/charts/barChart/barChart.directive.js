@@ -26,6 +26,8 @@
 
   function barChartCtrl($scope) {
 
+    $scope.now = Date.now() + Math.random();
+
     updateData();
 
 
@@ -48,7 +50,9 @@
         };
 
 
-        var trendingBarChart = document.getElementById("bar-chart-component").getContext("2d");
+        var id = "bar-chart-component" + "-" + $scope.now;
+
+        var trendingBarChart = document.getElementById(id.toString()).getContext("2d");
         window.trendingBarChart = new Chart(trendingBarChart).Bar(dataBarChart, {
           scaleShowGridLines: false,///Boolean - Whether grid lines are shown across the chart
           showScale: true,
@@ -65,9 +69,7 @@
 
 
     $scope.$watch('barData', function (newValue, oldValue) {
-      console.log("get called")
       updateData();
-
     });
 
 
