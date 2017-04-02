@@ -15,8 +15,6 @@
   function SettingsService($http,$window) {
 
 
-
-
     return {
 
 
@@ -25,7 +23,6 @@
 
 
   }
-
 
 })();
 

@@ -1,10 +1,220 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div id="breadcrumbs-wrapper">
+  <!-- Search for small screen -->
+  <div class="header-search-wrapper grey hide-on-large-only">
+    <i class="mdi-action-search active"></i>
+    <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize">
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m12 l12">
+        <h5 class="breadcrumbs-title">Settings</h5>
+        <ol class="breadcrumbs">
+          <li><a href="index.html">Admin</a>
+          </li>
+          <li><a href="#">Profile</a>
+          </li>
+          <li class="active">Settings</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
 
-</body>
-</html>
+<!-- Here we go -->
+<div class="row">
+<div class="col s10 offset-s1">
+
+  <ul class="collapsible collapsible-accordion" data-collapsible="expandable">
+    <li>
+      <div class="collapsible-header active"><i class="mdi-file-cloud-download"></i> Basic Information</div>
+      <div class="collapsible-body">
+
+
+        <div class="row">
+          <div class="col s12 m12 l12">
+            <div class="card-panel">
+              <div class="row">
+                <form class="col s12">
+                  <div class="row">
+                    <div class="input-field col s4">
+                      <i class="mdi-action-account-circle prefix"></i>
+                      <input id="icon_prefix" placeholder="Devensta" type="text" class="validate">
+                      <label for="icon_prefix">Business Name</label>
+                    </div>
+                    <div class="input-field col s4">
+                      <select  id="businessType" name="businessType" ng-model="user.credentialsRegister.businessType" data-error=".businessType">
+                        <option value="" selected disabled>Business Type</option>
+                        <option value="1">Aerospace</option>
+                        <option value="2">Agriculture/Forestry</option>
+                        <option value="3">Automotive</option>
+                        <option value="4">Business Services/Consulting</option>
+                        <option value="5">Communications/Telecom supplier</option>
+                        <option value="6">Computer/Software/Technology manufacturer</option>
+                        <option value="7">Computer/Technology reseller</option>
+                        <option value="8">Computer services/consulting</option>
+                        <option value="9">Education</option>
+                        <option value="10">Electronics</option>
+                        <option value="11">Government</option>
+                        <option value="12">Healthcare/Health services</option>
+                        <option value="13">Manufacturing/Industrial (non-computer related)</option>
+                        <option value="14">Manufacturing consumer goods</option>
+                        <option value="15">Financial/Banking/Insurance/Real Estate/Legal</option>
+                        <option value="16">Retail/Wholesale</option>
+                        <option value="17">Oil/Gas/Mining/Other natural resources</option>
+                        <option value="18">Publishing/Broadcast/Media</option>
+                        <option value="19">Service Provider (ASP, ESP, Web Hosting)</option>
+                        <option value="20">VAR/VAD/Systems or Network Integrator</option>
+                        <option value="22">Transportation/Distribution</option>
+                        <option value="23">Travel/Hospitality/Recreation/Entertainment</option>
+                        <option value="24">Utility</option>
+                        <option value="21">Other</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s4">
+                      <i class="mdi-action-account-circle prefix"></i>
+                      <input id="icon_prefix" placeholder="exemple@gmail.com" type="text" class="validate">
+                      <label for="icon_prefix">Email Address</label>
+                    </div>
+                    <div class="input-field col s4">
+                      <select id="employeesNumber" name="employeesNumber" ng-model="user.credentialsRegister.employeesNumber" data-error=".employeesNumber">
+                        <option value="" selected disabled>N° of Employees</option>
+                        <option value="1 - 10">1 - 10</option>
+                        <option value="10 - 100">10 - 100</option>
+                        <option value="100 - 1000">100 - 1000</option>
+                        <option value="+1000">+1000</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s8">
+                      <i class="mdi-communication-phone prefix"></i>
+                      <input id="phone-code" type="text" class="">
+                      <label for="phone_code">Phone Code</label>
+                    </div>
+                    <div class="input-field col s4">
+                      <div class="input-field col s12">
+                        <button class="btn cyan waves-effect waves-light" type="submit" name="action"><i class="mdi-action-lock-open"></i> Save Changes</button>
+                      </div>
+                    </div>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </li>
+    <li>
+      <div class="collapsible-header active "><i class="mdi-hardware-desktop-windows"></i> Additional Information</div>
+      <div class="collapsible-body">
+
+        <!--Heyyyyyy-->
+
+        <div class="row">
+          <div class="col s12 m12 l12">
+            <div class="card-panel">
+              <div class="row">
+                <form class="col s12">
+                  <div class="row">
+                    <div class="input-field col s4">
+                      <i class="mdi-action-account-circle prefix"></i>
+                      <input id="icon_prefix" placeholder="Devensta" type="text" class="validate">
+                      <label for="icon_prefix">Business Name</label>
+                    </div>
+                    <div class="input-field col s4">
+                      <select  id="businessType" name="businessType" ng-model="user.credentialsRegister.businessType" data-error=".businessType">
+                        <option value="" selected disabled>Business Type</option>
+                        <option value="1">Aerospace</option>
+                        <option value="2">Agriculture/Forestry</option>
+                        <option value="3">Automotive</option>
+                        <option value="4">Business Services/Consulting</option>
+                        <option value="5">Communications/Telecom supplier</option>
+                        <option value="6">Computer/Software/Technology manufacturer</option>
+                        <option value="7">Computer/Technology reseller</option>
+                        <option value="8">Computer services/consulting</option>
+                        <option value="9">Education</option>
+                        <option value="10">Electronics</option>
+                        <option value="11">Government</option>
+                        <option value="12">Healthcare/Health services</option>
+                        <option value="13">Manufacturing/Industrial (non-computer related)</option>
+                        <option value="14">Manufacturing consumer goods</option>
+                        <option value="15">Financial/Banking/Insurance/Real Estate/Legal</option>
+                        <option value="16">Retail/Wholesale</option>
+                        <option value="17">Oil/Gas/Mining/Other natural resources</option>
+                        <option value="18">Publishing/Broadcast/Media</option>
+                        <option value="19">Service Provider (ASP, ESP, Web Hosting)</option>
+                        <option value="20">VAR/VAD/Systems or Network Integrator</option>
+                        <option value="22">Transportation/Distribution</option>
+                        <option value="23">Travel/Hospitality/Recreation/Entertainment</option>
+                        <option value="24">Utility</option>
+                        <option value="21">Other</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s4">
+                      <i class="mdi-action-account-circle prefix"></i>
+                      <input id="icon_prefix" placeholder="exemple@gmail.com" type="text" class="validate">
+                      <label for="icon_prefix">Email Address</label>
+                    </div>
+                    <div class="input-field col s4">
+                      <select id="employeesNumber" name="employeesNumber" ng-model="user.credentialsRegister.employeesNumber" data-error=".employeesNumber">
+                        <option value="" selected disabled>N° of Employees</option>
+                        <option value="1 - 10">1 - 10</option>
+                        <option value="10 - 100">10 - 100</option>
+                        <option value="100 - 1000">100 - 1000</option>
+                        <option value="+1000">+1000</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s8">
+                      <i class="mdi-communication-phone prefix"></i>
+                      <input id="phone-code" type="text" class="">
+                      <label for="phone_code">Phone Code</label>
+                    </div>
+                    <div class="input-field col s4">
+                      <div class="input-field col s12">
+                        <button class="btn cyan waves-effect waves-light" type="submit" name="action"><i class="mdi-action-lock-open"></i> Save Changes</button>
+                      </div>
+                    </div>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--End heyyy-->
+
+      </div>
+    </li>
+    <li>
+      <div class="collapsible-header active "><i class="mdi-hardware-gamepad"></i> Third Header</div>
+      <div class="collapsible-body">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </p>
+      </div>
+    </li>
+  </ul>
+
+</div>
+</div>
+
+
+<script>
+  loadScriptOnlyIfNotLoaded("angular/app/assets/js/materialize.min.js");
+  loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins.min.js");
+</script>
+
+<script type="text/javascript">
+  $('#phone-code').formatter({
+    'pattern': '+{{999}} - {{999999999999}}',
+    'persistent': true
+  });
+</script>
