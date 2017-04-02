@@ -19,7 +19,7 @@
   /**Injection**/
   config.$inject = ['$stateProvider', '$qProvider'];
 
-  CampaignCtrl.$inject = ['CampaignService', 'ChannelService', '$state', 'angularLoad', '$scope', '$rootScope','$q'];
+  CampaignCtrl.$inject = ['CampaignService', 'ChannelService', 'FacebookService', '$state', 'angularLoad', '$scope', '$rootScope', '$q'];
   /**End Of Injection**/
 
 
@@ -48,7 +48,7 @@
   /**End of Route Config**/
 
 
-  function CampaignCtrl(CampaignService, ChannelService, $state, angularLoad, $scope, $rootScope,$q) {
+  function CampaignCtrl(CampaignService, ChannelService, FacebookService, $state, angularLoad, $scope, $rootScope, $q) {
 
     /**Scope Replace**/
     var vm = this;
@@ -72,30 +72,65 @@
 
 
     $scope.channels = [];
+    $scope.channelsId = [];
+    $scope.keywords = [];
 
     vm.addChannels = function (channel) {
-      if(vm.extractDomain(channel.url).toLowerCase().indexOf('facebook')!=-1
-        || vm.extractDomain(channel.url).toLowerCase().indexOf('twitter')!=-1 )
-      {}
-      else
-      {
-        channel.url=vm.extractDomain(channel.url);
+      //add only domain name exemple www.ifm.tn
+      if (vm.extractDomain(channel.url).toLowerCase().indexOf('facebook') != -1
+        || vm.extractDomain(channel.url).toLowerCase().indexOf('twitter') != -1) {
       }
+      else {
+        channel.url = vm.extractDomain(channel.url);
+      }
+      //end
+      $scope.myChannelAaccessToken === undefined ? '' : channel.accessToken = $scope.myChannelAaccessToken;
+      //Call Service Add Channel Function
+
+
       ChannelService.addChannel(channel).then(function (dataChannel) {
-        console.log(dataChannel);
+        vm.pushChannelId(dataChannel._id)
+      });
+
+      //end
+    };
+
+    vm.pushChannelId = function (idChannel) {
+      $scope.channelsId.push({'channelId': idChannel});
+      ChannelService.getChannelByID(idChannel).then(function (dataChannel) {
         $scope.channels.push(dataChannel);
       });
-    }
+
+    };
+
+    vm.addKeywords = function (keyword) {
+      $scope.keywords.push(
+        {
+          "content": keyword.content,
+          "importance": keyword.importance
+        }
+      );
+    };
+    vm.removeKeywordsFromAdd = function (index) {
+      $scope.keywords.splice(index, 1);
+      console.info($scope.keywords);
+    };
 
 
+    /**
+     * addCampaign
+     * @param campaign
+     */
     vm.addCampaign = function (campaign) {
+      // init vars
       campaign.channel.userId = $rootScope.currentUser._id;
-
-      console.log(channels);
-      campaign.channels = channels;
+      campaign.userId = $rootScope.currentUser._id;
+      campaign.channel.personal === undefined ? false : campaign.channel.personal;
+      campaign.channels = $scope.channelsId;
       campaign.dateStart = moment(campaign.dateStart, 'DD/MM/YYYY');
       campaign.dateEnd = moment(campaign.dateEnd, 'DD/MM/YYYY');
-      campaign.userId = $rootScope.currentUser._id;
+
+      campaign.keywords = $scope.keywords;
 
       campaign.location = [
         {
@@ -103,25 +138,22 @@
           "longitude": 55.55
         }
       ];
-      campaign.keywords = [
-        {
-          "content": "Iphone 8 price",
-          "importance": "low"
-        }
-      ];
-      campaign.channel.personal === undefined ? false : campaign.channel.personal;
+
+
+      // end init vars
+
 
       CampaignService.addCampaign(campaign).then(function (data) {
         console.log("Campaign Added");
         console.log(data);
-      }).catch(function (err) {
-        // console.log("NOT Campaign Added");
-        // console.log(data);
       });
 
 
     };
 
+    /**
+     * getAllMyChannels
+     */
     vm.getAllMyChannels = function () {
       ChannelService.getChannelsByUser($rootScope.currentUser._id).then(function (data) {
         console.log(data);
@@ -129,26 +161,29 @@
       });
     };
 
-    vm.setColor=function(url)
-    {
-      if(vm.extractDomain(url).toLowerCase().indexOf('facebook')!=-1)
-      {
+
+    /***
+     * setColor
+     * @param url
+     * @returns {*}
+     */
+
+    vm.setColor = function (url) {
+      if (vm.extractDomain(url).toLowerCase().indexOf('facebook') != -1) {
         return "light-blue darken-3";
       }
-      else if(vm.extractDomain(url).toLowerCase().indexOf('twitter')!=-1)
-      {
+      else if (vm.extractDomain(url).toLowerCase().indexOf('twitter') != -1) {
         return "cyan accent-3";
       }
-      else
-      {
+      else {
         return "green lighten-1";
       }
 
 
-    }
+    };
 
 
-   vm.extractDomain=  function(url) {
+    vm.extractDomain = function (url) {
       var domain;
       //find & remove protocol (http, ftp, etc.) and get domain
       if (url.indexOf("://") > -1) {
@@ -165,21 +200,28 @@
     };
 
 
+    $scope.myFacebookPages = [];
+    vm.getPermissions = function () {
+      console.log("getPermissions");
+      FacebookService.initFacebookApi()
+        .then(function (data) {
+          console.log("here we are token  + user ,,promise bouh kalb", data);
+          var token = data.authResponse.accessToken;
 
-    vm.isImage=function(src) {
+          FacebookService.getLongLivedToken(token).then(function (newLongToken) {
+            console.log("new long" + newLongToken);
+            $scope.myChannelAaccessToken = newLongToken.longToken;
+            data.user.accounts.data.forEach(function (page) {
+              $scope.myFacebookPages.push({value: page.id, text: page.name})
+              console.log("666" + $scope.myFacebookPages);
+              var $toastContent = $('<span class="green-text">Your permission has granted , now pick a page</span>');
+              var rounded = "rounded"
+              Materialize.toast($toastContent, 3000, rounded);
 
-      var deferred = $q.defer();
+            });
+          })
 
-      var image = new Image();
-      image.onerror = function() {
-        deferred.resolve(false);
-      };
-      image.onload = function() {
-        deferred.resolve(true);
-      };
-      image.src = src;
-
-      return deferred.promise;
+        });
     };
 
 

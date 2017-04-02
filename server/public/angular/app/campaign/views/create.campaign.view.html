@@ -53,7 +53,6 @@
                            on-set="onSet()"
                            on-stop="onStop()"/>
                     <label for="inputCreated">Date start</label>
-
                   </div>
                 </div>
                 <div class="row">
@@ -128,106 +127,128 @@
                 <div class="row">
                   <div class="input-field col s12">
                     <div class="input-field col s3 offset-s3">
-                      <input ng-model="showHideTest" ng-value="true" class="with-gap" name="group1" type="radio"
+                      <input ng-model="newChannelShow" ng-value="true" class="with-gap" name="group1" type="radio"
                              id="test3"/>
                       <label for="test3">New Channel</label>
-
                     </div>
-
                     <div class="input-field col s4">
-                      <input ng-model="showHideTest" ng-value="false" class="with-gap" name="group1" type="radio"
+                      <input ng-model="newChannelShow" ng-value="false" class="with-gap" name="group1" type="radio"
                              id="test4"/>
                       <label for="test4">Assign Channel</label>
                     </div>
-
                   </div>
-                  <div ng-show="showHideTest===false">
+                  <div ng-show="newChannelShow===false">
                     <span ng-init="camp.getAllMyChannels()"></span>
                     <div class="row">
                       <div class="input-field col s1">
                         <i class="mdi-image-edit prefix"></i>
                       </div>
                       <div class="input-field col s11">
-
-                        <select class="browser-default" ng-model="camp.campaignToAdd.channel._id">
+                        <select class="browser-default" ng-model="camp.campaignToAdd.channelId">
                           <option value="" disabled selected> Choose existent channel</option>
                           <optgroup ng-repeat="ch in camp.allMyChannels" label="{{ch.name}}">
                             <option value="{{ch._id}}">{{ch.url}}</option>
                           </optgroup>
                         </select>
-
-
                       </div>
                     </div>
                   </div>
-                  <div ng-show="showHideTest">
+                  <div ng-show="newChannelShow">
                     <div class="row">
-                      <div class="input-field col s4 offset-s1">
-
+                      <div class="input-field col s12">
                         <div class="row">
+                          <div class="input-field col s12">
+                            <i class="mdi-image-edit prefix"></i>
+                            <input ng-model="camp.campaignToAdd.channel.name" id="ch_name" type="text">
+                            <label for="ch_name">Channel Name</label>
+                          </div>
+
+                        </div>
+                        <div class="row">
+                          <div class="input-field col s12">
+                            <i class="fa fa-users prefix"></i>
+                            <input ng-init="camp.campaignToAdd.channel.personal=false" id="personal" type="checkbox"
+                                   ng-model="camp.campaignToAdd.channel.personal">
+                            <label for="personal">Personnel
+                            </label>
+                            <br>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="input-field col s1">
+                            <i class="mdi-image-edit prefix"></i>
+                          </div>
+                          <div class="input-field col s8">
+                            <select ng-model="camp.campaignToAdd.channel.type" name="type" id="ch_type">
+                              <option value="" disabled>Type</option>
+                              <option value="facebook">Facebook</option>
+                              <option value="twitter">Twitter</option>
+                              <option value="website">Website/Blogs</option>
+                            </select>
+                          </div>
+                          <div
+                            ng-if="camp.campaignToAdd.channel.personal && camp.campaignToAdd.channel.type==='facebook'"
+                            style="margin-top: 15px;" class="input-field col s3">
+                            <button
+                              ng-click="camp.getPermissions()"
+                              class="btn light-blue darken-4 waves-effect waves-light right">
+                              <i class="fa fa-facebook-official left"></i> Give permission
+                            </button>
+                          </div>
+                        </div>
+                        <div ng-if="camp.campaignToAdd.channel.personal===false" class="row">
                           <div class="input-field col s12">
                             <i class="mdi-image-edit prefix"></i>
                             <input ng-model="camp.campaignToAdd.channel.url" id="ch_url" type="url">
                             <label for="ch_url">Channel URL</label>
                           </div>
                         </div>
-                        <div class="row">
-
-                          <div class="input-field col s12">
-                            <i class="mdi-image-edit prefix"></i>
-                            <input ng-model="camp.campaignToAdd.channel.name" id="ch_name" type="text">
-                            <label for="ch_name">Channel Name</label>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="input-field col s12">
-                            <i class="fa fa-users prefix"></i>
-
-                            <input ng-init="camp.campaignToAdd.channel.personal=false" id="personal" type="checkbox" ng-model="camp.campaignToAdd.channel.personal">
-                            <label for="personal">Personnel
-                            </label>
-                            <br>
-                          </div>
-                        </div>
-
-                        <div class="row">
+                        <div class="row" ng-if="camp.campaignToAdd.channel.personal && myFacebookPages.length">
                           <div class="input-field col s1">
-                            <i class="mdi-image-edit prefix"></i>
+                            <i class="fa fa-facebook prefix"></i>
                           </div>
+
                           <div class="input-field col s11">
-                            <select ng-model="camp.campaignToAdd.channel.type" name="type" id="ch_type">
-                              <option value="" disabled selected>Type</option>
-                              <option value="facebook">Facebook</option>
-                              <option value="twitter">Twitter</option>
-                              <option value="website">Website/Blogs</option>
+                            <select ng-required="true" ng-model="camp.campaignToAdd.channel.url" name="page" id="page"
+                                    material-select watch>
+                              <option value="" selected>Choose an option</option>
+                              <option ng-repeat="page in myFacebookPages" value="{{page.value}}">{{page.text}}</option>
                             </select>
+                            <label for="page">Page</label>
                           </div>
                         </div>
                       </div>
-
-
-                      <div class="input-field col s2">
-
-                          <button ng-click="camp.addChannels(camp.campaignToAdd.channel)"
-                                  class="btn grey darken-3 waves-effect waves-light center " name="action">Add
-                            <i class="mdi-image-navigate-next right"></i>
-                          </button>
-
-                      </div>
-                      <div class="input-field col s5">
-                        <span ng-repeat="channel in channels" >
-                        <div class="chip white-text {{camp.setColor(channel.url)}}">
-                          <img width="100" height="100" ng-src="{{'https://logo.clearbit.com/'+camp.extractDomain(channel.url)}}" err-src alt="logo">
-                          {{channel.name}}
-                        </div>
-                      </span>
-
-                      </div>
-
                     </div>
                   </div>
-
-
+                  <div class="row">
+                    <div ng-show="newChannelShow==true" class="input-field s12">
+                      <button ng-click="camp.addChannels(camp.campaignToAdd.channel)"
+                              class="col s4 offset-s4 btn grey darken-3 waves-effect waves-light center " name="action">
+                        Add Channel To this Campaign
+                        <i class="mdi-action-note-add right"></i>
+                      </button>
+                    </div>
+                    <div ng-show="newChannelShow==false" class="input-field s12">
+                      <button ng-click="camp.pushChannelId(camp.campaignToAdd.channelId)"
+                              class="col s4 offset-s4 btn grey darken-3 waves-effect waves-light center " name="action">
+                        Add Channel To this Campaign
+                        <i class="mdi-action-note-add right"></i>
+                      </button>
+                    </div>
+                    <div class="input-field col s12">
+                      <br/><br/><br/>
+                      <span ng-repeat="channel in channels">
+                                 <div class="chip white-text {{camp.setColor(channel.url)}}">
+                                    <img width="100" height="100"
+                                         ng-src="{{'https://logo.clearbit.com/'+camp.extractDomain(channel.url)}}"
+                                         err-src
+                                         alt="logo">
+                                    {{channel.name}}
+                                 </div>
+                              </span>
+                      <br/><br/><br/>
+                    </div>
+                  </div>
                   <div class="row">
                     <div class="input-field col s6">
                       <button onclick="validateAndGoNext('#campaign-section')"
@@ -244,7 +265,6 @@
                   </div>
               </form>
             </div>
-
           </div>
         </div>
       </div>
@@ -260,12 +280,51 @@
                 <div class="row">
                   <div class="input-field col s12">
                     <i class="mdi-image-edit prefix"></i>
-                    <input id="c_nnn" type="text">
-                    <label for="c_n">Keyword Name</label>
+                    <input ng-model="camp.keyword.content" id="c_nnn" type="text">
+                    <label for="c_n">Keyword Expression </label>
+                  </div>
+
+                  <div class="input-field col s12">
+                    <div class="input-field col s3 offset-s2">
+                      <input ng-model="camp.keyword.importance" value="low" class="with-gap" name="importanceKey" type="radio"
+                      id="low"/>
+                      <label for="low">Low</label>
+                    </div>
+                    <div class="input-field col s3">
+                      <input ng-model="camp.keyword.importance" value="medium" class="with-gap" name="importanceKey" type="radio"
+                      id="medium"/>
+                      <label for="medium">Medium</label>
+                    </div>
+                    <div class="input-field col s2">
+                      <input ng-model="camp.keyword.importance" value="high" class="with-gap" name="importanceKey" type="radio"
+                      id="high"/>
+                      <label for="high">High</label>
+                    </div>
+                  </div>
+                  <div class="input-field col s12">
+                    <br/><br/><br/>
+                    <span ng-repeat="k in keywords">
+                                 <div class="chip white-text teal">
+                                    {{k.content}}
+
+                                     <i ng-click="camp.removeKeywordsFromAdd($index)" class="material-icons mdi-navigation-close"></i>
+                                 </div>
+                              </span>
+                    <br/><br/><br/>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <button ng-click="camp.addKeywords(camp.keyword)"
+                            class="col s4 offset-s4 btn grey darken-3 waves-effect waves-light center " name="action">
+                      Add Keyword To this Campaign
+                      <i class="mdi-action-note-add right"></i>
+                    </button>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="input-field col s6">
+                  <div  class="input-field col s6">
                     <button onclick="validateAndGoNext('#assign-section')"
                             class="btn grey darken-3 waves-effect waves-light left" name="action">Previous
                       <i class="mdi-image-navigate-before left"></i>
@@ -273,8 +332,9 @@
                   </div>
                   <div class="input-field col s6">
                     <button ng-click="camp.addCampaign(camp.campaignToAdd)"
-                            class="btn grey darken-3 waves-effect waves-light right" type="submit" name="action">Next
-                      <i class="mdi-image-navigate-next right"></i>
+                            class="btn grey darken-3 waves-effect waves-light right" type="submit" name="action">Add
+                      Campaign
+                      <i class="mdi-content-add-circle right"></i>
                     </button>
                   </div>
                 </div>
@@ -286,26 +346,19 @@
     </li>
   </ul>
 </div>
-
 <!--insights test -->
 <!--<script>-->
 <!--loadScriptOnlyIfNotLoaded('angular/app/assets/js/charts/ggleloader.js')-->
 <!--loadScriptOnlyIfNotLoaded('angular/app/assets/js/charts/chartTest.js')-->
 <!--</script>-->
-
 <!--<div id="chart_div" style="width: 100%; height: 500px;"></div>-->
-
-
 <!-- END insights test -->
-
 <script>
   loadScriptOnlyIfNotLoaded("angular/app/assets/js/materialize.min.js");
   loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins.min.js");
   //  loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins/jquery-validation/jquery.validate.min.js");
   //  loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins/jquery-validation/additional-methods.min.js");
 </script>
-
-
 <script>
   function validateAndGoNext(next) {
 
@@ -320,5 +373,3 @@
   //  }
 
 </script>
-
-
