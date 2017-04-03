@@ -23,6 +23,7 @@
   text-decoration: inherit;
   width: 1em;
   margin-left: .2em;
+  margin-top: 2em;
   margin-right: .2em;
   text-align: center;
   font-variant: normal;
@@ -91,7 +92,7 @@
         -ms-transform: translateY(-50%);
             transform: translateY(-50%); }
     .dropify-wrapper .dropify-message span.file-icon {
-      font-size: 50px;
+      font-size: 40px;
       color: #CCC; }
     .dropify-wrapper .dropify-message p {
       margin: 5px 0 0 0; }
