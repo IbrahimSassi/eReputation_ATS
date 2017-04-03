@@ -48,6 +48,31 @@
     var vm = this;
     /***/
 
+    /**
+     * Initialize all attributes for business
+     */
+  vm.basicInformationBuss =
+  {businessName:"Devensta", businessType:"", emailAddress:"", employeesNumber:"", phoneNumber:""}
+  vm.additionalInformationBuss =
+    {profilePicture:"", CoverPicture:"", aboutEntreprise:"", creationDate:"", country:"Albania"}
+  vm.changePasswordBuss =
+    {oldpassword:"", newpassword:"", newpasswordagain:""}
+
+    /**
+     * Initialize all attributes for individual
+     */
+    vm.basicInformationBuss =
+      {businessName:"Devensta", businessType:"", emailAddress:"", employeesNumber:"", phoneNumber:""}
+    vm.additionalInformationBuss =
+      {profilePicture:"", CoverPicture:"", aboutEntreprise:"", creationDate:"", country:"Albania"}
+    vm.changePasswordBuss =
+      {oldpassword:"", newpassword:"", newpasswordagain:""}
+
+
+
+
+
+
 
   };
   /**End UserCtrl Function**/
