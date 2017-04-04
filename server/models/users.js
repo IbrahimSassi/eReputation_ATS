@@ -23,15 +23,19 @@ var UserSchema   = new Schema({
 
 
   creationDate:String,
-  picture:String,
-  address:String,
-  state:String
+  phoneNumber:String,
+  profilePicture:String,
+  coverPicture:String,
+  about:String,
+  country:String
+
 },options);
 
 var individualSchema = new Schema({
   username: String,
   firstName: String,
   lastName: String,
+  birthday:String
 
 },options);
 
@@ -40,6 +44,7 @@ var businessSchema = new Schema({
   employeesNumber: String,
   businessType: String,
   businessID:String,
+  creationDate:String
 
 },options);
 

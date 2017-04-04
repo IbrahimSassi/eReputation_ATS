@@ -51,22 +51,16 @@
     /**
      * Initialize all attributes for business
      */
-  vm.basicInformationBuss =
-  {businessName:"Devensta", businessType:"", emailAddress:"", employeesNumber:"", phoneNumber:""}
-  vm.additionalInformationBuss =
-    {profilePicture:"", CoverPicture:"", aboutEntreprise:"", creationDate:"", country:"Albania"}
-  vm.changePasswordBuss =
-    {oldpassword:"", newpassword:"", newpasswordagain:""}
+  vm.basicInformationBuss = {businessName:$rootScope.currentUser.businessName, businessType:$rootScope.currentUser.businessType, email:$rootScope.currentUser.email, employeesNumber:$rootScope.currentUser.employeesNumber, phoneNumber:""}
+  vm.additionalInformationBuss = {profilePicture:"", CoverPicture:"", aboutEntreprise:"", creationDate:"", country:"Albania"}
+  vm.changePasswordBuss = {oldpassword:"", newpassword:"", newpasswordagain:""}
 
     /**
      * Initialize all attributes for individual
      */
-    vm.basicInformationBuss =
-      {businessName:"Devensta", businessType:"", emailAddress:"", employeesNumber:"", phoneNumber:""}
-    vm.additionalInformationBuss =
-      {profilePicture:"", CoverPicture:"", aboutEntreprise:"", creationDate:"", country:"Albania"}
-    vm.changePasswordBuss =
-      {oldpassword:"", newpassword:"", newpasswordagain:""}
+    vm.basicInformationIndiv = {firstName:$rootScope.currentUser.firstName, lastName:$rootScope.currentUser.lastName, username:$rootScope.currentUser.username, email:$rootScope.currentUser.email, phoneNumber:""}
+    vm.additionalInformationIndiv = {profilePicture:"", CoverPicture:"", aboutYou:"", birthday:"", country:"Albania"}
+    vm.changePasswordIndiv = {oldpassword:"", newpassword:"", newpasswordagain:""}
 
 
 

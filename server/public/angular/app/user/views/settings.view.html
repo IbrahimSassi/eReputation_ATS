@@ -74,7 +74,7 @@
                     <div class="row">
                       <div class="input-field col s4">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="emailAddress" placeholder="exemple@gmail.com" type="text" class="validate" ng-model="settings.basicInformationBuss.emailAddress">
+                        <input id="emailAddress" placeholder="exemple@gmail.com" type="text" class="validate" ng-model="settings.basicInformationBuss.email">
                         <label for="emailAddress">Email Address</label>
                       </div>
                       <div class="input-field col s4">
@@ -535,15 +535,15 @@
                 <div class="row">
                   <div class="input-field col s8">
                     <i class="mdi-editor-mode-edit prefix"></i>
-                    <textarea id="aboutEntrepriseIndiv" class="materialize-textarea" ng-model="settings.additionalInformationIndiv.aboutEntreprise"></textarea>
-                    <label for="aboutEntrepriseIndiv" class="">About Entreprise</label>
+                    <textarea id="aboutYou" class="materialize-textarea" ng-model="settings.additionalInformationIndiv.aboutYou"></textarea>
+                    <label for="aboutYou" class="">About You</label>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s4">
                     <i class="mdi-editor-mode-edit prefix"></i>
-                    <input id="creationDateIndiv" type="date" class="datepicker" ng-model="settings.additionalInformationIndiv.creationDate">
-                    <label for="creationDateIndiv">Creation Date</label>
+                    <input id="birthday" type="date" class="datepicker" ng-model="settings.additionalInformationIndiv.birthday">
+                    <label for="birthday">Birthday</label>
                   </div>
                   <div class="input-field col s4">
                     <select  id="countryIndiv" name="countryIndiv" ng-model="settings.additionalInformationIndiv.country" data-error=".businessType">
