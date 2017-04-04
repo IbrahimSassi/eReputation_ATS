@@ -12,6 +12,9 @@ var options = {
 
 var dataProviderSchema = new Schema({
 
+  id: {
+    type: String
+  },
   name: {
     type: String
     , index: true
@@ -67,8 +70,8 @@ var facebookPostsProvider = new Schema({
   name: {
     type: String
   },
-  link :{
-    type : String
+  link: {
+    type: String
   }
   , reactions: {
     type: Array

@@ -5,7 +5,6 @@
 var config = require('../../../../config/facebook.config.js');
 var request = require('request');
 var async = require('async');
-var FacebookController = require('../facebookPosts.controller');
 var urls = [];
 
 
@@ -40,7 +39,7 @@ module.exports.transformPostsData = function (req, res, next) {
       Promise.all([promisePrevious, promiseNext]).then(function (tab) {
 
         //Requesting Data for all those urls
-        async.eachSeries(tab[0], function iterate(listItem, callback) {
+        async.eachSeries(tab[0], function iteratee(listItem, callback) {
           request(listItem, function (error, response, body) {
             var localData = JSON.parse(body).data;
             localData.forEach(function (story) {
@@ -58,8 +57,9 @@ module.exports.transformPostsData = function (req, res, next) {
               //Transform Data to match with our DB
               story = transformPosts(story, req.params.id)
               promiseReactions.then(function (data) {
-                story.reaction = data;
-                story.reaction.date = new Date();
+                story.reactions = [];
+                data.date = new Date();
+                story.reactions.push(data)
                 AllPosts.push(story);
               });
             });
@@ -113,13 +113,14 @@ function transformPosts(post, author) {
     content: post.message,
     dateContent: post.created_time,
     type: post.type,
-    sourceLink: "http://facebook.com/" + post.id,
+    sourceLink: "https://www.facebook.com/" + post.id,
     name: post.name,
     link: post.link,
     author: {
       name: author
     },
-    shares: typeof post.shares != "undefined" ? post.shares.count : 0
+    shares: typeof post.shares != "undefined" ? post.shares.count : 0,
+    channelId: author
   }
 
 }

@@ -2,6 +2,10 @@
  * Created by Ibrahim on 24/03/2017.
  */
 var config = require('../../../config/facebook.config');
+var controller = require('../facebook/facebookPosts.controller');
+var DataProvider = require('../../../models/dataProvider/dataProvider.model');
+var async = require('async');
+
 var request = require('request');
 
 module.exports.getToken = function (req, res, next) {
@@ -16,8 +20,25 @@ module.exports.getToken = function (req, res, next) {
 module.exports.getPostsByPage = function (req, res, next) {
 
   // var page_id = "mosaiquefm";
-  console.log("req.posts.length",req.posts.length)
+  console.log("req.posts.length", req.posts.length)
+
+
+  async.eachSeries(req.posts, function iteratee(post, callback) {
+    var newFacebookPost = new DataProvider.FacebookPostsProvider(post);
+
+    DataProvider.createDataProviderModel(newFacebookPost, function (err, item) {
+      if (err)
+        return res.status(500).send(err);
+      else {
+        console.log('Success facebook posts saved saved', item.id);
+      }
+
+    });
+    callback();
+  }, function done() {
     res.json(req.posts)
+  });
+
 
 };
 
