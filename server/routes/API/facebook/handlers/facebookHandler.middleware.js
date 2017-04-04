@@ -6,9 +6,11 @@ var config = require('../../../../config/facebook.config.js');
 var request = require('request');
 var async = require('async');
 var FacebookController = require('../facebookPosts.controller');
+var urls = [];
+
 
 module.exports.transformPostsData = function (req, res, next) {
-
+  urls = [];
   var page_id = req.params.id;
   var node = page_id + "/posts";
   var fields = "?fields=message,link,created_time,type,name,id" +
@@ -17,71 +19,107 @@ module.exports.transformPostsData = function (req, res, next) {
     ",reactions" +
     ".limit(0).summary(true)" +
     //TODO Change This Dynamic
-    "&since=" + "24-03-2017";
+    "&since=" + req.params.since +
+    "&until=" + req.params.until;
   var parameters = "&access_token=" + config.ACCESS_TOKEN;
-
   var url = config.base + node + fields + parameters;
   // console.log(url);
-  var secondPromise;
-  var newPosts = [];
-  var promise = new Promise(function (resolve, reject) {
+  var posts;
+  var promiseNext;
+  var promisePrevious;
+  var promiseReactions;
+  var AllPosts = [];
+  //Getting First Page
+  request(url, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      posts = JSON.parse(body);
+
+      //Getting All Nexr and previous paging urls
+      promiseNext = handleData(posts, "next");
+      promisePrevious = handleData(posts, "previous");
+      Promise.all([promisePrevious, promiseNext]).then(function (tab) {
+
+        //Requesting Data for all those urls
+        async.eachSeries(tab[0], function iterate(listItem, callback) {
+          request(listItem, function (error, response, body) {
+            var localData = JSON.parse(body).data;
+            localData.forEach(function (story) {
+
+              // Getting Reactions For each story
+              promiseReactions = new Promise(function (resolveReaction, reject) {
+                request('http://localhost:3000/api/facebook/posts/' + story.id + '/reactions', function (reactionError, reactionResponse, reactionBody) {
+                  if (!reactionError && reactionResponse.statusCode == 200) {
+                    var reactions = JSON.parse(reactionBody);
+                    resolveReaction(reactions)
+                  }
+                });
+              });
+
+              //Transform Data to match with our DB
+              story = transformPosts(story, req.params.id)
+              promiseReactions.then(function (data) {
+                story.reaction = data;
+                story.reaction.date = new Date();
+                AllPosts.push(story);
+              });
+            });
+            callback(error, body);
+          });
+        }, function done() {
+          req.posts = AllPosts;
+          next();
+        });
+      });
+    }
+  });
+};
+
+function handleData(data, direction) {
+  return new Promise(function (resolve, reject) {
+    if (data.paging && data.paging[direction]) {
+      urls.push(data.paging[direction]);
+      getData(data.paging[direction]).then(function (newData) {
+        handleData(newData, direction).then(function (data) {
+          resolve(urls)
+        })
+      })
+    }
+    else {
+      resolve(urls)
+    }
+  })
+}
+
+
+function getData(url) {
+  return new Promise(function (resolve, reject) {
     request(url, function (error, response, body) {
       if (!error && response.statusCode == 200) {
-
-        var posts = JSON.parse(body);
-
-
-        posts.data.forEach(function (post) {
-
-          // console.log("iddd",post.id)
-          secondPromise = new Promise(function (resolveReaction, reject) {
-            request('http://localhost:3000/api/facebook/posts/' + post.id + '/reactions', function (reactionError, reactionResponse, reactionBody) {
-              if (!reactionError && reactionResponse.statusCode == 200) {
-                var reactions = JSON.parse(reactionBody);
-                // console.log("there");
-                // console.log("reactions", reactions);
-                resolveReaction(reactions)
-              }
-            });
-
-          });
-          //
-          //
-          // //
-          var newPost = {
-            id: post.id,
-            content: post.name,
-            dateContent: post.created_time,
-            type: post.type,
-            sourceLink: "http://facebook.com/" + post.id,
-            link: post.link,
-            author: {
-              name: req.params.id
-            },
-            shares: typeof post.shares != "undefined" ? post.shares.count : 0
-          };
-          //
-          secondPromise.then(function (data) {
-            // console.log("data", data);
-            newPost.reaction = data;
-            newPost.reaction.date = new Date();
-            // console.log(newPost.id);
-            newPosts.push(newPost);
-
-          });
-          //
-          // FacebookController.saveFacebookPosts()
-          // post.save(asyncdone);
-        });
-        resolve(posts);
-        req.postsTransformed = promise;
-        res.newPosts = newPosts;
-        next();
-
-
+        resolve(JSON.parse(body))
       }
+      else {
+        reject(error)
+      }
+
     });
-  });
+
+  })
+}
 
 
-};
+function transformPosts(post, author) {
+  return {
+    id: post.id,
+    content: post.message,
+    dateContent: post.created_time,
+    type: post.type,
+    sourceLink: "http://facebook.com/" + post.id,
+    name: post.name,
+    link: post.link,
+    author: {
+      name: author
+    },
+    shares: typeof post.shares != "undefined" ? post.shares.count : 0
+  }
+
+}

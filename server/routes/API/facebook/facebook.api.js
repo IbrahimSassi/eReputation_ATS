@@ -16,10 +16,8 @@ module.exports.getToken = function (req, res, next) {
 module.exports.getPostsByPage = function (req, res, next) {
 
   // var page_id = "mosaiquefm";
-  req.postsTransformed.then(function (data) {
-    // console.log("data", req.newPosts)
-    res.json(data)
-  });
+  console.log("req.posts.length",req.posts.length)
+    res.json(req.posts)
 
 };
 
@@ -39,9 +37,7 @@ module.exports.getCommentsByPost = function (req, res, next) {
     }
   })
 
-
 };
-
 
 module.exports.getReactionsByPost = function (req, res, next) {
 
@@ -88,20 +84,3 @@ module.exports.pageInsights = function (req, res, next) {
 };
 
 
-function getData(url) {
-  return new Promise(function (resolve, reject) {
-    request(url, function (error, response, body) {
-
-      if (!error && response.statusCode == 200) {
-
-        if (body.pagination && body.paging.previous) {
-          // getData(body.pagination.next);
-          resolve(body.data)
-        }
-
-
-      }
-    });
-  })
-
-}
