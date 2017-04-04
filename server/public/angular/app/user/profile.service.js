@@ -64,6 +64,12 @@
           creationDate: payload.creationDate,
           state : payload.state,
           kind : payload.kind,
+          phoneNumber : payload.phoneNumber,
+          profilePicture : payload.profilePicture,
+          coverPicture : payload.coverPicture,
+          about : payload.about,
+          birthday : payload.birthday,
+          country : payload.country,
           expiration: payload.exp
         };
       }

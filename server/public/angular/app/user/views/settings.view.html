@@ -34,7 +34,7 @@
             <div class="col s12 m12 l12">
               <div class="card-panel" style="margin-top: -14px">
                 <div class="row">
-                  <form class="col s12">
+                  <form class="col s12" ng-submit="settings.EditBasicInformationBusiness()">
                     <div class="row">
                       <div class="input-field col s4">
                         <i class="mdi-action-account-circle prefix"></i>
@@ -117,31 +117,32 @@
           <div class="row">
             <div class="col s12 m12 l12">
               <div class="card-panel" style="margin-top: -14px">
+                <form ng-submit="settings.EditAdditionalInformation()">
                 <div class="row">
                   <div class="col s4">
                     Profile Picture:
-                    <input type="file" id="profilePicture" class="dropify" data-default-file="" data-height="50" ng-model="settings.additionalInformationBuss.profilePicture"/>
+                    <input type="file" id="profilePictureBuss" class="dropify" data-default-file="" data-height="50" ng-model="settings.additionalInformation.profilePicture"/>
                   </div>
                   <div class="col s4">
                     Cover Picture:
-                    <input type="file" id="CoverPicture" class="dropify" data-default-file="" data-height="50" ng-model="settings.additionalInformationBuss.coverPicture"/>
+                    <input type="file" id="coverPictureBuss" class="dropify" data-default-file="" data-height="50" ng-model="settings.additionalInformation.coverPicture"/>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s8">
                     <i class="mdi-editor-mode-edit prefix"></i>
-                    <textarea id="aboutEntreprise" class="materialize-textarea" ng-model="settings.additionalInformationBuss.aboutEntreprise"></textarea>
+                    <textarea id="aboutEntreprise" class="materialize-textarea" ng-model="settings.additionalInformation.about"></textarea>
                     <label for="aboutEntreprise" class="">About Entreprise</label>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s4">
                     <i class="mdi-editor-mode-edit prefix"></i>
-                    <input id="creationDate" type="date" class="datepicker" ng-model="settings.additionalInformationBuss.creationDate">
+                    <input id="creationDate" type="date" class="datepicker" ng-model="settings.additionalInformation.birthday">
                     <label for="creationDate">Creation Date</label>
                   </div>
                   <div class="input-field col s4">
-                    <select  id="country" name="country" ng-model="settings.additionalInformationBuss.country" data-error=".businessType">
+                    <select  id="countryBuss" name="country" ng-model="settings.additionalInformation.country" data-error=".businessType">
                       <option value="" selected disabled>Country...</option>
                       <option value="Afganistan">Afghanistan</option>
                       <option value="Albania">Albania</option>
@@ -421,18 +422,18 @@
                     <div class="row">
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="oldpassword"type="text" class="validate" ng-model="settings.changePasswordBuss.oldpassword">
-                        <label for="oldpassword">Old Password</label>
+                        <input id="oldpasswordBuss"type="text" class="validate" ng-model="settings.changePassword.oldpassword">
+                        <label for="oldpasswordBuss">Old Password</label>
                       </div>
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="newpassword"type="text" class="validate" ng-model="settings.changePasswordBuss.newpassword">
-                        <label for="newpassword">New Password</label>
+                        <input id="newpasswordBuss"type="text" class="validate" ng-model="settings.changePassword.newpassword">
+                        <label for="newpasswordBuss">New Password</label>
                       </div>
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="newpasswordagain"type="text" class="validate" ng-model="settings.changePasswordBuss.newpasswordagain">
-                        <label for="newpasswordagain">Old Password Again</label>
+                        <input id="newpasswordagainBuss"type="text" class="validate" ng-model="settings.changePassword.newpasswordagain">
+                        <label for="newpasswordagainBuss">Old Password Again</label>
                       </div>
                       <div class="input-field col s4">
                         <div class="input-field col s12">
@@ -467,7 +468,7 @@
             <div class="col s12 m12 l12">
               <div class="card-panel" style="margin-top: -14px">
                 <div class="row">
-                  <form class="col s12">
+                  <form class="col s12" ng-submit="settings.EditBasicInformationIndividual()">
                     <div class="row">
                       <div class="input-field col s4">
                         <i class="mdi-action-account-circle prefix"></i>
@@ -495,8 +496,8 @@
                     <div class="row">
                       <div class="input-field col s8">
                         <i class="mdi-communication-phone prefix"></i>
-                        <input id="phoneNumberIndiv" type="text" class="" ng-model="settings.basicInformationIndiv.phoneNumber">
-                        <label for="phoneNumberIndiv">Phone Number</label>
+                        <input id="phoneNumber" type="text" class="" ng-model="settings.basicInformation.phoneNumber">
+                        <label for="phoneNumber">Phone Number</label>
                       </div>
                       <div class="input-field col s4">
                         <div class="input-field col s12">
@@ -522,31 +523,32 @@
           <div class="row">
             <div class="col s12 m12 l12">
               <div class="card-panel" style="margin-top: -14px">
+                <form ng-submit="settings.EditAdditionalInformation()">
                 <div class="row">
                   <div class="col s4">
                     Profile Picture:
-                    <input type="file" id="profilePictureIndiv" class="dropify" data-default-file="" data-height="50" ng-model="settings.additionalInformationIndiv.profilePicture"/>
+                    <input type="file" id="profilePicture" class="dropify" data-default-file="" data-height="50" ng-model="settings.additionalInformation.profilePicture"/>
                   </div>
                   <div class="col s4">
                     Cover Picture:
-                    <input type="file" id="CoverPictureIndiv" class="dropify" data-default-file="" data-height="50" ng-model="settings.additionalInformationIndiv.coverPicture"/>
+                    <input type="file" id="CoverPicture" class="dropify" data-default-file="" data-height="50" ng-model="settings.additionalInformation.coverPicture"/>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s8">
                     <i class="mdi-editor-mode-edit prefix"></i>
-                    <textarea id="aboutYou" class="materialize-textarea" ng-model="settings.additionalInformationIndiv.aboutYou"></textarea>
-                    <label for="aboutYou" class="">About You</label>
+                    <textarea id="about" class="materialize-textarea" ng-model="settings.additionalInformation.about"></textarea>
+                    <label for="about" class="">About Entreprise</label>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s4">
                     <i class="mdi-editor-mode-edit prefix"></i>
-                    <input id="birthday" type="date" class="datepicker" ng-model="settings.additionalInformationIndiv.birthday">
-                    <label for="birthday">Birthday</label>
+                    <input id="birthday" type="date" class="datepicker" ng-model="settings.additionalInformation.birthday">
+                    <label for="birthday">Creation Date</label>
                   </div>
                   <div class="input-field col s4">
-                    <select  id="countryIndiv" name="countryIndiv" ng-model="settings.additionalInformationIndiv.country" data-error=".businessType">
+                    <select  id="country" name="country" ng-model="settings.additionalInformation.country" data-error=".businessType">
                       <option value="" selected disabled>Country...</option>
                       <option value="Afganistan">Afghanistan</option>
                       <option value="Albania">Albania</option>
@@ -808,7 +810,10 @@
               </div>
             </div>
           </div>
+
+
           <!--End heyyy-->
+
         </div>
       </li>
       <li>
@@ -823,18 +828,18 @@
                     <div class="row">
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="oldpasswordIndiv"type="text" class="validate" ng-model="settings.changePasswordIndiv.oldpassword">
-                        <label for="oldpasswordIndiv">Old Password</label>
+                        <input id="oldpassword"type="text" class="validate" ng-model="settings.changePassword.oldpassword">
+                        <label for="oldpassword">Old Password</label>
                       </div>
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="newpasswordIndiv"type="text" class="validate" ng-model="settings.changePasswordIndiv.newpassword">
-                        <label for="newpasswordIndiv">New Password</label>
+                        <input id="newpassword"type="text" class="validate" ng-model="settings.changePassword.newpassword">
+                        <label for="newpassword">New Password</label>
                       </div>
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="newpasswordagainIndiv"type="text" class="validate" ng-model="settings.changePasswordIndiv.newpasswordagain">
-                        <label for="newpasswordagainIndiv">Old Password Again</label>
+                        <input id="newpasswordagain"type="text" class="validate" ng-model="settings.changePassword.newpasswordagain">
+                        <label for="newpasswordagain">Old Password Again</label>
                       </div>
                       <div class="input-field col s4">
                         <div class="input-field col s12">
@@ -860,11 +865,11 @@
 </script>
 
 <script type="text/javascript">
-  $('#phoneNumberBuss').formatter({
+  $('#phoneNumber').formatter({
     'pattern': '+{{999}} - {{999999999999}}',
     'persistent': true
   });
-  $('#phoneNumberIndiv').formatter({
+  $('#phoneNumberBuss').formatter({
     'pattern': '+{{999}} - {{999999999999}}',
     'persistent': true
   });

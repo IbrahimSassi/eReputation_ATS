@@ -24,7 +24,7 @@ router.post('/basicinformationIndiv', function(req, res, next) {
   User.Individual.update({ email: activeEmail }, { $set: { firstName: firstName,lastName:lastName,username:username,email:email,phoneNumber:phoneNumber}}, function (err, user) {
     if (err) return res.status(401);
 
-    res.status(200).json({ "email": "ok"});
+    res.status(200).json({ "statut": "ok"});
 
   });
 
@@ -47,8 +47,8 @@ router.post('/basicinformationIndiv', function(req, res, next) {
     var phoneNumber=req.body.phoneNumber;
 
     User.Business.update({ email: activeEmail }, { $set: { businessName: businessName,businessType:businessType,employeesNumber:employeesNumber,email:email,phoneNumber:phoneNumber}}, function (err, user) {
-      if (err) return res.json({"g":err});
-      res.status(200).json(user);
+      if (err) return res.status(401);
+      res.status(200).json({"statut":"ok"});
     });
     }
     else
@@ -70,7 +70,7 @@ router.post('/basicinformationIndiv', function(req, res, next) {
 
       User.update({ email: activeEmail }, { $set: { profilePicture: profilePicture, coverPicture:coverPicture,about:about,birthday:birthday,country:country}}, function (err, user) {
         if (err) return res.status(401);
-        res.status(200).json({ "email": "ok"});
+        res.status(200).json({ "statut": "ok"});
       });
       res.status(200)
       }

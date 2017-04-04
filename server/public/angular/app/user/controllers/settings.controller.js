@@ -16,7 +16,7 @@
   /**Injection**/
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$qProvider'];
 
-  SettingsCtrl.$inject = ['$state','$rootScope','angularLoad','$location'];
+  SettingsCtrl.$inject = ['$state','$rootScope','angularLoad','$location','SettingsService'];
   /**End Of Injection**/
 
 
@@ -35,41 +35,89 @@
 
 
   };
-  /**End of Route Config**/
 
-  /** Controller UseCtrl FUNCTION
-   *
-   * @param UserService
-   * @param $state
-   */
-  function SettingsCtrl($state,$rootScope,angularLoad,$location) {
+  function SettingsCtrl($state,$rootScope,angularLoad,$location,SettingsService) {
 
     /**Scope Replace**/
     var vm = this;
     /***/
 
     /**
-     * Initialize all attributes for business
+     * Initialize all attributes for business and individual
      */
-  vm.basicInformationBuss = {businessName:$rootScope.currentUser.businessName, businessType:$rootScope.currentUser.businessType, email:$rootScope.currentUser.email, employeesNumber:$rootScope.currentUser.employeesNumber, phoneNumber:""}
-  vm.additionalInformationBuss = {profilePicture:"", CoverPicture:"", aboutEntreprise:"", creationDate:"", country:"Albania"}
-  vm.changePasswordBuss = {oldpassword:"", newpassword:"", newpasswordagain:""}
-
-    /**
-     * Initialize all attributes for individual
-     */
-    vm.basicInformationIndiv = {firstName:$rootScope.currentUser.firstName, lastName:$rootScope.currentUser.lastName, username:$rootScope.currentUser.username, email:$rootScope.currentUser.email, phoneNumber:""}
-    vm.additionalInformationIndiv = {profilePicture:"", CoverPicture:"", aboutYou:"", birthday:"", country:"Albania"}
-    vm.changePasswordIndiv = {oldpassword:"", newpassword:"", newpasswordagain:""}
+  vm.basicInformationBuss = {activeEmail:$rootScope.currentUser.email,businessName:$rootScope.currentUser.businessName, businessType:$rootScope.currentUser.businessType, email:$rootScope.currentUser.email, employeesNumber:$rootScope.currentUser.employeesNumber, phoneNumber:$rootScope.phoneNumber}
+  vm.additionalInformation = {activeEmail:$rootScope.currentUser.email,profilePicture:"", CoverPicture:"", about:$rootScope.about, birthday:$rootScope.birthday, country:$rootScope.country}
+  vm.basicInformationIndiv = {activeEmail:$rootScope.currentUser.email,firstName:$rootScope.currentUser.firstName, lastName:$rootScope.currentUser.lastName, username:$rootScope.currentUser.username, email:$rootScope.currentUser.email, phoneNumber:$rootScope.phoneNumber}
+  vm.changePassword = {activeEmail:$rootScope.currentUser.email,oldpassword:"", newpassword:"", newpasswordagain:""}
 
 
+    vm.EditBasicInformationIndividual = function () {
+      SettingsService
+        .EditBasicInformationIndividual(vm.basicInformationIndiv)
+        .then(successCallback, errorCallback);
 
 
+
+      function successCallback(response){
+      console.log("Succ");
+      }
+      function errorCallback(error){
+        console.log("Err");
+        if (error.status ==400)
+        {
+
+        }
+        else if (error.status ==401)
+          vm.errorInvalid = true;
+      }
+    };
+
+//*******************************
+    vm.EditBasicInformationBusiness = function () {
+      SettingsService
+        .EditBasicInformationBusiness(vm.basicInformationBuss)
+        .then(successCallback, errorCallback);
+
+
+
+      function successCallback(response){
+        console.log("Succ");
+      }
+      function errorCallback(error){
+        console.log("Err");
+        if (error.status ==400)
+        {
+
+        }
+        else if (error.status ==401)
+          vm.errorInvalid = true;
+      }
+    };
+//*************************************
+    vm.EditAdditionalInformation = function () {
+      SettingsService
+        .EditAdditionalInformation(vm.additionalInformation)
+        .then(successCallback, errorCallback);
+
+
+
+      function successCallback(response){
+        console.log("Succ");
+      }
+      function errorCallback(error){
+        console.log("Err");
+        if (error.status ==400)
+        {
+
+        }
+        else if (error.status ==401)
+          vm.errorInvalid = true;
+      }
+    };
 
 
 
   };
-  /**End UserCtrl Function**/
 
 })();
 
