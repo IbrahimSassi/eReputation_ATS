@@ -9,9 +9,6 @@ var jwt = require('jsonwebtoken');
 var options = { discriminatorKey: 'kind' };
 
 var UserSchema   = new Schema({
-
-
-
   email: {
     type: String,
     unique: true,
@@ -20,13 +17,12 @@ var UserSchema   = new Schema({
   hashedPassword: String,
   salt: String,
 
-
-
   creationDate:String,
   phoneNumber:String,
   profilePicture:String,
   coverPicture:String,
   about:String,
+  birthday:String,
   country:String
 
 },options);
@@ -34,9 +30,7 @@ var UserSchema   = new Schema({
 var individualSchema = new Schema({
   username: String,
   firstName: String,
-  lastName: String,
-  birthday:String
-
+  lastName: String
 },options);
 
 var businessSchema = new Schema({
@@ -44,7 +38,7 @@ var businessSchema = new Schema({
   employeesNumber: String,
   businessType: String,
   businessID:String,
-  creationDate:String
+
 
 },options);
 
