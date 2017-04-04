@@ -19,7 +19,7 @@
   /**Injection**/
   config.$inject = ['$stateProvider', '$qProvider'];
 
-  CampaignCtrl.$inject = ['CampaignService', '$state', 'angularLoad', '$scope'];
+  CampaignCtrl.$inject = ['CampaignService', 'ChannelService', 'FacebookService', '$state', 'angularLoad', '$scope', '$rootScope', '$q'];
   /**End Of Injection**/
 
 
@@ -44,10 +44,11 @@
 
 
   }
+
   /**End of Route Config**/
 
 
-  function CampaignCtrl(CampaignService, $state, angularLoad, $scope) {
+  function CampaignCtrl(CampaignService, ChannelService, FacebookService, $state, angularLoad, $scope, $rootScope, $q) {
 
     /**Scope Replace**/
     var vm = this;
@@ -65,37 +66,71 @@
       vm.getAllCampaigns();
 
     };
-    var myCampaign = {
-      "name": "Iphone 87",
-      "url": "https://www.apple.com/iphone/olaola",
-      "description": "iphone 7 campaign ola",
-      "dateStart": "2017-03-24T23:00:00.000Z",
-      "dateEnd": "2017-06-04T23:00:00.000Z",
-      "phoneNumber": "0088414652",
-      "userId": "58d3dc815d391346a06f48c3",
-      "location": [
-        {
-          "latitude": 123.123,
-          "longitude": 55.55
-        }
-      ],
-      "keywords": [
-        {
-          "content": "Iphone 8 price",
-          "importance": "low"
-        }
-      ],
-      "channels": [
-        {
-          "channelId": "58d1825eb8224d1ee822642f"
-        }
-      ]
-    }
 
+
+    // $rootScope.currentUser._id='58dcdfb7007df41d241782f7';
+
+
+    $scope.channels = [];
+    $scope.channelsId = [];
+    $scope.keywords = [];
+
+    vm.addChannels = function (channel) {
+      //add only domain name exemple www.ifm.tn
+      if (vm.extractDomain(channel.url).toLowerCase().indexOf('facebook') != -1
+        || vm.extractDomain(channel.url).toLowerCase().indexOf('twitter') != -1) {
+      }
+      else {
+        channel.url = vm.extractDomain(channel.url);
+      }
+      //end
+      $scope.myChannelAaccessToken === undefined ? '' : channel.accessToken = $scope.myChannelAaccessToken;
+      //Call Service Add Channel Function
+
+
+      ChannelService.addChannel(channel).then(function (dataChannel) {
+        vm.pushChannelId(dataChannel._id)
+      });
+
+      //end
+    };
+
+    vm.pushChannelId = function (idChannel) {
+      $scope.channelsId.push({'channelId': idChannel});
+      ChannelService.getChannelByID(idChannel).then(function (dataChannel) {
+        $scope.channels.push(dataChannel);
+      });
+
+    };
+
+    vm.addKeywords = function (keyword) {
+      $scope.keywords.push(
+        {
+          "content": keyword.content,
+          "importance": keyword.importance
+        }
+      );
+    };
+    vm.removeKeywordsFromAdd = function (index) {
+      $scope.keywords.splice(index, 1);
+      console.info($scope.keywords);
+    };
+
+
+    /**
+     * addCampaign
+     * @param campaign
+     */
     vm.addCampaign = function (campaign) {
-      campaign.dateStart= moment(campaign.dateStart,'DD/MM/YYYY');
-      campaign.dateEnd=moment(campaign.dateEnd,'DD/MM/YYYY');
-      campaign.userId = '58d3dc815d391346a06f48c3';
+      // init vars
+      campaign.channel.userId = $rootScope.currentUser._id;
+      campaign.userId = $rootScope.currentUser._id;
+      campaign.channel.personal === undefined ? false : campaign.channel.personal;
+      campaign.channels = $scope.channelsId;
+      campaign.dateStart = moment(campaign.dateStart, 'DD/MM/YYYY');
+      campaign.dateEnd = moment(campaign.dateEnd, 'DD/MM/YYYY');
+
+      campaign.keywords = $scope.keywords;
 
       campaign.location = [
         {
@@ -103,27 +138,92 @@
           "longitude": 55.55
         }
       ];
-      campaign.keywords = [
-        {
-          "content": "Iphone 8 price",
-          "importance": "low"
-        }
-      ];
-      campaign.channels = [
-        {
-          "channelId": "58d1825eb8224d1ee822642f"
-        }
-      ];
+
+
+      // end init vars
 
 
       CampaignService.addCampaign(campaign).then(function (data) {
         console.log("Campaign Added");
         console.log(data);
-      }).catch(function (err) {
-        console.log("NOT Campaign Added");
+      });
+
+
+    };
+
+    /**
+     * getAllMyChannels
+     */
+    vm.getAllMyChannels = function () {
+      ChannelService.getChannelsByUser($rootScope.currentUser._id).then(function (data) {
         console.log(data);
+        vm.allMyChannels = data;
       });
     };
+
+
+    /***
+     * setColor
+     * @param url
+     * @returns {*}
+     */
+
+    vm.setColor = function (url) {
+      if (vm.extractDomain(url).toLowerCase().indexOf('facebook') != -1) {
+        return "light-blue darken-3";
+      }
+      else if (vm.extractDomain(url).toLowerCase().indexOf('twitter') != -1) {
+        return "cyan accent-3";
+      }
+      else {
+        return "green lighten-1";
+      }
+
+
+    };
+
+
+    vm.extractDomain = function (url) {
+      var domain;
+      //find & remove protocol (http, ftp, etc.) and get domain
+      if (url.indexOf("://") > -1) {
+        domain = url.split('/')[2];
+      }
+      else {
+        domain = url.split('/')[0];
+      }
+
+      //find & remove port number
+      domain = domain.split(':')[0];
+
+      return domain;
+    };
+
+
+    $scope.myFacebookPages = [];
+    vm.getPermissions = function () {
+      console.log("getPermissions");
+      FacebookService.initFacebookApi()
+        .then(function (data) {
+          console.log("here we are token  + user ,,promise bouh kalb", data);
+          var token = data.authResponse.accessToken;
+
+          FacebookService.getLongLivedToken(token).then(function (newLongToken) {
+            console.log("new long" + newLongToken);
+            $scope.myChannelAaccessToken = newLongToken.longToken;
+            data.user.accounts.data.forEach(function (page) {
+              $scope.myFacebookPages.push({value: page.id, text: page.name})
+              console.log("666" + $scope.myFacebookPages);
+              var $toastContent = $('<span class="green-text">Your permission has granted , now pick a page</span>');
+              var rounded = "rounded"
+              Materialize.toast($toastContent, 3000, rounded);
+
+            });
+          })
+
+        });
+    };
+
 
     /** Scripts Loading first Refresh **/
     // angularLoad.loadScript('angular/app/assets/js/charts/ggleloader.js').then(function () {
