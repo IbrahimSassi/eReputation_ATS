@@ -9,17 +9,16 @@ router.get('/a', function(req, res, next) {
   res.json({"a":1})
 });
 
-router.post('/basicinformationIndiv', function(req, res, next) {
+router.post('/basicinformationIndiv/:activeEmail/:email/:firstName/:lastName/:username/:phoneNumber', function(req, res, next) {
 
-  if (!req.body.activeEmail && !req.body.email && !req.body.firstName && !req.body.lastName && !req.body.username && !req.body.phoneNumber)
+  if (req.body.activeEmail && req.params.email && req.params.firstName && req.params.lastName && req.params.username && req.params.phoneNumber)
   {
-  var activeEmail = req.body.activeEmail;
-  var email=req.body.email;
-  var firstName=req.body.firstName;
-  var lastName=req.body.lastName;
-  var username=req.body.username;
-  var phoneNumber=req.body.phoneNumber;
-
+  var activeEmail = req.params.activeEmail;
+  var email=req.params.email;
+  var firstName=req.params.firstName;
+  var lastName=req.params.lastName;
+  var username=req.params.username;
+  var phoneNumber=req.params.phoneNumber;
 
   User.Individual.update({ email: activeEmail }, { $set: { firstName: firstName,lastName:lastName,username:username,email:email,phoneNumber:phoneNumber}}, function (err, user) {
     if (err) return res.status(401);
@@ -36,7 +35,7 @@ router.post('/basicinformationIndiv', function(req, res, next) {
 
 });
 
-  router.post('/basicinformationBuss', function(req, res, next) {
+  router.post('/basicinformationBuss/:activeEmail/:email/:businessName/:businessType/:employeesNumber/:phoneNumber', function(req, res, next) {
     if (!req.body.activeEmail && !req.body.email && !req.body.businessName && !req.body.businessType && !req.body.employeesNumber && !req.body.phoneNumber)
     {
     var activeEmail = req.body.activeEmail;
@@ -58,7 +57,7 @@ router.post('/basicinformationIndiv', function(req, res, next) {
   });
 
 
-    router.post('/additionalInformation', function(req, res, next) {
+    router.post('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:about/:birthday/:country', function(req, res, next) {
       if (!req.body.activeEmail && !req.body.profilePicture && !req.body.coverPicture && !req.body.about && !req.body.birthday && !req.body.country)
       {
       var activeEmail = req.body.activeEmail;

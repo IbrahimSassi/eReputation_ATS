@@ -20,7 +20,7 @@
       {
         'update': {method: 'PUT'},
         'basicinformationIndiv': {
-          url: '/users/settings/:activeEmail/:email/:firstName/:lastName/:username/:phoneNumber',
+          url: '/users/settings/basicinformationIndiv/:activeEmail/:email/:firstName/:lastName/:username/:phoneNumber',
           method: 'POST',
           params: {
             activeEmail: '@activeEmail',
@@ -28,11 +28,11 @@
             firstName: '@firstName',
             lastName: '@lastName',
             username: '@username',
-            phoneNumber: '@phoneNumber',
+            phoneNumber: '@phoneNumber'
           }
         },
         'basicinformationBuss': {
-          url: '/users/settings/:activeEmail/:email/:businessName/:businessType/:employeesNumber/:phoneNumber',
+          url: '/users/settings/basicinformationBuss/:activeEmail/:email/:businessName/:businessType/:employeesNumber/:phoneNumber',
           method: 'POST',
           params: {
             activeEmail: '@activeEmail',
@@ -45,7 +45,7 @@
           }
         },
         'additionalInformation': {
-          url: '/users/settings/:activeEmail/:profilePicture/:coverPicture/:about/:birthday/:country',
+          url: '/users/settings/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:about/:birthday/:country',
           method: 'POST',
           params: {
             activeEmail: '@activeEmail',

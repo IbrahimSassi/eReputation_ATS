@@ -16,6 +16,7 @@ var UserSchema   = new Schema({
   },
   hashedPassword: String,
   salt: String,
+  state: String,
 
   creationDate:String,
   phoneNumber:String,
@@ -72,6 +73,12 @@ UserSchema.methods.generateJwt = function() {
     address:this.address,
     state:this.state,
     kind: this.kind,
+    phoneNumber : this.phoneNumber,
+    profilePicture : this.profilePicture,
+    coverPicture : this.coverPicture,
+    about : this.about,
+    birthday : this.birthday,
+    country : this.country,
     exp: parseInt(expiry.getTime() / 1000),
   }, "MY_SECRET"); // DO NOT KEEP YOUR SECRET IN THE CODE!
 };

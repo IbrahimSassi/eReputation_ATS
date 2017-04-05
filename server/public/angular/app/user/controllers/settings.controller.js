@@ -45,10 +45,10 @@
     /**
      * Initialize all attributes for business and individual
      */
-  vm.basicInformationBuss = {activeEmail:$rootScope.currentUser.email,businessName:$rootScope.currentUser.businessName, businessType:$rootScope.currentUser.businessType, email:$rootScope.currentUser.email, employeesNumber:$rootScope.currentUser.employeesNumber, phoneNumber:$rootScope.phoneNumber}
-  vm.additionalInformation = {activeEmail:$rootScope.currentUser.email,profilePicture:"", CoverPicture:"", about:$rootScope.about, birthday:$rootScope.birthday, country:$rootScope.country}
-  vm.basicInformationIndiv = {activeEmail:$rootScope.currentUser.email,firstName:$rootScope.currentUser.firstName, lastName:$rootScope.currentUser.lastName, username:$rootScope.currentUser.username, email:$rootScope.currentUser.email, phoneNumber:$rootScope.phoneNumber}
-  vm.changePassword = {activeEmail:$rootScope.currentUser.email,oldpassword:"", newpassword:"", newpasswordagain:""}
+    vm.basicInformationBuss = {activeEmail:$rootScope.currentUser.email,businessName:$rootScope.currentUser.businessName, businessType:$rootScope.currentUser.businessType, email:$rootScope.currentUser.email, employeesNumber:$rootScope.currentUser.employeesNumber, phoneNumber:$rootScope.currentUser.phoneNumber}
+    vm.basicInformationIndiv = {activeEmail:$rootScope.currentUser.email,firstName:$rootScope.currentUser.firstName, lastName:$rootScope.currentUser.lastName, username:$rootScope.currentUser.username, email:$rootScope.currentUser.email, phoneNumber:$rootScope.currentUser.phoneNumber}
+    vm.additionalInformation = {activeEmail:$rootScope.currentUser.email,profilePicture:" ", coverPicture:" ", about:$rootScope.about, birthday:$rootScope.birthday, country:$rootScope.country}
+    vm.changePassword = {activeEmail:$rootScope.currentUser.email,oldpassword:"", newpassword:"", newpasswordagain:""}
 
 
     vm.EditBasicInformationIndividual = function () {
@@ -60,6 +60,11 @@
 
       function successCallback(response){
       console.log("Succ");
+        $rootScope.currentUser.firstName = vm.basicInformationIndiv.firstName;
+        $rootScope.currentUser.lastName = vm.basicInformationIndiv.lastName;
+        $rootScope.currentUser.username = vm.basicInformationIndiv.username;
+        $rootScope.currentUser.email = vm.basicInformationIndiv.email;
+
       }
       function errorCallback(error){
         console.log("Err");
@@ -95,6 +100,7 @@
     };
 //*************************************
     vm.EditAdditionalInformation = function () {
+      console.log(vm.additionalInformation);
       SettingsService
         .EditAdditionalInformation(vm.additionalInformation)
         .then(successCallback, errorCallback);

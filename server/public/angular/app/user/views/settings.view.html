@@ -34,15 +34,16 @@
             <div class="col s12 m12 l12">
               <div class="card-panel" style="margin-top: -14px">
                 <div class="row">
-                  <form class="col s12" ng-submit="settings.EditBasicInformationBusiness()">
+                  <form class="col s12" ng-submit="settings.EditBasicInformationBusiness()" id="formValidateBussBasic">
                     <div class="row">
                       <div class="input-field col s4">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="businessName" placeholder="Devensta" type="text" class="validate" ng-model="settings.basicInformationBuss.businessName">
+                        <input id="businessName" name="businessName" placeholder="Devensta" data-error=".errorbusinessName" type="text" class="validate" ng-model="settings.basicInformationBuss.businessName">
                         <label for="businessName">Business Name</label>
+                        <div class="errorbusinessName"></div>
                       </div>
                       <div class="input-field col s4">
-                        <select  id="businessType" name="businessType" ng-model="settings.basicInformationBuss.businessType" data-error=".businessType">
+                        <select  id="businessType" name="businessType" ng-model="settings.basicInformationBuss.businessType" data-error=".errorbusinessType">
                           <option value="" selected disabled>Business Type</option>
                           <option value="1">Aerospace</option>
                           <option value="2">Agriculture/Forestry</option>
@@ -69,29 +70,33 @@
                           <option value="24">Utility</option>
                           <option value="21">Other</option>
                         </select>
+                        <div class="errorbusinessType"></div>
                       </div>
                     </div>
                     <div class="row">
                       <div class="input-field col s4">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="emailAddress" placeholder="exemple@gmail.com" type="text" class="validate" ng-model="settings.basicInformationBuss.email">
+                        <input id="emailAddress" name="emailAddress" placeholder="exemple@gmail.com" data-error=".erroremailAddress" type="text" class="validate" ng-model="settings.basicInformationBuss.email">
                         <label for="emailAddress">Email Address</label>
+                        <div class="erroremailAddress"></div>
                       </div>
                       <div class="input-field col s4">
-                        <select id="employeesNumber" name="employeesNumber" ng-model="settings.basicInformationBuss.employeesNumber" data-error=".employeesNumber">
+                        <select id="employeesNumber" name="employeesNumber" ng-model="settings.basicInformationBuss.employeesNumber" data-error=".erroremployeesNumber">
                           <option value="" selected disabled>N° of Employees</option>
                           <option value="1 - 10">1 - 10</option>
                           <option value="10 - 100">10 - 100</option>
                           <option value="100 - 1000">100 - 1000</option>
                           <option value="+1000">+1000</option>
                         </select>
+                        <div class="erroremployeesNumber"></div>
                       </div>
                     </div>
                     <div class="row">
                       <div class="input-field col s8">
                         <i class="mdi-communication-phone prefix"></i>
-                        <input id="phoneNumberBuss" type="text" class="" ng-model="settings.basicInformationBuss.phoneNumber">
+                        <input id="phoneNumberBuss" name="phoneNumberBuss" type="text" class="" data-error=".errorphoneNumberBuss" ng-model="settings.basicInformationBuss.phoneNumber">
                         <label for="phoneNumberBuss">Phone Number</label>
+                        <div class="errorphoneNumberBuss"></div>
                       </div>
                       <div class="input-field col s4">
                         <div class="input-field col s12">
@@ -117,11 +122,11 @@
           <div class="row">
             <div class="col s12 m12 l12">
               <div class="card-panel" style="margin-top: -14px">
-                <form ng-submit="settings.EditAdditionalInformation()">
+                <form ng-submit="settings.EditAdditionalInformation()" id="formValidateBussAdd">
                 <div class="row">
                   <div class="col s4">
                     Profile Picture:
-                    <input type="file" id="profilePictureBuss" class="dropify" data-default-file="" data-height="50" ng-model="settings.additionalInformation.profilePicture"/>
+                    <input type="file" id="profilePictureBuss"  class="dropify" data-default-file="" data-height="50" ng-model="settings.additionalInformation.profilePicture"/>
                   </div>
                   <div class="col s4">
                     Cover Picture:
@@ -131,18 +136,20 @@
                 <div class="row">
                   <div class="input-field col s8">
                     <i class="mdi-editor-mode-edit prefix"></i>
-                    <textarea id="aboutEntreprise" class="materialize-textarea" ng-model="settings.additionalInformation.about"></textarea>
+                    <textarea id="aboutEntreprise" name="aboutEntreprise" class="materialize-textarea" data-error=".erroraboutEntreprise" ng-model="settings.additionalInformation.about"></textarea>
                     <label for="aboutEntreprise" class="">About Entreprise</label>
+                    <div class="erroraboutEntreprise"></div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s4">
                     <i class="mdi-editor-mode-edit prefix"></i>
-                    <input id="creationDate" type="date" class="datepicker" ng-model="settings.additionalInformation.birthday">
+                    <input id="creationDate" name="creationDate" type="date" data-error=".errorcreationDate" class="datepicker" ng-model="settings.additionalInformation.birthday">
                     <label for="creationDate">Creation Date</label>
+                    <div class="errorcreationDate"></div>
                   </div>
                   <div class="input-field col s4">
-                    <select  id="countryBuss" name="country" ng-model="settings.additionalInformation.country" data-error=".businessType">
+                    <select  id="countryBuss" name="countryBuss" data-error=".errorcountryBuss" ng-model="settings.additionalInformation.country" data-error=".businessType">
                       <option value="" selected disabled>Country...</option>
                       <option value="Afganistan">Afghanistan</option>
                       <option value="Albania">Albania</option>
@@ -392,6 +399,7 @@
                       <option value="Zambia">Zambia</option>
                       <option value="Zimbabwe">Zimbabwe</option>
                     </select>
+                    <div class="errorcountryBuss"></div>
                   </div>
                   <div class="input-field col s4">
                     <div class="input-field col s12">
@@ -418,22 +426,25 @@
             <div class="col s12 m12 l12">
               <div class="card-panel" style="margin-top: -14px">
                 <div class="row">
-                  <form class="col s12">
+                  <form class="col s12 formValidate" id="forrmValidatePasswordBus">
                     <div class="row">
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="oldpasswordBuss"type="text" class="validate" ng-model="settings.changePassword.oldpassword">
+                        <input id="oldpasswordBuss" name="oldpasswordBuss" type="text" class="validate" data-error=".erroroldpasswordBuss" ng-model="settings.changePassword.oldpassword" required>
                         <label for="oldpasswordBuss">Old Password</label>
+                        <div class="erroroldpasswordBuss"></div>
                       </div>
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="newpasswordBuss"type="text" class="validate" ng-model="settings.changePassword.newpassword">
+                        <input id="newpasswordBuss" name="newpasswordBuss" type="text" data-error=".newpasswordBuss" class="validate" ng-model="settings.changePassword.newpassword">
                         <label for="newpasswordBuss">New Password</label>
+                        <div class="newpasswordBuss"></div>
                       </div>
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="newpasswordagainBuss"type="text" class="validate" ng-model="settings.changePassword.newpasswordagain">
+                        <input id="newpasswordagainBuss" name="newpasswordagainBuss" type="text" data-error=".errornewpasswordagainBuss" class="validate" ng-model="settings.changePassword.newpasswordagain">
                         <label for="newpasswordagainBuss">Old Password Again</label>
+                        <div class="errornewpasswordagainBuss"></div>
                       </div>
                       <div class="input-field col s4">
                         <div class="input-field col s12">
@@ -468,36 +479,41 @@
             <div class="col s12 m12 l12">
               <div class="card-panel" style="margin-top: -14px">
                 <div class="row">
-                  <form class="col s12" ng-submit="settings.EditBasicInformationIndividual()">
+                  <form class="col s12" id="formValidateIndivBasic" ng-submit="settings.EditBasicInformationIndividual()">
                     <div class="row">
                       <div class="input-field col s4">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="firstName" placeholder="MrFirases" type="text" class="validate" ng-model="settings.basicInformationIndiv.firstName">
+                        <input id="firstName" name="firstName" data-error=".errorfirstName" placeholder="MrFirases" type="text" class="validate" ng-model="settings.basicInformationIndiv.firstName">
                         <label for="firstName">First Name</label>
+                        <div class="errorfirstName"></div>
                       </div>
                       <div class="input-field col s4">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="lastName" placeholder="MrFirases" type="text" class="validate" ng-model="settings.basicInformationIndiv.lastName">
+                        <input id="lastName" name="lastName" placeholder="MrFirases" data-error=".errorlastName" type="text" class="validate" ng-model="settings.basicInformationIndiv.lastName">
                         <label for="lastName">Last Name</label>
+                        <div class="errorlastName"></div>
                     </div>
                     </div>
                     <div class="row">
                       <div class="input-field col s4">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="username" placeholder="MrFirases" type="text" class="validate" ng-model="settings.basicInformationIndiv.username">
+                        <input id="username" name="username" placeholder="MrFirases" type="text"  ng-model="settings.basicInformationIndiv.username" data-error=".errorusername">
                         <label for="username">Username</label>
+                        <div class="errorusername"></div>
                       </div>
                       <div class="input-field col s4">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="email" placeholder="example@test.com" type="text" class="validate" ng-model="settings.basicInformationIndiv.email">
+                        <input id="email" name="email" placeholder="example@test.com" data-error=".erroremail" type="text" class="validate" ng-model="settings.basicInformationIndiv.email">
                         <label for="email">Email Address</label>
+                        <div class="erroremail"></div>
                       </div>
                     </div>
                     <div class="row">
                       <div class="input-field col s8">
                         <i class="mdi-communication-phone prefix"></i>
-                        <input id="phoneNumber" type="text" class="" ng-model="settings.basicInformation.phoneNumber">
+                        <input id="phoneNumber" name="phoneNumber" type="text" class="" data-error=".errorphoneNumber" ng-model="settings.basicInformationIndiv.phoneNumber">
                         <label for="phoneNumber">Phone Number</label>
+                        <div class="errorphoneNumber"></div>
                       </div>
                       <div class="input-field col s4">
                         <div class="input-field col s12">
@@ -523,32 +539,56 @@
           <div class="row">
             <div class="col s12 m12 l12">
               <div class="card-panel" style="margin-top: -14px">
-                <form ng-submit="settings.EditAdditionalInformation()">
+                <form id="formValidateIndivAdd" ng-submit="settings.EditAdditionalInformation()"  >
                 <div class="row">
                   <div class="col s4">
                     Profile Picture:
-                    <input type="file" id="profilePicture" class="dropify" data-default-file="" data-height="50" ng-model="settings.additionalInformation.profilePicture"/>
+                    <input type="file" id="profilePicture" class="dropify"  data-default-file="" data-height="50" ng-model="settings.additionalInformation.profilePicture"/>
                   </div>
                   <div class="col s4">
                     Cover Picture:
-                    <input type="file" id="CoverPicture" class="dropify" data-default-file="" data-height="50" ng-model="settings.additionalInformation.coverPicture"/>
+                    <input type="file" id="CoverPicture" class="dropify"  data-default-file="" data-height="50" ng-model="settings.additionalInformation.coverPicture"/>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s8">
                     <i class="mdi-editor-mode-edit prefix"></i>
-                    <textarea id="about" class="materialize-textarea" ng-model="settings.additionalInformation.about"></textarea>
-                    <label for="about" class="">About Entreprise</label>
+                    <textarea id="about" name="about" class="materialize-textarea" data-error=".errorabout" ng-model="settings.additionalInformation.about"></textarea>
+                    <label for="about" >About You</label>
+                    <div class="errorabout"></div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s4">
                     <i class="mdi-editor-mode-edit prefix"></i>
-                    <input id="birthday" type="date" class="datepicker" ng-model="settings.additionalInformation.birthday">
-                    <label for="birthday">Creation Date</label>
+                    <input
+                      input-date
+                      container="body"
+                      format="dd/mm/yyyy"
+                      months-full="{{ month }}"
+                      months-short="{{ monthShort }}"
+                      weekdays-full="{{ weekdaysFull }}"
+                      weekdays-short="{{ weekdaysShort }}"
+                      weekdays-letter="{{ weekdaysLetter }}"
+                      disable="disable"
+                      min="{{ minDate }}"
+                      max="{{ maxDate }}"
+                      today="today"
+                      clear="clear"
+                      close="close"
+                      select-years="15"
+                      on-start="onStart()"
+                      on-render="onRender()"
+                      on-open="onOpen()"
+                      on-close="onClose()"
+                      on-set="onSet()"
+                      on-stop="onStop()"
+                      id="birthday" name="birthday" type="date" class="datepicker" data-error=".errorbirthday" ng-model="settings.additionalInformation.birthday">
+                    <label for="birthday">Birthday</label>
+                    <div class="errorbirthday"></div>
                   </div>
                   <div class="input-field col s4">
-                    <select  id="country" name="country" ng-model="settings.additionalInformation.country" data-error=".businessType">
+                    <select  id="country" name="country" ng-model="settings.additionalInformation.country" data-error=".errorcountry">
                       <option value="" selected disabled>Country...</option>
                       <option value="Afganistan">Afghanistan</option>
                       <option value="Albania">Albania</option>
@@ -798,6 +838,7 @@
                       <option value="Zambia">Zambia</option>
                       <option value="Zimbabwe">Zimbabwe</option>
                     </select>
+                    <div class="errorcountry"></div>
                   </div>
                   <div class="input-field col s4">
                     <div class="input-field col s12">
@@ -824,22 +865,25 @@
             <div class="col s12 m12 l12">
               <div class="card-panel" style="margin-top: -14px">
                 <div class="row">
-                  <form class="col s12">
+                  <form class="col s12" id="formValidatePasswordIndiv">
                     <div class="row">
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="oldpassword"type="text" class="validate" ng-model="settings.changePassword.oldpassword">
+                        <input id="oldpassword" name="oldpassword" type="text" data-error=".erroroldpassword" class="validate" ng-model="settings.changePassword.oldpassword">
                         <label for="oldpassword">Old Password</label>
+                        <div class="erroroldpassword"></div>
                       </div>
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="newpassword"type="text" class="validate" ng-model="settings.changePassword.newpassword">
+                        <input id="newpassword" name="newpassword" type="text" data-error=".errornewpassword" class="validate" ng-model="settings.changePassword.newpassword">
                         <label for="newpassword">New Password</label>
+                        <div class="errornewpassword"></div>
                       </div>
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="newpasswordagain"type="text" class="validate" ng-model="settings.changePassword.newpasswordagain">
+                        <input id="newpasswordagain" name="newpasswordagain" type="text" data-error=".errornewpasswordagain" class="validate" ng-model="settings.changePassword.newpasswordagain">
                         <label for="newpasswordagain">Old Password Again</label>
+                        <div class="errornewpasswordagain"></div>
                       </div>
                       <div class="input-field col s4">
                         <div class="input-field col s12">
@@ -865,14 +909,7 @@
 </script>
 
 <script type="text/javascript">
-  $('#phoneNumber').formatter({
-    'pattern': '+{{999}} - {{999999999999}}',
-    'persistent': true
-  });
-  $('#phoneNumberBuss').formatter({
-    'pattern': '+{{999}} - {{999999999999}}',
-    'persistent': true
-  });
+
 </script>
 
 <script type="text/javascript">
@@ -901,4 +938,289 @@
       alert('File deleted');
     });
   });
+</script>
+
+
+<script type="text/javascript">
+
+  $("#formValidateIndivBasic").validate({
+    rules: {
+      username: {
+        required: true,
+        minlength: 5
+      },
+      firstName: {
+        required: true
+      },
+      lastName: {
+        required: true
+      },
+      email: {
+        required: true,
+        email:true
+      },
+      phoneNumber: {
+        required: true,
+        minlength: 6
+      }
+
+
+    },
+    //For custom messages
+    messages: {
+      username:{
+        required: "Enter a username",
+        minlength: "Enter at least 5 characters"
+      },
+      firstName:{
+        required: "Enter you first name"
+      },
+      lastName:{
+        required: "Enter your last name"
+      }
+    },
+    errorElement : 'div',
+    errorPlacement: function(error, element) {
+      var placement = $(element).data('error');
+      if (placement) {
+        $(placement).append(error)
+      } else {
+        error.insertAfter(element);
+      }
+    }
+  });
+
+
+
+</script>
+
+<script type="text/javascript">
+
+  $("#formValidateIndivAdd").validate({
+    rules: {
+
+      about: {
+        required: true,
+        minlength: 6,
+      }
+      ,
+      birthday: {
+        required: true,
+
+      }
+      ,
+      country: {
+        required: true,
+
+      }
+
+    },
+    //For custom messages
+    messages: {
+      username:{
+        required: "Enter a username",
+        minlength: "Enter at least 5 characters"
+      }
+    },
+    errorElement : 'div',
+    errorPlacement: function(error, element) {
+      var placement = $(element).data('error');
+      if (placement) {
+        $(placement).append(error)
+      } else {
+        error.insertAfter(element);
+      }
+    }
+  });
+
+
+
+</script>
+
+
+
+<script type="text/javascript">
+
+  $("#formValidatePasswordIndiv").validate({
+    rules: {
+
+      oldpassword: {
+        required: true,
+
+      }
+      ,
+      newpassword: {
+        required: true,
+        minlength: 6,
+      }
+      ,
+      newpasswordagain: {
+        required: true,
+        minlength: 6,
+        equalTo: "#newpassword"
+      }
+
+
+    },
+    //For custom messages
+    messages: {
+      username:{
+        required: "Enter a username",
+        minlength: "Enter at least 5 characters"
+      }
+    },
+    errorElement : 'div',
+    errorPlacement: function(error, element) {
+      var placement = $(element).data('error');
+      if (placement) {
+        $(placement).append(error)
+      } else {
+        error.insertAfter(element);
+      }
+    }
+  });
+
+
+
+</script>
+
+
+<script type="text/javascript">
+
+  $("#formValidateBussBasic").validate({
+    rules: {
+
+
+
+      businessName: {
+        required: true,
+      },
+      businessType: {
+        required: true,
+      },
+      emailAddress: {
+        required: true,
+        email: true,
+      },
+      employeesNumber: {
+        required: true,
+      },
+      phoneNumberBuss: {
+        required: true,
+        minlength: 6,
+      }
+    },
+    //For custom messages
+    messages: {
+      username:{
+        required: "Enter a username",
+        minlength: "Enter at least 5 characters"
+      }
+    },
+    errorElement : 'div',
+    errorPlacement: function(error, element) {
+      var placement = $(element).data('error');
+      if (placement) {
+        $(placement).append(error)
+      } else {
+        error.insertAfter(element);
+      }
+    }
+  });
+
+
+
+</script>
+
+
+
+<script type="text/javascript">
+
+  $("#formValidateBussAdd").validate({
+    rules: {
+
+      aboutEntreprise: {
+        required: true,
+        minlength: 6,
+
+      }
+      ,
+      creationDate: {
+        required: true,
+        minlength: 6,
+
+      }
+      ,
+      countryBuss: {
+        required: true,
+      }
+
+    },
+    //For custom messages
+    messages: {
+      username:{
+        required: "Enter a username",
+        minlength: "Enter at least 5 characters"
+      }
+    },
+    errorElement : 'div',
+    errorPlacement: function(error, element) {
+      var placement = $(element).data('error');
+      if (placement) {
+        $(placement).append(error)
+      } else {
+        error.insertAfter(element);
+      }
+    }
+  });
+
+
+
+</script>
+
+
+
+
+
+<script type="text/javascript">
+
+  $("#forrmValidatePasswordBus").validate({
+    rules: {
+
+      oldpasswordBuss: {
+        required: true,
+      }
+      ,
+      newpasswordBuss: {
+        required: true,
+        minlength: 6,
+
+      }
+      ,
+      newpasswordagainBuss: {
+        required: true,
+        minlength: 6,
+        equalTo: "#newpasswordBuss"
+      }
+    },
+    //For custom messages
+    messages: {
+      username:{
+        required: "Enter a username",
+        minlength: "Enter at least 5 characters"
+      }
+    },
+    errorElement : 'div',
+    errorPlacement: function(error, element) {
+      var placement = $(element).data('error');
+      if (placement) {
+        $(placement).append(error)
+      } else {
+        error.insertAfter(element);
+      }
+    }
+  });
+
+
+
 </script>
