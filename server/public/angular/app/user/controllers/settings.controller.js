@@ -100,7 +100,8 @@
     };
 //*************************************
     vm.EditAdditionalInformation = function () {
-      console.log(vm.additionalInformation);
+
+      console.log("Date: ",moment(vm.additionalInformation.birthday, 'DD/MM/YYYY'));
       SettingsService
         .EditAdditionalInformation(vm.additionalInformation)
         .then(successCallback, errorCallback);

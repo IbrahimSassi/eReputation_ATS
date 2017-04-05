@@ -561,29 +561,14 @@
                 <div class="row">
                   <div class="input-field col s4">
                     <i class="mdi-editor-mode-edit prefix"></i>
-                    <input
-                      input-date
-                      container="body"
-                      format="dd/mm/yyyy"
-                      months-full="{{ month }}"
-                      months-short="{{ monthShort }}"
-                      weekdays-full="{{ weekdaysFull }}"
-                      weekdays-short="{{ weekdaysShort }}"
-                      weekdays-letter="{{ weekdaysLetter }}"
-                      disable="disable"
-                      min="{{ minDate }}"
-                      max="{{ maxDate }}"
-                      today="today"
-                      clear="clear"
-                      close="close"
-                      select-years="15"
-                      on-start="onStart()"
-                      on-render="onRender()"
-                      on-open="onOpen()"
-                      on-close="onClose()"
-                      on-set="onSet()"
-                      on-stop="onStop()"
-                      id="birthday" name="birthday" type="date" class="datepicker" data-error=".errorbirthday" ng-model="settings.additionalInformation.birthday">
+                    <input input-date
+                           type="date"
+                           name="birthday"
+                           id="birthday"
+                           ng-model="settings.additionalInformation.birthday"
+                           container="body"
+                           format="dd/mm/yyyy"
+                           />
                     <label for="birthday">Birthday</label>
                     <div class="errorbirthday"></div>
                   </div>
