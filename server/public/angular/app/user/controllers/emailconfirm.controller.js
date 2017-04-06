@@ -14,7 +14,7 @@
 
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$qProvider'];
 
-  EmailConfirmCtrl.$inject = ['EmailConfirmService', '$state','$rootScope','angularLoad','$location','$window','$stateParams'];
+  EmailConfirmCtrl.$inject = ['EmailConfirmService', '$state', '$rootScope', 'angularLoad', '$location', '$window', '$stateParams'];
 
   function config($stateProvider, $urlRouterProvider, $qProvider) {
 
@@ -23,7 +23,7 @@
         url: '/emailconfirmation/:token',
         templateUrl: 'angular/app/user/views/emailconfirm.view.html',
         controller: 'EmailConfirmCtrl as EmailConfirmCtrl',
-        login:true
+        login: true
       })
 
     ;
@@ -35,7 +35,7 @@
 
   /** Controller UseCtrl FUNCTION
    */
-  function EmailConfirmCtrl(EmailConfirmService, $state,$rootScope,angularLoad,$location,$window,$stateParams) {
+  function EmailConfirmCtrl(EmailConfirmService, $state, $rootScope, angularLoad, $location, $window, $stateParams) {
 
 
     var vm = this;
@@ -48,11 +48,12 @@
     console.log(token)
     EmailConfirmService.CheckToken(token).then(successCallback, errorCallback);
 
-    function successCallback(response){
-      console.log("succ",response)
+    function successCallback(response) {
+      console.log("succ", response)
       vm.success = true;
     }
-    function errorCallback(error){
+
+    function errorCallback(error) {
       vm.echec = true;
     }
 

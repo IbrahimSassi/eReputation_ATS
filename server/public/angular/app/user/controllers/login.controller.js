@@ -18,7 +18,7 @@
   /**Injection**/
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$qProvider'];
 
-  LoginCtrl.$inject = ['UserService', '$state','$rootScope','angularLoad','$location','$window'];
+  LoginCtrl.$inject = ['UserService', '$state', '$rootScope', 'angularLoad', '$location', '$window'];
   /**End Of Injection**/
 
 
@@ -30,7 +30,7 @@
         url: '/login',
         templateUrl: 'angular/app/user/views/login.view.html',
         controller: 'LoginCtrl as user',
-        login:true
+        login: true
       })
 
     ;
@@ -42,7 +42,7 @@
 
   /** Controller UseCtrl FUNCTION
    */
-  function LoginCtrl(UserService, $state,$rootScope,angularLoad,$location,$window) {
+  function LoginCtrl(UserService, $state, $rootScope, angularLoad, $location, $window) {
 
     /**Scope Replace**/
     var vm = this;
@@ -52,8 +52,8 @@
     vm.errorInactive = false;
 
     vm.credentialsLogin = {
-      email : "",
-      password : ""
+      email: "",
+      password: ""
     };
 
     vm.onSubmitLogin = function () {
@@ -62,21 +62,20 @@
         .then(successCallback, errorCallback);
 
 
-
-      function successCallback(response){
-        console.log("succ",response)
+      function successCallback(response) {
+        console.log("succ", response)
         vm.errorInvalid = false;
         UserService.saveToken(response.token);
         $window.location.href = '/admin';
       }
-      function errorCallback(error){
+
+      function errorCallback(error) {
         //alert(error.status)
-        console.log("error",error)
-        if (error.status ==400)
-        {
+        console.log("error", error)
+        if (error.status == 400) {
           vm.errorInactive = true;
         }
-        else if (error.status ==401)
+        else if (error.status == 401)
           vm.errorInvalid = true;
       }
     };

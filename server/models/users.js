@@ -1,14 +1,14 @@
 /**
  * Created by MrFirases on 3/20/2017.
  */
-var mongoose     = require('mongoose');
-var Schema       = mongoose.Schema;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 
-var options = { discriminatorKey: 'kind' };
+var options = {discriminatorKey: 'kind'};
 
-var UserSchema   = new Schema({
+var UserSchema = new Schema({
   email: {
     type: String,
     unique: true,
@@ -18,43 +18,43 @@ var UserSchema   = new Schema({
   salt: String,
   state: String,
 
-  creationDate:String,
-  phoneNumber:String,
-  profilePicture:String,
-  coverPicture:String,
-  about:String,
-  birthday:String,
-  country:String
+  creationDate: String,
+  phoneNumber: String,
+  profilePicture: String,
+  coverPicture: String,
+  about: String,
+  birthday: String,
+  country: String
 
-},options);
+}, options);
 
 var individualSchema = new Schema({
   username: String,
   firstName: String,
   lastName: String
-},options);
+}, options);
 
 var businessSchema = new Schema({
   businessName: String,
   employeesNumber: String,
   businessType: String,
-  businessID:String,
+  businessID: String,
 
 
-},options);
+}, options);
 
-UserSchema.methods.setPassword = function(password){
+UserSchema.methods.setPassword = function (password) {
   this.salt = crypto.randomBytes(16).toString('hex');
   this.hashedPassword = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
 };
 
 
-UserSchema.methods.validPassword = function(password) {
+UserSchema.methods.validPassword = function (password) {
   var hashedPassword = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
   return this.hashedPassword === hashedPassword;
 };
 
-UserSchema.methods.generateJwt = function() {
+UserSchema.methods.generateJwt = function () {
   var expiry = new Date();
   expiry.setDate(expiry.getDate() + 7);
 
@@ -68,22 +68,22 @@ UserSchema.methods.generateJwt = function() {
     employeesNumber: this.employeesNumber,
     businessType: this.businessType,
     accountType: this.accountType,
-    creationDate:this.creationDate,
-    businessID:this.businessID,
-    picture:this.picture,
-    address:this.address,
-    state:this.state,
+    creationDate: this.creationDate,
+    businessID: this.businessID,
+    picture: this.picture,
+    address: this.address,
+    state: this.state,
     kind: this.kind,
-    phoneNumber : this.phoneNumber,
-    profilePicture : this.profilePicture,
-    coverPicture : this.coverPicture,
-    about : this.about,
-    birthday : this.birthday,
-    country : this.country,
+    phoneNumber: this.phoneNumber,
+    profilePicture: this.profilePicture,
+    coverPicture: this.coverPicture,
+    about: this.about,
+    birthday: this.birthday,
+    country: this.country,
     exp: parseInt(expiry.getTime() / 1000),
   }, "MY_SECRET"); // DO NOT KEEP YOUR SECRET IN THE CODE!
 };
 
 var User = module.exports = mongoose.model('User', UserSchema);
-module.exports.Individual= User.discriminator('Individual',individualSchema);
-module.exports.Business= User.discriminator('Business',businessSchema);
+module.exports.Individual = User.discriminator('Individual', individualSchema);
+module.exports.Business = User.discriminator('Business', businessSchema);
