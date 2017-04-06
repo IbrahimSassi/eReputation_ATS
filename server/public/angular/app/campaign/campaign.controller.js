@@ -42,6 +42,26 @@
         templateUrl: '../angular/app/campaign/views/detail.campaign.view.html',
         controller: 'CampaignCtrl as camp'
       })
+      .state('campaignSentimentAnalysis', {
+        url: '/campaign/detail/:idCampaign/sentiment',
+        templateUrl: '../angular/app/campaign/views/analysis/sentiment.campaign.view.html',
+        controller: 'CampaignSentimentCtrl as camp',
+      })
+      .state('campaignFbAnalysis', {
+        url: '/campaign/detail/:idCampaign/fb',
+        templateUrl: '../angular/app/campaign/views/analysis/fb.campaign.view.html',
+        controller: 'CampaignFbCtrl as vm',
+      })
+      .state('campaignTwitterAnalysis', {
+        url: '/campaign/detail/:idCampaign/twitter',
+        templateUrl: '../angular/app/campaign/views/analysis/tw.campaign.view.html',
+        controller: 'CampaignTwCtrl as camp',
+      })
+      .state('campaignWebAnalysis', {
+        url: '/campaign/detail/:idCampaign/web',
+        templateUrl: '../angular/app/campaign/views/analysis/web.campaign.view.html',
+        controller: 'CampaignWebCtrl as camp',
+      })
 
 
     ;
@@ -69,7 +89,7 @@
       {
         CampaignService.getCampaignById(id).then(function (data) {
           console.info(data);
-          vm.detailChannel=data[0];
+          vm.detailCampaign=data[0];
         }).catch(function (err) {
           console.error(err);
         });
