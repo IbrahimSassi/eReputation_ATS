@@ -1,0 +1,139 @@
+<link href="angular/app/assets/js/plugins/ionRangeSlider/css/ion.rangeSlider.css" type="text/css" rel="stylesheet"
+      media="screen,projection">
+<link href="angular/app/assets/js/plugins/ionRangeSlider/css/ion.rangeSlider.skinFlat.css" type="text/css"
+      rel="stylesheet" media="screen,projection">
+<link href="angular/app/assets/js/plugins/sweetalert/sweetalert.css" type="text/css" rel="stylesheet"
+      media="screen,projection">
+<script type="text/javascript" src="angular/app/assets/js/plugins/ionRangeSlider/js/ion.rangeSlider.js"></script>
+<!--breadcrumbs start-->
+<div id="breadcrumbs-wrapper">
+  <!-- Search for small screen -->
+  <div class="header-search-wrapper grey hide-on-large-only">
+    <i class="mdi-action-search active"></i>
+    <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize">
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m12 l12">
+        <h5 class="breadcrumbs-title">Campaign details</h5>
+        <ol class="breadcrumbs">
+          <li><a ui-sref="campaignList">Campaigns</a>
+          </li>
+          <li class="active">Campaign {{camp.detailChannel.name}}</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!--breadcrumbs end-->
+<div id="profile-card" class="card">
+  <div class="card-image waves-effect waves-block waves-light">
+    <img class="activator"
+         src="https://research.pasteur.fr/wp-content/uploads/2015/06/research.pasteur.fr_data-analysis1.png"
+         alt="user bg">
+  </div>
+  <div class="card-content">
+
+    <qr size="70" class="responsive-img activator card-profile-image" ng-if="camp.detailChannel.name"
+        text="camp.detailChannel.name"></qr>
+    <a class="btn-floating activator btn-move-up waves-effect red accent-2 right">
+      <i class="mdi-image-remove-red-eye"></i>
+    </a>
+    <div class="row">
+    <div class="col s2 offset-s2">
+      <span class="card-title activator grey-text text-darken-4">{{camp.detailChannel.name}}</span>
+      <h6 class="grey-text">Campaign Name</h6>
+    </div>
+      <div class="col s2 offset-s1">
+        <span class="card-title activator grey-text text-darken-4">{{camp.detailChannel.keywords.length}}</span>
+        <h6 class="grey-text">Campaign Keywords</h6>
+      </div>
+      <div class="col s2 offset-s1">
+        <span class="card-title activator grey-text text-darken-4">{{camp.detailChannel.channels.length}}</span>
+        <h6 class="grey-text">Campaign Channels</h6>
+      </div>
+    <!--<div style="padding-bottom: 20px;padding-left: 50px;padding-right: 50px;">-->
+    <div class="col s10 offset-s1">
+      <date-display ng-if="camp.detailChannel.dateStart"
+                    date-on="{{camp.detailChannel.dateStart | date :'dd/MM/yyyy' }}"
+                    date-end="{{camp.detailChannel.dateEnd | date :'dd/MM/yyyy'}}"
+                    my-id="{{camp.detailChannel._id}}"></date-display>
+
+      <br/>
+    </div>
+    </div>
+  </div>
+  <div class="card-reveal">
+
+
+    <span class="card-title grey-text text-darken-4">{{camp.detailChannel.name}} <i class="mdi-navigation-close right"></i></span>
+    <blockquote style="border-left: 5px solid #757575;">{{camp.detailChannel.description}}</blockquote>
+    <p><i class="mdi-editor-insert-link"></i> <a href="{{camp.detailChannel.url}}">{{camp.detailChannel.url}}</a></p>
+    <p><i class="mdi-action-perm-phone-msg"></i> {{camp.detailChannel.phoneNumber}}</p>
+    <p><i class="mdi-communication-email"></i> yourmail@domain.com</p>
+    <p><i class="mdi-social-cake"></i> 18th June 1990
+    <p>
+    <p><i class="mdi-device-airplanemode-on"></i> BAR - AUS
+    <p>
+  </div>
+</div>
+<br/>
+<div class="row">
+  <div class="col s12">
+    <ul class="tabs tab-demo-active z-depth-1">
+      <li class="tab col s3"><a class="white-text red darken-2 waves-effect waves-light active"
+                                href="#tab-sentiment"><i class="fa fa-heartbeat" aria-hidden="true"></i> Sentiment
+        Analysis</a>
+      </li>
+      <li class="tab col s3"><a class="white-text indigo darken-1 waves-effect waves-light active" href="#tab-fb"><i
+        class="fa fa-facebook" aria-hidden="true"></i> Facebook</a>
+      </li>
+      <li class="tab col s3"><a class="white-text light-blue lighten-2 waves-effect waves-light" href="#tab-tw"><i
+        class="fa fa-twitter" aria-hidden="true"></i> Twitter</a>
+      </li>
+      <li class="tab col s3"><a class="white-text green lighten-2 waves-effect waves-light" href="#tab-web"><i
+        class="fa fa-rss" aria-hidden="true"></i> Websites</a>
+      </li>
+    </ul>
+  </div>
+  <div class="col s12">
+    <div id="tab-sentiment" class="col s12 ">
+      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+      <ol>
+        <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+        <li>Aliquam tincidunt mauris eu risus.</li>
+        <li>Vestibulum auctor dapibus neque.</li>
+      </ol>
+    </div>
+    <div id="tab-fb" class="col s12 ">
+      <dl>
+        <dt>Definition list</dt>
+        <dd>Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </dd>
+        <dt>Lorem ipsum dolor sit amet</dt>
+        <dd>Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </dd>
+      </dl>
+    </div>
+    <div id="tab-tw" class="col s12 ">
+      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor
+        quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean
+        ultricies
+        mi vitae est. Mauris placerat eleifend leo.
+      </p>
+    </div>
+    <div id="tab-web" class="col s12 ">
+      <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor
+        quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean
+        ultricies
+        mi vitae est. Mauris placerat eleifend leo.
+      </p>
+    </div>
+  </div>
+</div>
+<script>
+  loadScriptOnlyIfNotLoaded("angular/app/assets/js/materialize.min.js");
+  loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins.min.js");
+</script>

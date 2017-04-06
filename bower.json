@@ -16,6 +16,7 @@
     "angular-load": "^0.4.1",
     "oclazyload": "^1.0.9",
     "moment": "^2.18.1",
-    "fusioncharts": "^3.12.0"
+    "fusioncharts": "^3.12.0",
+    "angular-qr": "^0.2.0"
   }
 }
