@@ -39,7 +39,7 @@
 
               var options = {
                 title: 'Overview about How people reacts between '+moment().format('DD/MM/YYYY')+' and 3/30/2017',
-                colors: ['#0B3B0B', '#AEB404','#8A0808' ],
+                colors: ['#04B404', '#FE9F0C', '#DF0101'],
                 chartArea: {width: '50%'},
                 isStacked: 'percent',
                 height: 300,
