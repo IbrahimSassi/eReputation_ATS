@@ -47,10 +47,10 @@
      */
     vm.basicInformationBuss = {activeEmail:$rootScope.currentUser.email,businessName:$rootScope.currentUser.businessName, businessType:$rootScope.currentUser.businessType, email:$rootScope.currentUser.email, employeesNumber:$rootScope.currentUser.employeesNumber, phoneNumber:$rootScope.currentUser.phoneNumber}
     vm.basicInformationIndiv = {activeEmail:$rootScope.currentUser.email,firstName:$rootScope.currentUser.firstName, lastName:$rootScope.currentUser.lastName, username:$rootScope.currentUser.username, email:$rootScope.currentUser.email, phoneNumber:$rootScope.currentUser.phoneNumber}
-    vm.additionalInformation = {activeEmail:$rootScope.currentUser.email,profilePicture:" ", coverPicture:" ", about:$rootScope.about, birthday:$rootScope.birthday, country:$rootScope.country}
-    vm.changePassword = {activeEmail:$rootScope.currentUser.email,oldpassword:"", newpassword:"", newpasswordagain:""}
-
-
+    vm.additionalInformation = {activeEmail:$rootScope.currentUser.email,profilePicture:" ", coverPicture:" ",birthday:"", about:$rootScope.about,  country:$rootScope.country}
+    vm.changePasswordAtt = {activeEmail:$rootScope.currentUser.email,oldpassword:"", newpassword:"", newpasswordagain:""}
+    vm.birthday = moment($rootScope.currentUser.birthday, 'DD-MM-YYYY')._i;
+    console.log(vm.birthday)
     vm.EditBasicInformationIndividual = function () {
       SettingsService
         .EditBasicInformationIndividual(vm.basicInformationIndiv)
@@ -101,7 +101,8 @@
 //*************************************
     vm.EditAdditionalInformation = function () {
 
-      console.log("Date: ",moment(vm.additionalInformation.birthday, 'DD/MM/YYYY'));
+      vm.additionalInformation.birthday = moment(vm.birthday, 'DD-MM-YYYY')._i;
+
       SettingsService
         .EditAdditionalInformation(vm.additionalInformation)
         .then(successCallback, errorCallback);
@@ -121,7 +122,31 @@
           vm.errorInvalid = true;
       }
     };
+//*************************************************
 
+    vm.changePassword = function () {
+
+      console.log(vm.changePasswordAtt);
+
+      SettingsService
+        .changePassword(vm.changePasswordAtt)
+        .then(successCallback, errorCallback);
+
+
+
+      function successCallback(response){
+        console.log("Succ");
+      }
+      function errorCallback(error){
+        console.log("Err");
+        if (error.status ==400)
+        {
+
+        }
+        else if (error.status ==401)
+          vm.errorInvalid = true;
+      }
+    };
 
 
   };

@@ -56,6 +56,18 @@
             country: '@country',
 
           },
+
+        },
+        'changepaswword': {
+          url: '/users/settings/changepassword/:activeEmail/:oldpassword/:newpassword',
+          method: 'POST',
+          params: {
+            activeEmail: '@activeEmail',
+            oldpassword: '@oldpassword',
+            newpassword: '@newpassword',
+
+
+          },
         }
       }
     );

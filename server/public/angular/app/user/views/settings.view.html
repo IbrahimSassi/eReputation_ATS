@@ -144,7 +144,32 @@
                 <div class="row">
                   <div class="input-field col s4">
                     <i class="mdi-editor-mode-edit prefix"></i>
-                    <input id="creationDate" name="creationDate" type="date" data-error=".errorcreationDate" class="datepicker" ng-model="settings.additionalInformation.birthday">
+                    <input input-date
+                           type="text"
+                           name="creationDate"
+                           id="creationDate"
+                           ng-model="settings.birthday"
+                           container="body"
+                           format="dd-mm-yyyy"
+                           months-full="{{ month }}"
+                           months-short="{{ monthShort }}"
+                           weekdays-full="{{ weekdaysFull }}"
+                           weekdays-short="{{ weekdaysShort }}"
+                           weekdays-letter="{{ weekdaysLetter }}"
+                           disable="disable"
+                           min="{{ minDate }}"
+                           max="{{ maxDate }}"
+                           today="today"
+                           clear="clear"
+                           close="close"
+                           select-years="15"
+                           on-start="onStart()"
+                           on-render="onRender()"
+                           on-open="onOpen()"
+                           on-close="onClose()"
+                           on-set="onSet()"
+                           on-stop="onStop()"
+                           data-error=".errorcreationDate"/>
                     <label for="creationDate">Creation Date</label>
                     <div class="errorcreationDate"></div>
                   </div>
@@ -426,23 +451,23 @@
             <div class="col s12 m12 l12">
               <div class="card-panel" style="margin-top: -14px">
                 <div class="row">
-                  <form class="col s12 formValidate" id="forrmValidatePasswordBus">
+                  <form class="col s12 formValidate" id="forrmValidatePasswordBus" ng-submit="settings.changePassword()">
                     <div class="row">
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="oldpasswordBuss" name="oldpasswordBuss" type="text" class="validate" data-error=".erroroldpasswordBuss" ng-model="settings.changePassword.oldpassword" required>
+                        <input id="oldpasswordBuss" name="oldpasswordBuss" type="text" class="validate" data-error=".erroroldpasswordBuss" ng-model="settings.changePasswordAtt.oldpassword" required>
                         <label for="oldpasswordBuss">Old Password</label>
                         <div class="erroroldpasswordBuss"></div>
                       </div>
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="newpasswordBuss" name="newpasswordBuss" type="text" data-error=".newpasswordBuss" class="validate" ng-model="settings.changePassword.newpassword">
+                        <input id="newpasswordBuss" name="newpasswordBuss" type="text" data-error=".newpasswordBuss" class="validate" ng-model="settings.changePasswordAtt.newpassword">
                         <label for="newpasswordBuss">New Password</label>
                         <div class="newpasswordBuss"></div>
                       </div>
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="newpasswordagainBuss" name="newpasswordagainBuss" type="text" data-error=".errornewpasswordagainBuss" class="validate" ng-model="settings.changePassword.newpasswordagain">
+                        <input id="newpasswordagainBuss" name="newpasswordagainBuss" type="text" data-error=".errornewpasswordagainBuss" class="validate" ng-model="settings.changePasswordAtt.newpasswordagain">
                         <label for="newpasswordagainBuss">Old Password Again</label>
                         <div class="errornewpasswordagainBuss"></div>
                       </div>
@@ -562,13 +587,31 @@
                   <div class="input-field col s4">
                     <i class="mdi-editor-mode-edit prefix"></i>
                     <input input-date
-                           type="date"
+                           type="text"
                            name="birthday"
                            id="birthday"
-                           ng-model="settings.additionalInformation.birthday"
+                           ng-model="settings.birthday"
                            container="body"
-                           format="dd/mm/yyyy"
-                           />
+                           format="dd-mm-yyyy"
+                           months-full="{{ month }}"
+                           months-short="{{ monthShort }}"
+                           weekdays-full="{{ weekdaysFull }}"
+                           weekdays-short="{{ weekdaysShort }}"
+                           weekdays-letter="{{ weekdaysLetter }}"
+                           disable="disable"
+                           min="{{ minDate }}"
+                           max="{{ maxDate }}"
+                           today="today"
+                           clear="clear"
+                           close="close"
+                           select-years="15"
+                           on-start="onStart()"
+                           on-render="onRender()"
+                           on-open="onOpen()"
+                           on-close="onClose()"
+                           on-set="onSet()"
+                           on-stop="onStop()"
+                           data-error=".errorbirthday"/>
                     <label for="birthday">Birthday</label>
                     <div class="errorbirthday"></div>
                   </div>
@@ -850,23 +893,23 @@
             <div class="col s12 m12 l12">
               <div class="card-panel" style="margin-top: -14px">
                 <div class="row">
-                  <form class="col s12" id="formValidatePasswordIndiv">
+                  <form class="col s12" id="formValidatePasswordIndiv" ng-submit="settings.changePassword()">
                     <div class="row">
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="oldpassword" name="oldpassword" type="text" data-error=".erroroldpassword" class="validate" ng-model="settings.changePassword.oldpassword">
+                        <input id="oldpassword" name="oldpassword" type="text" data-error=".erroroldpassword" class="validate" ng-model="settings.changePasswordAtt.oldpassword">
                         <label for="oldpassword">Old Password</label>
                         <div class="erroroldpassword"></div>
                       </div>
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="newpassword" name="newpassword" type="text" data-error=".errornewpassword" class="validate" ng-model="settings.changePassword.newpassword">
+                        <input id="newpassword" name="newpassword" type="text" data-error=".errornewpassword" class="validate" ng-model="settings.changePasswordAtt.newpassword">
                         <label for="newpassword">New Password</label>
                         <div class="errornewpassword"></div>
                       </div>
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="newpasswordagain" name="newpasswordagain" type="text" data-error=".errornewpasswordagain" class="validate" ng-model="settings.changePassword.newpasswordagain">
+                        <input id="newpasswordagain" name="newpasswordagain" type="text" data-error=".errornewpasswordagain" class="validate" ng-model="settings.changePasswordAtt.newpasswordagain">
                         <label for="newpasswordagain">Old Password Again</label>
                         <div class="errornewpasswordagain"></div>
                       </div>

@@ -48,6 +48,7 @@ UserSchema.methods.setPassword = function(password){
   this.hashedPassword = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
 };
 
+
 UserSchema.methods.validPassword = function(password) {
   var hashedPassword = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
   return this.hashedPassword === hashedPassword;

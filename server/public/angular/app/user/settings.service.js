@@ -32,9 +32,9 @@
       coverPicture:userToEdit.coverPicture,about:userToEdit.about,birthday:userToEdit.birthday,country:userToEdit.country}).$promise;
     };
 
-    var register = function(user) {
-      //return $http.post('/users/register', user)
-      return SettingsFactory.Register(user).$promise;
+    var changePassword = function(userToEdit) {
+      console.log("heh",userToEdit.activeEmail)
+      return SettingsFactory.changepaswword({activeEmail:userToEdit.activeEmail,oldpassword:userToEdit.oldpassword,newpassword:userToEdit.newpassword}).$promise;
     };
 
 
@@ -44,7 +44,8 @@
     return {
       EditBasicInformationIndividual : EditBasicInformationIndividual,
       EditBasicInformationBusiness : EditBasicInformationBusiness,
-      EditAdditionalInformation : EditAdditionalInformation
+      EditAdditionalInformation : EditAdditionalInformation,
+      changePassword : changePassword
     };
 
 
