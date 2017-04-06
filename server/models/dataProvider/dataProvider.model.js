@@ -93,4 +93,9 @@ module.exports.getAllDataProvidersModel = function (callback) {
 };
 
 
+module.exports.getDataProvidersByConditionModel = function (query, callback) {
+  DataProvider.find(query, callback);
+};
+
+
 

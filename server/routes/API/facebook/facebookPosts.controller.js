@@ -4,7 +4,7 @@
 //TODO - Organize the structure LATER
 
 var DataProvider = require('../../../models/dataProvider/dataProvider.model');
-
+var moment = require('moment');
 
 exports.getAllFacebookPosts = function (req, res, next) {
 
@@ -37,8 +37,48 @@ module.exports.saveFacebookPosts = function (req, res, next) {
     }
 
   })
+};
 
 
+module.exports.getFacebookPosts = function (req, res, next) {
+
+  // var since = new Date(req.params.since);
+  // var until = new Date(req.params.until);
+  var since = moment(req.body.since).format();
+  var until = moment(req.body.until).format();
+
+  // console.log("datejs formated to moment,", moment(datejs).format())
+  var query = {
+    dateContent: {$gte: since, $lte: until},
+    channelId: req.body.channelId,
+    source: req.body.source
+  };
+
+  console.log("query", query);
+  DataProvider.getDataProvidersByConditionModel(query, function (err, docs) {
+    if (err) return handleError(res, err);
+    else {
+      console.log('Success ');
+      if (!req.body.keywords.length)
+        res.status(201)
+          .json(docs);
+      else {
+        var posts = [];
+        docs.forEach(function (story, index) {
+          req.body.keywords.forEach(function (key) {
+            console.log("index", index)
+            console.log(key)
+            if ((story.content && story.content.indexOf(key) !== -1) || (story.name && story.name.indexOf(key) !== -1)) {
+              posts.push(story)
+            }
+          })
+        });
+        res.status(201)
+          .json(posts);
+      }
+
+    }
+  })
 };
 
 

@@ -10,6 +10,7 @@ router.get('/', function (req, res, next) {
 });
 
 
+//Directly From Facebook API
 router.get('/token/:token', extendToken, facebookApi.getToken);
 
 router.get('/page/posts/:id/:since/:until', facebookHandler.transformPostsData, facebookApi.getPostsByPage);
@@ -20,6 +21,11 @@ router.get('/posts/:id/reactions', facebookApi.getReactionsByPost);
 
 router.get('/page/:id/insights/:metric/:token/:since/:until', facebookApi.pageInsights);
 
-router.post('/add/posts', facebookPosts.saveFacebookPosts);
+
+//From Our DB After Transformation
+router.post('/facebookPosts', facebookPosts.saveFacebookPosts);
+
+router.post('/facebookPosts/get', facebookPosts.getFacebookPosts);
+
 
 module.exports = router;

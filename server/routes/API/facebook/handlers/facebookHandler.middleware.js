@@ -2,7 +2,7 @@
  * Created by Ibrahim on 24/03/2017.
  */
 
-var config = require('../../../../config/facebook.config.js');
+var config = require('../../../../config/facebook.config');
 var request = require('request');
 var async = require('async');
 var urls = [];
@@ -49,17 +49,17 @@ module.exports.transformPostsData = function (req, res, next) {
                 request('http://localhost:3000/api/facebook/posts/' + story.id + '/reactions', function (reactionError, reactionResponse, reactionBody) {
                   if (!reactionError && reactionResponse.statusCode == 200) {
                     var reactions = JSON.parse(reactionBody);
-                    resolveReaction(reactions)
+                    resolveReaction(reactions);
                   }
                 });
               });
 
               //Transform Data to match with our DB
-              story = transformPosts(story, req.params.id)
+              story = transformPosts(story, req.params.id);
               promiseReactions.then(function (data) {
                 story.reactions = [];
                 data.date = new Date();
-                story.reactions.push(data)
+                story.reactions.push(data);
                 AllPosts.push(story);
               });
             });
