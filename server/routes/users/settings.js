@@ -92,6 +92,7 @@ router.post('/changepassword/:activeEmail/:oldpassword/:newpassword', function(r
     console.log("Passed: ",activeEmail,oldpassword,newpassword)
 
     User.findOne({ email: activeEmail }, function (err, user) {
+
       if (err) {
         console.log('err ',err);
         return res.status(500).json(err);
