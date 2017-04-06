@@ -6,6 +6,9 @@ var express = require('express');
 var router = express.Router();
 var User = require('../../models/users');
 var crypto = require('crypto');
+var randomstring = require("randomstring");
+var fs = require('fs');
+
 router.get('/a', function (req, res, next) {
   res.json({"a": 1})
 });
@@ -70,11 +73,7 @@ router.post('/basicinformationBuss/:activeEmail/:email/:businessName/:businessTy
   }
 });
 
-//*
-var fs = require('fs');
-var multer = require('multer'); // v1.0.5
-var upload = multer(); // for parsing multipart/form-data
-//*
+
 
 router.post('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:about/:birthday/:country', function (req, res, next) {
   if (req.params.activeEmail && req.params.profilePicture && req.params.coverPicture && req.params.about && req.params.birthday && req.params.country) {
@@ -85,17 +84,17 @@ router.post('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:
     var birthday = req.params.birthday;
     var country = req.params.country;
 
-    var profilePictureName
-    var coverPictureName
+    var profilePictureName = randomstring.generate(12);
+    var coverPictureName = randomstring.generate(12);
     //*
     var profilePictureBase64 = profilePicture;
     var coverPictureBase64 = coverPicture;
 
-    fs.writeFile(__dirname + "/../../public/uploads/images/out.png", profilePictureBase64, 'base64', function(err) {
+    fs.writeFile(__dirname + "/../../public/uploads/images/"+profilePictureName+".jpeg", profilePictureBase64, 'base64', function(err) {
       if (err) console.log(err);
     });
 
-    fs.writeFile(__dirname + "/../../public/uploads/images/ouy.png", coverPictureBase64, 'base64', function(err) {
+    fs.writeFile(__dirname + "/../../public/uploads/images/"+coverPictureName+".jpeg", coverPictureBase64, 'base64', function(err) {
       if (err) console.log(err);
     });
 
@@ -110,8 +109,8 @@ router.post('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:
 
     User.update({email: activeEmail}, {
       $set: {
-        profilePicture: profilePicture,
-        coverPicture: coverPicture,
+        profilePicture: profilePictureName,
+        coverPicture: coverPictureName,
         about: about,
         birthday: birthday,
         country: country
