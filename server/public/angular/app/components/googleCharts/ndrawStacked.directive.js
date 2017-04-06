@@ -14,9 +14,15 @@
         restrict: 'EA',
         scope: {
           myId: '@myId',
-          positive: '@positive',
-          negative: '@negative',
-          neutral: '@neutral',
+          nowPositive: '@nowPositive',
+          nowNegative: '@nowNegative',
+          nowNeutral: '@nowNeutral',
+          yesPositive: '@yesPositive',
+          yesNegative: '@yesNegative',
+          yesNeutral: '@yesNeutral',
+          oldPositive: '@oldPositive',
+          oldNegative: '@oldNegative',
+          oldNeutral: '@oldNeutral',
         },
         templateUrl: 'angular/app/components/googleCharts/ndrawStacked.template.html',
         link: function (scope, elem, attrs) {
@@ -25,13 +31,14 @@
             function drawStacked() {
               var data = google.visualization.arrayToDataTable([
                 ['Genre',  'Positive', 'Neutral', 'Negative', { role: 'annotation' } ],
-                ['03/30/2017', 10, 24, 20, ''],
-                ['03/29/2017', 16, 22, 43,''],
-                ['03/28/2017', 28, 19, 29, '']
+                [moment().format('DD/MM/YYYY'), parseFloat(scope.nowPositive), parseFloat(scope.nowNeutral), parseFloat(scope.nowNegative), ''],
+                [moment().add(-1,'days').format('DD/MM/YYYY'),parseFloat(scope.yesPositive), parseFloat(scope.yesNeutral), parseFloat(scope.yesNegative),''],
+                [moment().add(-2,'days').format('DD/MM/YYYY'), parseFloat(scope.oldPositive), parseFloat(scope.oldNeutral), parseFloat(scope.oldNegative), ''],
+             //   [moment().add(-3,'days').format('DD/MM/YYYY'), parseFloat(scope.nowPositive), parseFloat(scope.nowNeutral), parseFloat(scope.nowNegative), '']
               ]);
 
               var options = {
-                title: 'Overview about How people reacts between 3/28/2017 and 3/30/2017',
+                title: 'Overview about How people reacts between '+moment().format('DD/MM/YYYY')+' and 3/30/2017',
                 colors: ['#0B3B0B', '#AEB404','#8A0808' ],
                 chartArea: {width: '50%'},
                 isStacked: 'percent',
@@ -44,13 +51,13 @@
               };
 
 
-              var chart = new google.visualization.BarChart(document.getElementById('stacked_chart_div'+ scope.myId));
+              var chart = new google.visualization.BarChart(document.getElementById('ndrawChart'+ scope.myId));
               chart.draw(data, options);
             }
 
             google.charts.setOnLoadCallback(
               function () { // Anonymous function that calls drawChart1 and drawChart2
-                ndrawStacked();
+                drawStacked();
 
               });
 
