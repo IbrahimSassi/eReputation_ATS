@@ -20,7 +20,7 @@ function drawStacked() {
 
   var options = {
     title: 'Overview about How people reacts between 3/28/2017 and 3/30/2017',
-    colors: ['#04B404', '#F7FE2E','#DF0101' ],
+    colors: ['#0B3B0B', '#AEB404','#8A0808' ],
     chartArea: {width: '50%'},
     isStacked: 'percent',
     height: 300,

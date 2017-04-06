@@ -91,3 +91,14 @@ module.exports.getAllDataProvidersModel = function (callback) {
 
 
 
+module.exports.findAllDataProviders = function () {
+  return new Promise(function (resolve, reject) {
+    DataProvider.aggregate([{ $group: { _id: "$id", channels: { $addToSet: "$channelId" } } },{ $sort: { _id: 1 } }], function (err, docs) {
+      if (err) {
+        reject(err);
+      }
+      resolve(docs);
+    });
+  });
+};
+
