@@ -134,15 +134,16 @@
             <div class="col s12 m12 l12">
               <div class="card-panel" style="margin-top: -14px">
                 <form ng-submit="settings.EditAdditionalInformation()" id="formValidateBussAdd">
+
                   <div class="row">
                     <div class="col s4">
                       Profile Picture:
-                      <input type="file" id="profilePictureBuss" class="dropify" data-default-file="" data-height="50"
-                             ng-model="settings.additionalInformation.profilePicture"/>
+                      <input  type="file" id="filePickerProfilePicBuss" class="dropify" data-default-file="" data-height="50"
+                              ng-model="settings.additionalInformation.profilePicture"/>
                     </div>
                     <div class="col s4">
                       Cover Picture:
-                      <input type="file" id="coverPictureBuss" class="dropify" data-default-file="" data-height="50"
+                      <input type="file" id="filePickerCoverPicBuss" class="dropify" data-default-file="" data-height="50"
                              ng-model="settings.additionalInformation.coverPicture"/>
                     </div>
                   </div>
@@ -603,12 +604,12 @@
                   <div class="row">
                     <div class="col s4">
                       Profile Picture:
-                      <input type="file" id="profilePicture" class="dropify" data-default-file="" data-height="50"
+                      <input type="file" id="filePickerProfilePicIndiv" class="dropify" data-default-file="" data-height="50"
                              ng-model="settings.additionalInformation.profilePicture"/>
                     </div>
                     <div class="col s4">
                       Cover Picture:
-                      <input type="file" id="CoverPicture" class="dropify" data-default-file="" data-height="50"
+                      <input type="file" id="filePickerCoverPicIndiv" class="dropify" data-default-file="" data-height="50"
                              ng-model="settings.additionalInformation.coverPicture"/>
                     </div>
                   </div>

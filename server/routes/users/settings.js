@@ -70,6 +70,11 @@ router.post('/basicinformationBuss/:activeEmail/:email/:businessName/:businessTy
   }
 });
 
+//*
+var fs = require('fs');
+var multer = require('multer'); // v1.0.5
+var upload = multer(); // for parsing multipart/form-data
+//*
 
 router.post('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:about/:birthday/:country', function (req, res, next) {
   if (req.params.activeEmail && req.params.profilePicture && req.params.coverPicture && req.params.about && req.params.birthday && req.params.country) {
@@ -79,6 +84,29 @@ router.post('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:
     var about = req.params.about;
     var birthday = req.params.birthday;
     var country = req.params.country;
+
+    var profilePictureName
+    var coverPictureName
+    //*
+    var profilePictureBase64 = profilePicture;
+    var coverPictureBase64 = coverPicture;
+
+    fs.writeFile(__dirname + "/../../public/uploads/images/out.png", profilePictureBase64, 'base64', function(err) {
+      if (err) console.log(err);
+    });
+
+    fs.writeFile(__dirname + "/../../public/uploads/images/ouy.png", coverPictureBase64, 'base64', function(err) {
+      if (err) console.log(err);
+    });
+
+    //*
+
+
+
+
+
+
+
 
     User.update({email: activeEmail}, {
       $set: {
@@ -141,6 +169,20 @@ router.post('/changepassword/:activeEmail/:oldpassword/:newpassword', function (
     res.status(400).json({"error": "All field are required!"})
   }
 });
+
+
+//***************************
+
+
+
+//****************************
+
+
+
+
+
+
+
 
 
 module.exports = router;
