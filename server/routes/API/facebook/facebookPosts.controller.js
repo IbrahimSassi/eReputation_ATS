@@ -5,6 +5,7 @@
 
 var DataProvider = require('../../../models/dataProvider/dataProvider.model');
 var moment = require('moment');
+var MongoClient = require('mongodb').MongoClient;
 
 exports.getAllFacebookPosts = function (req, res, next) {
 
@@ -24,7 +25,7 @@ exports.getAllFacebookPosts = function (req, res, next) {
 
 module.exports.saveFacebookPosts = function (req, res, next) {
 
-  console.log(req.body)
+  // console.log(req.body);
   var newFacebookPost = new DataProvider.FacebookPostsProvider(req.body);
 
   DataProvider.createDataProviderModel(newFacebookPost, function (err, item) {
@@ -48,35 +49,38 @@ module.exports.getFacebookPosts = function (req, res, next) {
   var until = moment(req.body.until).format();
 
   // console.log("datejs formated to moment,", moment(datejs).format())
-  var query = {
-    dateContent: {$gte: since, $lte: until},
-    channelId: req.body.channelId,
-    source: req.body.source
-  };
+  var query;
+  var sortedBy;
+  if (!req.body.keywords.length) {
+    query = {
+      dateContent: {$gte: since, $lte: until},
+      channelId: req.body.channelId,
+      source: req.body.source
+    };
+
+  }
+  else {
+    var keywords = req.body.keywords.join(" ");
+    console.log("keywords", keywords);
+    query = {
+      dateContent: {$gte: since, $lte: until},
+      channelId: req.body.channelId,
+      source: req.body.source,
+      $text: {$search: keywords}
+    };
+    sortedBy = {"score": {$meta: "textScore"}};
+  }
+
+  // Create DB Index !!!!!!!
+  // db.dataproviders.createIndex( { content: "text",name:"text" } )
 
   console.log("query", query);
-  DataProvider.getDataProvidersByConditionModel(query, function (err, docs) {
+  DataProvider.getDataProvidersByConditionSortedModel(query, sortedBy, function (err, docs) {
     if (err) return handleError(res, err);
     else {
       console.log('Success ');
-      if (!req.body.keywords.length)
-        res.status(201)
-          .json(docs);
-      else {
-        var posts = [];
-        docs.forEach(function (story, index) {
-          req.body.keywords.forEach(function (key) {
-            console.log("index", index)
-            console.log(key)
-            if ((story.content && story.content.indexOf(key) !== -1) || (story.name && story.name.indexOf(key) !== -1)) {
-              posts.push(story)
-            }
-          })
-        });
-        res.status(201)
-          .json(posts);
-      }
-
+      res.status(201)
+        .json(docs);
     }
   })
 };

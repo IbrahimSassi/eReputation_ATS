@@ -60,6 +60,13 @@ var dataProviderSchema = new Schema({
 
 }, options);
 
+//Creating Index to use mongoDb Text Search
+dataProviderSchema.index
+({ content: 'text', name: 'text' }, {name: 'Text index', weights: {content: 10, name: 5}});
+
+// db.dataproviders.createIndex({ content: 'text', name: 'text' }, {name: 'Text index', weights: {content: 10, name: 5}})
+
+
 
 var DataProvider = module.exports = mongoose.model('DataProvider', dataProviderSchema);
 
@@ -95,6 +102,14 @@ module.exports.getAllDataProvidersModel = function (callback) {
 
 module.exports.getDataProvidersByConditionModel = function (query, callback) {
   DataProvider.find(query, callback);
+};
+
+
+module.exports.getDataProvidersByConditionSortedModel = function (query,sort, callback) {
+  DataProvider
+    .find(query, {"score": {$meta: "textScore"}})
+    .sort(sort)
+    .exec(callback);
 };
 
 
