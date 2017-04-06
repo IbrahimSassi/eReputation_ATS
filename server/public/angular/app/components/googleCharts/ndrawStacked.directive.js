@@ -18,7 +18,7 @@
           negative: '@negative',
           neutral: '@neutral',
         },
-        templateUrl: 'angular/app/components/googleCharts/ndrawChart.template.html',
+        templateUrl: 'angular/app/components/googleCharts/ndrawStacked.template.html',
         link: function (scope, elem, attrs) {
           setTimeout(function () {
             google.charts.load('current', {'packages': ['corechart', 'bar']});
