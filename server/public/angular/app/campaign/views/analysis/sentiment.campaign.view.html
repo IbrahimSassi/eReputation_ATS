@@ -1,0 +1,125 @@
+<link href="angular/app/assets/js/plugins/ionRangeSlider/css/ion.rangeSlider.css" type="text/css" rel="stylesheet"
+      media="screen,projection">
+<link href="angular/app/assets/js/plugins/ionRangeSlider/css/ion.rangeSlider.skinFlat.css" type="text/css"
+      rel="stylesheet" media="screen,projection">
+<link href="angular/app/assets/js/plugins/sweetalert/sweetalert.css" type="text/css" rel="stylesheet"
+      media="screen,projection">
+<script type="text/javascript" src="angular/app/assets/js/plugins/ionRangeSlider/js/ion.rangeSlider.js"></script>
+<!--My Work-->
+<!--breadcrumbs start-->
+<div id="breadcrumbs-wrapper">
+  <!-- Search for small screen -->
+  <div class="header-search-wrapper grey hide-on-large-only">
+    <i class="mdi-action-search active"></i>
+    <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize">
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m12 l12">
+        <h5 class="breadcrumbs-title">Campaign details</h5>
+        <ol class="breadcrumbs">
+          <li><a ui-sref="campaignList">Campaigns</a>
+          </li>
+          <li class="active">Campaign {{camp.detailCampaign.name}}</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!--breadcrumbs end-->
+<div id="profile-card" class="card">
+  <div class="card-image waves-effect waves-block waves-light">
+    <img class="activator"
+         src="https://research.pasteur.fr/wp-content/uploads/2015/06/research.pasteur.fr_data-analysis1.png"
+         alt="user bg">
+  </div>
+  <div class="card-content">
+
+    <qr size="70" class="responsive-img activator card-profile-image" ng-if="camp.detailCampaign.name"
+        text="camp.detailCampaign.name"></qr>
+    <a class="btn-floating activator btn-move-up waves-effect red accent-2 right">
+      <i class="mdi-image-remove-red-eye"></i>
+    </a>
+    <div class="row">
+      <div class="col s2 offset-s2">
+        <span class="card-title activator grey-text text-darken-4">{{camp.detailCampaign.name}}</span>
+        <h6 class="grey-text">Campaign Name</h6>
+      </div>
+      <div class="col s2 offset-s1">
+        <span class="card-title activator grey-text text-darken-4">{{camp.detailCampaign.keywords.length}}</span>
+        <h6 class="grey-text">Campaign Keywords</h6>
+      </div>
+      <div class="col s2 offset-s1">
+        <span class="card-title activator grey-text text-darken-4">{{camp.detailCampaign.channels.length}}</span>
+        <h6 class="grey-text">Campaign Channels</h6>
+      </div>
+      <!--<div style="padding-bottom: 20px;padding-left: 50px;padding-right: 50px;">-->
+      <div class="col s10 offset-s1">
+        <date-display ng-if="camp.detailCampaign.dateStart"
+                      date-on="{{camp.detailCampaign.dateStart | date :'dd/MM/yyyy' }}"
+                      date-end="{{camp.detailCampaign.dateEnd | date :'dd/MM/yyyy'}}"
+                      my-id="{{camp.detailCampaign._id}}"></date-display>
+
+        <br/>
+      </div>
+    </div>
+  </div>
+  <div class="card-reveal">
+
+
+    <span class="card-title grey-text text-darken-4">{{camp.detailCampaign.name}} <i
+      class="mdi-navigation-close right"></i></span>
+    <blockquote style="border-left: 5px solid #757575;">{{camp.detailCampaign.description}}</blockquote>
+    <p><i class="mdi-editor-insert-link"></i> <a href="{{camp.detailCampaign.url}}">{{camp.detailCampaign.url}}</a></p>
+    <p><i class="mdi-action-perm-phone-msg"></i> {{camp.detailCampaign.phoneNumber}}</p>
+    <p><i class="mdi-communication-email"></i> yourmail@domain.com</p>
+    <p><i class="mdi-social-cake"></i> 18th June 1990
+    <p>
+    <p><i class="mdi-device-airplanemode-on"></i> BAR - AUS
+    <p>
+  </div>
+</div>
+<br/>
+
+<!--End My Work-->
+
+<!--Your Work-->
+<div class="row">
+  <div class="col s12">
+    <ul class="tabs z-depth-1">
+      <li class="tab col s3"><a ng-if="camp.detailCampaign._id" class="white-text red darken-2 waves-effect waves-light"
+                                ui-sref="campaignSentimentAnalysis({idCampaign:'{{camp.detailCampaign._id}}'})"  ><i
+        class="fa fa-heartbeat" aria-hidden="true"></i> Sentiment
+        Analysis</a>
+      </li>
+      <li class="tab col s3"><a ng-if="camp.detailCampaign._id" class="white-text indigo darken-1 waves-effect waves-light active" ui-sref="campaignFbAnalysis({idCampaign:'{{camp.detailCampaign._id}}'})"><i
+        class="fa fa-facebook" aria-hidden="true"></i> Facebook</a>
+      </li>
+      <li class="tab col s3"><a ng-if="camp.detailCampaign._id" class="white-text light-blue lighten-2 waves-effect waves-light" ui-sref="campaignTwitterAnalysis({idCampaign:'{{camp.detailCampaign._id}}'})"><i
+        class="fa fa-twitter" aria-hidden="true"></i> Twitter</a>
+      </li>
+      <li class="tab col s3"><a ng-if="camp.detailCampaign._id" class="white-text green lighten-2 waves-effect waves-light" ui-sref="campaignWebAnalysis({idCampaign:'{{camp.detailCampaign._id}}'})"><i
+        class="fa fa-rss" aria-hidden="true"></i> Websites</a>
+      </li>
+    </ul>
+  </div>
+  <div class="col s12">
+    <div id="tab-sentiment" class="col s12 ">
+      <!-- your In tab Work-->
+      Sentiment WORK
+
+      <donut-chart ng-if="camp.detailCampaign._id" my-id="{{camp.detailCampaign._id}}" positive="60" negative="30" neutral="10"></donut-chart>
+      <ndraw-stacked now-negative="20" now-neutral="23" now-positive="88" yes-negative="78" yes-neutral="55" yes-positive="8" old-negative="45" old-neutral="78" old-positive="88" ng-if="camp.detailCampaign._id" my-id="{{camp.detailCampaign._id}}"></ndraw-stacked>
+      <combo-chart ng-if="camp.detailCampaign._id" my-id="{{camp.detailCampaign._id}}"></combo-chart>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  loadScriptOnlyIfNotLoaded("angular/app/assets/js/materialize.min.js");
+  loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins.min.js");
+  loadScriptOnlyIfNotLoaded('angular/app/assets/js/charts/ggleloader.js');
+//  loadScriptOnlyIfNotLoaded('angular/app/assets/js/charts/narimen/columnchart.js');
+
+</script>

@@ -12,6 +12,7 @@
   <link href="angular/app/assets/css/style.min.css" type="text/css" rel="stylesheet" media="screen,projection">
   <link href="angular/app/assets/css/page/wizard/wizard.css" type="text/css" rel="stylesheet" media="screen,projection">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="angular/app/assets/js/plugins/dropify/css/dropify.css" type="text/css" rel="stylesheet" media="screen,projection">
 </head>
 <body >
 <!-- Start Page Loading -->
@@ -129,12 +130,9 @@
               <ul id="profile-dropdown" class="dropdown-content">
                 <li><a href="#" ng-click="goToProfile()"><i class="mdi-action-face-unlock"></i> Profile</a>
                 </li>
-                <li><a href="#"><i class="mdi-action-settings"></i> Settings</a>
-                </li>
-                <li><a href="#"><i class="mdi-communication-live-help"></i> Help</a>
+                <li><a href="#" ng-click="goToSettings()"><i class="mdi-action-settings"></i> Settings</a>
                 </li>
                 <li class="divider"></li>
-                <li><a href="#"><i class="mdi-action-lock-outline"></i> Lock</a>
                 </li>
                 <li><a href="#" ng-click="logOut()"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
                 </li>
@@ -490,6 +488,17 @@
 <script src="angular/app/campaign/campaign.service.js"></script>
 <script src="angular/app/components/campaign/date.display.directive.js"></script>
 <script src="angular/app/components/campaign/confirmationAlert.directive.js"></script>
+<script src="angular/app/components/campaign/errSrc.directive.js"></script>
+<script type="text/javascript" src="angular/app/bower_components/qrcode/lib/qrcode.min.js"></script>
+<script type="text/javascript" src="angular/app/bower_components/angular-qr/angular-qr.min.js"></script>
+<script src="angular/app/campaign/controllers/campaign.sentiment.controller.js"></script>
+<script src="angular/app/campaign/controllers/campaign.fb.controller.js"></script>
+<script src="angular/app/campaign/controllers/campaign.tw.controller.js"></script>
+<script src="angular/app/campaign/controllers/campaign.web.controller.js"></script>
+<script src="angular/app/components/googleCharts/donutChart.directive.js"></script>
+<script src="angular/app/components/googleCharts/ndrawStacked.directive.js"></script>
+<script src="angular/app/components/googleCharts/comboChart.directive.js"></script>
+
 <!--Hakim Campaign Modules ends-->
 
 <script src="angular/app/components/prevent-default.directive.js"></script>
@@ -543,6 +552,11 @@
 <script type="text/javascript" src="angular/app/assets/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <!--plugins.js - Some Specific JS codes for Plugin Settings-->
 <script type="text/javascript" src="angular/app/assets/js/plugins.min.js"></script>
+<script type="text/javascript" src="angular/app/assets/js/plugins/formatter/jquery.formatter.min.js"></script>
+<script type="text/javascript" src="angular/app/assets/js/plugins/dropify/js/dropify.js"></script>
+
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 <!--custom-script.js - Add your own theme custom JS-->
 <script type="text/javascript" src="angular/app/assets/js/custom-script.js"></script>
 

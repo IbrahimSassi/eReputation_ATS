@@ -37,6 +37,10 @@
       return CampaignFactory.save(campaign).$promise;
     }
 
+    this.getCampaignById = function (idCampaign) {
+      return CampaignFactory.getCampaignById({id: idCampaign}).$promise;
+    }
+
 
   }
 

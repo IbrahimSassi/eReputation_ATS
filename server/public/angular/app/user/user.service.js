@@ -8,10 +8,10 @@
     .module('ATSApp-front.user')
     .service('UserService', UserServiceFN);
 
-  UserServiceFN.$inject = ['UserFactory','$http', '$window'];
+  UserServiceFN.$inject = ['UserFactory', '$http', '$window'];
 
 
-  function UserServiceFN(UserFactory,$http, $window) {
+  function UserServiceFN(UserFactory, $http, $window) {
 
 
     this.getAllUsers = function () {
@@ -28,11 +28,11 @@
       return $window.localStorage['mean-token'];
     };
 
-    var isLoggedIn = function() {
+    var isLoggedIn = function () {
       var token = getToken();
       var payload;
 
-      if(token){
+      if (token) {
         payload = token.split('.')[1];
         payload = $window.atob(payload);
         payload = JSON.parse(payload);
@@ -43,48 +43,45 @@
       }
     };
 
-    var currentUser = function() {
-      if(isLoggedIn()){
+    var currentUser = function () {
+      if (isLoggedIn()) {
         var token = getToken();
         var payload = token.split('.')[1];
         payload = $window.atob(payload);
         payload = JSON.parse(payload);
         return {
-          email : payload.email,
-          name : payload.name
+          email: payload.email,
+          name: payload.name
         };
       }
     };
 
-     var register = function(user) {
+    var register = function (user) {
       //return $http.post('/users/register', user)
-       return UserFactory.Register(user).$promise;
+      return UserFactory.Register(user).$promise;
     };
 
-     var login = function(user) {
+    var login = function (user) {
       //return $http.post('/users/login', user)
-       return UserFactory.Login(user).$promise;
+      return UserFactory.Login(user).$promise;
     };
 
-    var logout = function() {
+    var logout = function () {
       $window.localStorage.removeItem('mean-token');
     };
-    var SendVerificationEmail = function(email) {
-      return UserFactory.SendVerificationEmail({email:email}).$promise;
+    var SendVerificationEmail = function (email) {
+      return UserFactory.SendVerificationEmail({email: email}).$promise;
     };
     return {
-      currentUser : currentUser,
-      saveToken : saveToken,
-      getToken : getToken,
-      isLoggedIn : isLoggedIn,
-      register : register,
-      login : login,
-      logout : logout,
-      SendVerificationEmail : SendVerificationEmail
+      currentUser: currentUser,
+      saveToken: saveToken,
+      getToken: getToken,
+      isLoggedIn: isLoggedIn,
+      register: register,
+      login: login,
+      logout: logout,
+      SendVerificationEmail: SendVerificationEmail
     };
-
-
-
 
 
   }

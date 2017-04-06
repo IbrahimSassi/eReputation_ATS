@@ -20,7 +20,7 @@ function drawStacked() {
 
   var options = {
     title: 'Overview about How people reacts between 3/28/2017 and 3/30/2017',
-    colors: ['#04B404', '#F7FE2E','#DF0101' ],
+    colors: ['#0B3B0B', '#AEB404','#8A0808' ],
     chartArea: {width: '50%'},
     isStacked: 'percent',
     height: 300,
@@ -70,7 +70,7 @@ function drawVisualization() {
 
   var options = {
     title : 'Number of Tweets by Time and sentiment',
-    colors: ['#04B404', '#F7FE2E','#DF0101','#0404B4' ],
+    colors: ['#04B404', '#FE9F0C','#DF0101','#0404B4' ],
     vAxis: {title: 'Motions'},
     hAxis: {title: 'Month'},
     seriesType: 'bars',

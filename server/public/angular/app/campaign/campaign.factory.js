@@ -18,7 +18,15 @@
 
       {id: '@id'},
       {
-        'update': {method: 'PUT'}
+        'update': {method: 'PUT'},
+        'getCampaignById': {
+          url: 'api/campaigns/:id',
+          method: 'GET',
+          params: {
+            id: '@id',
+          },
+          isArray: true
+        },
       }
     );
 

@@ -9,7 +9,7 @@ var mailsender = require('mailsender');
 var fs = require('fs')
 var Styliner = require('styliner');
 
-router.post('/generate/:email', function(req, res, next) {
+router.post('/generate/:email', function (req, res, next) {
 
   var token = jwt.sign({
     exp: Math.floor(Date.now() / 1000) + (60 * 60),
@@ -17,54 +17,49 @@ router.post('/generate/:email', function(req, res, next) {
   }, 'emailverification');
 
 
-  fs.readFile('server/views/email.html',function (err,data) {
-    if(err)
-    {
+  fs.readFile('server/views/email.html', function (err, data) {
+    if (err) {
       console.log(err);
     }
     else {
-      data = data  + '<a style="color:cadetblue;" href="http://localhost:3000/#!/emailconfirmation/'+token+'">Verification Link</a>';
-      sendmail(data,req.params.email)
+      data = data + '<a style="color:cadetblue;" href="http://localhost:3000/#!/emailconfirmation/' + token + '">Verification Link</a>';
+      sendmail(data, req.params.email)
 
 
     }
 
   });
 
-  function sendmail (body,to) {
+  function sendmail(body, to) {
     mailsender
       .from('mohamedfiras.ouertani@esprit.tn', 'MFO11889162')
       .to(to)
-      .body('subject',body,true)
-  .send();
+      .body('subject', body, true)
+      .send();
   }
 
-  res.status(200).json({ "token": token});
+  res.status(200).json({"token": token});
 });
 
 
-router.get('/validate/:token', function(req, res, next) {
+router.get('/validate/:token', function (req, res, next) {
 
-  console.log('token:',req.params.token)
-  jwt.verify(req.params.token, 'emailverification', function(err, decoded) {
+  console.log('token:', req.params.token)
+  jwt.verify(req.params.token, 'emailverification', function (err, decoded) {
 
-    if (err)
-    {
-      res.status(401).json({ "Error": 'Token Expired or incorrect'});
+    if (err) {
+      res.status(401).json({"Error": 'Token Expired or incorrect'});
     }
-    else
-    {
-    User.update({ email: decoded.email }, { $set: { state: 'Activated' }}, function (err, user) {
-      if (err) return res.status(401);
+    else {
+      User.update({email: decoded.email}, {$set: {state: 'Activated'}}, function (err, user) {
+        if (err) return res.status(401);
 
-      res.status(200).json({ "email": decoded.email});
+        res.status(200).json({"email": decoded.email});
 
-    });
+      });
     }
 
   });
-
-
 
 
 });

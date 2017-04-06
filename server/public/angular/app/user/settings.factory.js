@@ -14,24 +14,59 @@
   function SettingsFactory($resource) {
 
     /** Change The Link To your Rest URL From the JAVA EE APP*/
-    return $resource('/users/register',
+    return $resource('/users/settings',
 
       {id: '@id'},
       {
         'update': {method: 'PUT'},
-        'Register': {
-          url: '/users/register',
-          method: 'POST'
-        },
-        'Login': {
-          url: '/users/LOGIN',
-          method: 'POST'
-        },
-        'SendVerificationEmail': {
-          url: '/users/verification/generate/:email',
+        'basicinformationIndiv': {
+          url: '/users/settings/basicinformationIndiv/:activeEmail/:email/:firstName/:lastName/:username/:phoneNumber',
           method: 'POST',
           params: {
+            activeEmail: '@activeEmail',
             email: '@email',
+            firstName: '@firstName',
+            lastName: '@lastName',
+            username: '@username',
+            phoneNumber: '@phoneNumber'
+          }
+        },
+        'basicinformationBuss': {
+          url: '/users/settings/basicinformationBuss/:activeEmail/:email/:businessName/:businessType/:employeesNumber/:phoneNumber',
+          method: 'POST',
+          params: {
+            activeEmail: '@activeEmail',
+            email: '@email',
+            businessName: '@businessName',
+            businessType: '@businessType',
+            employeesNumber: '@employeesNumber',
+            phoneNumber: '@phoneNumber',
+
+          }
+        },
+        'additionalInformation': {
+          url: '/users/settings/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:about/:birthday/:country',
+          method: 'POST',
+          params: {
+            activeEmail: '@activeEmail',
+            profilePicture: '@profilePicture',
+            coverPicture: '@coverPicture',
+            about: '@about',
+            birthday: '@birthday',
+            country: '@country',
+
+          },
+
+        },
+        'changepaswword': {
+          url: '/users/settings/changepassword/:activeEmail/:oldpassword/:newpassword',
+          method: 'POST',
+          params: {
+            activeEmail: '@activeEmail',
+            oldpassword: '@oldpassword',
+            newpassword: '@newpassword',
+
+
           },
         }
       }

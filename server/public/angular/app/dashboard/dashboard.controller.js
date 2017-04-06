@@ -15,7 +15,7 @@
   /**Injection**/
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$qProvider'];
 
-  DashboardCtrl.$inject = ['DashboardService', '$state', 'angularLoad'];
+  DashboardCtrl.$inject = ['DashboardService', '$state', 'angularLoad','$scope'];
   /**End Of Injection**/
 
 
@@ -39,10 +39,11 @@
   /**End of Route Config**/
 
 
-  function DashboardCtrl(DashboardService, $state, angularLoad) {
+  function DashboardCtrl(DashboardService, $state, angularLoad,$scope) {
 
     /**Scope Replace**/
     var vm = this;
+
 
     vm.getAllUsers = function () {
       DashboardService.getAllUsers().then(function (data) {

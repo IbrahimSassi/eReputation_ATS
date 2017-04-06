@@ -22,7 +22,7 @@
   /**Injection**/
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$qProvider'];
 
-  ProfileCtrl.$inject = ['ProfileService', '$state','$rootScope','angularLoad','$location'];
+  ProfileCtrl.$inject = ['ProfileService', '$state', '$rootScope', 'angularLoad', '$location'];
   /**End Of Injection**/
 
 
@@ -34,7 +34,7 @@
         url: '/profile',
         templateUrl: 'angular/app/user/views/profile.view.html',
         controller: 'ProfileCtrl as profile',
-        register:true
+        register: true
       })
     ;
     $qProvider.errorOnUnhandledRejections(false);
@@ -48,7 +48,7 @@
    * @param UserService
    * @param $state
    */
-  function ProfileCtrl(ProfileService, $state,$rootScope,angularLoad,$location) {
+  function ProfileCtrl(ProfileService, $state, $rootScope, angularLoad, $location) {
 
     /**Scope Replace**/
     var vm = this;
@@ -57,14 +57,14 @@
 
 
     /*
-    vm.userDoc = {};
-    ProfileService.getProfile().then(successCallback, errorCallback);
-    function successCallback(response){
-      vm.userDoc = response.data
-    }
-    function errorCallback(error){
-    }
-    */
+     vm.userDoc = {};
+     ProfileService.getProfile().then(successCallback, errorCallback);
+     function successCallback(response){
+     vm.userDoc = response.data
+     }
+     function errorCallback(error){
+     }
+     */
 
 
     vm.logout = function () {

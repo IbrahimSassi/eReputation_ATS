@@ -18,8 +18,7 @@
     return $resource('/users/verification/validate/:token',
 
       {token: '@token'},
-      {
-      }
+      {}
     );
 
 

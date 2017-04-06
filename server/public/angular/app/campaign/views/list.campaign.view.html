@@ -16,13 +16,15 @@
                <blockquote style="border-left: 5px solid #757575;">{{c.description | limitTo: 40 }}
                  {{c.description.length>40 ?'[...]':''}}</blockquote>
                <p style="margin: 15px;">
-                 <date-display date-on="{{c.dateStart | date :'dd/MM/yyyy' }}"
+                 <date-display ng-if="c.dateStart" date-on="{{c.dateStart | date :'dd/MM/yyyy' }}"
                                date-end="{{c.dateEnd | date :'dd/MM/yyyy'}}" my-id="{{c._id}}"></date-display>
                </p>
 
             </div>
 
             <div class="card-action right">
+               <a ui-sref="campaignSentimentAnalysis({idCampaign:'{{c._id}}'})"  style="margin: 5px" class="btn-floating waves-effect grey darken-1 waves-light"><i
+                 class="mdi-image-remove-red-eye"></i></a>
                <a style="margin: 5px" class="btn-floating waves-effect grey darken-1 waves-light"><i
                  class="mdi-action-settings"></i></a>
                <a id="realDelete{{c._id}}" style="display: none" ng-click="camp.deleteCampaign(c)" style="margin: 5px" class="btn-floating waves-effect grey darken-1 waves-light"><i
@@ -37,19 +39,8 @@
 </div>
 
 <script>
-//  $('.btn-warning-confirm').click(function(){
-//    swal({
-//        title: "Are you sure?",
-//        text: "You will not be able to recover this imaginary file!",
-//        type: "warning",
-//        showCancelButton: true,
-//        confirmButtonColor: '#DD6B55',
-//        confirmButtonText: 'Yes, delete it!',
-//        closeOnConfirm: false
-//      },
-//      function(){
-//        swal("Deleted!", "Your imaginary file has been deleted!", "success");
-//      });
+//  $(document).ready(function(){
+//    $('.tooltipped').tooltip({delay: 50});
 //  });
 </script>
 

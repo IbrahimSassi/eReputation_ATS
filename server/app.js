@@ -10,6 +10,7 @@ var admin = require('./routes/admin');
 var index = require('./routes/index');
 var users = require('./routes/users/index');
 var usersVerification = require('./routes/users/verification');
+var settings = require('./routes/users/settings');
 
 
 /** APIS*/
@@ -65,7 +66,7 @@ app.use('/api/wwsa', wwsa);
 app.use('/api/channels', channel);
 app.use('/api/campaigns', campaign);
 app.use('/users/verification', usersVerification);
-
+app.use('/users/settings', settings);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

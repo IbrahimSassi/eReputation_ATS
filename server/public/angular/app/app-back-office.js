@@ -31,8 +31,12 @@ angular.module('ATSApp', [
 
     $rootScope.goToProfile  = function()
     {
-
       $state.go('profile')
+    }
+
+    $rootScope.goToSettings  = function()
+    {
+      $state.go('settings')
     }
 
     if (ProfileService.isLoggedIn()) {
