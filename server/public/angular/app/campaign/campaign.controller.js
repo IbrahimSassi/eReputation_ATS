@@ -9,7 +9,7 @@
   angular
     .module('ATSApp.campaign', [
       'ui.router',
-
+      'ja.qr'
     ])
     .config(config)
     .controller('CampaignCtrl', CampaignCtrl);
@@ -19,7 +19,7 @@
   /**Injection**/
   config.$inject = ['$stateProvider', '$qProvider'];
 
-  CampaignCtrl.$inject = ['CampaignService', 'ChannelService', 'FacebookService', '$state', 'angularLoad', '$scope', '$rootScope', '$q'];
+  CampaignCtrl.$inject = ['CampaignService', 'ChannelService', 'FacebookService', 'angularLoad', '$scope', '$rootScope','$stateParams'];
   /**End Of Injection**/
 
 
@@ -37,6 +37,11 @@
         templateUrl: '../angular/app/campaign/views/list.campaign.view.html',
         controller: 'CampaignCtrl as camp'
       })
+      .state('campaignDetail', {
+        url: '/campaign/detail/:idCampaign',
+        templateUrl: '../angular/app/campaign/views/detail.campaign.view.html',
+        controller: 'CampaignCtrl as camp'
+      })
 
 
     ;
@@ -48,10 +53,35 @@
   /**End of Route Config**/
 
 
-  function CampaignCtrl(CampaignService, ChannelService, FacebookService, $state, angularLoad, $scope, $rootScope, $q) {
+  function CampaignCtrl(CampaignService, ChannelService, FacebookService, angularLoad, $scope, $rootScope,$stateParams) {
 
     /**Scope Replace**/
     var vm = this;
+    vm.idCampaign = $stateParams.idCampaign;
+
+    /**
+     * View Detail Methods
+     */
+
+    vm.getCampaignDetail = function(id)
+    {
+      if(id!==undefined)
+      {
+        CampaignService.getCampaignById(id).then(function (data) {
+          console.info(data);
+          vm.detailChannel=data[0];
+        }).catch(function (err) {
+          console.error(err);
+        });
+      }
+
+    }
+
+    vm.getCampaignDetail(vm.idCampaign);
+
+    /***
+     * End
+     */
 
     vm.getAllCampaigns = function () {
       CampaignService.getAllCampaigns().then(function (data) {
