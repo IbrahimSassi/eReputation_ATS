@@ -107,6 +107,9 @@
     <div id="tab-sentiment" class="col s12 ">
       <!-- your In tab Work-->
       Sentiment WORK
+
+      <donut-chart ng-if="camp.detailCampaign._id" my-id="{{camp.detailCampaign._id}}" positive="60" negative="30" neutral="10"></donut-chart>
+
     </div>
   </div>
 </div>
@@ -115,4 +118,7 @@
 <script>
   loadScriptOnlyIfNotLoaded("angular/app/assets/js/materialize.min.js");
   loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins.min.js");
+  loadScriptOnlyIfNotLoaded('angular/app/assets/js/charts/ggleloader.js');
+//  loadScriptOnlyIfNotLoaded('angular/app/assets/js/charts/narimen/columnchart.js');
+
 </script>

@@ -70,7 +70,7 @@ function drawVisualization() {
 
   var options = {
     title : 'Number of Tweets by Time and sentiment',
-    colors: ['#04B404', '#F7FE2E','#DF0101','#0404B4' ],
+    colors: ['#04B404', '#FE9F0C','#DF0101','#0404B4' ],
     vAxis: {title: 'Motions'},
     hAxis: {title: 'Month'},
     seriesType: 'bars',
