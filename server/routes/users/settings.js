@@ -76,6 +76,8 @@ router.post('/basicinformationBuss/:activeEmail/:email/:businessName/:businessTy
 
 
 router.post('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:about/:birthday/:country', function (req, res, next) {
+  console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+
   if (req.params.activeEmail && req.params.profilePicture && req.params.coverPicture && req.params.about && req.params.birthday && req.params.country) {
     var activeEmail = req.params.activeEmail;
     var profilePicture = req.params.profilePicture;
@@ -83,7 +85,6 @@ router.post('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:
     var about = req.params.about;
     var birthday = req.params.birthday;
     var country = req.params.country;
-
     var profilePictureName = randomstring.generate(12);
     var coverPictureName = randomstring.generate(12);
     //*
@@ -99,13 +100,6 @@ router.post('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:
     });
 
     //*
-
-
-
-
-
-
-
 
     User.update({email: activeEmail}, {
       $set: {

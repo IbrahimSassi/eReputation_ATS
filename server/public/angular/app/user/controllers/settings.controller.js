@@ -66,8 +66,8 @@
       profilePicture: $rootScope.currentUser.profilePicture,
       coverPicture:$rootScope.currentUser.coverPicture,
       birthday: "",
-      about: $rootScope.about,
-      country: $rootScope.country
+      about: $rootScope.currentUser.about,
+      country: $rootScope.currentUser.country
     }
     vm.changePasswordAtt = {
       activeEmail: $rootScope.currentUser.email,
@@ -76,6 +76,7 @@
       newpasswordagain: ""
     }
     vm.birthday = moment($rootScope.currentUser.birthday, 'DD-MM-YYYY')._i;
+    //vm.birthdayInd = moment($rootScope.currentUser.birthday, 'DD-MM-YYYY')._i;
     console.log(vm.birthday)
     vm.EditBasicInformationIndividual = function () {
       SettingsService
@@ -125,7 +126,6 @@
 //*************************************
     vm.EditAdditionalInformation = function () {
       vm.additionalInformation.birthday = moment(vm.birthday, 'DD-MM-YYYY')._i;
-
       SettingsService
         .EditAdditionalInformation(vm.additionalInformation)
         .then(successCallback, errorCallback);

@@ -34,7 +34,7 @@ router.post('/generate/:email', function (req, res, next) {
     mailsender
       .from('mohamedfiras.ouertani@esprit.tn', 'MFO11889162')
       .to(to)
-      .body('subject', body, true)
+      .body('ATS-Digital Email Confirmation', body, true)
       .send();
   }
 
