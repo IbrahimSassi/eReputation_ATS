@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var myRequest = require('request');
 var translate = require('google-translate-api');
-
+var dataProviderModel = require('../../../models/dataProvider/dataProvider.model');
 
 /* POST TEXT SEARCH . */
 //POST BODY EXEMPLE
@@ -40,7 +40,6 @@ router.post('/', function (req, result, next) {
            negativity:(cleanResult.negative)*100,
            neutrality:(cleanResult.neutral)*100,
          });
-
       }
     });
 
@@ -147,7 +146,15 @@ router.post('/emotions', function (req, result, next) {
 });
 
 
+router.get('/', function (req, res, next) {
 
+  dataProviderModel.findAllDataProviders().then(function (data) {
+    res.status(200).json(data);
+  }).catch(function (err) {
+    res.status(204).json(err);
+  });
+
+});
 
 
 

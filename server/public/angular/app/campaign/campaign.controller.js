@@ -19,7 +19,7 @@
   /**Injection**/
   config.$inject = ['$stateProvider', '$qProvider'];
 
-  CampaignCtrl.$inject = ['CampaignService', 'ChannelService', 'FacebookService', 'angularLoad', '$scope', '$rootScope','$stateParams'];
+  CampaignCtrl.$inject = ['CampaignService', 'ChannelService', 'FacebookService', 'angularLoad', '$scope', '$rootScope', '$stateParams'];
   /**End Of Injection**/
 
 
@@ -73,23 +73,27 @@
   /**End of Route Config**/
 
 
-  function CampaignCtrl(CampaignService, ChannelService, FacebookService, angularLoad, $scope, $rootScope,$stateParams) {
+  function CampaignCtrl(CampaignService, ChannelService, FacebookService, angularLoad, $scope, $rootScope, $stateParams) {
 
     /**Scope Replace**/
     var vm = this;
     vm.idCampaign = $stateParams.idCampaign;
+    $scope.allChannelTodisplay = [];
 
     /**
      * View Detail Methods
      */
 
-    vm.getCampaignDetail = function(id)
-    {
-      if(id!==undefined)
-      {
+    vm.getCampaignDetail = function (id) {
+      if (id !== undefined) {
         CampaignService.getCampaignById(id).then(function (data) {
           console.info(data);
-          vm.detailCampaign=data[0];
+          vm.detailCampaign = data[0];
+          data[0].channels.forEach(function (channelPartial) {
+            ChannelService.getChannelByID(channelPartial.channelId).then(function (channel) {
+              $scope.allChannelTodisplay.push(channel);
+            });
+          });
         }).catch(function (err) {
           console.error(err);
         });
