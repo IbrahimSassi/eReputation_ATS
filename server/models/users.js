@@ -29,16 +29,35 @@ var UserSchema = new Schema({
 }, options);
 
 var individualSchema = new Schema({
-  username: String,
-  firstName: String,
-  lastName: String
+  username:  {
+  type: String,
+    unique: true,
+    required: true
+},
+  firstName: {
+    type: String,
+    required: true
+  },
+  lastName: {
+    type: String,
+    required: true
+  },
 }, options);
 
 var businessSchema = new Schema({
-  businessName: String,
-  employeesNumber: String,
-  businessType: String,
-  businessID: String,
+  businessName: {
+    type: String,
+    required: true
+  },
+  employeesNumber: {
+    type: String,
+    required: true
+  },
+  businessType: {
+    type: String,
+    required: true
+  },
+
 
 
 }, options);
@@ -69,7 +88,6 @@ UserSchema.methods.generateJwt = function () {
     businessType: this.businessType,
     accountType: this.accountType,
     creationDate: this.creationDate,
-    businessID: this.businessID,
     picture: this.picture,
     address: this.address,
     state: this.state,

@@ -16,7 +16,7 @@
   /**Injection**/
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$qProvider'];
 
-  SettingsCtrl.$inject = ['$state', '$rootScope', 'angularLoad', '$location', 'SettingsService'];
+  SettingsCtrl.$inject = ['$state', '$rootScope', 'angularLoad', '$location', 'SettingsService','$scope'];
   /**End Of Injection**/
 
 
@@ -36,7 +36,7 @@
 
   };
 
-  function SettingsCtrl($state, $rootScope, angularLoad, $location, SettingsService) {
+  function SettingsCtrl($state, $rootScope, angularLoad, $location, SettingsService,$scope) {
 
     /**Scope Replace**/
     var vm = this;
@@ -63,11 +63,11 @@
     }
     vm.additionalInformation = {
       activeEmail: $rootScope.currentUser.email,
-      profilePicture: " ",
-      coverPicture: " ",
+      profilePicture: $rootScope.currentUser.profilePicture,
+      coverPicture:$rootScope.currentUser.coverPicture,
       birthday: "",
-      about: $rootScope.about,
-      country: $rootScope.country
+      about: $rootScope.currentUser.about,
+      country: $rootScope.currentUser.country
     }
     vm.changePasswordAtt = {
       activeEmail: $rootScope.currentUser.email,
@@ -76,6 +76,7 @@
       newpasswordagain: ""
     }
     vm.birthday = moment($rootScope.currentUser.birthday, 'DD-MM-YYYY')._i;
+    //vm.birthdayInd = moment($rootScope.currentUser.birthday, 'DD-MM-YYYY')._i;
     console.log(vm.birthday)
     vm.EditBasicInformationIndividual = function () {
       SettingsService
@@ -124,9 +125,7 @@
     };
 //*************************************
     vm.EditAdditionalInformation = function () {
-
       vm.additionalInformation.birthday = moment(vm.birthday, 'DD-MM-YYYY')._i;
-
       SettingsService
         .EditAdditionalInformation(vm.additionalInformation)
         .then(successCallback, errorCallback);
@@ -171,6 +170,86 @@
     };
 
 
+//*********************Getting Image Base64 Codes********************
+
+    var filePickerProfilePicIndiv = function(evt) {
+      var files = evt.target.files;
+      var file = files[0];
+
+      if (files && file) {
+        var reader = new FileReader();
+
+        reader.onload = function(readerEvt) {
+          var binaryString = readerEvt.target.result;
+          console.log('heyyyyy: ',btoa(binaryString))
+          vm.additionalInformation.profilePicture = btoa(binaryString);
+        };
+
+        reader.readAsBinaryString(file);
+      }
+    };
+
+    //***
+    var filePickerCoverPicIndiv = function(evt) {
+      var files = evt.target.files;
+      var file = files[0];
+
+      if (files && file) {
+        var reader = new FileReader();
+
+        reader.onload = function(readerEvt) {
+          var binaryString = readerEvt.target.result;
+          console.log('heyyyyy: ',btoa(binaryString))
+          vm.additionalInformation.coverPicture = btoa(binaryString);
+        };
+
+        reader.readAsBinaryString(file);
+      }
+    };
+
+    //****
+    var filePickerProfilePicBuss = function(evt) {
+      var files = evt.target.files;
+      var file = files[0];
+
+      if (files && file) {
+        var reader = new FileReader();
+
+        reader.onload = function(readerEvt) {
+          var binaryString = readerEvt.target.result;
+          console.log('heyyyyy: ',btoa(binaryString))
+          vm.additionalInformation.profilePicture = btoa(binaryString);
+        };
+
+        reader.readAsBinaryString(file);
+      }
+    };
+//**
+    var filePickerCoverPicBuss = function(evt) {
+      var files = evt.target.files;
+      var file = files[0];
+
+      if (files && file) {
+        var reader = new FileReader();
+
+        reader.onload = function(readerEvt) {
+          var binaryString = readerEvt.target.result;
+          console.log('heyyyyy: ',btoa(binaryString))
+          vm.additionalInformation.coverPicture = btoa(binaryString);
+        };
+
+        reader.readAsBinaryString(file);
+      }
+    };
+
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+      document.getElementById('filePickerProfilePicIndiv').addEventListener('change', filePickerProfilePicIndiv, false);
+      document.getElementById('filePickerCoverPicIndiv').addEventListener('change', filePickerCoverPicIndiv, false);
+      document.getElementById('filePickerProfilePicBuss').addEventListener('change', filePickerProfilePicBuss, false);
+      document.getElementById('filePickerCoverPicBuss').addEventListener('change', filePickerCoverPicBuss, false);
+    } else {
+      alert('The File APIs are not fully supported in this browser.');
+    }
   };
 
 })();

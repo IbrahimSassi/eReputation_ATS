@@ -6,6 +6,9 @@ var express = require('express');
 var router = express.Router();
 var User = require('../../models/users');
 var crypto = require('crypto');
+var randomstring = require("randomstring");
+var fs = require('fs');
+
 router.get('/a', function (req, res, next) {
   res.json({"a": 1})
 });
@@ -71,7 +74,10 @@ router.post('/basicinformationBuss/:activeEmail/:email/:businessName/:businessTy
 });
 
 
+
 router.post('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:about/:birthday/:country', function (req, res, next) {
+  console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+
   if (req.params.activeEmail && req.params.profilePicture && req.params.coverPicture && req.params.about && req.params.birthday && req.params.country) {
     var activeEmail = req.params.activeEmail;
     var profilePicture = req.params.profilePicture;
@@ -79,11 +85,26 @@ router.post('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:
     var about = req.params.about;
     var birthday = req.params.birthday;
     var country = req.params.country;
+    var profilePictureName = randomstring.generate(12);
+    var coverPictureName = randomstring.generate(12);
+    //*
+    var profilePictureBase64 = profilePicture;
+    var coverPictureBase64 = coverPicture;
+
+    fs.writeFile(__dirname + "/../../public/uploads/images/"+profilePictureName+".jpeg", profilePictureBase64, 'base64', function(err) {
+      if (err) console.log(err);
+    });
+
+    fs.writeFile(__dirname + "/../../public/uploads/images/"+coverPictureName+".jpeg", coverPictureBase64, 'base64', function(err) {
+      if (err) console.log(err);
+    });
+
+    //*
 
     User.update({email: activeEmail}, {
       $set: {
-        profilePicture: profilePicture,
-        coverPicture: coverPicture,
+        profilePicture: profilePictureName,
+        coverPicture: coverPictureName,
         about: about,
         birthday: birthday,
         country: country
@@ -141,6 +162,20 @@ router.post('/changepassword/:activeEmail/:oldpassword/:newpassword', function (
     res.status(400).json({"error": "All field are required!"})
   }
 });
+
+
+//***************************
+
+
+
+//****************************
+
+
+
+
+
+
+
 
 
 module.exports = router;
