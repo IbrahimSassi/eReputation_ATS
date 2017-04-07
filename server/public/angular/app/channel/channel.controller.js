@@ -23,7 +23,8 @@
     'ChannelService',
     '$state',
     '$stateParams',
-    '$scope'
+    '$scope',
+    '$rootScope'
   ];
 
 
@@ -56,11 +57,13 @@
   function ChannelCtrl(ChannelService,
                        $state,
                        $stateParams,
-                       $scope) {
+                       $scope,
+                       $rootScope) {
     //On Init Start
     var vm = this;
     vm.myChannels = [];
-    vm.connectedUserId = "58d3dc815d391346a06f48c3";
+    vm.connectedUserId = $rootScope.currentUser._id;
+    // vm.connectedUserId = "58d3dc815d391346a06f48c3";
     vm.title = 'Channel List';
 
     init();

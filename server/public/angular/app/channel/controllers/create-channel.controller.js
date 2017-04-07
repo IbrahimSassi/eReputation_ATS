@@ -30,7 +30,8 @@
     //On Init Start
     var vm = this;
 
-    vm.connectedUserId = "58d3dc815d391346a06f48c3";
+    // vm.connectedUserId = "58d3dc815d391346a06f48c3";
+    vm.connectedUserId = $rootScope.currentUser._id;
     vm.title = 'Create Channel';
     vm.channel = {
       name: "",

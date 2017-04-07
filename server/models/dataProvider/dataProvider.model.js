@@ -33,7 +33,7 @@ var dataProviderSchema = new Schema({
     type: Date
   }
   , contentScore: {
-    type: Object
+    type: Array
   }
   , contentTopics: {
     type: Array
@@ -62,10 +62,9 @@ var dataProviderSchema = new Schema({
 
 //Creating Index to use mongoDb Text Search
 dataProviderSchema.index
-({ content: 'text', name: 'text' }, {name: 'Text index', weights: {content: 10, name: 5}});
+({content: 'text', name: 'text'}, {name: 'Text index', weights: {content: 10, name: 5}});
 
 // db.dataproviders.createIndex({ content: 'text', name: 'text' }, {name: 'Text index', weights: {content: 10, name: 5}})
-
 
 
 var DataProvider = module.exports = mongoose.model('DataProvider', dataProviderSchema);
@@ -105,13 +104,16 @@ module.exports.getDataProvidersByConditionModel = function (query, callback) {
 };
 
 
-module.exports.getDataProvidersByConditionSortedModel = function (query,sort, callback) {
+module.exports.getDataProvidersByConditionSortedModel = function (query, options, sort, callback) {
   DataProvider
-    .find(query, {"score": {$meta: "textScore"}})
+    .find(query, options)
     .sort(sort)
     .exec(callback);
 };
 
+module.exports.updateDataProviderModel = function (id, update, options, callback) {
+  DataProvider.findByIdAndUpdate(id, update, options, callback)
+};
 
 
 

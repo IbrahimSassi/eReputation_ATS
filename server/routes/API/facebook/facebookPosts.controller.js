@@ -51,12 +51,14 @@ module.exports.getFacebookPosts = function (req, res, next) {
   // console.log("datejs formated to moment,", moment(datejs).format())
   var query;
   var sortedBy;
+  var options;
   if (!req.body.keywords.length) {
     query = {
       dateContent: {$gte: since, $lte: until},
       channelId: req.body.channelId,
       source: req.body.source
     };
+    sortedBy = {dateContent: 1}
 
   }
   else {
@@ -68,6 +70,7 @@ module.exports.getFacebookPosts = function (req, res, next) {
       source: req.body.source,
       $text: {$search: keywords}
     };
+    options = {"score": {$meta: "textScore"}};
     sortedBy = {"score": {$meta: "textScore"}};
   }
 
@@ -75,7 +78,7 @@ module.exports.getFacebookPosts = function (req, res, next) {
   // db.dataproviders.createIndex( { content: "text",name:"text" } )
 
   console.log("query", query);
-  DataProvider.getDataProvidersByConditionSortedModel(query, sortedBy, function (err, docs) {
+  DataProvider.getDataProvidersByConditionSortedModel(query, options, sortedBy, function (err, docs) {
     if (err) return handleError(res, err);
     else {
       console.log('Success ');

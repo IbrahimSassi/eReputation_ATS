@@ -10,7 +10,7 @@
     .config(config)
     .controller('FacebookController', FacebookControllerFN);
 
-  FacebookControllerFN.$inject = ['$scope', 'FacebookService', 'ChannelService', '$filter'];
+  FacebookControllerFN.$inject = ['$scope', 'FacebookService', 'ChannelService', '$filter', '$rootScope'];
   config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 
@@ -41,10 +41,11 @@
 
 
   /* @ngInject */
-  function FacebookControllerFN($scope, FacebookService, ChannelService, $filter) {
+  function FacebookControllerFN($scope, FacebookService, ChannelService, $filter, $rootScope) {
     var vm = this;
     vm.title = 'FacebookController';
-    vm.connectedUserId = "58d3dc815d391346a06f48c3";
+    // vm.connectedUserId = "58d3dc815d391346a06f48c3";
+    vm.connectedUserId = $rootScope.currentUser._id;
     vm.selectedChannel = {};
     vm.myChannels = [];
     vm.pageFans = [];

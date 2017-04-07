@@ -86,19 +86,29 @@
             <!--</label>-->
             <!--</div>-->
           </div>
-          <line-chart-curved ng-if="vm.display" line-labels="{{vm.storytellersLabels}}"
-                      line-data="{{vm.storytellersData}}"></line-chart-curved>
+          <line-chart-curved ng-if="vm.display && vm.storytellersData.length" line-labels="{{vm.storytellersLabels}}"
+                             line-data="{{vm.storytellersData}}"></line-chart-curved>
+          <div ng-if="!vm.storytellersData.length && !vm.display" class="card-content blue darken-1 center-align">
+            <div class="spinner icon-spinner-5" aria-hidden="true"></div>
+          </div>
 
         </div>
       </div>
       <div class="card-content">
         <a class="btn-floating btn-move-up waves-effect waves-light darken-2 right"><i
           class="mdi-content-add activator"></i></a>
-        <div class="col s12 m3 l3">
+        <div ng-if="vm.TotalStoryByGender[0].value" class="col s12 m3 l3">
           <doughnut-chart doughnut-data="{{vm.TotalStoryByGender}}"></doughnut-chart>
+        </div>
+        <div ng-if="!vm.TotalStoryByGender[0].value" class="col s12 m3 l3 center-align">
+          <div class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
         <div ng-if="vm.dataPageEngagedUsers.length" class="col s12 m8 l8">
           <bar-chart bar-data="{{vm.dataPageEngagedUsers}}" bar-labels="{{vm.labelsPageEngagedUsers}}"></bar-chart>
+          <p>The number of people who engaged with your Page. Engagement includes any click.</p>
+        </div>
+        <div ng-if="!vm.dataPageEngagedUsers.length" class="col s12 m8 l8 center-align">
+          <div class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
           <p>The number of people who engaged with your Page. Engagement includes any click.</p>
         </div>
       </div>
