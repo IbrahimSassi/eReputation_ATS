@@ -8,8 +8,9 @@
     <option ng-repeat="channel in vm.myChannels" value="{{channel._id}}">{{channel.name}}</option>
   </select>
 </div>
-<div ng-if="!vm.myChannels.length" class="row center-align" >
-    <div class="spinner icon-spinner-3 cyan-text" aria-hidden="true">No Pages Yet</div>
+<div ng-if="!vm.myChannels.length" class="row center-align">
+  No Pages Yet
+  <div class="spinner icon-spinner-3 cyan-text" aria-hidden="true"></div>
 </div>
 <div class="row">
   <div class="col s1 m1 l1">
@@ -166,7 +167,8 @@
     <div class="card">
       <div class="card-move-up teal waves-effect waves-block waves-light">
         <div class="move-up">
-          <p class="margin white-text">The number of times a Page's profile has been viewed by logged in and logged out people.</p>
+          <p class="margin white-text">The number of times a Page's profile has been viewed by logged in and logged out
+            people.</p>
         </div>
       </div>
       <div ng-if="vm.dataPageViews.length" class="card-content teal darken-2">
