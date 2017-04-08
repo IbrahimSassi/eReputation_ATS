@@ -45,6 +45,10 @@
       }
     };
 
+    var saveToken = function (token) {
+      $window.localStorage['mean-token'] = token;
+    };
+
     var currentUser = function () {
       if (isLoggedIn()) {
         var token = getToken();
@@ -80,7 +84,8 @@
       logout: logout,
       getToken: getToken,
       currentUser: currentUser,
-      isLoggedIn: isLoggedIn
+      isLoggedIn: isLoggedIn,
+      saveToken : saveToken
     };
 
 

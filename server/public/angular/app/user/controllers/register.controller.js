@@ -45,6 +45,7 @@
 
     vm.emailExists = false;
     vm.AllFieldsRequired = false;
+    vm.usernameEx = false;
     vm.clearcredentialsRegister = function () {
 
       vm.credentialsRegister = {
@@ -99,10 +100,11 @@
         .register(vm.credentialsRegister)
         .then(successCallback, errorCallback);
 
-
       function successCallback(response) {
         console.log("succ", response)
-        swal("Your account was successfully created!", "We sent you an email! Please confirm your registration", "success");
+        //swal("Your account was successfully created!", "We sent you an email! Please confirm your registration", "success");
+        UserService.saveToken(response.token);
+        $window.location.href = '/admin';
         UserService.SendVerificationEmail(vm.credentialsRegister.email).then(function (data) {
           console.log('Email: ', data)
         })
@@ -112,6 +114,10 @@
         console.log("error", error);
         if (error.status == 401) {
           vm.emailExists = true;
+        }
+        else if (error.status == 403)
+        {
+          vm.usernameEx = true;
         }
         else
           vm.AllFieldsRequired = true;

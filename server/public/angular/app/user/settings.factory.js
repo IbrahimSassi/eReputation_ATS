@@ -20,7 +20,7 @@
       {
         'update': {method: 'PUT'},
         'basicinformationIndiv': {
-          url: '/users/settings/basicinformationIndiv/:activeEmail/:email/:firstName/:lastName/:username/:phoneNumber',
+          url: '/users/settings/basicinformationIndiv',
           method: 'POST',
           params: {
             activeEmail: '@activeEmail',

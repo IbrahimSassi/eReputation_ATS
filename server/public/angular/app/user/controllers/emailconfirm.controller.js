@@ -14,7 +14,7 @@
 
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$qProvider'];
 
-  EmailConfirmCtrl.$inject = ['EmailConfirmService', '$state', '$rootScope', 'angularLoad', '$location', '$window', '$stateParams'];
+  EmailConfirmCtrl.$inject = ['EmailConfirmService', '$state', '$rootScope', 'angularLoad', '$location', '$window', '$stateParams','UserService'];
 
   function config($stateProvider, $urlRouterProvider, $qProvider) {
 
@@ -35,7 +35,7 @@
 
   /** Controller UseCtrl FUNCTION
    */
-  function EmailConfirmCtrl(EmailConfirmService, $state, $rootScope, angularLoad, $location, $window, $stateParams) {
+  function EmailConfirmCtrl(EmailConfirmService, $state, $rootScope, angularLoad, $location, $window, $stateParams,UserService) {
 
 
     var vm = this;
@@ -51,6 +51,9 @@
     function successCallback(response) {
       console.log("succ", response)
       vm.success = true;
+      UserService.saveToken(response.token);
+      $window.location.href = '/admin';
+
     }
 
     function errorCallback(error) {

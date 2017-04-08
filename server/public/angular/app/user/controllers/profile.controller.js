@@ -34,7 +34,9 @@
         url: '/profile',
         templateUrl: 'angular/app/user/views/profile.view.html',
         controller: 'ProfileCtrl as profile',
-        register: true
+        register: true,
+        authenticate: true
+
       })
     ;
     $qProvider.errorOnUnhandledRejections(false);

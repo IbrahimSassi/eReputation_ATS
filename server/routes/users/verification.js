@@ -34,7 +34,7 @@ router.post('/generate/:email', function (req, res, next) {
     mailsender
       .from('mohamedfiras.ouertani@esprit.tn', 'MFO11889162')
       .to(to)
-      .body('ATS-Digital Email Confirmation', body, true)
+      .body('Digital Reputation Registration Confirmation', body, true)
       .send();
   }
 
@@ -51,10 +51,21 @@ router.get('/validate/:token', function (req, res, next) {
       res.status(401).json({"Error": 'Token Expired or incorrect'});
     }
     else {
-      User.update({email: decoded.email}, {$set: {state: 'Activated'}}, function (err, user) {
+      console.log("email: ",decoded.email)
+      User.findOneAndUpdate({email: decoded.email}, {$set: {state: 'Activated'}}, function (err, user) {
         if (err) return res.status(401);
 
-        res.status(200).json({"email": decoded.email});
+        User.findOne({ email: user.email }, function (err, userFound) {
+          if (err) return res.status(401);
+
+          var token;
+          token = userFound.generateJwt();
+          console.log('token: ' + userFound);
+          res.status(200).json({"token": token});
+        });
+
+
+
 
       });
     }

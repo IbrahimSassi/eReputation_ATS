@@ -13,18 +13,18 @@ router.get('/a', function (req, res, next) {
   res.json({"a": 1})
 });
 
-router.post('/basicinformationIndiv/:activeEmail/:email/:firstName/:lastName/:username/:phoneNumber', function (req, res, next) {
+router.post('/basicinformationIndiv', function (req, res, next) {
 
-  if (req.body.activeEmail && req.params.email && req.params.firstName && req.params.lastName && req.params.username && req.params.phoneNumber) {
-    var activeEmail = req.params.activeEmail;
-    var email = req.params.email;
-    var firstName = req.params.firstName;
-    var lastName = req.params.lastName;
-    var username = req.params.username;
-    var phoneNumber = req.params.phoneNumber;
+  if (req.query.activeEmail && req.query.email && req.query.firstName && req.query.lastName && req.query.username && req.query.phoneNumber) {
+    var activeEmail = req.query.activeEmail;
+    var email = req.query.email;
+    var firstName = req.query.firstName;
+    var lastName = req.query.lastName;
+    var username = req.query.username;
+    var phoneNumber = req.query.phoneNumber;
 
 
-    User.Individual.update({email: activeEmail}, {
+    User.Individual.findOneAndUpdate({email: activeEmail}, {
       $set: {
         firstName: firstName,
         lastName: lastName,
@@ -35,7 +35,17 @@ router.post('/basicinformationIndiv/:activeEmail/:email/:firstName/:lastName/:us
     }, function (err, user) {
       if (err) return res.status(401);
 
-      res.status(200).json({"statut": "ok"});
+
+
+      User.findOne({ email: user.email }, function (err, userFound) {
+        if (err) return res.status(401);;
+
+        var token;
+        token = userFound.generateJwt();
+        console.log('token: ' + userFound);
+        res.status(200).json({"token": token});
+      });
+
 
     });
 
@@ -55,7 +65,7 @@ router.post('/basicinformationBuss/:activeEmail/:email/:businessName/:businessTy
     var employeesNumber = req.params.employeesNumber;
     var phoneNumber = req.params.phoneNumber;
 
-    User.Business.update({email: activeEmail}, {
+    User.Business.findOneAndUpdate({email: activeEmail}, {
       $set: {
         businessName: businessName,
         businessType: businessType,
@@ -65,7 +75,15 @@ router.post('/basicinformationBuss/:activeEmail/:email/:businessName/:businessTy
       }
     }, function (err, user) {
       if (err) return res.status(401);
-      res.status(200).json({"statut": "ok"});
+
+      User.findOne({ email: user.email, username:user.username }, function (err, userFound) {
+        if (err) return res.status(401);;
+
+        var token;
+        token = userFound.generateJwt();
+        console.log('token: ' + userFound);
+        res.status(200).json({"token": token});
+      });
     });
   }
   else {
@@ -77,6 +95,8 @@ router.post('/basicinformationBuss/:activeEmail/:email/:businessName/:businessTy
 
 router.post('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:about/:birthday/:country', function (req, res, next) {
   console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+
+  console.log("Profile: ",req.params.profilePicture);
 
   if (req.params.activeEmail && req.params.profilePicture && req.params.coverPicture && req.params.about && req.params.birthday && req.params.country) {
     var activeEmail = req.params.activeEmail;
@@ -91,17 +111,17 @@ router.post('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:
     var profilePictureBase64 = profilePicture;
     var coverPictureBase64 = coverPicture;
 
-    fs.writeFile(__dirname + "/../../public/uploads/images/"+profilePictureName+".jpeg", profilePictureBase64, 'base64', function(err) {
+    fs.writeFile(__dirname + "/../../public/uploads/images/"+profilePictureName+".png", profilePictureBase64, 'base64', function(err) {
       if (err) console.log(err);
     });
 
-    fs.writeFile(__dirname + "/../../public/uploads/images/"+coverPictureName+".jpeg", coverPictureBase64, 'base64', function(err) {
+    fs.writeFile(__dirname + "/../../public/uploads/images/"+coverPictureName+".jpg", coverPictureBase64, 'base64', function(err) {
       if (err) console.log(err);
     });
 
     //*
 
-    User.update({email: activeEmail}, {
+    User.findOneAndUpdate({email: activeEmail}, {
       $set: {
         profilePicture: profilePictureName,
         coverPicture: coverPictureName,
@@ -111,7 +131,15 @@ router.post('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:
       }
     }, function (err, user) {
       if (err) return res.status(401);
-      res.status(200).json({"statut": "ok"});
+
+      User.findOne({ email: user.email, username:user.username }, function (err, userFound) {
+        if (err) return res.status(401);
+
+        var token;
+        token = userFound.generateJwt();
+        console.log('token: ' + userFound);
+        res.status(200).json({"token": token});
+      });
     });
     res.status(200)
   }
@@ -165,7 +193,14 @@ router.post('/changepassword/:activeEmail/:oldpassword/:newpassword', function (
 
 
 //***************************
-
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
+router.post('/profile', upload.any(), function (req, res, next) {
+  // req.file is the `avatar` file
+  // req.body will hold the text fields, if there were any
+  console.log(req.file)
+  res.status(200)
+})
 
 
 //****************************

@@ -16,7 +16,7 @@
   /**Injection**/
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$qProvider'];
 
-  SettingsCtrl.$inject = ['$state', '$rootScope', 'angularLoad', '$location', 'SettingsService','$scope'];
+  SettingsCtrl.$inject = ['$state', '$rootScope', 'angularLoad', '$location', 'SettingsService','$scope','ProfileService','$http'];
   /**End Of Injection**/
 
 
@@ -28,7 +28,9 @@
         url: '/settings',
         templateUrl: 'angular/app/user/views/settings.view.html',
         controller: 'SettingsCtrl as settings',
-        register: true
+        register: true,
+        authenticate: true,
+        shouldConfirmed: true
       })
     ;
     $qProvider.errorOnUnhandledRejections(false);
@@ -36,10 +38,27 @@
 
   };
 
-  function SettingsCtrl($state, $rootScope, angularLoad, $location, SettingsService,$scope) {
+  function SettingsCtrl($state, $rootScope, angularLoad, $location, SettingsService,$scope,ProfileService,$http) {
 
     /**Scope Replace**/
     var vm = this;
+
+    vm.basicBuss = false;
+    vm.additBuss = false;
+    vm.passwordBuss = false;
+
+    vm.basicIndiv = false;
+    vm.additIndiv = false;
+    vm.passwordIndiv = false;
+
+
+    $scope.zz = "haha";
+
+      //*
+
+
+
+
     /***/
 
     /**
@@ -51,7 +70,7 @@
       businessType: $rootScope.currentUser.businessType,
       email: $rootScope.currentUser.email,
       employeesNumber: $rootScope.currentUser.employeesNumber,
-      phoneNumber: $rootScope.currentUser.phoneNumber
+      phoneNumber: parseInt($rootScope.currentUser.phoneNumber)
     }
     vm.basicInformationIndiv = {
       activeEmail: $rootScope.currentUser.email,
@@ -59,7 +78,7 @@
       lastName: $rootScope.currentUser.lastName,
       username: $rootScope.currentUser.username,
       email: $rootScope.currentUser.email,
-      phoneNumber: $rootScope.currentUser.phoneNumber
+      phoneNumber: parseInt($rootScope.currentUser.phoneNumber)
     }
     vm.additionalInformation = {
       activeEmail: $rootScope.currentUser.email,
@@ -85,18 +104,17 @@
 
 
       function successCallback(response) {
-        console.log("Succ");
-        $rootScope.currentUser.firstName = vm.basicInformationIndiv.firstName;
-        $rootScope.currentUser.lastName = vm.basicInformationIndiv.lastName;
-        $rootScope.currentUser.username = vm.basicInformationIndiv.username;
-        $rootScope.currentUser.email = vm.basicInformationIndiv.email;
+        console.log("Succhhhh");
+        swal("Profile Updated!", "Your settings was updating successfully!", "success");
+        ProfileService.saveToken(response.token);
 
+        vm.basicIndiv = false;
       }
 
       function errorCallback(error) {
         console.log("Err");
         if (error.status == 400) {
-
+          vm.basicIndiv = true;
         }
         else if (error.status == 401)
           vm.errorInvalid = true;
@@ -112,11 +130,15 @@
 
       function successCallback(response) {
         console.log("Succ");
+        vm.basicBuss = false;
+        swal("Profile Updated!", "Your settings was updating successfully!", "success");
+        ProfileService.saveToken(response.token);
       }
 
       function errorCallback(error) {
         console.log("Err");
         if (error.status == 400) {
+          vm.basicBuss = true;
 
         }
         else if (error.status == 401)
@@ -129,14 +151,20 @@
       SettingsService
         .EditAdditionalInformation(vm.additionalInformation)
         .then(successCallback, errorCallback);
-
+console.log(vm.additionalInformation.profilePicture)
 
       function successCallback(response) {
         console.log("Succ");
+        vm.additBuss = false;
+        vm.additIndiv = false;
+        swal("Profile Updated!", "Your settings was updating successfully!", "success");
+        ProfileService.saveToken(response.token);
       }
 
       function errorCallback(error) {
         console.log("Err");
+        vm.additBuss = true;
+        vm.additIndiv = true;
         if (error.status == 400) {
 
         }
@@ -156,12 +184,17 @@
 
 
       function successCallback(response) {
-        console.log("Succ");
+        swal("Password Changed!", "Your password was updated successfully!", "success");
+        vm.passwordBuss = false;
+        vm.passwordIndiv = false;
       }
 
       function errorCallback(error) {
         console.log("Err");
+        vm.passwordBuss = true;
+        vm.passwordIndiv = true;
         if (error.status == 400) {
+
 
         }
         else if (error.status == 401)

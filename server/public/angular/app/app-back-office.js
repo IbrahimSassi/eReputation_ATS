@@ -22,6 +22,31 @@ angular.module('ATSApp', [
 
     }])
   .run(function ($rootScope, $state,$location, ProfileService,$window) {
+    $rootScope.currentUser = ProfileService.currentUser();
+
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+
+      if (toState.authenticate && !ProfileService.isLoggedIn()){
+        // User isn’t authenticated
+        //$state.transitionTo("login");
+        //event.preventDefault();
+        $window.location.href = '/';
+        console.log("Access denied!")
+      }
+
+      if (toState.shouldConfirmed && $rootScope.currentUser.state=='INACTIVE')
+      {
+        console.log('blocked')
+        $window.location.href = '/admin';
+      }
+
+    });
+
+
+
+
+
+
 
     $rootScope.logOut = function()
     {
@@ -39,11 +64,12 @@ angular.module('ATSApp', [
       $state.go('settings')
     }
 
+
     if (ProfileService.isLoggedIn()) {
 
-      $rootScope.currentUser = ProfileService.currentUser();
+
       console.log("Hey Brogrammers! This is the connected user: ",$rootScope.currentUser);
     }
-    else {
-      //$state.go('login');
-    }});
+
+
+   });
