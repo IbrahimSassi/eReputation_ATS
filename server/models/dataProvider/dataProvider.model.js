@@ -116,4 +116,47 @@ module.exports.updateDataProviderModel = function (id, update, options, callback
 };
 
 
+module.exports.findAllDataProviders = function () {
+  return new Promise(function (resolve, reject) {
+    DataProvider.aggregate([{ $group: { _id: "$name", channels: { $addToSet: "$channelId" } } },{ $sort: { _id: 1 } }], function (err, docs) {
+      if (err) {
+        reject(err);
+      }
+      resolve(docs);
+    });
+  });
+};
+
+
+
+
+module.exports.findNulledScore = function (score) {
+  return new Promise(function (resolve, reject) {
+    DataProvider.findOne({contentScore: null}, function (err, data) {
+      if (err) reject(err);
+      resolve(data);
+    })
+
+  });
+}
+
+
+
+module.exports.updateScore = function (dataProviderToUpdate,score) {
+  return new Promise(function (resolve, reject) {
+      DataProvider.update({_id: dataProviderToUpdate._id}, {$set: {contentScore: score}}, function (err, updatedData) {
+        if (err)  reject(err);
+        //res.status(200).json({"updatedData": updatedData});
+        resolve(updatedData);
+
+      });
+  });
+
+}
+
+
+
+
+
+
 

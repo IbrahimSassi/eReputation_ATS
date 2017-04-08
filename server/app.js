@@ -20,6 +20,7 @@ var facebook = require('./routes/API/facebook');
 var twitter = require('./routes/API/twitterScraping/twitter');
 var wwsa = require('./routes/API/wwsa/index');
 
+var dataProviderScore = require('./routes/sentimental/insights');
 //Real Work Starts
 var channel = require('./routes/API/channel');
 var campaign = require('./routes/API/campaign')
@@ -67,6 +68,7 @@ app.use('/api/channels', channel);
 app.use('/api/campaigns', campaign);
 app.use('/users/verification', usersVerification);
 app.use('/users/settings', settings);
+app.use('/attributeScore', dataProviderScore);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
