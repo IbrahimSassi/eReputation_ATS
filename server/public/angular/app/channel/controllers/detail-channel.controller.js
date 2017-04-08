@@ -40,7 +40,8 @@
 
     function init() {
       vm.channelId = $stateParams.channelId;
-      vm.userConnectedId = "58d3dc815d391346a06f48c3";
+      vm.connectedUserId = $rootScope.currentUser._id;
+      // vm.userConnectedId = "58d3dc815d391346a06f48c3";
 
       ChannelService.getChannelByID(vm.channelId).then(function (channel) {
         vm.selectedChannel = channel;

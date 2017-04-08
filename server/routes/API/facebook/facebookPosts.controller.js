@@ -4,7 +4,8 @@
 //TODO - Organize the structure LATER
 
 var DataProvider = require('../../../models/dataProvider/dataProvider.model');
-
+var moment = require('moment');
+var MongoClient = require('mongodb').MongoClient;
 
 exports.getAllFacebookPosts = function (req, res, next) {
 
@@ -24,7 +25,7 @@ exports.getAllFacebookPosts = function (req, res, next) {
 
 module.exports.saveFacebookPosts = function (req, res, next) {
 
-  console.log(req.body)
+  // console.log(req.body);
   var newFacebookPost = new DataProvider.FacebookPostsProvider(req.body);
 
   DataProvider.createDataProviderModel(newFacebookPost, function (err, item) {
@@ -37,8 +38,54 @@ module.exports.saveFacebookPosts = function (req, res, next) {
     }
 
   })
+};
 
 
+module.exports.getFacebookPosts = function (req, res, next) {
+
+  // var since = new Date(req.params.since);
+  // var until = new Date(req.params.until);
+  var since = moment(req.body.since).format();
+  var until = moment(req.body.until).format();
+
+  // console.log("datejs formated to moment,", moment(datejs).format())
+  var query;
+  var sortedBy;
+  var options;
+  if (!req.body.keywords.length) {
+    query = {
+      dateContent: {$gte: since, $lte: until},
+      channelId: req.body.channelId,
+      source: req.body.source
+    };
+    sortedBy = {dateContent: 1}
+
+  }
+  else {
+    var keywords = req.body.keywords.join(" ");
+    console.log("keywords", keywords);
+    query = {
+      dateContent: {$gte: since, $lte: until},
+      channelId: req.body.channelId,
+      source: req.body.source,
+      $text: {$search: keywords}
+    };
+    options = {"score": {$meta: "textScore"}};
+    sortedBy = {"score": {$meta: "textScore"}};
+  }
+
+  // Create DB Index !!!!!!!
+  // db.dataproviders.createIndex( { content: "text",name:"text" } )
+
+  console.log("query", query);
+  DataProvider.getDataProvidersByConditionSortedModel(query, options, sortedBy, function (err, docs) {
+    if (err) return handleError(res, err);
+    else {
+      console.log('Success ');
+      res.status(201)
+        .json(docs);
+    }
+  })
 };
 
 

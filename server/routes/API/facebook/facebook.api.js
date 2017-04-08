@@ -2,6 +2,10 @@
  * Created by Ibrahim on 24/03/2017.
  */
 var config = require('../../../config/facebook.config');
+var controller = require('../facebook/facebookPosts.controller');
+var DataProvider = require('../../../models/dataProvider/dataProvider.model');
+var async = require('async');
+
 var request = require('request');
 
 module.exports.getToken = function (req, res, next) {
@@ -16,10 +20,25 @@ module.exports.getToken = function (req, res, next) {
 module.exports.getPostsByPage = function (req, res, next) {
 
   // var page_id = "mosaiquefm";
-  req.postsTransformed.then(function (data) {
-    // console.log("data", req.newPosts)
-    res.json(data)
+  console.log("req.posts.length", req.posts.length)
+
+
+  async.eachSeries(req.posts, function iteratee(post, callback) {
+    var newFacebookPost = new DataProvider.FacebookPostsProvider(post);
+
+    DataProvider.createDataProviderModel(newFacebookPost, function (err, item) {
+      if (err)
+        return res.status(500).send(err);
+      else {
+        console.log('Success facebook posts saved saved', item.id);
+      }
+
+    });
+    callback();
+  }, function done() {
+    res.json(req.posts)
   });
+
 
 };
 
@@ -39,9 +58,7 @@ module.exports.getCommentsByPost = function (req, res, next) {
     }
   })
 
-
 };
-
 
 module.exports.getReactionsByPost = function (req, res, next) {
 
@@ -88,20 +105,3 @@ module.exports.pageInsights = function (req, res, next) {
 };
 
 
-function getData(url) {
-  return new Promise(function (resolve, reject) {
-    request(url, function (error, response, body) {
-
-      if (!error && response.statusCode == 200) {
-
-        if (body.pagination && body.paging.previous) {
-          // getData(body.pagination.next);
-          resolve(body.data)
-        }
-
-
-      }
-    });
-  })
-
-}

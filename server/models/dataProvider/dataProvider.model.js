@@ -12,6 +12,9 @@ var options = {
 
 var dataProviderSchema = new Schema({
 
+  id: {
+    type: String
+  },
   name: {
     type: String
     , index: true
@@ -30,7 +33,7 @@ var dataProviderSchema = new Schema({
     type: Date
   }
   , contentScore: {
-    type: Object
+    type: Array
   }
   , contentTopics: {
     type: Array
@@ -57,6 +60,12 @@ var dataProviderSchema = new Schema({
 
 }, options);
 
+//Creating Index to use mongoDb Text Search
+dataProviderSchema.index
+({content: 'text', name: 'text'}, {name: 'Text index', weights: {content: 10, name: 5}});
+
+// db.dataproviders.createIndex({ content: 'text', name: 'text' }, {name: 'Text index', weights: {content: 10, name: 5}})
+
 
 var DataProvider = module.exports = mongoose.model('DataProvider', dataProviderSchema);
 
@@ -67,8 +76,8 @@ var facebookPostsProvider = new Schema({
   name: {
     type: String
   },
-  link :{
-    type : String
+  link: {
+    type: String
   }
   , reactions: {
     type: Array
@@ -89,6 +98,22 @@ module.exports.getAllDataProvidersModel = function (callback) {
   DataProvider.find(callback);
 };
 
+
+module.exports.getDataProvidersByConditionModel = function (query, callback) {
+  DataProvider.find(query, callback);
+};
+
+
+module.exports.getDataProvidersByConditionSortedModel = function (query, options, sort, callback) {
+  DataProvider
+    .find(query, options)
+    .sort(sort)
+    .exec(callback);
+};
+
+module.exports.updateDataProviderModel = function (id, update, options, callback) {
+  DataProvider.findByIdAndUpdate(id, update, options, callback)
+};
 
 
 
