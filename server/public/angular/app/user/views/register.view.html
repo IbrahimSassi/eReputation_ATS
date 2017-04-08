@@ -113,6 +113,11 @@
                      data-error=".errorUsername">
               <label for="username" class="center-align">Username</label>
               <div class="errorUsername"></div>
+              <div class="row margin" ng-show="user.usernameEx">
+                <div class=" col s12">
+                  <a style="color: red;">Username already exists.</a>
+                </div>
+              </div>
             </div>
           </div>
           <div class="row margin">
@@ -160,6 +165,11 @@
                        ng-model="user.credentialsRegister.businessName" data-error=".businessName">
                 <label for="businessName" class="center-align">Business Name</label>
                 <div class="businessName"></div>
+              </div>
+              <div class="row margin" ng-show="user.usernameEx">
+                <div class=" col s12">
+                  <a style="color: red;">Username already exists.</a>
+                </div>
               </div>
               <div class="input-field col s6">
                 <i class="mdi-social-people prefix"></i>

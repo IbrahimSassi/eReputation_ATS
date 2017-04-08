@@ -62,7 +62,9 @@ module.exports.register = function (req, res) {
 
       user.setPassword(req.body.password);
 
-      user.save(function (err) {
+      user.save(function (err,usersaved,num) {
+        //if (num==0) { res.status(403)}
+        //else {
         var token;
         token = user.generateJwt();
         res.status(200);
@@ -71,6 +73,7 @@ module.exports.register = function (req, res) {
         res.json({
           "token": token
         });
+       // }
       });
 
     }

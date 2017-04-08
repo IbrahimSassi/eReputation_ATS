@@ -1,3 +1,4 @@
+
 <div id="breadcrumbs-wrapper">
   <!-- Search for small screen -->
   <div class="header-search-wrapper grey hide-on-large-only">
@@ -97,6 +98,11 @@
                         </select>
                         <div class="erroremployeesNumber"></div>
                       </div>
+
+                      <div ng-show="settings.basicBuss" class="input-field col s4">
+                        <p style="color: red;">* All field are required.</p>
+                      </div>
+
                     </div>
                     <div class="row">
                       <div class="input-field col s8">
@@ -155,6 +161,9 @@
                                 ng-model="settings.additionalInformation.about"></textarea>
                       <label for="aboutEntreprise" class="">About Entreprise</label>
                       <div class="erroraboutEntreprise"></div>
+                    </div>
+                    <div ng-show="settings.additBuss" class="input-field col s4">
+                      <p style="color: red;">* All field are required.</p>
                     </div>
                   </div>
                   <div class="row">
@@ -475,7 +484,7 @@
                     <div class="row">
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="oldpasswordBuss" name="oldpasswordBuss" type="text" class="validate"
+                        <input id="oldpasswordBuss" name="oldpasswordBuss" type="password" class="validate"
                                data-error=".erroroldpasswordBuss" ng-model="settings.changePasswordAtt.oldpassword"
                                required>
                         <label for="oldpasswordBuss">Old Password</label>
@@ -483,14 +492,17 @@
                       </div>
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="newpasswordBuss" name="newpasswordBuss" type="text" data-error=".newpasswordBuss"
+                        <input id="newpasswordBuss" name="newpasswordBuss" type="password" data-error=".newpasswordBuss"
                                class="validate" ng-model="settings.changePasswordAtt.newpassword">
                         <label for="newpasswordBuss">New Password</label>
                         <div class="newpasswordBuss"></div>
                       </div>
+                      <div ng-show="settings.passwordBuss" class="input-field col s4">
+                        <p style="color: red;">Old password is incorrect.</p>
+                      </div>
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="newpasswordagainBuss" name="newpasswordagainBuss" type="text"
+                        <input id="newpasswordagainBuss" name="newpasswordagainBuss" type="password"
                                data-error=".errornewpasswordagainBuss" class="validate"
                                ng-model="settings.changePasswordAtt.newpasswordagain">
                         <label for="newpasswordagainBuss">Old Password Again</label>
@@ -537,7 +549,7 @@
                       <div class="input-field col s4">
                         <i class="mdi-action-account-circle prefix"></i>
                         <input id="firstName" name="firstName" data-error=".errorfirstName" placeholder="MrFirases"
-                               type="text" class="validate" ng-model="settings.basicInformationIndiv.firstName">
+                               type="text" class="validate" ng-model="settings.basicInformationIndiv.firstName" required>
                         <label for="firstName">First Name</label>
                         <div class="errorfirstName"></div>
                       </div>
@@ -564,11 +576,16 @@
                         <label for="email">Email Address</label>
                         <div class="erroremail"></div>
                       </div>
+
+                      <div ng-show="settings.basicIndiv" class="input-field col s4">
+                      <p style="color: red;">* All field are required.</p>
+                      </div>
+
                     </div>
                     <div class="row">
                       <div class="input-field col s8">
                         <i class="mdi-communication-phone prefix"></i>
-                        <input id="phoneNumber" name="phoneNumber" type="text" class="" data-error=".errorphoneNumber"
+                        <input id="phoneNumber" name="phoneNumber" type="number" class="" data-error=".errorphoneNumber"
                                ng-model="settings.basicInformationIndiv.phoneNumber">
                         <label for="phoneNumber">Phone Number</label>
                         <div class="errorphoneNumber"></div>
@@ -620,6 +637,9 @@
                                 ng-model="settings.additionalInformation.about"></textarea>
                       <label for="about">About You</label>
                       <div class="errorabout"></div>
+                    </div>
+                    <div ng-show="settings.additIndiv" class="input-field col s4">
+                      <p style="color: red;">* All field are required.</p>
                     </div>
                   </div>
                   <div class="row">
@@ -939,21 +959,24 @@
                     <div class="row">
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="oldpassword" name="oldpassword" type="text" data-error=".erroroldpassword"
+                        <input id="oldpassword" name="oldpassword" type="password" data-error=".erroroldpassword"
                                class="validate" ng-model="settings.changePasswordAtt.oldpassword">
                         <label for="oldpassword">Old Password</label>
                         <div class="erroroldpassword"></div>
                       </div>
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="newpassword" name="newpassword" type="text" data-error=".errornewpassword"
+                        <input id="newpassword" name="newpassword" type="password" data-error=".errornewpassword"
                                class="validate" ng-model="settings.changePasswordAtt.newpassword">
                         <label for="newpassword">New Password</label>
                         <div class="errornewpassword"></div>
                       </div>
+                      <div ng-show="settings.passwordIndiv" class="input-field col s4">
+                        <p style="color: red;">Old password is incorrect.</p>
+                      </div>
                       <div class="input-field col s8">
                         <i class="mdi-action-account-circle prefix"></i>
-                        <input id="newpasswordagain" name="newpasswordagain" type="text"
+                        <input id="newpasswordagain" name="newpasswordagain" type="password"
                                data-error=".errornewpasswordagain" class="validate"
                                ng-model="settings.changePasswordAtt.newpasswordagain">
                         <label for="newpasswordagain">Old Password Again</label>

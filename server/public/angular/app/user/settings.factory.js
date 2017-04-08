@@ -16,11 +16,12 @@
     /** Change The Link To your Rest URL From the JAVA EE APP*/
     return $resource('/users/settings',
 
+
       {id: '@id'},
       {
         'update': {method: 'PUT'},
         'basicinformationIndiv': {
-          url: '/users/settings/basicinformationIndiv/:activeEmail/:email/:firstName/:lastName/:username/:phoneNumber',
+          url: '/users/settings/basicinformationIndiv',
           method: 'POST',
           params: {
             activeEmail: '@activeEmail',
