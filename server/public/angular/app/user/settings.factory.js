@@ -16,6 +16,7 @@
     /** Change The Link To your Rest URL From the JAVA EE APP*/
     return $resource('/users/settings',
 
+
       {id: '@id'},
       {
         'update': {method: 'PUT'},
