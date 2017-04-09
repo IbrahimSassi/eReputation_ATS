@@ -47,11 +47,11 @@ module.exports.getCommentsByPost = function (req, res, next) {
 
   // var page_id = "mosaiquefm";
   var page_id = req.params.id;
-  var node = page_id + "/posts";
-  var fields = "/?fields=comments";
-  var parameters = "&access_token=" + config.ACCESS_TOKEN;
-  var url = config.base + node + fields + parameters;
-  console.log(url);
+  // var node =  "posts/";
+  var fields = "/comments";
+  var parameters = "?access_token=" + config.ACCESS_TOKEN;
+  var url = config.base + page_id + fields + parameters;
+  // console.log(url);
   request(url, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       res.json(JSON.parse(body));

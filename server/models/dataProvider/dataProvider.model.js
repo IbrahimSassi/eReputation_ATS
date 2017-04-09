@@ -54,9 +54,6 @@ var dataProviderSchema = new Schema({
     type: Date,
     default: Date.now
   }
-  , parentId: {
-    type: String
-  }
 
 }, options);
 
@@ -88,7 +85,15 @@ var facebookPostsProvider = new Schema({
 
 }, options);
 
+var facebookCommentsProvider = new Schema({
+  parentId: {
+    type: String
+  }
+
+}, options);
+
 module.exports.FacebookPostsProvider = DataProvider.discriminator('FacebookPostsProvider', facebookPostsProvider);
+module.exports.FacebookCommentsProvider = DataProvider.discriminator('FacebookCommentsProvider', facebookCommentsProvider);
 
 module.exports.createDataProviderModel = function (newDataProvider, callback) {
   newDataProvider.save(callback);
@@ -118,7 +123,12 @@ module.exports.updateDataProviderModel = function (id, update, options, callback
 
 module.exports.findAllDataProviders = function () {
   return new Promise(function (resolve, reject) {
-    DataProvider.aggregate([{ $group: { _id: "$name", channels: { $addToSet: "$channelId" } } },{ $sort: { _id: 1 } }], function (err, docs) {
+    DataProvider.aggregate([{
+      $group: {
+        _id: "$name",
+        channels: {$addToSet: "$channelId"}
+      }
+    }, {$sort: {_id: 1}}], function (err, docs) {
       if (err) {
         reject(err);
       }
@@ -126,8 +136,6 @@ module.exports.findAllDataProviders = function () {
     });
   });
 };
-
-
 
 
 module.exports.findNulledScore = function (score) {
@@ -141,15 +149,14 @@ module.exports.findNulledScore = function (score) {
 }
 
 
-
-module.exports.updateScore = function (dataProviderToUpdate,score) {
+module.exports.updateScore = function (dataProviderToUpdate, score) {
   return new Promise(function (resolve, reject) {
-      DataProvider.update({_id: dataProviderToUpdate._id}, {$set: {contentScore: score}}, function (err, updatedData) {
-        if (err)  reject(err);
-        //res.status(200).json({"updatedData": updatedData});
-        resolve(updatedData);
+    DataProvider.update({_id: dataProviderToUpdate._id}, {$set: {contentScore: score}}, function (err, updatedData) {
+      if (err) reject(err);
+      //res.status(200).json({"updatedData": updatedData});
+      resolve(updatedData);
 
-      });
+    });
   });
 
 }

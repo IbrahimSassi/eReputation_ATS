@@ -3,6 +3,7 @@ var router = express.Router();
 var extendToken = require('./handlers/extendLLT.middleware');
 var facebookHandler = require('./handlers/facebookHandler.middleware');
 var facebookPosts = require('./facebookPosts.controller');
+var facebookComments= require('./facebookComments.controller');
 var facebookApi = require('./facebook.api');
 
 router.get('/', function (req, res, next) {
@@ -26,6 +27,9 @@ router.get('/page/:id/insights/:metric/:token/:since/:until', facebookApi.pageIn
 router.post('/facebookPosts', facebookPosts.saveFacebookPosts);
 
 router.post('/facebookPosts/get', facebookPosts.getFacebookPosts);
+
+
+router.post('/facebookComments',facebookHandler.transformCommentsData, facebookComments.addFacebookComments);
 
 
 module.exports = router;
