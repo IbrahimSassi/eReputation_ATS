@@ -13,23 +13,17 @@ router.get('/', function (req, res, next) {
 
 //Directly From Facebook API
 router.get('/token/:token', extendToken, facebookApi.getToken);
-
-router.get('/page/posts/:id/:since/:until', facebookHandler.transformPostsData, facebookApi.getPostsByPage);
-
 router.get('/posts/:id/comments', facebookApi.getCommentsByPost);
-
 router.get('/posts/:id/reactions', facebookApi.getReactionsByPost);
-
 router.get('/page/:id/insights/:metric/:token/:since/:until', facebookApi.pageInsights);
+
+router.post('/facebookPosts', facebookHandler.transformPostsData, facebookApi.getPostsByPage);
+router.post('/facebookComments',facebookHandler.transformCommentsData, facebookComments.addFacebookComments);
+
 
 
 //From Our DB After Transformation
-router.post('/facebookPosts', facebookPosts.saveFacebookPosts);
-
-router.post('/facebookPosts/get', facebookPosts.getFacebookPosts);
-
-
-router.post('/facebookComments',facebookHandler.transformCommentsData, facebookComments.addFacebookComments);
+router.post('/facebookDataProvider/get', facebookPosts.getFacebookDataProvider);
 
 
 module.exports = router;

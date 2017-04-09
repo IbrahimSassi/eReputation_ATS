@@ -20,10 +20,12 @@ var dataProviderSchema = new Schema({
     , index: true
   }
   , sourceLink: {
-    type: String,
-    index: true
+    type: String
   }
   , channelId: {
+    type: String
+  }
+  , campaignId: {
     type: String
   }
   , content: {

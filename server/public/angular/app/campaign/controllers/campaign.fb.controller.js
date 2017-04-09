@@ -1,5 +1,5 @@
 /**
- * Created by HP on 20/03/2017.
+ * Created by Ibrahim on 09/04/2017.
  */
 
 (function () {
@@ -15,7 +15,7 @@
   /**Injection**/
 
 
-  CampaignFbCtrl.$inject = ['CampaignService', 'ChannelService', 'FacebookService', 'angularLoad', '$scope', '$rootScope','$stateParams'];
+  CampaignFbCtrl.$inject = ['CampaignService', 'ChannelService', 'FacebookService', 'angularLoad', '$scope', '$rootScope', '$stateParams'];
   /**End Of Injection**/
 
 
@@ -24,36 +24,45 @@
   /**End of Route Config**/
 
 
-  function CampaignFbCtrl(CampaignService, ChannelService, FacebookService, angularLoad, $scope, $rootScope,$stateParams) {
+  function CampaignFbCtrl(CampaignService, ChannelService, FacebookService, angularLoad, $scope, $rootScope, $stateParams) {
 
     /**Scope Replace**/
     var vm = this;
-    vm.idCampaign = $stateParams.idCampaign;
+    // vm.selectedCampaign = $stateParams.idCampaign; //TODO Change It Dynamic
+    vm.selectedCampaign = "58eaaacdff57b30edc92fc4e";
 
-    /**
-     * View Detail Methods
-     */
-
-    vm.getCampaignDetail = function(id)
-    {
-      if(id!==undefined)
+    var filter1 =
       {
-        CampaignService.getCampaignById(id).then(function (data) {
-          console.info(data);
-          vm.detailCampaign=data[0];
-        }).catch(function (err) {
-          console.error(err);
-        });
-      }
+        "since": "2017-04-03T02:35:14+01:00",
+        "until": "2017-04-04T19:35:14+01:00",
+        "channelId": "techcrunch",
+        "campaignId": vm.selectedCampaign,
+        "source": "FacebookPostsProvider",
+        "keywords": []
+      };
+    var filter2 =
+      {
+        "since": "2017-04-03T02:35:14+01:00",
+        "until": "2017-04-04T19:35:14+01:00",
+        "channelId": "techcrunch",
+        "campaignId": vm.selectedCampaign,
+        "source": "FacebookCommentsProvider",
+        "keywords": []
+      };
+    init();
 
+    function init() {
+      FacebookService.getFacebookPosts(filter1).then(function (data) {
+        console.log("facebook posts ", data)
+        vm.Posts = data;
+      });
+
+
+      FacebookService.getFacebookPosts(filter).then(function (data) {
+        console.log("facebook posts ", data)
+        vm.Posts = data;
+      });
     }
-
-    vm.getCampaignDetail(vm.idCampaign);
-
-    /***
-     * End
-     */
-
 
 
     /** Scripts Loading first Refresh **/
@@ -69,7 +78,6 @@
     /** END of Scripts Loading first Refresh **/
 
   };
-
 
 
 })();

@@ -14,6 +14,7 @@
   function FacebookServiceFN(FacebookFactory, $http) {
 
 
+    var self = this;
     this.statusChangeCallback = statusChangeCallbackFN;
     this.checkLoginState = checkLoginStateFN;
     this.initFacebookApi = initFacebookApiFN;
@@ -34,9 +35,9 @@
     this.getPageFansCountry = getPageFansCountryFN;
     this.getPageViewsTotal = getPageViewsTotalFN;
     this.getPageVideoViews = getPageVideoViewsFN;
+     this.getFacebookPosts = getFacebookPostsFN;
 
 
-    var self = this;
 
 
     function statusChangeCallbackFN(response) {
@@ -330,6 +331,10 @@
       }).$promise;
     }
 
+
+    function getFacebookPostsFN(filter) {
+      return FacebookFactory.facebookPosts(filter).$promise;
+    }
 
   }
 

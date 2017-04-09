@@ -37,8 +37,11 @@
             until: '@until'
           }
           // , isArray: true
-
-
+        },
+        'facebookPosts': {
+          url: '/api/facebook/facebookDataProvider/get',
+          method: 'POST'
+          , isArray: true
         }
       }
     );

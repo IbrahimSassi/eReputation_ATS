@@ -42,24 +42,24 @@
         templateUrl: '../angular/app/campaign/views/detail.campaign.view.html',
         controller: 'CampaignCtrl as camp'
       })
-      .state('campaignSentimentAnalysis', {
-        url: '/campaign/detail/:idCampaign/sentiment',
-        templateUrl: '../angular/app/campaign/views/analysis/sentiment.campaign.view.html',
+      .state('campaignDetail.campaignSentimentAnalysis', {
+        url: '/sentiment',
+        templateUrl: 'angular/app/campaign/views/analysis/sentiment.campaign.view.html',
         controller: 'CampaignSentimentCtrl as camp',
       })
-      .state('campaignFbAnalysis', {
-        url: '/campaign/detail/:idCampaign/fb',
-        templateUrl: '../angular/app/campaign/views/analysis/fb.campaign.view.html',
+      .state('campaignDetail.campaignFbAnalysis', {
+        url: '/fb',
+        templateUrl: 'angular/app/campaign/views/analysis/fb.campaign.view.html',
         controller: 'CampaignFbCtrl as vm',
       })
-      .state('campaignTwitterAnalysis', {
-        url: '/campaign/detail/:idCampaign/twitter',
-        templateUrl: '../angular/app/campaign/views/analysis/tw.campaign.view.html',
+      .state('campaignDetail.campaignTwitterAnalysis', {
+        url: '/twitter',
+        templateUrl: 'angular/app/campaign/views/analysis/tw.campaign.view.html',
         controller: 'CampaignTwCtrl as camp',
       })
-      .state('campaignWebAnalysis', {
-        url: '/campaign/detail/:idCampaign/web',
-        templateUrl: '../angular/app/campaign/views/analysis/web.campaign.view.html',
+      .state('campaignDetail.campaignWebAnalysis', {
+        url: '/web',
+        templateUrl: 'angular/app/campaign/views/analysis/web.campaign.view.html',
         controller: 'CampaignWebCtrl as camp',
       })
 

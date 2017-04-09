@@ -12,18 +12,19 @@ var moment = require("moment");
 
 module.exports.transformPostsData = function (req, res, next) {
   urls = [];
-  var page_id = req.params.id;
+  var page_id = req.body.channelId;
   var node = page_id + "/posts";
   var fields = "?fields=message,link,created_time,type,name,id" +
     // ",comments" +
     ",shares" +
     ",reactions" +
     ".limit(0).summary(true)" +
-    //TODO Change This Dynamic
-    "&since=" + req.params.since +
-    "&until=" + req.params.until;
+    "&since=" + req.body.since +
+    "&until=" + req.body.until;
+
   var parameters = "&access_token=" + config.ACCESS_TOKEN;
   var url = config.base + node + fields + parameters;
+
   // console.log(url);
   var posts;
   var promiseNext;
@@ -32,7 +33,9 @@ module.exports.transformPostsData = function (req, res, next) {
   var AllPosts = [];
   //Getting First Page
   request(url, function (error, response, body) {
+
     if (!error && response.statusCode == 200) {
+
       posts = JSON.parse(body);
 
       urls.push(url);
@@ -58,7 +61,7 @@ module.exports.transformPostsData = function (req, res, next) {
               });
 
               //Transform Data to match with our DB
-              story = transformPosts(story, req.params.id);
+              story = transformPosts(story, req.body.channelId, req.body.campaignId);
               promiseReactions.then(function (data) {
                 story.reactions = [];
                 data.date = new Date();
@@ -87,6 +90,8 @@ module.exports.transformCommentsData = function (req, res, next) {
   DataProvider.getDataProvidersByConditionModel(
     {
       source: 'FacebookPostsProvider',
+      channelId: req.body.channelId,
+      campaignId: req.body.campaignId,
       dateContent: {$gte: since, $lte: until}
     }, function (err, posts) {
 
@@ -104,14 +109,13 @@ module.exports.transformCommentsData = function (req, res, next) {
                 var nextPromise = handleData(initialComments, 'next');
 
                 nextPromise.then(function (data) {
-                  console.log("dataaa", data)
                   resolve(urls)
                 });
 
               }
               else {
                 for (var i = 0; i < initialComments.data.length; i++)
-                  comments.push(transformComments(initialComments.data[i], post.channelId, post.id))
+                  comments.push(transformComments(initialComments.data[i], post.channelId, post.id,req.body.campaignId))
 
                 resolve(body)
 
@@ -132,7 +136,7 @@ module.exports.transformCommentsData = function (req, res, next) {
       }, function done() {
         console.log("urls", urls)
 
-        var prom = new Promise(function (resolve, reject) {
+        var getRestOfComments = new Promise(function (resolve, reject) {
           urls.forEach(function (u) {
             var postId = getPostId(u);
             console.log("postId", postId)
@@ -140,16 +144,19 @@ module.exports.transformCommentsData = function (req, res, next) {
               if (!error && response.statusCode == 200) {
                 var LocalBody = JSON.parse(body);
                 for (var i = 0; i < LocalBody.data.length; i++) {
-                  comments.push(transformComments(LocalBody.data[i],postId,postId));
-                  // comments.push(transformComments(LocalBody.data[i]),post.channelId, post.id)
+                  comments.push(transformComments(LocalBody.data[i], postId, postId,req.body.campaignId));
                 }
+              }
+              else
+              {
+                reject(error)
               }
             });
           });
           resolve(comments);
 
         });
-        prom.then(function (data) {
+        getRestOfComments.then(function (data) {
           setTimeout(function () {
             req.comments = comments;
             next()
@@ -181,7 +188,8 @@ module.exports.transformCommentsData = function (req, res, next) {
 
 
 function handleData(data, direction) {
-  return new Promise(function (resolve, reject) {
+  console.log("direction",direction)
+  return new Promise(function (resolve) {
     if (data.paging && data.paging[direction]) {
       urls.push(data.paging[direction]);
       getData(data.paging[direction]).then(function (newData) {
@@ -213,7 +221,7 @@ function getData(url) {
 }
 
 
-function transformPosts(post, author) {
+function transformPosts(post, author, campaignId) {
   return {
     id: post.id,
     content: post.message,
@@ -226,12 +234,14 @@ function transformPosts(post, author) {
       name: author
     },
     shares: typeof post.shares != "undefined" ? post.shares.count : 0,
-    channelId: author
+    channelId: author,
+    campaignId: campaignId
+
   }
 
 }
 
-function transformComments(comment, channel, parent) {
+function transformComments(comment, channel, parent,campaign) {
   return {
     id: comment.id,
     content: comment.message,
@@ -241,7 +251,8 @@ function transformComments(comment, channel, parent) {
       id: comment.from.id
     },
     channelId: channel,
-    parentId: parent
+    parentId: parent,
+    campaignId: campaign
   }
 
 }
