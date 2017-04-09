@@ -49,6 +49,8 @@ router.get('/about',function (req,res) {
   //client.get('search/tweets', {q: '"happy hour" until:2017-03-02', count:100}, function(error, tweets, response) {
     //client.get('search/tweets', {q: 'from:CoryBooker max_id:836661171746930700 until:2017-03-01', count:100}, function(error, tweets, response) {
   //client.get('search/tweets', {q: 'love OR hate max_id:836661171746930700 until:2017-03-01', count:100}, function(error, tweets, response) {
+
+  /*
   client.get('search/tweets', {q: 'delicious #cocacola', count:10 }, function(error, tweets, response) {
 
     //JSON
@@ -56,7 +58,15 @@ router.get('/about',function (req,res) {
     //console.log("This is it: ",tweets);
 
   });
+*/
 
+  client.get('search/tweets', {q: 'nba', count:10, geocode:'36.802732,10.181041,150km' }, function(error, tweets, response) {
+
+    //JSON
+    res.json(tweets);
+    //console.log("This is it: ",tweets);
+
+  });
 
 });
 

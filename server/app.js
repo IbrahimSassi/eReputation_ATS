@@ -17,7 +17,7 @@ var settings = require('./routes/users/settings');
 var webScraping = require('./routes/API/webScraping/index');
 var twitterScraping = require('./routes/API/twitterScraping/twitterScraping');
 var facebook = require('./routes/API/facebook');
-var twitter = require('./routes/API/twitterScraping/twitter');
+var twitter = require('./routes/API/twitter/index');
 var wwsa = require('./routes/API/wwsa/index');
 
 var dataProviderScore = require('./routes/sentimental/insights');
@@ -69,6 +69,7 @@ app.use('/api/campaigns', campaign);
 app.use('/users/verification', usersVerification);
 app.use('/users/settings', settings);
 app.use('/attributeScore', dataProviderScore);
+app.use('/api/twitter', twitter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
