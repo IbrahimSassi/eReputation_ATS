@@ -156,8 +156,13 @@ module.exports.updateDataProviderModel = function (id, update, options, callback
 module.exports.avgPositivitybyCompaign = function (id) {
   console.log(id)
   return new Promise(function (resolve, reject) {
-    DataProvider.aggregate([{$match: {'dateContent': {'$gte':new Date(new Date().setDate(new Date().getDate()-3)), '$lt': new Date()}}},
-      { $group: { _id: "$channelId", positive_score: { $avg: "$contentScore.positivity" } } }], function (err, docs) {
+    DataProvider.aggregate([
+        {
+          $match: {$and: [{dateContent: {'$gte':new Date(new Date().setDate(new Date().getDate()-3)), '$lt': new Date()}},{channelId:{'$eq':id}}]}
+        },
+        {
+        $group: { _id: "$channelId", positive_score: { $avg: "$contentScore.positivity" } }
+        }], function (err, docs) {
       if (err) {
         reject(err);
       }
@@ -168,7 +173,10 @@ module.exports.avgPositivitybyCompaign = function (id) {
 
 module.exports.avgNegativitybyCompaign = function (id) {
   return new Promise(function (resolve, reject) {
-    DataProvider.aggregate([{$match: [{'dateContent': {'$gte':new Date(new Date().setDate(new Date().getDate()-3)), '$lt': new Date()}},{'channelId':{'$eq':id}}]},
+    DataProvider.aggregate([
+        {
+            $match: {$and: [{dateContent: {'$gte':new Date(new Date().setDate(new Date().getDate()-3)), '$lt': new Date()}},{channelId:{'$eq':id}}]}
+        },
       { $group: { _id: "$channelId", negative_score: { $avg: "$contentScore.negativity" } } }], function (err, docs) {
       if (err) {
         reject(err);
@@ -177,10 +185,12 @@ module.exports.avgNegativitybyCompaign = function (id) {
     });
   });
 };
-module.exports.avgNeutralitybyCompaign = function () {
+module.exports.avgNeutralitybyCompaign = function (id) {
   return new Promise(function (resolve, reject) {
     DataProvider.aggregate([
-      {$match: {'dateContent': {'$gte':new Date(new Date().setDate(new Date().getDate()-3)), '$lt': new Date()}}},
+        {
+            $match: {$and: [{dateContent: {'$gte':new Date(new Date().setDate(new Date().getDate()-3)), '$lt': new Date()}},{channelId:{'$eq':id}}]}
+        },
       { $group: { _id: "$channelId", neutral_score: { $avg: "$contentScore.neutral"}} }], function (err, docs) {
       if (err) {
         reject(err);
