@@ -5,30 +5,34 @@ var express = require('express');
 var router = express.Router();
 var config = require('../twitter/config');
 var TwitterStream = require('twitter');
+var dataProvider = require('../../../models/dataProvider/dataProvider.model');
+var TwitterAPIQueries = require('./twitterAPIQuries');
+
+
 var client = new TwitterStream({
   consumer_key: config.twitter.consumer_key,
   consumer_secret: config.twitter.consumer_secret,
   access_token_key: config.twitter.access_token,
   access_token_secret: config.twitter.access_token_secret
 });
-/* GET home page. */
-router.get('/:screen_name', function (req, res, next) {
 
-  client.get('statuses/user_timeline', {
-    screen_name: req.params.screen_name,
-    count: 1
-  }, function (error, tweet, response) {
 
-    if (error) {
-      return res.json(error);
-    }
-    if (!tweet) {
-      return res.status(404).send();
-    }
 
-    res.json(tweet[0].user)
-  });
+router.post('/test',function (req,res) {
+
+  var since = req.query.since;
+  var until = req.query.until;
+  var keywords = req.body.keywords;
+  console.log(keywords)
+    client.get('search/tweets', {q: ''+keywords+' since:'+since+' until:'+until+'', count: 11,geocode:'40.712639,-74.006299,150km' }, function(error, tweets, response) {
+      res.json(tweets)
+    });
+
 });
 
+
+router.post('/UserRepForChannel',TwitterAPIQueries.SaveDatToTwitterProviderForRepliesToUserForChannel);
+router.post('/UserMentionedForChannel',TwitterAPIQueries.SaveDatToTwitterProviderForMentionedUserForChannel);
+router.post('/GetUserInfo/:screen_name',TwitterAPIQueries.GetUserInfo);
 
 module.exports = router;
