@@ -123,6 +123,21 @@ module.exports.tweetsProvider = DataProvider.discriminator('tweetsProvider', twe
 
 //****** End Twitter Provider
 
+/**
+ *  Websites Provider
+ */
+
+var websitesProvider = new Schema({
+  numberOfViews: {
+    type: Number
+  }
+}, options);
+
+module.exports.websitesProvider = DataProvider.discriminator('websitesProvider', websitesProvider);
+
+/**
+ * END Websites Provider
+ */
 
 module.exports.createDataProviderModel = function (newDataProvider, callback) {
   newDataProvider.save(callback);
