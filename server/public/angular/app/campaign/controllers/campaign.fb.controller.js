@@ -47,7 +47,6 @@
         "channelId": "techcrunch",
         "campaignId": vm.selectedCampaign,
         "source": "FacebookCommentsProvider",
-        "keywords": []
       };
     init();
 
@@ -55,12 +54,19 @@
       FacebookService.getFacebookPosts(filter1).then(function (data) {
         console.log("facebook posts ", data)
         vm.Posts = data;
+
+        vm.Shares = 0;
+        vm.Likes = 0;
+        vm.Posts.forEach(function (post) {
+          vm.Shares =vm.Shares+post.shares;
+        })
+
       });
 
 
-      FacebookService.getFacebookPosts(filter).then(function (data) {
-        console.log("facebook posts ", data)
-        vm.Posts = data;
+      FacebookService.getFacebookPosts(filter2).then(function (data) {
+        console.log("facebook comments ", data)
+        vm.Comments = data;
       });
     }
 

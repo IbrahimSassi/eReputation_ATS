@@ -23,8 +23,11 @@
       <div class="col s12 m6 l3">
         <div class="card">
           <div class="card-content pink lighten-1 white-text">
-            <p class="card-stats-title"><i class="mdi-editor-insert-drive-file"></i> New Invoice</p>
-            <h4 class="card-stats-number">1806</h4>
+            <p class="card-stats-title"><i class="mdi-editor-insert-drive-file"></i> Comments </p>
+            <h4 ng-if="vm.Comments.length" class="card-stats-number">{{vm.Comments.length}}</h4>
+            <h4 ng-if="!vm.Comments.length" class="card-stats-number">
+              <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
+            </h4>
             <p class="card-stats-compare">
               <i class="mdi-hardware-keyboard-arrow-down"></i> 3% <span class="deep-purple-text text-lighten-5">from last month</span>
             </p>
@@ -37,8 +40,11 @@
       <div class="col s12 m6 l3">
         <div class="card">
           <div class="card-content blue-grey white-text">
-            <p class="card-stats-title"><i class="mdi-action-trending-up"></i>Posts</p>
-            <h4 class="card-stats-number">$806.52</h4>
+            <p class="card-stats-title"><i class="mdi-action-trending-up"></i>Share</p>
+            <h4 ng-if="vm.Shares" class="card-stats-number">{{vm.Shares}}</h4>
+            <h4 ng-if="!vm.Shares"class="card-stats-number">
+              <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
+            </h4>
             <p class="card-stats-compare">
               <i class="mdi-hardware-keyboard-arrow-up"></i> 80% <span class="blue-grey-text text-lighten-5">from yesterday</span>
             </p>
@@ -51,7 +57,7 @@
       <div class="col s12 m6 l3">
         <div class="card">
           <div class="card-content purple white-text">
-            <p class="card-stats-title"><i class="mdi-editor-attach-money"></i>Comments</p>
+            <p class="card-stats-title"><i class="mdi-editor-attach-money"></i>Sth else</p>
             <h4 class="card-stats-number">$8990.63</h4>
             <p class="card-stats-compare">
               <i class="mdi-hardware-keyboard-arrow-up"></i> 70% <span

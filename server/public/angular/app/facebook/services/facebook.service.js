@@ -333,7 +333,7 @@
 
 
     function getFacebookPostsFN(filter) {
-      return FacebookFactory.facebookPosts(filter).$promise;
+      return FacebookFactory.facebookDataProvider(filter).$promise;
     }
 
   }

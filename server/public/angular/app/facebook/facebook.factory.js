@@ -38,11 +38,11 @@
           }
           // , isArray: true
         },
-        'facebookPosts': {
+        'facebookDataProvider': {
           url: '/api/facebook/facebookDataProvider/get',
           method: 'POST'
           , isArray: true
-        }
+        },
       }
     );
   }
