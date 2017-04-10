@@ -39,10 +39,10 @@ app.engine('html', ejs.renderFile);
 
 //MongoDB Connection
 var mongoose   = require('mongoose');
-/*mongoose.connect('mongodb://bro:brobro0055@ds157469.mlab.com:57469/ats-digital',{
+mongoose.connect('mongodb://bro:brobro0055@ds157469.mlab.com:57469/ats-digital',{
   server : { autoReconnect : false }
-});*/
- mongoose.connect('mongodb://localhost:27017/ats-digital-local');
+});
+ //mongoose.connect('mongodb://localhost:27017/ats-digital-local');
 
 //Adding passport require
 require('./config/passport');
