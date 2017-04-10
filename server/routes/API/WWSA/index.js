@@ -164,11 +164,11 @@ router.get('/NegativityByCompaign/:id', function (req, res, next) {
   });
 
 });
-router.get('/NeutralByCompaign', function (req, res, next) {
+router.get('/NeutralByCompaign/:id', function (req, res, next) {
 
   console.log("3 last days",new Date(new Date().setDate(new Date().getDate()-3)))
 
-  dataProviderModel.avgNeutralitybyCompaign().then(function (data) {
+  dataProviderModel.avgNeutralitybyCompaign(req.params.id).then(function (data) {
     res.status(200).json(data);
   }).catch(function (err) {
     res.status(204).json(err);
