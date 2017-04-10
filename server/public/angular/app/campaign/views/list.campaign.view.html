@@ -12,9 +12,9 @@
          <div class="card ">
             <div class="card-content darken-4-text">
               <!--<input id="campaign_id" type="hidden">-->
-               <span class="card-title"><h5>{{c.name}}</h5></span>
-               <blockquote style="border-left: 5px solid #757575;">{{c.description | limitTo: 40 }}
-                 {{c.description.length>40 ?'[...]':''}}</blockquote>
+               <span class="card-title"><h5>{{c.name | limitTo: 10}}  {{c.name.length>10 ?'[...]':''}}</h5></span>
+               <blockquote style="border-left: 5px solid #757575;">{{c.description | limitTo: 25 }}
+                 {{c.description.length>25 ?'[...]':''}}</blockquote>
                <p style="margin: 15px;">
                  <date-display ng-if="c.dateStart" date-on="{{c.dateStart | date :'dd/MM/yyyy' }}"
                                date-end="{{c.dateEnd | date :'dd/MM/yyyy'}}" my-id="{{c._id}}"></date-display>
