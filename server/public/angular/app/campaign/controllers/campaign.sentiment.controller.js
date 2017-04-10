@@ -15,7 +15,7 @@
   /**Injection**/
 
 
-  CampaignSentimentCtrl.$inject = ['CampaignService', 'ChannelService', 'FacebookService', 'angularLoad', '$scope', '$rootScope', '$stateParams'];
+  CampaignSentimentCtrl.$inject = ['CampaignService', 'ChannelService', 'FacebookService', 'angularLoad', '$scope', '$rootScope', '$stateParams','WwsaService'];
   /**End Of Injection**/
 
 
@@ -24,7 +24,7 @@
   /**End of Route Config**/
 
 
-  function CampaignSentimentCtrl(CampaignService, ChannelService, FacebookService, angularLoad, $scope, $rootScope, $stateParams) {
+  function CampaignSentimentCtrl(CampaignService, ChannelService, FacebookService, angularLoad, $scope, $rootScope, $stateParams,WwsaService) {
 
     /**Scope Replace**/
     var vm = this;
@@ -64,6 +64,27 @@
       console.log('err script 1');
     });
     /** END of Scripts Loading first Refresh **/
+
+
+
+    //My Work
+
+    WwsaService.getPositivity(vm.idCampaign).then(function (data) {
+
+    vm.positive = data.data[0].positive_score;
+
+
+
+
+        console.info('succ: ',data.data[0].positive_score);
+    }).catch(function (err) {
+        console.error('error: ',err);
+    });
+
+
+
+
+
 
   };
 

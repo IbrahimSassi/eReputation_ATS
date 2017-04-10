@@ -19,7 +19,14 @@
 
       {id: '@id'},
       {
-        'update': {method: 'PUT'}
+        'update': {method: 'PUT'},
+          'PositivitybyCompaign': {
+              url: '/api/wwsa/PositivitybyCompaign/:id',
+              method: 'GET',
+              params: {
+                  id: '@id'
+              }
+          },
       }
     );
 

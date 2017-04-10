@@ -17,7 +17,14 @@
   function WwsaServiceFN(WwsaFactory) {
 
 
+      var getPositivity = function (idfromCTRL) {
 
+          return WwsaFactory.PositivitybyCompaign({id:idfromCTRL}).$promise;
+      };
+
+      return {
+          getPositivity: getPositivity
+      };
   }
 
 

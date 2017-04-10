@@ -145,18 +145,36 @@ router.post('/emotions', function (req, result, next) {
   });
 });
 
+router.get('/PositivitybyCompaign/:id', function (req, res, next) {
 
-router.get('/', function (req, res, next) {
+  dataProviderModel.avgPositivitybyCompaign(req.params.id).then(function (data) {
+      console.log('the id: ',data)
+    res.status(200).json({data:data});
+  }).catch(function (err) {
+    res.status(400).json(err);
+  });
 
-  dataProviderModel.findAllDataProviders().then(function (data) {
+});
+
+router.get('/NegativityByCompaign/:id', function (req, res, next) {
+  dataProviderModel.avgNegativitybyCompaign(req.params.id).then(function (data) {
     res.status(200).json(data);
   }).catch(function (err) {
     res.status(204).json(err);
   });
 
 });
+router.get('/NeutralByCompaign', function (req, res, next) {
 
+  console.log("3 last days",new Date(new Date().setDate(new Date().getDate()-3)))
 
+  dataProviderModel.avgNeutralitybyCompaign().then(function (data) {
+    res.status(200).json(data);
+  }).catch(function (err) {
+    res.status(204).json(err);
+  });
+
+});
 
 
 

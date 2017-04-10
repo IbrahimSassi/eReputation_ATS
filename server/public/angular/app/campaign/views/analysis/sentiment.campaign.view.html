@@ -1,4 +1,11 @@
-<!--breadcrumbs start-->
-<div id="breadcrumbs-wrapper">
-  Sentiment Work
+<div class="col s12">
+  <div id="tab-sentiment" class="col s12 ">
+    <!-- your In tab Work-->
+    Sentiment WORK
+{{camp.positive}}
+    <donut-chart ng-if="camp.detailCampaign._id" my-id="{{camp.detailCampaign._id}}" positive="camp.positive" negative="30" neutral="10"></donut-chart>
+    <ndraw-stacked now-negative="20" now-neutral="23" now-positive="88" yes-negative="78" yes-neutral="55" yes-positive="8" old-negative="45" old-neutral="78" old-positive="88" ng-if="camp.detailCampaign._id" my-id="{{camp.detailCampaign._id}}"></ndraw-stacked>
+    <combo-chart ng-if="camp.detailCampaign._id" my-id="{{camp.detailCampaign._id}}"></combo-chart>
+  </div>
 </div>
+
