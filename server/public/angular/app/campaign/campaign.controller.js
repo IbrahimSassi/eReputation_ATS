@@ -17,29 +17,29 @@
   /**End My Module Init**/
 
   /**Injection**/
-  config.$inject = ['$stateProvider', '$qProvider'];
+  config.$inject = ['$stateProvider', '$qProvider','$urlRouterProvider'];
 
   CampaignCtrl.$inject = ['CampaignService', 'ChannelService', 'FacebookService', 'angularLoad', '$scope', '$rootScope', '$stateParams'];
   /**End Of Injection**/
 
 
   /** Route Config **/
-  function config($stateProvider, $qProvider) {
+  function config($stateProvider, $qProvider,$urlRouterProvider) {
 
     $stateProvider
       .state('campaignCreate', {
         url: '/campaign/create',
-        templateUrl: '../angular/app/campaign/views/create.campaign.view.html',
+        templateUrl: 'angular/app/campaign/views/create.campaign.view.html',
         controller: 'CampaignCtrl as camp'
       })
       .state('campaignList', {
         url: '/campaign/list',
-        templateUrl: '../angular/app/campaign/views/list.campaign.view.html',
+        templateUrl: 'angular/app/campaign/views/list.campaign.view.html',
         controller: 'CampaignCtrl as camp'
       })
       .state('campaignDetail', {
         url: '/campaign/detail/:idCampaign',
-        templateUrl: '../angular/app/campaign/views/detail.campaign.view.html',
+        templateUrl: 'angular/app/campaign/views/detail.campaign.view.html',
         controller: 'CampaignCtrl as camp'
       })
       .state('campaignDetail.campaignSentimentAnalysis', {
@@ -48,7 +48,7 @@
         controller: 'CampaignSentimentCtrl as camp',
       })
       .state('campaignDetail.campaignFbAnalysis', {
-        url: '/fb',
+        url: '/facebook',
         templateUrl: 'angular/app/campaign/views/analysis/fb.campaign.view.html',
         controller: 'CampaignFbCtrl as vm',
       })
@@ -62,9 +62,9 @@
         templateUrl: 'angular/app/campaign/views/analysis/web.campaign.view.html',
         controller: 'CampaignWebCtrl as camp',
       })
-
-
     ;
+
+
     $qProvider.errorOnUnhandledRejections(false);
 
 
