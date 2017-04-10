@@ -115,7 +115,10 @@ var tweetsProvider = new Schema({
   },
   place: {
   type: String
-}
+},
+  counts: {
+    type: Object
+  }
 
 }, options);
 

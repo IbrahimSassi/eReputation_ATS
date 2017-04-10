@@ -34,5 +34,6 @@ router.post('/test',function (req,res) {
 router.post('/UserRepForChannel',TwitterAPIQueries.SaveDatToTwitterProviderForRepliesToUserForChannel);
 router.post('/UserMentionedForChannel',TwitterAPIQueries.SaveDatToTwitterProviderForMentionedUserForChannel);
 router.post('/GetUserInfo/:screen_name',TwitterAPIQueries.GetUserInfo);
+router.post('/TweetsScrapper',TwitterAPIQueries.TweetsScrapper);
 
 module.exports = router;
