@@ -57,6 +57,7 @@
     };
 
     vm.onSubmitLogin = function () {
+      console.log("clicked")
       UserService
         .login(vm.credentialsLogin)
         .then(successCallback, errorCallback);
