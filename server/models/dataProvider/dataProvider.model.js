@@ -97,6 +97,29 @@ var facebookCommentsProvider = new Schema({
 module.exports.FacebookPostsProvider = DataProvider.discriminator('FacebookPostsProvider', facebookPostsProvider);
 module.exports.FacebookCommentsProvider = DataProvider.discriminator('FacebookCommentsProvider', facebookCommentsProvider);
 
+//****** Twitter Provider
+
+var tweetsProvider = new Schema({
+  hashtags: {
+    type: Array
+  },
+  tweetType: {
+    type: String
+  },
+  resultType: {
+    type: String
+  },
+  place: {
+  type: String
+}
+
+}, options);
+
+module.exports.tweetsProvider = DataProvider.discriminator('tweetsProvider', tweetsProvider);
+
+//****** End Twitter Provider
+
+
 module.exports.createDataProviderModel = function (newDataProvider, callback) {
   newDataProvider.save(callback);
 };

@@ -17,7 +17,7 @@ var settings = require('./routes/users/settings');
 var webScraping = require('./routes/API/webScraping/index');
 var twitterScraping = require('./routes/API/twitterScraping/twitterScraping');
 var facebook = require('./routes/API/facebook');
-var twitter = require('./routes/API/twitterScraping/twitter');
+var twitter = require('./routes/API/twitter/index');
 var wwsa = require('./routes/API/wwsa/index');
 
 var dataProviderScore = require('./routes/sentimental/insights');
@@ -42,8 +42,7 @@ var mongoose   = require('mongoose');
 mongoose.connect('mongodb://bro:brobro0055@ds157469.mlab.com:57469/ats-digital',{
   server : { autoReconnect : false }
 });
-
-// mongoose.connect('mongodb://localhost:27017/ats-digital-local');
+ //mongoose.connect('mongodb://localhost:27017/ats-digital-local');
 
 //Adding passport require
 require('./config/passport');
@@ -70,6 +69,7 @@ app.use('/api/campaigns', campaign);
 app.use('/users/verification', usersVerification);
 app.use('/users/settings', settings);
 app.use('/attributeScore', dataProviderScore);
+app.use('/api/twitter', twitter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
