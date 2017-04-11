@@ -57,7 +57,7 @@ module.exports.getFacebookDataProvider = function (req, res, next) {
   var options;
 
   query = {
-    dateContent: {$gte: since, $lte: until},
+    dateContent: {$gte: new Date(since), $lte: new Date(until)},
     channelId: req.body.channelId,
     campaignId: req.body.campaignId,
     source: req.body.source
@@ -146,7 +146,6 @@ module.exports.getFacebookSentimental = function (req, res, next) {
       {campaignId: {'$eq': req.body.campaignId}}
     ]
   };
-  console.log("salem")
 
   var groupObject = {
     _id: {channelId: "$channelId",campaignId: "$campaignId",dateContent: {$substr: ["$dateContent", 0, 10]}} ,
@@ -154,14 +153,12 @@ module.exports.getFacebookSentimental = function (req, res, next) {
     positive_score: {$avg: "$contentScore.positivity"},
     negative_score: {$avg: "$contentScore.negativity"}
   };
-  console.log(".channelId", req.body.channelId)
-  console.log(".campaignId", req.body.campaignId)
 
-  DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject).then(function (data) {
+  var sortObject = {};
+  DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject,undefined).then(function (data) {
     res.json(data);
   }).catch(function (err) {
     res.json(err);
-
   })
 
 };

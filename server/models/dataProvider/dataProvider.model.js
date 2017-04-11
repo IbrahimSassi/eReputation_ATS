@@ -3,7 +3,7 @@
  */
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-
+var _ = require("underscore");
 //Version 1 TODO To Improve
 
 var options = {
@@ -264,14 +264,27 @@ module.exports.updateScore = function (dataProviderToUpdate, score) {
 }
 
 
-module.exports.getDataProviderMatchedAndGrouped = function (matchObject, groupObject) {
+module.exports.getDataProviderMatchedAndGrouped = function (matchObject, groupObject, sortObject) {
   return new Promise(function (resolve, reject) {
-    console.log(matchObject.$and)
+
+    var query = [
+      {$match: matchObject},
+      {$group: groupObject},
+      {$sort: sortObject}
+    ];
+
+
+    if (matchObject === undefined)
+      query.splice(0, 1)
+    if (groupObject === undefined)
+      query.splice(1, 1)
+    if (sortObject === undefined)
+      query.splice(2, 1)
+
+
     DataProvider.aggregate(
-      [
-        {$match: matchObject},
-        {$group: groupObject}
-      ], function (err, docs) {
+      query
+      , function (err, docs) {
         if (err) {
           // console.log(err)
           reject(err);
