@@ -7,9 +7,9 @@ var scraper = require('./scraper');
 
 /* POST home page. */
 router.post('/', function (request, result, next) {
+  var allChannels = request.body.channels;
   /**Vars Definition*/
   var allResult = [];
-  var allChannels = request.body.channels;
   var allKeywords = request.body.keywords;
   var postBodyVerif = request.body.postBody;
   google.resultsPerPage = request.body.minPostNb;
