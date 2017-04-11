@@ -35,5 +35,10 @@ router.post('/UserRepForChannel',TwitterAPIQueries.SaveDatToTwitterProviderForRe
 router.post('/UserMentionedForChannel',TwitterAPIQueries.SaveDatToTwitterProviderForMentionedUserForChannel);
 router.post('/GetUserInfo/:screen_name',TwitterAPIQueries.GetUserInfo);
 router.post('/TweetsScrapper',TwitterAPIQueries.TweetsScrapper);
+router.post('/TweetsScrapperWithGeo',TwitterAPIQueries.TweetsScrapperWithGeo);
+
+
+//Test
+router.post('/UserRepForChannelTest',TwitterAPIQueries.SaveDatToTwitterProviderForRepliesToUserForChannelTest);
 
 module.exports = router;

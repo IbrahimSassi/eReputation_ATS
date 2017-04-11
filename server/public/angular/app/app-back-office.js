@@ -3,6 +3,7 @@
 // Declare app level module which depends on views, and components
 angular.module('ATSApp', [
   'ATSApp.dashboard',
+  'ATSApp.twitter',
   'ATSApp.campaign',
   'ATSApp.facebook',
   'ui.materialize',
@@ -11,8 +12,7 @@ angular.module('ATSApp', [
   'ngResource',
   'angularLoad',
   'ui.router',
-  'ATSApp.wwsa'
-
+  'ATSApp.wwsa',
 
 ])
   .config(['$urlRouterProvider',
