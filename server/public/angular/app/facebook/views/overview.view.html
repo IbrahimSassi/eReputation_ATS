@@ -2,21 +2,19 @@
 <hr>
 
 
-<div ng-if="vm.myChannels.length" class="row">
+<div ng-if="vm.myChannels.length" class="row input-field">
   <select ng-change="vm.onSelect()" ng-model="vm.selectedChannel._id" name="" id="" material-select watch>
     <option value="" selected disabled>Pick a page</option>
     <option ng-repeat="channel in vm.myChannels" value="{{channel._id}}">{{channel.name}}</option>
   </select>
+  <label for="">Page</label>
 </div>
 <div ng-if="!vm.myChannels.length" class="row center-align">
   No Pages Yet
   <div class="spinner icon-spinner-3 cyan-text" aria-hidden="true"></div>
 </div>
 <div class="row">
-  <div class="col s1 m1 l1">
-    Since
-  </div>
-  <div class="col s5 m5 l5">
+  <div class="input-field col s6 m6 l6">
     <input input-date
            type="text"
            name="created"
@@ -29,13 +27,11 @@
            select-years="15"
            ng-change="vm.onChange()"
     />
-
-  </div>
-  <div class="col s1 m1 l1">
-    Until
+    <label for="">Since</label>
   </div>
 
-  <div class="col s5 m5 l5">
+
+  <div class="input-field col s6 m6 l6">
     <input input-date
            type="text"
            name="created"
@@ -48,7 +44,7 @@
            select-years="15"
            ng-change="vm.onChange()"
     />
-
+    <label for="">Until</label>
   </div>
 
 </div>

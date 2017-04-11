@@ -17,7 +17,7 @@ angular.module('ATSApp', [
 ])
   .config(['$urlRouterProvider',
     function ($urlRouterProvider) {
-      $urlRouterProvider.otherwise('/users');
+      $urlRouterProvider.otherwise('/campaign/list');
 
 
     }])

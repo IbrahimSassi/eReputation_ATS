@@ -81,6 +81,9 @@ var facebookPostsProvider = new Schema({
   },
   link: {
     type: String
+  },
+  story: {
+    type: String
   }
   , reactions: {
     type: Array
@@ -114,8 +117,8 @@ var tweetsProvider = new Schema({
     type: String
   },
   place: {
-  type: String
-},
+    type: String
+  },
   counts: {
     type: Object
   }
@@ -172,12 +175,19 @@ module.exports.avgPositivitybyCompaign = function (id) {
   console.log(id)
   return new Promise(function (resolve, reject) {
     DataProvider.aggregate([
-        {
-          $match: {$and: [{dateContent: {'$gte':new Date(new Date().setDate(new Date().getDate()-3)), '$lt': new Date()}},{channelId:{'$eq':id}}]}
-        },
-        {
-        $group: { _id: "$channelId", positive_score: { $avg: "$contentScore.positivity" } }
-        }], function (err, docs) {
+      {
+        $match: {
+          $and: [{
+            dateContent: {
+              '$gte': new Date(new Date().setDate(new Date().getDate() - 3)),
+              '$lt': new Date()
+            }
+          }, {channelId: {'$eq': id}}]
+        }
+      },
+      {
+        $group: {_id: "$channelId", positive_score: {$avg: "$contentScore.positivity"}}
+      }], function (err, docs) {
       if (err) {
         reject(err);
       }
@@ -189,10 +199,17 @@ module.exports.avgPositivitybyCompaign = function (id) {
 module.exports.avgNegativitybyCompaign = function (id) {
   return new Promise(function (resolve, reject) {
     DataProvider.aggregate([
-        {
-            $match: {$and: [{dateContent: {'$gte':new Date(new Date().setDate(new Date().getDate()-3)), '$lt': new Date()}},{channelId:{'$eq':id}}]}
-        },
-      { $group: { _id: "$channelId", negative_score: { $avg: "$contentScore.negativity" } } }], function (err, docs) {
+      {
+        $match: {
+          $and: [{
+            dateContent: {
+              '$gte': new Date(new Date().setDate(new Date().getDate() - 3)),
+              '$lt': new Date()
+            }
+          }, {channelId: {'$eq': id}}]
+        }
+      },
+      {$group: {_id: "$channelId", negative_score: {$avg: "$contentScore.negativity"}}}], function (err, docs) {
       if (err) {
         reject(err);
       }
@@ -203,10 +220,17 @@ module.exports.avgNegativitybyCompaign = function (id) {
 module.exports.avgNeutralitybyCompaign = function (id) {
   return new Promise(function (resolve, reject) {
     DataProvider.aggregate([
-        {
-            $match: {$and: [{dateContent: {'$gte':new Date(new Date().setDate(new Date().getDate()-3)), '$lt': new Date()}},{channelId:{'$eq':id}}]}
-        },
-      { $group: { _id: "$channelId", neutral_score: { $avg: "$contentScore.neutral"}} }], function (err, docs) {
+      {
+        $match: {
+          $and: [{
+            dateContent: {
+              '$gte': new Date(new Date().setDate(new Date().getDate() - 3)),
+              '$lt': new Date()
+            }
+          }, {channelId: {'$eq': id}}]
+        }
+      },
+      {$group: {_id: "$channelId", neutral_score: {$avg: "$contentScore.neutral"}}}], function (err, docs) {
       if (err) {
         reject(err);
       }
@@ -227,10 +251,10 @@ module.exports.findNulledScore = function (score) {
 }
 
 
-module.exports.updateScore = function (dataProviderToUpdate,score) {
+module.exports.updateScore = function (dataProviderToUpdate, score) {
   return new Promise(function (resolve, reject) {
     DataProvider.update({_id: dataProviderToUpdate._id}, {$set: {contentScore: score}}, function (err, updatedData) {
-      if (err)  reject(err);
+      if (err) reject(err);
       //res.status(200).json({"updatedData": updatedData});
       resolve(updatedData);
 
@@ -240,6 +264,23 @@ module.exports.updateScore = function (dataProviderToUpdate,score) {
 }
 
 
+module.exports.getDataProviderMatchedAndGrouped = function (matchObject, groupObject) {
+  return new Promise(function (resolve, reject) {
+    console.log(matchObject.$and)
+    DataProvider.aggregate(
+      [
+        {$match: matchObject},
+        {$group: groupObject}
+      ], function (err, docs) {
+        if (err) {
+          // console.log(err)
+          reject(err);
+        }
+        resolve(docs);
+      });
+  });
+
+};
 
 
 

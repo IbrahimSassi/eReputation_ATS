@@ -1,11 +1,69 @@
 <div class="col s12">
-  <h1>Overview</h1>
+  <div id="flight-card" class="card">
+
+    <div class="card-header indigo darken-1">
+      <div class="card-title">
+        <h4 class="flight-card-title">Overview</h4>
+        <p class="flight-card-date">Last operation : 4 hours ago</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="input-field col s11 m11 l11">
+      <select ng-change="vm.onSelect()" ng-model="vm.selectedChannel._id" name="" id="" material-select watch>
+        <option value="all" selected>All</option>
+        <option ng-repeat="channel in vm.myChannels" value="{{channel._id}}">{{channel.name}}</option>
+      </select>
+      <label>Page</label>
+    </div>
+
+  </div>
+  <div class="row">
+
+    <div class="input-field col s6 m6 l6">
+        <input input-date
+               type="text"
+               name="created"
+               id="since"
+               ng-model="vm.since"
+               format="ddd mmm dd yyyy HH:MM:ss"
+               today="today"
+               clear="clear"
+               close="close"
+               select-years="15"
+               min="2017/04/05"
+               max="2017/04/26"
+               ng-change="vm.onChange()"
+        />
+      <label>From</label>
+    </div>
+    <div class="input-field col s6 m6 l6">
+        <input input-date
+               type="text"
+               name="created"
+               id="until"
+               ng-model="vm.until"
+               format="ddd mmm dd yyyy HH:MM:ss"
+               today="today"
+               clear="clear"
+               close="close"
+               min="2017/04/05"
+               max="2017/04/26"
+               ng-change="vm.onChange()"
+        />
+      <label>To</label>
+    </div>
+
+  </div>
+
   <div id="card-stats">
     <div class="row">
       <div class="col s12 m6 l3">
         <div class="card">
-          <div class="card-content  green white-text">
-            <p class="card-stats-title"><i class="mdi-social-group-add"></i> Posts </p>
+          <div class="card-content indigo darken-1 white-text">
+            <p class="card-stats-title"><i class="fa fa-pencil-square-o"></i> Posts </p>
             <h4 ng-if="vm.Posts.length" class="card-stats-number">{{vm.Posts.length}}</h4>
             <h4 ng-if="!vm.Posts.length" class="card-stats-number">
               <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
@@ -15,15 +73,15 @@
               class="green-text text-lighten-5">from yesterday</span>
             </p>
           </div>
-          <div class="card-action  green darken-2">
+          <div class="card-action indigo darken-2">
             <div id="clients-bar" class="center-align"></div>
           </div>
         </div>
       </div>
       <div class="col s12 m6 l3">
         <div class="card">
-          <div class="card-content pink lighten-1 white-text">
-            <p class="card-stats-title"><i class="mdi-editor-insert-drive-file"></i> Comments </p>
+          <div class="card-content indigo darken-1 white-text">
+            <p class="card-stats-title"><i class="fa fa-comments"></i> Comments </p>
             <h4 ng-if="vm.Comments.length" class="card-stats-number">{{vm.Comments.length}}</h4>
             <h4 ng-if="!vm.Comments.length" class="card-stats-number">
               <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
@@ -32,39 +90,42 @@
               <i class="mdi-hardware-keyboard-arrow-down"></i> 3% <span class="deep-purple-text text-lighten-5">from last month</span>
             </p>
           </div>
-          <div class="card-action  pink darken-2">
+          <div class="card-action indigo darken-2">
             <div id="invoice-line" class="center-align"></div>
           </div>
         </div>
       </div>
       <div class="col s12 m6 l3">
         <div class="card">
-          <div class="card-content blue-grey white-text">
-            <p class="card-stats-title"><i class="mdi-action-trending-up"></i>Share</p>
+          <div class="card-content indigo darken-1 white-text">
+            <p class="card-stats-title"><i class="fa fa-share-square-o"></i> Share</p>
             <h4 ng-if="vm.Shares" class="card-stats-number">{{vm.Shares}}</h4>
-            <h4 ng-if="!vm.Shares"class="card-stats-number">
+            <h4 ng-if="!vm.Shares" class="card-stats-number">
               <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
             </h4>
             <p class="card-stats-compare">
               <i class="mdi-hardware-keyboard-arrow-up"></i> 80% <span class="blue-grey-text text-lighten-5">from yesterday</span>
             </p>
           </div>
-          <div class="card-action blue-grey darken-2">
+          <div class="card-action indigo darken-2">
             <div id="profit-tristate" class="center-align"></div>
           </div>
         </div>
       </div>
       <div class="col s12 m6 l3">
         <div class="card">
-          <div class="card-content purple white-text">
-            <p class="card-stats-title"><i class="mdi-editor-attach-money"></i>Sth else</p>
-            <h4 class="card-stats-number">$8990.63</h4>
+          <div class="card-content indigo darken-1 white-text">
+            <p class="card-stats-title"><i class="fa  fa-thumbs-o-up"></i> Likes</p>
+            <h4 ng-if="vm.Likes" class="card-stats-number">{{vm.Likes}}</h4>
+            <h4 ng-if="!vm.Likes" class="card-stats-number">
+              <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
+            </h4>
             <p class="card-stats-compare">
               <i class="mdi-hardware-keyboard-arrow-up"></i> 70% <span
               class="purple-text text-lighten-5">last month</span>
             </p>
           </div>
-          <div class="card-action purple darken-2">
+          <div class="card-action indigo darken-2">
             <div id="sales-compositebar" class="center-align"></div>
           </div>
         </div>
@@ -72,5 +133,9 @@
     </div>
   </div>
 
+{{ table = [['date','positive','negative'],['12/11/2014',20,10],['12/10/2014',10,40],['12/10/2016',80,50]]}}
+  <div class="row">
+    <area-chart my-id="15" my-table="{{table}}"></area-chart>
+  </div>
 
 </div>

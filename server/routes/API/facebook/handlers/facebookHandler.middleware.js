@@ -12,72 +12,96 @@ var moment = require("moment");
 
 module.exports.transformPostsData = function (req, res, next) {
   urls = [];
-  var page_id = req.body.channelId;
-  var node = page_id + "/posts";
-  var fields = "?fields=message,link,created_time,type,name,id" +
-    // ",comments" +
-    ",shares" +
-    ",reactions" +
-    ".limit(0).summary(true)" +
-    "&since=" + req.body.since +
-    "&until=" + req.body.until;
 
-  var parameters = "&access_token=" + config.ACCESS_TOKEN;
-  var url = config.base + node + fields + parameters;
+  var channelPromise = new Promise(function (resolve, reject) {
+    request(config.host + "/api/channels/" + req.body.channelId, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        var channel = JSON.parse(body);
+        console.log()
+        resolve(channel.url.split("/"));
+      }
+      else {
+        reject(error);
+      }
+    })
+  });
 
-  // console.log(url);
-  var posts;
-  var promiseNext;
-  var promisePrevious;
-  var promiseReactions;
-  var AllPosts = [];
-  //Getting First Page
-  request(url, function (error, response, body) {
+  channelPromise.then(function (channel) {
 
-    if (!error && response.statusCode == 200) {
+    console.log("channel[3]",channel[3])
+    var page_id = channel[3];
+    var node = page_id + "/posts";
+    var fields = "?fields=message,link,created_time,type,name,id" +
+      // ",comments" +
+      ",shares" +
+      ",reactions" +
+      ".limit(0).summary(true)" +
+      "&since=" + encodeURIComponent(req.body.since) +
+      "&until=" + encodeURIComponent(req.body.until) +
+      "&limit=100";
 
-      posts = JSON.parse(body);
+    var parameters = "&access_token=" + config.ACCESS_TOKEN;
+    var url = config.base + node + fields + parameters;
 
-      urls.push(url);
-      //Getting All Nexr and previous paging urls
-      promiseNext = handleData(posts, "next");
-      promisePrevious = handleData(posts, "previous");
-      Promise.all([promisePrevious, promiseNext]).then(function (tab) {
+    // console.log(url);
+    var posts;
+    var promiseNext;
+    var promisePrevious;
+    var promiseReactions;
+    var AllPosts = [];
+    //Getting First Page
+    request(url, function (error, response, body) {
 
-        //Requesting Data for all those urls
-        async.eachSeries(tab[0], function iteratee(listItem, callback) {
-          request(listItem, function (error, response, body) {
-            var localData = JSON.parse(body).data;
-            localData.forEach(function (story) {
+      if (!error && response.statusCode == 200) {
 
-              // Getting Reactions For each story
-              promiseReactions = new Promise(function (resolveReaction, reject) {
-                request(config.host + '/api/facebook/posts/' + story.id + '/reactions', function (reactionError, reactionResponse, reactionBody) {
-                  if (!reactionError && reactionResponse.statusCode == 200) {
-                    var reactions = JSON.parse(reactionBody);
-                    resolveReaction(reactions);
-                  }
+        posts = JSON.parse(body);
+
+        console.log(url)
+        urls.push(url);
+        //Getting All Nexr and previous paging urls
+        promiseNext = handleData(posts, "next");
+        promisePrevious = handleData(posts, "previous");
+        Promise.all([promisePrevious, promiseNext]).then(function (tab) {
+
+          //Requesting Data for all those urls
+          async.eachSeries(tab[0], function iteratee(listItem, callback) {
+            request(listItem, function (error, response, body) {
+              var localData = JSON.parse(body).data;
+              localData.forEach(function (story) {
+
+                // Getting Reactions For each story
+                promiseReactions = new Promise(function (resolveReaction, reject) {
+                  request(config.host + '/api/facebook/posts/' + story.id + '/reactions', function (reactionError, reactionResponse, reactionBody) {
+                    if (!reactionError && reactionResponse.statusCode == 200) {
+                      var reactions = JSON.parse(reactionBody);
+                      resolveReaction(reactions);
+                    }
+                  });
+                });
+
+                //Transform Data to match with our DB
+                story = transformPosts(story, req.body.channelId, req.body.campaignId);
+                promiseReactions.then(function (data) {
+                  story.reactions = [];
+                  data.date = new Date();
+                  story.reactions.push(data);
+                  AllPosts.push(story);
                 });
               });
-
-              //Transform Data to match with our DB
-              story = transformPosts(story, req.body.channelId, req.body.campaignId);
-              promiseReactions.then(function (data) {
-                story.reactions = [];
-                data.date = new Date();
-                story.reactions.push(data);
-                AllPosts.push(story);
-              });
+              callback(error, body);
             });
-            callback(error, body);
+          }, function done() {
+            req.posts = AllPosts;
+            next();
           });
-        }, function done() {
-          req.posts = AllPosts;
-          next();
         });
-      });
-    }
+      }
+    });
+
+
+
   });
+
 };
 
 
@@ -115,8 +139,7 @@ module.exports.transformCommentsData = function (req, res, next) {
               }
               else {
                 for (var i = 0; i < initialComments.data.length; i++)
-                  comments.push(transformComments(initialComments.data[i], post.channelId, post.id,req.body.campaignId))
-
+                  comments.push(transformComments(initialComments.data[i], req.body.channelId, post.id, req.body.campaignId))
                 resolve(body)
 
               }
@@ -139,16 +162,14 @@ module.exports.transformCommentsData = function (req, res, next) {
         var getRestOfComments = new Promise(function (resolve, reject) {
           urls.forEach(function (u) {
             var postId = getPostId(u);
-            console.log("postId", postId)
             request(u, function (error, response, body) {
               if (!error && response.statusCode == 200) {
                 var LocalBody = JSON.parse(body);
                 for (var i = 0; i < LocalBody.data.length; i++) {
-                  comments.push(transformComments(LocalBody.data[i], postId, postId,req.body.campaignId));
+                  comments.push(transformComments(LocalBody.data[i], req.body.channelId, postId, req.body.campaignId));
                 }
               }
-              else
-              {
+              else {
                 reject(error)
               }
             });
@@ -188,7 +209,7 @@ module.exports.transformCommentsData = function (req, res, next) {
 
 
 function handleData(data, direction) {
-  console.log("direction",direction)
+  console.log("direction", direction)
   return new Promise(function (resolve) {
     if (data.paging && data.paging[direction]) {
       urls.push(data.paging[direction]);
@@ -241,7 +262,7 @@ function transformPosts(post, author, campaignId) {
 
 }
 
-function transformComments(comment, channel, parent,campaign) {
+function transformComments(comment, channel, parent, campaign) {
   return {
     id: comment.id,
     content: comment.message,

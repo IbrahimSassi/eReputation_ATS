@@ -6,6 +6,7 @@
 var DataProvider = require('../../../models/dataProvider/dataProvider.model');
 var moment = require('moment');
 var MongoClient = require('mongodb').MongoClient;
+var async = require('async');
 
 exports.getAllFacebookPosts = function (req, res, next) {
 
@@ -45,8 +46,7 @@ module.exports.getFacebookDataProvider = function (req, res, next) {
 
   // var since = new Date(req.params.since);
   // var until = new Date(req.params.until);
-  if(req.body.since && req.body.until)
-  {
+  if (req.body.since && req.body.until) {
     var since = moment(req.body.since).format();
     var until = moment(req.body.until).format();
   }
@@ -105,6 +105,65 @@ module.exports.getFacebookDataProvider = function (req, res, next) {
         .json(docs);
     }
   })
+};
+
+
+module.exports.addFacebookComments = function (req, res, next) {
+
+
+  async.eachSeries(req.comments, function iteratee(comment, callback) {
+    var newFacebookComment = new DataProvider.FacebookCommentsProvider(comment);
+
+    DataProvider.createDataProviderModel(newFacebookComment, function (err, item) {
+      if (err)
+        handleError(res, err)
+      else {
+        console.log('Success facebook comments saved saved', item._id);
+      }
+
+    });
+    callback();
+  }, function done() {
+    res.json(req.comments)
+  });
+
+};
+
+
+module.exports.getFacebookSentimental = function (req, res, next) {
+
+  var since;
+  var until;
+  if (req.body.since && req.body.until) {
+    since = moment(req.body.since).format();
+    until = moment(req.body.until).format();
+  }
+
+  var matchObject = {
+    $and: [
+      {dateContent: {'$gte': new Date(req.body.since), '$lte': new Date(req.body.until)}},
+      {channelId: {'$eq': req.body.channelId}},
+      {campaignId: {'$eq': req.body.campaignId}}
+    ]
+  };
+  console.log("salem")
+
+  var groupObject = {
+    _id: {channelId: "$channelId",campaignId: "$campaignId",dateContent: {$substr: ["$dateContent", 0, 10]}} ,
+    neutral_score: {$avg: "$contentScore.neutral"},
+    positive_score: {$avg: "$contentScore.positivity"},
+    negative_score: {$avg: "$contentScore.negativity"}
+  };
+  console.log(".channelId", req.body.channelId)
+  console.log(".campaignId", req.body.campaignId)
+
+  DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject).then(function (data) {
+    res.json(data);
+  }).catch(function (err) {
+    res.json(err);
+
+  })
+
 };
 
 

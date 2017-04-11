@@ -1,9 +1,6 @@
 <h1>Community</h1>
 <div class="row">
-  <div class="col s1 m1 l1">
-    Since
-  </div>
-  <div class="col s5 m5 l5">
+  <div class="input-field col s5 m5 l5">
     <input input-date
            type="text"
            name="created"
@@ -16,13 +13,11 @@
            select-years="15"
            ng-change="vm.onChange()"
     />
+    <label for="">Since</label>
 
   </div>
-  <div class="col s1 m1 l1">
-    Until
-  </div>
 
-  <div class="col s5 m5 l5">
+  <div class="input-field col s6 m6 l6">
     <input input-date
            type="text"
            name="created"
@@ -34,34 +29,26 @@
            close="close"
            select-years="15"
            ng-change="vm.onChange()"
-
     />
+    <label for="">Until</label>
 
   </div>
 
 </div>
 
 <div class="row">
-  <div class="col s1 m1 l1">
-    Page :
-  </div>
-  <div class="col s5 m5 l5">
+  <div class="input-field col s6 m6 l6">
     <select ng-change="vm.onSelect()" ng-model="vm.selectedChannel._id" name="" id="" material-select watch>
       <option value="" selected disabled>Pick a page</option>
       <option ng-repeat="channel in vm.myChannels" value="{{channel._id}}">{{channel.name}}</option>
     </select>
-
+    <label for="">Page</label>
   </div>
-  <div class="col s1 m1 l1">
-    Selected Date :
-  </div>
-
-  <div class="col s5 m5 l5">
+  <div class="input-field col s6 m6 l6">
     <select ng-change="vm.onChangeSelectedDate()" ng-model="vm.selectedDate" material-select watch>
       <option ng-repeat="date in vm.Dates" value="{{$index}}">{{date.text}}</option>
     </select>
-
-
+    <label for="">Selected Date</label>
   </div>
 
 </div>
