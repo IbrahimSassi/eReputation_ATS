@@ -27,6 +27,35 @@
                   id: '@id'
               }
           },
+          'NegativityByCompaign': {
+              url: '/api/wwsa/NegativityByCompaign/:id',
+              method: 'GET',
+              params: {
+                  id: '@id'
+              }
+          },
+          'NeutralByCompaign': {
+              url: '/api/wwsa/NeutralByCompaign/:id',
+              method: 'GET',
+              params: {
+                  id: '@id'
+              }
+          },
+          'stackedbar': {
+              url: '/api/wwsa/SentimentalAnalysisStackedBar/:id',
+              method: 'GET',
+              params: {
+                  id: '@id'
+              }
+          },
+          'combochart': {
+              url: '/api/wwsa/SentimentalAnalysiscombochart/:idcam/:idch',
+              method: 'GET',
+              params: {
+                  idcam: '@idcam',
+                  idch: '@idch'
+              }
+          },
       }
     );
 

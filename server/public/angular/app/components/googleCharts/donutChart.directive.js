@@ -21,6 +21,7 @@
           setTimeout(function () {
             google.charts.load('current', {'packages': ['corechart', 'bar']});
             function donutChart() {
+
               var data = google.visualization.arrayToDataTable([
                 ['Etat', 'percent'],
                 ['positive', parseFloat(scope.positive)],
@@ -30,9 +31,11 @@
 
               var options = {
                 title: '',
-                colors: ['#04B404', '#FE9F0C', '#DF0101'],
+                colors: ['#46BFBD', '#FDB45C', '#F7464A'],
                 pieHole: 0.4,
-
+                  'width':800,
+                  'height':300,
+                  backgroundColor: { fill:'transparent' }
               };
 
               var chart = new google.visualization.PieChart(document.getElementById('donutchart' + scope.myId));

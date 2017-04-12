@@ -3,58 +3,90 @@
  */
 
 (function () {
-  'use strict';
+    'use strict';
 
-  angular
-    .module('ATSApp.campaign')
-    .directive("comboChart", function () {
-      return {
-        restrict: 'EA',
-        scope: {
-          myId: '@myId',
-          positive: '@positive',
-          negative: '@negative',
-          neutral: '@neutral',
-        },
-        templateUrl: 'angular/app/components/googleCharts/comboChart.template.html',
-        link: function (scope, elem, attrs) {
-          setTimeout(function () {
-            google.charts.load('current', {'packages': ['corechart', 'bar']});
-            function drawVisualization() {
-              // Some raw data (not necessarily accurate)
-              var data = google.visualization.arrayToDataTable([
-                ['Month', 'Positive', 'Neutral', 'Negative', 'Average'],
-                ['2017/05',  165,      938,         522,             614.6],
-                ['2017/06',  135,      1120,        599,             682],
-                ['2017/07',  157,      1167,        587,             623],
-                ['2017/08',  139,      1110,        615,             609.4],
-                ['2017/09',  136,      691,         629,             569.6]
-              ]);
+    angular
+        .module('ATSApp.campaign')
+        .directive("comboChart", function () {
+            return {
+                restrict: 'EA',
+                scope: {
 
-              var options = {
-                title : 'Number of Tweets by Time and sentiment',
-                colors: ['#04B404', '#FE9F0C','#DF0101','#0404B4' ],
-                vAxis: {title: 'Motions'},
-                hAxis: {title: 'Month'},
-                seriesType: 'bars',
-                series: {3: {type: 'line'}}
-              };
+                    myId: '@myId',
+                    nowPositive: '@nowPositive',
+                    nowNegative: '@nowNegative',
+                    nowNeutral: '@nowNeutral',
+                    nowAvg: '@nowAvg',
 
-              var chart = new google.visualization.ComboChart(document.getElementById('combochart'+ scope.myId));
-              chart.draw(data, options);
-            }
+                    yesPositive: '@yesPositive',
+                    yesNegative: '@yesNegative',
+                    yesNeutral: '@yesNeutral',
+                    yesAvg: '@yesAvg',
 
-            google.charts.setOnLoadCallback(
-              function () { // Anonymous function that calls drawChart1 and drawChart2
-                drawVisualization();
+                    oldPositive: '@oldPositive',
+                    oldNegative: '@oldNegative',
+                    oldNeutral: '@oldNeutral',
+                    oldAvg: '@oldAvg',
 
-              });
+                    ooldPositive: '@ooldPositive',
+                    ooldNegative: '@ooldNegative',
+                    ooldNeutral: '@ooldNeutral',
+                    ooldAvg: '@ooldAvg',
 
-          }, 0);
+                    oooldPositive: '@oooldPositive',
+                    oooldNegative: '@oooldNegative',
+                    oooldNeutral: '@oooldNeutral',
+                    oooldAvg: '@oooldAvg',
 
-        }
+                },
+                templateUrl: 'angular/app/components/googleCharts/comboChart.template.html',
+                link: function (scope, elem, attrs) {
+                    setTimeout(function () {
+                        google.charts.load('current', {'packages': ['corechart', 'bar']});
+                        function drawVisualization() {
+                            // Some raw data (not necessarily accurate)
+                            var data = google.visualization.arrayToDataTable([
+                                ['Month', 'Positive', 'Neutral', 'Negative', 'Average'],
+                                [moment().add(-4, 'days').format('DD/MM/YYYY'), parseFloat(scope.oooldPositive), parseFloat(scope.oooldNeutral), parseFloat(scope.oooldNegative), parseFloat(scope.oooldAvg)],
+                                [moment().add(-3, 'days').format('DD/MM/YYYY'), parseFloat(scope.ooldPositive), parseFloat(scope.ooldNeutral), parseFloat(scope.ooldNegative), parseFloat(scope.ooldAvg)],
+                                [moment().add(-2, 'days').format('DD/MM/YYYY'), parseFloat(scope.oldPositive), parseFloat(scope.oldNeutral), parseFloat(scope.oldNegative), parseFloat(scope.oldAvg)],
+                                [moment().add(-1, 'days').format('DD/MM/YYYY'), parseFloat(scope.yesPositive), parseFloat(scope.yesNeutral), parseFloat(scope.yesNegative), parseFloat(scope.yesAvg)],
+                                [moment().format('DD/MM/YYYY'), parseFloat(scope.nowPositive), parseFloat(scope.nowNeutral), parseFloat(scope.nowNegative), parseFloat(scope.nowAvg)]
+                            ]);
 
-      };
-    });
+                            var options = {
+                                title: 'Number of Tweets by Time and sentiment',
+
+                                titleTextStyle: {
+                                    color: '#848484',    // any HTML string color ('red', '#cc00cc')
+                                    fontName: 'Arial Black', // i.e. 'Times New Roman'
+                                    fontSize: 22, // 12, 18 whatever you want (don't specify px)
+                                    // bold: true,    // true or false
+                                    // italic: true   // true of false
+                                },
+                                colors: ['#46BFBD', '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++', '#F7464A', '#BF00FF'],
+                                vAxis: {title: 'Motions'},
+                                hAxis: {title: 'Days'},
+                                seriesType: 'bars',
+                                series: {3: {type: 'line'}},
+                                backgroundColor: {fill: 'transparent'}
+                            };
+
+                            var chart = new google.visualization.ComboChart(document.getElementById('combochart' + scope.myId));
+                            chart.draw(data, options);
+                        }
+
+                        google.charts.setOnLoadCallback(
+                            function () { // Anonymous function that calls drawChart1 and drawChart2
+                                drawVisualization();
+
+                            });
+
+                    }, 0);
+
+                }
+
+            };
+        });
 
 })(angular);
