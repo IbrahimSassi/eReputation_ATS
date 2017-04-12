@@ -24,9 +24,18 @@
       return TwitterFactory.GetUserInfo({screen_name:screen_name}).$promise;
     };
 
+    function GetSentimentalForOneChannelForMention(filter) {
+      return TwitterFactory.GetSentimentalForOneChannelForMention(filter).$promise;
+    }
+    function GetSentimentalForOneChannelForReply(filter) {
+      return TwitterFactory.GetSentimentalForOneChannelForReply(filter).$promise;
+    }
+
     return {
       GetChannelByID : GetChannelByID,
-      GetUserInfo : GetUserInfo
+      GetUserInfo : GetUserInfo,
+      GetSentimentalForOneChannelForMention : GetSentimentalForOneChannelForMention,
+      GetSentimentalForOneChannelForReply : GetSentimentalForOneChannelForReply
     };
 
 

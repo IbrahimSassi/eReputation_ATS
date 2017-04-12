@@ -1,6 +1,32 @@
 <!--breadcrumbs start-->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
 
+  blockquote.twitter-tweet {
+    display: inline-block;
+    padding: 16px;
+    margin: 10px 0;
+    max-width: 468px;
+    border: #ddd 1px solid;
+    border-top-color: #eee;
+    border-bottom-color: #bbb;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    font: bold 14px/18px Helvetica, Arial, sans-serif;
+    color: #000;
+  }
+
+  blockquote.twitter-tweet p {
+    font: normal 18px/24px Georgia, "Times New Roman", Palatino, serif;
+    margin: 0 5px 10px 0;
+  }
+
+  blockquote.twitter-tweet a[href^="https://twitter.com"] {
+    font-weight: normal;
+    color: #666;
+    font-size: 12px;
+  }
+</style>
 
 
 <div id="input-select" class="row">
@@ -9,7 +35,8 @@
       <label>Please select your channel</label>
       <select ng-change="camp.onSelectChannel()" material-select watch ng-model="camp.selectChannelValue">
         <option value="" disabled selected>Choose your option</option>
-        <option ng-repeat="allchannels in camp.allChannelsInArray" value="{{allchannels.url}}">{{allchannels.name}}</option>
+        <option ng-repeat="allchannels in camp.allChannelsInArray" value="{{allchannels._id}}">{{allchannels.name}}
+        </option>
       </select>
     </div>
   </div>
@@ -23,13 +50,13 @@
            type="text"
            name="created"
            id="since"
-           ng-model="vm.since"
+           ng-model="camp.since"
            format="mmmm d, yyyy"
            today="today"
            clear="clear"
            close="close"
            select-years="15"
-           ng-change="vm.onChange()"
+           ng-change="camp.onChange()"
     />
 
   </div>
@@ -41,19 +68,18 @@
            type="text"
            name="created"
            id="until"
-           ng-model="vm.until"
+           ng-model="camp.until"
            format="mmmm d, yyyy"
            today="today"
            clear="clear"
            close="close"
            select-years="15"
-           ng-change="vm.onChange()"
+           ng-change="camp.onChange()"
     />
 
   </div>
 
 </div>
-
 
 
 <div id="breadcrumbs-wrapper">
@@ -72,7 +98,8 @@
             <p ng-if="camp.created_at" class="flight-card-date">Created at: {{camp.created_at}}</p>
           </div>
         </div>
-        <div ng-if="camp.profile_banner_url" style="background:url({{camp.profile_banner_url}}) no-repeat center center;-webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;height: 300px;"
+        <div ng-if="camp.profile_banner_url"
+             style="background:url({{camp.profile_banner_url}}) no-repeat center center;-webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;height: 300px;"
              class="card-content-bg-twitter white-text">
           <div class="card-content" style="height: 300px;">
             <div class="row flight-state-wrapper">
@@ -105,7 +132,6 @@
           </div>
         </div>
       </div>
-
 
 
       <!-- Cards stats -->
@@ -192,6 +218,59 @@
 
 </div>
 
+<div class="row">
+  <div class="col s12 m12 l12">
+    <div class="col s6 m6 l6">
+      <div class="row">
+        <div class="col s12 m12 l12">
+          <pie-chart my-id="Replies" my-table="{{camp.reputationBySentimentMention}}"
+                     title="Tweets Replies Analytics"></pie-chart>
+        </div>
+        <div class="input-filed col s12s m12 l12">
+          <div class="col s6">
+          <label>Most Positive Tweet In Replies To Your Tweets</label>
+          <blockquote class="twitter-tweet" data-lang="en">
+            <p lang="en" dir="ltr">just setting up my twttr</p>&mdash; Jack (@jack) <a
+            href="https://twitter.com/medfirasouert/status/851157516738342913">March 21, 2006</a>
+          </blockquote>
+          </div>
+          <div class="col s6">
+          <label>Most Negative Tweet In Replies To Your Tweets</label>
+          <blockquote class="twitter-tweet" data-lang="en" >
+            <p lang="en" dir="ltr">just setting up my twttr</p>&mdash; Jack (@jack) <a
+            href="https://twitter.com/medfirasouert/status/851157516738342913">March 21, 2006</a>
+          </blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col s6 m6 l6">
+      <div class="row">
+        <div class="col s12 m12 l12">
+          <pie-chart my-id="Mentions" my-table="{{camp.reputationBySentimentReply}}"
+                     title="Tweets Replies Analytics"></pie-chart>
+        </div>
+        <div class="input-filed col s12s m12 l12">
+          <div class="col s6">
+          <label>Most Positive Tweet In Where You Are Mentioned</label>
+          <blockquote class="twitter-tweet" data-lang="en">
+            <p lang="en" dir="ltr">just setting up my twttr</p>&mdash; Jack (@jack) <a
+            href="https://twitter.com/medfirasouert/status/851157516738342913">March 21, 2006</a>
+          </blockquote>
+          </div>
+          <div class="col s6">
+          <label>Most Negative Tweet In Where You Are Mentioned</label>
+          <blockquote class="twitter-tweet" data-lang="en">
+            <p lang="en" dir="ltr">just setting up my twttr</p>&mdash; Jack (@jack) <a
+            href="https://twitter.com/medfirasouert/status/851157516738342913">March 21, 2006</a>
+          </blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <script type="text/javascript">
@@ -200,3 +279,5 @@
   });
 
 </script>
+
+<script src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
