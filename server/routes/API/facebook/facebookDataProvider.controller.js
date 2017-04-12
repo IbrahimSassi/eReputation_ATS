@@ -66,7 +66,7 @@ module.exports.getFacebookDataProvider = function (req, res, next) {
     $text: {$search: ""}
   };
 
-  if (!req.body.keywords) {
+  if (!req.body.keywords.length) {
     sortedBy = {dateContent: 1}
     delete query.$text;
   }
@@ -277,6 +277,10 @@ module.exports.getReputationByTypes = function (req, res, next) {
 
   var groupObject = {
     _id: {type: "$type"}, nb: {$sum: 1},
+    neutral_score: {$avg: "$contentScore.neutral"},
+    positive_score: {$avg: "$contentScore.positivity"},
+    negative_score: {$avg: "$contentScore.negativity"}
+
   };
 
   if (req.body.channelId == "all") {

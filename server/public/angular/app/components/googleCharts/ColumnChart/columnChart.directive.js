@@ -20,6 +20,7 @@
         link: function (scope, elem, attrs) {
           setTimeout(function () {
             google.charts.load('current', {'packages': ['bar']});
+            // google.charts.setOnLoadCallback(drawChart);
 
             var LocalData = JSON.parse(scope.myTable);
 

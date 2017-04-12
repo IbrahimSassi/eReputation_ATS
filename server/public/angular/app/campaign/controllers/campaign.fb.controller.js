@@ -187,10 +187,38 @@
 
     function initReputationByTypes() {
       vm.reputationByTypes = [];
+      vm.typesLink = [];
+      vm.typesStatus = [];
+      vm.typesVideo = [];
+      vm.typesPhoto = [];
       vm.reputationByTypes.push(['Type', 'Number']);
+      vm.typesLink.push(['Sentimental', 'Number']);
+      vm.typesStatus.push(['Sentimental', 'Number']);
+      vm.typesVideo.push(['Sentimental', 'Number']);
+      vm.typesPhoto.push(['Sentimental', 'Number']);
       FacebookService.getReputationByTypes(filterSentimental).then(function (data) {
         data.forEach(function (obj) {
           vm.reputationByTypes.push([obj._id.type, obj.nb]);
+          if (obj._id.type == "link") {
+            vm.typesLink.push(['Positive', obj.positive_score])
+            vm.typesLink.push(['Negative', obj.negative_score])
+            vm.typesLink.push(['Neutral', obj.neutral_score])
+          }
+          if (obj._id.type == "video") {
+            vm.typesVideo.push(['Positive', obj.positive_score])
+            vm.typesVideo.push(['Negative', obj.negative_score])
+            vm.typesVideo.push(['Neutral', obj.neutral_score])
+          }
+          if (obj._id.type == "photo") {
+            vm.typesPhoto.push(['Positive', obj.positive_score])
+            vm.typesPhoto.push(['Negative', obj.negative_score])
+            vm.typesPhoto.push(['Neutral', obj.neutral_score])
+          }
+          if (obj._id.type == "status") {
+            vm.typesStatus.push(['Positive', obj.positive_score])
+            vm.typesStatus.push(['Negative', obj.negative_score])
+            vm.typesStatus.push(['Neutral', obj.neutral_score])
+          }
         });
       })
     }
