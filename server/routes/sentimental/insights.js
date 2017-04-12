@@ -13,7 +13,7 @@ function translateFN()
 {
     dataProvider.findNulledScore().then(function (data) {
 
-        console.log('this is: ', data.content)
+      //  console.log('this is: ', data.content)
 
         if (data.content) {
             translate(data.content.replace('@', ''), {to: 'en'}).then(function (result) {
@@ -60,6 +60,25 @@ function translateFN()
                 res.status(400).json({"Error": "Error in translator"})
             });
         }
+
+        else  {
+
+            var scoreResults = {
+              positivity: null,
+              negativity: null,
+              neutral: null
+            }
+          console.log("errrr",scoreResults)
+
+          dataProvider.updateScore(data, scoreResults).then(function (result) {
+           translateFN()
+            res.status(200).json({"updatedData": result});
+          }).catch(function (err) {
+            res.status(400).json({"Error": "Error in update"})
+          });
+
+          }
+
 
     }).catch(function (err) {
         res.status(400).json({"Error": "Error in Find Nulled Score"})

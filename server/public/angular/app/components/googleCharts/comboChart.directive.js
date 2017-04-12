@@ -64,7 +64,7 @@
                                     // bold: true,    // true or false
                                     // italic: true   // true of false
                                 },
-                                colors: ['#46BFBD', '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++', '#F7464A', '#BF00FF'],
+                                colors: ['#46BFBD', '#FDB45C', '#F7464A', '#BF00FF'],
                                 vAxis: {title: 'Motions'},
                                 hAxis: {title: 'Days'},
                                 seriesType: 'bars',
