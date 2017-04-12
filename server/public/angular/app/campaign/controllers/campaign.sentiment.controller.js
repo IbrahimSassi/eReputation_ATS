@@ -31,6 +31,14 @@
     vm.idCampaign = $stateParams.idCampaign;
     vm.idChannel = "58dd0dfc6a60631dbc879ddb";
 
+    var filterSentimental =
+      {
+        "since": "2017-04-07T02:35:14+01:00",
+        "until": "2017-04-12T19:35:14+01:00",
+        "channelId": "all",
+        "campaignId": vm.idCampaign
+      };
+
     /**
      * View Detail Methods
      */
@@ -96,7 +104,7 @@
           console.error('error: ',err);
       });
 
-      WwsaService.stackedbarchart(vm.idCampaign).then(function (data) {
+/*      WwsaService.stackedbarchart(vm.idCampaign).then(function (data) {
           vm.neutral_today = data.data1[0].neutral_score;
           vm.positive_today = data.data1[0].positive_score;
           vm.negative_today = data.data1[0].negative_score;
@@ -143,6 +151,50 @@
       }).catch(function (err) {
           console.error('error: ',err);
       });
+*/
+
+
+    vm.since="2017-04-07T02:35:14+01:00";
+    vm.until="2017-04-12T19:35:14+01:00";
+
+    $scope.SentimentalCampaignData = [];
+
+    WwsaService.CompaignSentimental({"since": vm.since, "until": vm.until, "channelId": "all", "campaignId": vm.idCampaign})
+      .then(function (data) {
+
+      $scope.SentimentalCampaignData.push(['Date', 'Postivity', 'Negativity', 'Neutrality']);
+      data.forEach(function (sentim) {
+        $scope.SentimentalCampaignData.push(
+          [
+            sentim._id.dateContent,sentim.positive_score,sentim.negative_score,sentim.neutral_score
+          ]
+        );
+      });
+
+    }).catch(function (err) {
+      console.error('error: ',err);
+    });
+
+
+
+    $scope.SentimentalChannelData = [];
+
+    WwsaService.ChannelSentimental({"since": vm.since, "until": vm.until, "channelId": "58dd0dfc6a60631dbc879ddb", "campaignId": vm.idCampaign})
+      .then(function (data) {
+
+        $scope.SentimentalChannelData.push(['Date', 'Postivity', 'Negativity', 'Neutrality','avg']);
+        data.forEach(function (sentim) {
+          $scope.SentimentalChannelData.push(
+            [
+              sentim._id.dateContent,sentim.positive_score,sentim.negative_score,sentim.neutral_score,sentim.avg/3
+            ]
+          );
+        });
+
+      }).catch(function (err) {
+      console.error('error: ',err);
+    });
+
 
 
 

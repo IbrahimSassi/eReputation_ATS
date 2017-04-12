@@ -13,7 +13,7 @@
                 scope: {
 
                     myId: '@myId',
-                    nowPositive: '@nowPositive',
+                   /* nowPositive: '@nowPositive',
                     nowNegative: '@nowNegative',
                     nowNeutral: '@nowNeutral',
                     nowAvg: '@nowAvg',
@@ -36,23 +36,29 @@
                     oooldPositive: '@oooldPositive',
                     oooldNegative: '@oooldNegative',
                     oooldNeutral: '@oooldNeutral',
-                    oooldAvg: '@oooldAvg',
+                    oooldAvg: '@oooldAvg',*/
+                  myTable: '@myTable'
 
                 },
                 templateUrl: 'angular/app/components/googleCharts/comboChart.template.html',
                 link: function (scope, elem, attrs) {
                     setTimeout(function () {
                         google.charts.load('current', {'packages': ['corechart', 'bar']});
+                      var LocalData = JSON.parse(scope.myTable);
                         function drawVisualization() {
+                          if (LocalData)
                             // Some raw data (not necessarily accurate)
-                            var data = google.visualization.arrayToDataTable([
+                            var data = google.visualization.arrayToDataTable(
+                              LocalData
+                            /*  [
                                 ['Month', 'Positive', 'Neutral', 'Negative', 'Average'],
                                 [moment().add(-4, 'days').format('DD/MM/YYYY'), parseFloat(scope.oooldPositive), parseFloat(scope.oooldNeutral), parseFloat(scope.oooldNegative), parseFloat(scope.oooldAvg)],
                                 [moment().add(-3, 'days').format('DD/MM/YYYY'), parseFloat(scope.ooldPositive), parseFloat(scope.ooldNeutral), parseFloat(scope.ooldNegative), parseFloat(scope.ooldAvg)],
                                 [moment().add(-2, 'days').format('DD/MM/YYYY'), parseFloat(scope.oldPositive), parseFloat(scope.oldNeutral), parseFloat(scope.oldNegative), parseFloat(scope.oldAvg)],
                                 [moment().add(-1, 'days').format('DD/MM/YYYY'), parseFloat(scope.yesPositive), parseFloat(scope.yesNeutral), parseFloat(scope.yesNegative), parseFloat(scope.yesAvg)],
                                 [moment().format('DD/MM/YYYY'), parseFloat(scope.nowPositive), parseFloat(scope.nowNeutral), parseFloat(scope.nowNegative), parseFloat(scope.nowAvg)]
-                            ]);
+                            ]*/
+                            );
 
                             var options = {
                                 title: 'Number of Tweets by Time and sentiment',
@@ -64,7 +70,7 @@
                                     // bold: true,    // true or false
                                     // italic: true   // true of false
                                 },
-                                colors: ['#46BFBD', '#FDB45C', '#F7464A', '#BF00FF'],
+                                colors: ['#46BFBD', '#F7464A', '#FDB45C', '#BF00FF'],
                                 vAxis: {title: 'Motions'},
                                 hAxis: {title: 'Days'},
                                 seriesType: 'bars',
@@ -81,6 +87,9 @@
                                 drawVisualization();
 
                             });
+                      scope.$watch('myTable', function (newValue, oldValue) {
+                        drawVisualization();
+                      });
 
                     }, 0);
 

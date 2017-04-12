@@ -30,20 +30,21 @@
           return WwsaFactory.NeutralByCompaign({id:idfromCTRL}).$promise;
       };
 
-      var stackedbarchart = function (idfromCTRL) {
-          return WwsaFactory.stackedbar({id:idfromCTRL}).$promise;
-      };
 
-      var combobarchart = function (idcam,idch) {
-          console.log("idcam",idcam,idch)
-          return WwsaFactory.combochart({idcam:idcam,idch:idch}).$promise;
-      };
+
+     var CompaignSentimental= function (filter) {
+       return WwsaFactory.CompaignSentimental(filter).$promise;
+    }
+    var ChannelSentimental =function (filter) {
+      return WwsaFactory.ChannelSentimental(filter).$promise;
+    }
+
       return {
           getPositivity: getPositivity,
           getNegativity: getNegativity,
           getNeutrality:getNeutrality,
-          stackedbarchart:stackedbarchart,
-          combobarchart:combobarchart
+        CompaignSentimental:CompaignSentimental,
+        ChannelSentimental:ChannelSentimental
 
       };
   }

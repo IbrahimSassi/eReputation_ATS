@@ -6,9 +6,14 @@
       negative : {{camp.negative}}
       neutre : {{camp.neutral}}-->
       <p class="header center">ALL OVERVIEW</p>
+
     <donut-chart ng-if="camp.detailCampaign._id" my-id="{{camp.detailCampaign._id}}" positive="{{camp.positive}}" negative="{{camp.negative}}" neutral="{{camp.neutral}}"></donut-chart>
-    <ndraw-stacked now-negative="{{camp.negative_today}}" now-neutral="{{camp.neutral_today}}" now-positive="{{camp.positive_today}}" yes-negative="{{camp.negative_last}}" yes-neutral="{{camp.neutral_last}}" yes-positive="{{camp.positive_last}}" old-negative="{{camp.negative_lastD}}" old-neutral="{{camp.neutral_lastD}}" old-positive="{{camp.positive_lastD}}" ng-if="camp.detailCampaign._id" my-id="{{camp.detailCampaign._id}}"></ndraw-stacked>
-    <combo-chart old-positive="{{camp.positive_old}}" old-neutral="{{camp.neutral_old}}" old-avg="{{camp.avg_old}}" old-negative="{{camp.negative_old}}" now-positive="{{camp.positive_todayy}}" now-neutral="{{camp.neutral_todayy}}" now-negative="{{camp.negative_todayy}}" now-avg="{{camp.avg_todayy}}" oold-avg="{{camp.avg_oold}}" oold-negative="{{camp.negative_oold}}" oold-neutral="{{camp.neutral_oold}}" oold-positive="{{camp.positive_oold}}" ooold-avg="{{camp.avg_ooold}}" ooold-negative="{{camp.negative_ooold}}" ooold-neutral="{{camp.neutral_ooold}}" ooold-positive="{{camp.positive_ooold}}" yes-positive="{{camp.positive_yes}}" yes-neutral="{{camp.neutral_yes}}" yes-negative="{{camp.negative_yes}}" yes-avg="{{camp.avg_yes}}"  ng-if="camp.detailCampaign._id" my-id="{{camp.detailCampaign._id}}"></combo-chart>
+   <!-- <ndraw-stacked now-negative="{{camp.negative_today}}" now-neutral="{{camp.neutral_today}}" now-positive="{{camp.positive_today}}" yes-negative="{{camp.negative_last}}" yes-neutral="{{camp.neutral_last}}" yes-positive="{{camp.positive_last}}" old-negative="{{camp.negative_lastD}}" old-neutral="{{camp.neutral_lastD}}" old-positive="{{camp.positive_lastD}}" ng-if="camp.detailCampaign._id" my-id="{{camp.detailCampaign._id}}"></ndraw-stacked>
+   //my-table="{{vm.reputationByReactions}}
+   -->
+    <ndraw-stacked ng-if="SentimentalCampaignData"   my-table="{{SentimentalCampaignData}}"  my-id="{{camp.detailCampaign._id}}"></ndraw-stacked>
+
+    <combo-chart my-table="{{SentimentalChannelData}}" ng-if="SentimentalChannelData" my-id="{{camp.detailCampaign._id}}"></combo-chart>
   </div>
 </div>
 

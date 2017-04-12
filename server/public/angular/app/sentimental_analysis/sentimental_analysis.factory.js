@@ -41,21 +41,17 @@
                   id: '@id'
               }
           },
-          'stackedbar': {
-              url: '/api/wwsa/SentimentalAnalysisStackedBar/:id',
-              method: 'GET',
-              params: {
-                  id: '@id'
-              }
-          },
-          'combochart': {
-              url: '/api/wwsa/SentimentalAnalysiscombochart/:idcam/:idch',
-              method: 'GET',
-              params: {
-                  idcam: '@idcam',
-                  idch: '@idch'
-              }
-          },
+
+        'CompaignSentimental': {
+          url: '/api/wwsa/CompaignSentimental',
+          method: 'POST',
+          isArray: true
+        },
+        'ChannelSentimental': {
+          url: '/api/wwsa/ChannelSentimental',
+          method: 'POST',
+          isArray: true
+        },
       }
     );
 
