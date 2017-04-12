@@ -12,6 +12,7 @@
         restrict: 'EA',
         scope: {
           myId: '@myId',
+          myTitle:'@myTitle',
           positive: '@positive',
           negative: '@negative',
           neutral: '@neutral',
@@ -30,7 +31,7 @@
               ]);
 
               var options = {
-                title: '',
+                title: scope.myTitle,
                 colors: ['#46BFBD', '#FDB45C', '#F7464A'],
                 pieHole: 0.4,
                   'width':800,
