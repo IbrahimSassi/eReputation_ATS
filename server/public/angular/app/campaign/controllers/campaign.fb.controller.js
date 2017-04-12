@@ -31,7 +31,6 @@
     vm.selectedCampaign = $stateParams.idCampaign; //TODO Change It Dynamic
     // vm.selectedCampaign = "58ec64b17b0eab2accff5f34";
     // vm.selectedCampaign = "58eaaacdff57b30edc92fc4e";
-
     var filterPosts =
       {
         "since": "2017-04-03T02:35:14+01:00",
@@ -160,7 +159,6 @@
       console.log(vm.selectedChannel)
       vm.reputationByReactions.push(['Date', 'Like', 'Love', 'Sad', 'Angry']);
       FacebookService.getReputationByReaction(filterSentimental).then(function (data) {
-        console.log("Sentimental", data);
         data.forEach(function (obj) {
           vm.reputationByReactions.push([obj._id.dateContent, obj.like, obj.love, obj.sad, obj.angry]);
         });

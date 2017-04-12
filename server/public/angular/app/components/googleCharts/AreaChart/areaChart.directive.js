@@ -27,16 +27,19 @@
             google.charts.load('current', {'packages': ['corechart']});
 
 
+            var LocalData = JSON.parse(scope.myTable);
+
             function drawChart() {
-              var data = google.visualization.arrayToDataTable(JSON.parse(scope.myTable));
+              if (LocalData)
+                var data = google.visualization.arrayToDataTable(JSON.parse(scope.myTable));
 
               var options = {
                 title: scope.title,
                 hAxis: {title: scope.hAxis, titleTextStyle: {color: '#333'}},
                 vAxis: {minValue: 0},
-                "backgroundColor" :"#eeeeee"
+                "backgroundColor": "#eeeeee"
 
-            };
+              };
 
               var chart = new google.visualization.AreaChart(document.getElementById('areaChart' + scope.myId));
               chart.draw(data, options);
