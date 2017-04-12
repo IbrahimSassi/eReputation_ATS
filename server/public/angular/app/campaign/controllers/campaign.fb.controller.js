@@ -68,6 +68,8 @@
       initFacebookSentimental();
       initReputationByReaction();
       initReputationByShares();
+      initReputationByTypes();
+
     }
 
 
@@ -80,10 +82,12 @@
           filterSentimental.channelId = item._id;
 
           initFacebookPost();
-          initFacebookComments()
+          initFacebookComments();
           initFacebookSentimental();
           initReputationByReaction();
           initReputationByShares();
+          initReputationByTypes();
+
         });
       }
       else {
@@ -93,6 +97,7 @@
         initFacebookComments();
         initFacebookSentimental();
         initReputationByShares();
+        initReputationByTypes();
       }
     }
 
@@ -163,7 +168,8 @@
       vm.reputationByReactions.push(['Date', 'Like', 'Love', 'Sad', 'Angry']);
       FacebookService.getReputationByReaction(filterSentimental).then(function (data) {
         data.forEach(function (obj) {
-          vm.reputationByReactions.push([obj._id.dateContent, obj.like, obj.love, obj.sad, obj.angry]);
+          vm.reputationByReactions.push(
+            [obj._id.dateContent, obj.like, obj.love, obj.sad, obj.angry]);
         });
       })
     }
@@ -175,6 +181,17 @@
       FacebookService.getReputationByShares(filterSentimental).then(function (data) {
         data.forEach(function (obj) {
           vm.reputationByShares.push([obj._id.dateContent, obj.shares]);
+        });
+      })
+    }
+
+    function initReputationByTypes() {
+      vm.reputationByTypes = [];
+      console.log(vm.selectedChannel)
+      vm.reputationByTypes.push(['Type', 'Number']);
+      FacebookService.getReputationByTypes(filterSentimental).then(function (data) {
+        data.forEach(function (obj) {
+          vm.reputationByTypes.push([obj._id.type, obj.nb]);
         });
       })
     }

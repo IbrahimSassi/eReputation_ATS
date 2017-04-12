@@ -58,6 +58,11 @@
           method: 'POST'
           , isArray: true
         },
+        'reputationByTypes': {
+          url: '/api/facebook/reputationByTypes',
+          method: 'POST'
+          , isArray: true
+        }
       }
     );
   }

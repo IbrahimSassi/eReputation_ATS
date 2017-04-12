@@ -138,11 +138,11 @@
   <div class="row">
     <div class="card">
       <div class="card-move-up waves-effect waves-block waves-light">
-        <div ng-if="vm.SentimentalFacebookData.length" class="move-up grey lighten-2">
+        <div ng-if="vm.SentimentalFacebookData.length" class="move-up ">
           <area-chart my-id="15" my-table="{{vm.SentimentalFacebookData}}" title="Sentimental Analysis"
                       h-axis="Date"></area-chart>
         </div>
-        <div ng-if="!vm.SentimentalFacebookData" class="move-up grey lighten-2">
+        <div ng-if="!vm.SentimentalFacebookData" class="move-up ">
           <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
 
         </div>
@@ -155,28 +155,39 @@
 <div class="row">
   <div class="card col s6 m6 l6">
     <div class="card-move-up waves-effect waves-block waves-light">
-      <div ng-if="vm.reputationByReactions.length" class="move-up grey lighten-2">
+      <div ng-if="vm.reputationByReactions.length" class="move-up ">
         <column-chart my-id="5" my-table="{{vm.reputationByReactions}}" title="Reactions"
                       h-axis="Date"></column-chart>
       </div>
-      <div ng-if="!vm.reputationByReactions" class="move-up grey lighten-2">
-        <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
+      <div ng-if="!vm.reputationByReactions" class="move-up ">
+        <div style="font-size: medium;" class="spinner icon-spinner-5 cyan" aria-hidden="true"></div>
       </div>
     </div>
   </div>
   <div class="card col s6 m6 l6">
     <div class="card-move-up waves-effect waves-block waves-light">
-      <div ng-if="vm.reputationByShares.length" class="move-up grey lighten-2">
+      <div ng-if="vm.reputationByShares.length" class="move-up">
         <column-chart my-id="6" my-table="{{vm.reputationByShares}}" title="Shares"
                       h-axis="Date"></column-chart>
       </div>
-      <div ng-if="!vm.reputationByShares" class="move-up grey lighten-2">
-        <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
+      <div ng-if="!vm.reputationByShares.length" class="move-up ">
+        <div style="font-size: medium;" class="spinner icon-spinner-5 cyan" aria-hidden="true"></div>
       </div>
     </div>
   </div>
-
 </div>
+
+<div class="row">
+  <div class="card col s6 m6 l6">
+    <div class="card-move-up waves-effect waves-block waves-light">
+      <div ng-if="vm.reputationByTypes.length" class="move-up ">
+        <pie-chart my-id="byPosts" my-table="{{vm.reputationByTypes}}" title="Posts By Type"></pie-chart>
+      </div>
+      <div ng-if="!vm.reputationByTypes.length" class="move-up ">
+        <div style="font-size: medium;" class="spinner icon-spinner-5 cyan" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 </div>

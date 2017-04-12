@@ -1,13 +1,12 @@
 /**
  * Created by Ibrahim on 12/04/2017.
  */
-
 (function () {
   'use strict';
 
   angular
     .module('ATSApp.campaign')
-    .directive("columnChart", function () {
+    .directive("pieChart", function () {
       return {
         restrict: 'EA',
         scope: {
@@ -16,10 +15,10 @@
           title: '@title',
           hAxis: "@hAxis"
         },
-        templateUrl: 'angular/app/components/googleCharts/ColumnChart/columnChart.template.html',
+        templateUrl: 'angular/app/components/googleCharts/PieChart/pieChart.template.html',
         link: function (scope, elem, attrs) {
           setTimeout(function () {
-            google.charts.load('current', {'packages': ['bar']});
+            google.charts.load('current', {'packages':['corechart']});
 
             var LocalData = JSON.parse(scope.myTable);
 
@@ -27,25 +26,13 @@
               if (LocalData)
                 var data = google.visualization.arrayToDataTable(
                   JSON.parse(scope.myTable)
-                  // [
-                  // ['Year', 'Sales', 'Expenses', 'Profit'],
-                  //   ['2014', 1000, 400, 200],
-                  //   ['2015', 1170, 460, 250],
-                  //   ['2016', 660, 1120, 300],
-                  //   ['2017', 1030, 540, 350]
-                  // ]
                 );
 
               var options = {
-                chart: {
-                  title: scope.title,
-                },
-                colors: ['#2ecc71', '#e74c3c', '#f1c40f', '#95a5a6'],
-                backgroundColor: {fill:'#e74c3c'}
-
+                title: scope.title,
               };
 
-              var chart = new google.charts.Bar(document.getElementById('columnChart' + scope.myId));
+              var chart = new google.visualization.PieChart(document.getElementById('piechart'+scope.myId));
 
               chart.draw(data, options);
             }
