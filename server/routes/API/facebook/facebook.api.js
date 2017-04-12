@@ -43,7 +43,6 @@ module.exports.getPostsByPage = function (req, res, next) {
 };
 
 
-
 module.exports.getCommentsByPost = function (req, res, next) {
 
   // var page_id = "mosaiquefm";
@@ -88,11 +87,17 @@ module.exports.pageInsights = function (req, res, next) {
 
   var page_id = req.params.id;
   var node = page_id;
+
   var fields = "/insights?metric=['" + req.params.metric + "']" +
     "&limit=100&since=" + req.params.since + "&until=" + req.params.until;
-  var parameters = "&access_token=" + req.params.token;
-  var url = config.base + node + fields + parameters;
 
+  var parameters;
+  if (req.params.metric !== "page_storytellers_by_country")
+    parameters = "&access_token=" + req.params.token;
+  else
+    parameters = "&access_token=" + config.ACCESS_TOKEN;
+
+  var url = config.base + node + fields + parameters;
   request(url, function (error, response, body) {
 
     if (!error && response.statusCode == 200) {

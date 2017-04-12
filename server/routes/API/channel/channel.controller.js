@@ -16,7 +16,7 @@ exports.getAllChannels = function (req, res, next) {
     if (!docs) {
       return res.status(404).send();
     }
-    console.log(docs);
+    // console.log(docs);
     res.status(200)
       .json(docs);
 
@@ -33,7 +33,7 @@ exports.getChannelById = function (req, res, next) {
     if (!docs) {
       return res.status(404).send();
     }
-    console.log(docs);
+    // console.log(docs);
     res.status(200)
       .json(docs);
   });

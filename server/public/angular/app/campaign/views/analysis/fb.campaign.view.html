@@ -133,8 +133,6 @@
     </div>
   </div>
 
-  <!--{{ vm.SentimentalFacebookData }}-->
-
   <div class="row">
     <div class="card">
       <div class="card-move-up waves-effect waves-block waves-light">
@@ -190,4 +188,18 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="card col s12 m12 l12">
+    <div class="card-move-up waves-effect waves-block waves-light">
+      <div ng-if="vm.storytellersByCountry.length" class="move-up ">
+        <geo-chart my-id="storytellerByCountry" my-table="{{vm.storytellersByCountry}}"
+                   title="The number of People Talking About the Page by user country"></geo-chart>
+      </div>
+      <div ng-if="!vm.storytellersByCountry.length" class="move-up ">
+        <div style="font-size: medium;" class="spinner icon-spinner-5 cyan" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
 </div>

@@ -46,9 +46,11 @@ module.exports.getFacebookDataProvider = function (req, res, next) {
 
   // var since = new Date(req.params.since);
   // var until = new Date(req.params.until);
+  var since;
+  var until;
   if (req.body.since && req.body.until) {
-    var since = moment(req.body.since).format();
-    var until = moment(req.body.until).format();
+    since = moment(req.body.since).format();
+    until = moment(req.body.until).format();
   }
 
   // console.log("datejs formated to moment,", moment(datejs).format())
@@ -60,11 +62,13 @@ module.exports.getFacebookDataProvider = function (req, res, next) {
     dateContent: {$gte: new Date(since), $lte: new Date(until)},
     channelId: req.body.channelId,
     campaignId: req.body.campaignId,
-    source: req.body.source
+    source: req.body.source,
+    $text: {$search: ""}
   };
 
   if (!req.body.keywords) {
     sortedBy = {dateContent: 1}
+    delete query.$text;
   }
 
   if (!req.body.channelId) {
@@ -84,10 +88,11 @@ module.exports.getFacebookDataProvider = function (req, res, next) {
     delete query.dateContent;
   }
 
+
   if (req.body.keywords && req.body.keywords.length) {
     var keywords = req.body.keywords.join(" ");
-
-    query.$text.$search = keywords;
+    console.log(query)
+    query.$text.$search = keywords.toString();
     options = {"score": {$meta: "textScore"}};
     sortedBy = {"score": {$meta: "textScore"}};
   }
@@ -140,12 +145,15 @@ module.exports.getFacebookSentimental = function (req, res, next) {
   }
 
   var matchObject = {
-    $and: [
-      {dateContent: {'$gte': new Date(req.body.since), '$lte': new Date(req.body.until)}},
-      {channelId: {'$eq': req.body.channelId}},
-      {campaignId: {'$eq': req.body.campaignId}}
-    ]
-  };
+      $and: [
+        {dateContent: {'$gte': new Date(req.body.since), '$lte': new Date(req.body.until)}},
+        {channelId: {'$eq': req.body.channelId}},
+        {campaignId: {'$eq': req.body.campaignId}}
+
+      ],
+      $or: [{source: 'FacebookCommentsProvider'}, {source: 'FacebookPostsProvider'}]
+    }
+    ;
 
 
   var groupObject = {
@@ -167,7 +175,8 @@ module.exports.getFacebookSentimental = function (req, res, next) {
     res.json(err);
   })
 
-};
+}
+;
 
 module.exports.getReputationByReaction = function (req, res, next) {
 

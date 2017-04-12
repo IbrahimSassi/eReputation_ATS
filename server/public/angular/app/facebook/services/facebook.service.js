@@ -228,13 +228,25 @@
 
 
     function getPageStorytellersByCountryFN(pageId, token, since, until) {
-      return FacebookFactory.facebookInsights({
-        pageId: pageId,
-        metric: 'page_storytellers_by_country',
-        token: token,
-        since: since,
-        until: until
-      }).$promise;
+      return new Promise(function (resolve,reject) {
+        var storytellersByCountry =[];
+        FacebookFactory.facebookInsights({
+          pageId: pageId,
+          metric: 'page_storytellers_by_country',
+          token: token,
+          since: since,
+          until: until
+        }).$promise.then(function (data) {
+          var LocalStorytellers = data.data;
+          LocalStorytellers[0].values.forEach(function (obj) {
+            if (obj.value)
+              Object.assign(storytellersByCountry,obj.value);
+
+          });
+          resolve(storytellersByCountry);
+
+        });
+      })
     }
 
     function getPageEngagedUsersFN(pageId, token, since, until) {

@@ -69,7 +69,7 @@
       initReputationByReaction();
       initReputationByShares();
       initReputationByTypes();
-
+      initReputationByStorytellersByCountry();
     }
 
 
@@ -106,7 +106,7 @@
       if (vm.selectedCampaign !== undefined) {
         CampaignService.getCampaignById(vm.selectedCampaign).then(function (data) {
           data[0].channels.forEach(function (channelPartial) {
-            console.log(channelPartial.channelId)
+            // console.log(channelPartial.channelId)
             ChannelService.getChannelByID(channelPartial.channelId).then(function (channel) {
               if (channel.type == "facebook")
                 vm.myChannels.push(channel);
@@ -123,7 +123,7 @@
     function initFacebookComments() {
       vm.Comments = [];
       FacebookService.getFacebookPosts(filterComments).then(function (data) {
-        console.log("facebook comments ", data)
+        // console.log("facebook comments ", data)
         vm.Comments = data;
       });
 
@@ -136,7 +136,7 @@
       vm.Shares = 0;
       vm.Likes = 0;
       FacebookService.getFacebookPosts(filterPosts).then(function (data) {
-        console.log("facebook posts ", data)
+        // console.log("facebook posts ", data)
         vm.Posts = data;
 
         vm.Posts.forEach(function (post) {
@@ -152,10 +152,10 @@
 
     function initFacebookSentimental() {
       vm.SentimentalFacebookData = [];
-      console.log(vm.selectedChannel)
+      // console.log(vm.selectedChannel)
       vm.SentimentalFacebookData.push(['Date', 'Postivity', 'Negativity', 'Neutrality']);
       FacebookService.getReputationBySentimental(filterSentimental).then(function (data) {
-        console.log("Sentimental", data);
+        // console.log("Sentimental", data);
         data.forEach(function (obj) {
           vm.SentimentalFacebookData.push([obj._id.dateContent, obj.positive_score, obj.negative_score, obj.neutral_score]);
         });
@@ -164,7 +164,7 @@
 
     function initReputationByReaction() {
       vm.reputationByReactions = [];
-      console.log(vm.selectedChannel)
+      // console.log(vm.selectedChannel)
       vm.reputationByReactions.push(['Date', 'Like', 'Love', 'Sad', 'Angry']);
       FacebookService.getReputationByReaction(filterSentimental).then(function (data) {
         data.forEach(function (obj) {
@@ -176,7 +176,7 @@
 
     function initReputationByShares() {
       vm.reputationByShares = [];
-      console.log(vm.selectedChannel)
+      // console.log(vm.selectedChannel)
       vm.reputationByShares.push(['Date', 'Shares']);
       FacebookService.getReputationByShares(filterSentimental).then(function (data) {
         data.forEach(function (obj) {
@@ -187,13 +187,30 @@
 
     function initReputationByTypes() {
       vm.reputationByTypes = [];
-      console.log(vm.selectedChannel)
       vm.reputationByTypes.push(['Type', 'Number']);
       FacebookService.getReputationByTypes(filterSentimental).then(function (data) {
         data.forEach(function (obj) {
           vm.reputationByTypes.push([obj._id.type, obj.nb]);
         });
       })
+    }
+
+    function initReputationByStorytellersByCountry() {
+      vm.storytellersByCountry = [];
+      FacebookService.getPageStorytellersByCountry(
+        "mosaiquefm", "null",
+        encodeURIComponent(filterSentimental.since),
+        encodeURIComponent(filterSentimental.until)).then(function (data) {
+
+        var keys = Object.keys(data);
+        var values = Object.values(data);
+        vm.storytellersByCountry.push(['Country', 'Storytellers'])
+        for (var i = 0; i < keys.length; i++)
+          vm.storytellersByCountry.push([keys[i], values[i]]);
+
+
+        console.log("vm.storytellersByCountry", vm.storytellersByCountry)
+      });
     }
 
 
