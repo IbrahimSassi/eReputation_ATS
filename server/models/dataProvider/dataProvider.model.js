@@ -94,7 +94,7 @@ var facebookPostsProvider = new Schema({
 var facebookCommentsProvider = new Schema({
   parentId: {
     type: String
-  }
+  },
 
 }, options);
 
