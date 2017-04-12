@@ -24,7 +24,8 @@ router.post('/facebookComments', facebookHandler.transformCommentsData, facebook
 router.post('/facebookDataProvider/get', facebookDataProvider.getFacebookDataProvider);
 
 router.post('/reputationBySentimental', facebookDataProvider.getFacebookSentimental);
-router.post('/reputationByReaction', facebookDataProvider.getReputationByReaction);
+router.post('/reputationByReactions', facebookDataProvider.getReputationByReaction);
+router.post('/reputationByShares', facebookDataProvider.getReputationByShares);
 
 
 module.exports = router;

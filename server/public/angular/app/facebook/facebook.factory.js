@@ -48,8 +48,13 @@
           method: 'POST'
           , isArray: true
         },
-        'reputationByReaction': {
-          url: '/api/facebook/reputationByReaction',
+        'reputationByReactions': {
+          url: '/api/facebook/reputationByReactions',
+          method: 'POST'
+          , isArray: true
+        },
+        'reputationByShares': {
+          url: '/api/facebook/reputationByShares',
           method: 'POST'
           , isArray: true
         },

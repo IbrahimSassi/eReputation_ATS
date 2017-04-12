@@ -38,6 +38,7 @@
     this.getFacebookPosts = getFacebookPostsFN;
     this.getReputationBySentimental = getReputationBySentimentalFN;
     this.getReputationByReaction = getReputationByReactionFN;
+    this.getReputationByShares = getReputationBySharesFN;
 
 
     function statusChangeCallbackFN(response) {
@@ -341,7 +342,10 @@
       return FacebookFactory.reputationBySentimental(filter).$promise;
     }
     function getReputationByReactionFN(filter) {
-      return FacebookFactory.reputationByReaction(filter).$promise;
+      return FacebookFactory.reputationByReactions(filter).$promise;
+    }
+    function getReputationBySharesFN(filter) {
+      return FacebookFactory.reputationByShares(filter).$promise;
     }
 
   }

@@ -67,6 +67,7 @@
       initFacebookComments();
       initFacebookSentimental();
       initReputationByReaction();
+      initReputationByShares();
     }
 
 
@@ -82,6 +83,7 @@
           initFacebookComments()
           initFacebookSentimental();
           initReputationByReaction();
+          initReputationByShares();
         });
       }
       else {
@@ -90,6 +92,7 @@
         initFacebookPost();
         initFacebookComments();
         initFacebookSentimental();
+        initReputationByShares();
       }
     }
 
@@ -164,6 +167,19 @@
         });
       })
     }
+
+    function initReputationByShares() {
+      vm.reputationByShares = [];
+      console.log(vm.selectedChannel)
+      vm.reputationByShares.push(['Date', 'Shares']);
+      FacebookService.getReputationByShares(filterSentimental).then(function (data) {
+        data.forEach(function (obj) {
+          vm.reputationByShares.push([obj._id.dateContent, obj.shares]);
+        });
+      })
+    }
+
+
   };
 
 
