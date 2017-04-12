@@ -29,6 +29,7 @@
     /**Scope Replace**/
     var vm = this;
     vm.idCampaign = $stateParams.idCampaign;
+    vm.idChannel = "58dd0dfc6a60631dbc879ddb";
 
     /**
      * View Detail Methods
@@ -81,12 +82,74 @@
         console.error('error: ',err);
     });
 
+      WwsaService.getNegativity(vm.idCampaign).then(function (data) {
+          vm.negative = data.data[0].negative_score;
+          console.info('succ: ',data.data[0].negative_score);
+      }).catch(function (err) {
+          console.error('error: ',err);
+      });
+
+      WwsaService.getNeutrality(vm.idCampaign).then(function (data) {
+          vm.neutral = data.data[0].neutral_score;
+          console.info('succ: ',data.data[0].neutral_score);
+      }).catch(function (err) {
+          console.error('error: ',err);
+      });
+
+      WwsaService.stackedbarchart(vm.idCampaign).then(function (data) {
+          vm.neutral_today = data.data1[0].neutral_score;
+          vm.positive_today = data.data1[0].positive_score;
+          vm.negative_today = data.data1[0].negative_score;
+          vm.neutral_last = data.data2[0].neutral_score;
+          vm.positive_last = data.data2[0].positive_score;
+          vm.negative_last = data.data2[0].negative_score;
+          vm.neutral_lastD = data.data3[0].neutral_score;
+          vm.positive_lastD = data.data3[0].positive_score;
+          vm.negative_lastD = data.data3[0].negative_score;
+        //  console.info('succ: ',data.data[0].neutral_score);
+      }).catch(function (err) {
+          console.error('error: ',err);
+      })
+
+      WwsaService.combobarchart(vm.idCampaign,vm.idChannel).then(function (data) {
+          vm.neutral_todayy = data.data1[0].neutral_score;
+          vm.positive_todayy = data.data1[0].positive_score;
+          vm.negative_todayy = data.data1[0].negative_score;
+          vm.avg_todayy= ((data.data1[0].neutral_score+data.data1[0].positive_score+data.data1[0].negative_score)/3)
+
+          vm.neutral_yes = data.data2[0].neutral_score;
+          vm.positive_yes = data.data2[0].positive_score;
+          vm.negative_yes = data.data2[0].negative_score;
+          vm.avg_yes= ((data.data2[0].neutral_score+data.data2[0].positive_score+data.data2[0].negative_score)/3)
+
+
+          vm.neutral_old = data.data3[0].neutral_score;
+          vm.positive_old = data.data3[0].positive_score;
+          vm.negative_old = data.data3[0].negative_score;
+          vm.avg_old= ((data.data3[0].neutral_score+data.data3[0].positive_score+data.data3[0].negative_score)/3)
+
+
+          vm.neutral_oold = data.data4[0].neutral_score;
+          vm.positive_oold = data.data4[0].positive_score;
+          vm.negative_oold = data.data4[0].negative_score;
+          vm.avg_oold= ((data.data4[0].neutral_score+data.data4[0].positive_score+data.data4[0].negative_score)/3)
+
+          vm.neutral_ooold = data.data5[0].neutral_score;
+          vm.positive_ooold = data.data5[0].positive_score;
+          vm.negative_ooold = data.data5[0].negative_score;
+          vm.avg_ooold= ((data.data5[0].neutral_score+data.data5[0].positive_score+data.data5[0].negative_score)/3)
+
+            console.info('succ vm.avg_todayy : ',vm.avg_todayy);
+      }).catch(function (err) {
+          console.error('error: ',err);
+      });
 
 
 
 
 
   };
+
 
 
 })();
