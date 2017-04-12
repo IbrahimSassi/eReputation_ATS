@@ -17,7 +17,9 @@
         restrict: 'EA',
         scope: {
           myId: '@myId',
-          myTable:'@myTable'
+          myTable: '@myTable',
+          title: '@title',
+          hAxis: "@hAxis"
         },
         templateUrl: 'angular/app/components/googleCharts/AreaChart/areaChart.template.html',
         link: function (scope, elem, attrs) {
@@ -25,15 +27,16 @@
             google.charts.load('current', {'packages': ['corechart']});
 
 
-
             function drawChart() {
               var data = google.visualization.arrayToDataTable(JSON.parse(scope.myTable));
 
               var options = {
-                title: 'Company Performance',
-                hAxis: {title: 'Year', titleTextStyle: {color: '#333'}},
-                vAxis: {minValue: 0}
-              };
+                title: scope.title,
+                hAxis: {title: scope.hAxis, titleTextStyle: {color: '#333'}},
+                vAxis: {minValue: 0},
+                "backgroundColor" :"#eeeeee"
+
+            };
 
               var chart = new google.visualization.AreaChart(document.getElementById('areaChart' + scope.myId));
               chart.draw(data, options);
@@ -44,6 +47,12 @@
                 drawChart();
 
               });
+
+
+            scope.$watch('myTable', function (newValue, oldValue) {
+              drawChart();
+            });
+
 
           }, 0);
 

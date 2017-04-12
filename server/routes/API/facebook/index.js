@@ -23,8 +23,8 @@ router.post('/facebookComments', facebookHandler.transformCommentsData, facebook
 //From Our DB After Transformation
 router.post('/facebookDataProvider/get', facebookDataProvider.getFacebookDataProvider);
 
-
-router.post('/facebookSentimental', facebookDataProvider.getFacebookSentimental);
+router.post('/reputationBySentimental', facebookDataProvider.getFacebookSentimental);
+router.post('/reputationByReaction', facebookDataProvider.getReputationByReaction);
 
 
 module.exports = router;

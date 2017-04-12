@@ -35,9 +35,9 @@
     this.getPageFansCountry = getPageFansCountryFN;
     this.getPageViewsTotal = getPageViewsTotalFN;
     this.getPageVideoViews = getPageVideoViewsFN;
-     this.getFacebookPosts = getFacebookPostsFN;
-
-
+    this.getFacebookPosts = getFacebookPostsFN;
+    this.getReputationBySentimental = getReputationBySentimentalFN;
+    this.getReputationByReaction = getReputationByReactionFN;
 
 
     function statusChangeCallbackFN(response) {
@@ -255,6 +255,7 @@
         until: until
       }).$promise;
     }
+
     function getPageNegativeFeedbackFN(pageId, token, since, until) {
       return FacebookFactory.facebookInsights({
         pageId: pageId,
@@ -334,6 +335,13 @@
 
     function getFacebookPostsFN(filter) {
       return FacebookFactory.facebookDataProvider(filter).$promise;
+    }
+
+    function getReputationBySentimentalFN(filter) {
+      return FacebookFactory.reputationBySentimental(filter).$promise;
+    }
+    function getReputationByReactionFN(filter) {
+      return FacebookFactory.reputationByReaction(filter).$promise;
     }
 
   }

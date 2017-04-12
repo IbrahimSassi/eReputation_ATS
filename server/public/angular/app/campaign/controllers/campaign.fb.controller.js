@@ -32,7 +32,7 @@
     // vm.selectedCampaign = "58ec64b17b0eab2accff5f34";
     // vm.selectedCampaign = "58eaaacdff57b30edc92fc4e";
 
-    var filter1 =
+    var filterPosts =
       {
         "since": "2017-04-03T02:35:14+01:00",
         "until": "2017-04-12T19:35:14+01:00",
@@ -41,7 +41,7 @@
         "source": "FacebookPostsProvider",
         "keywords": []
       };
-    var filter2 =
+    var filterComments =
       {
         "since": "2017-04-03T02:35:14+01:00",
         "until": "2017-04-11T19:35:14+01:00",
@@ -50,36 +50,47 @@
         "source": "FacebookCommentsProvider",
         "keywords": []
       };
+    var filterSentimental =
+      {
+        "since": "2017-04-02T02:35:14+01:00",
+        "until": "2017-04-12T19:35:14+01:00",
+        "channelId": "all",
+        "campaignId": vm.selectedCampaign
+      };
     init();
 
     function init() {
 
-      delete filter1.channelId;
-      delete filter2.channelId;
+      delete filterPosts.channelId;
+      delete filterComments.channelId;
       getSelectedCampaign();
       initFacebookPost();
       initFacebookComments();
+      initFacebookSentimental();
+      initReputationByReaction();
     }
 
 
-
     vm.onSelect = function () {
-      if(vm.selectedChannel._id !=="all")
-      {
+      if (vm.selectedChannel._id !== "all") {
         ChannelService.getChannelByID(vm.selectedChannel._id).then(function (item) {
           vm.selectedChannel = item;
-          filter1.channelId =item._id;
-          filter2.channelId =item._id;
+          filterPosts.channelId = item._id;
+          filterComments.channelId = item._id;
+          filterSentimental.channelId = item._id;
+
           initFacebookPost();
           initFacebookComments()
+          initFacebookSentimental();
+          initReputationByReaction();
         });
       }
-      else
-      {
-        delete filter1.channelId;
-        delete filter2.channelId;
+      else {
+        delete filterPosts.channelId;
+        delete filterComments.channelId;
         initFacebookPost();
-        initFacebookComments()
+        initFacebookComments();
+        initFacebookSentimental();
       }
     }
 
@@ -103,8 +114,8 @@
 
 
     function initFacebookComments() {
-      vm.Comments =[];
-      FacebookService.getFacebookPosts(filter2).then(function (data) {
+      vm.Comments = [];
+      FacebookService.getFacebookPosts(filterComments).then(function (data) {
         console.log("facebook comments ", data)
         vm.Comments = data;
       });
@@ -113,11 +124,11 @@
     }
 
     function initFacebookPost() {
-      console.log(filter1)
-      vm.Posts=[];
+      console.log(filterPosts)
+      vm.Posts = [];
       vm.Shares = 0;
       vm.Likes = 0;
-      FacebookService.getFacebookPosts(filter1).then(function (data) {
+      FacebookService.getFacebookPosts(filterPosts).then(function (data) {
         console.log("facebook posts ", data)
         vm.Posts = data;
 
@@ -132,18 +143,29 @@
 
     }
 
-    /** Scripts Loading first Refresh **/
-    // angularLoad.loadScript('angular/app/assets/js/charts/ggleloader.js').then(function () {
-    //   angularLoad.loadScript('angular/app/assets/js/charts/chartTest.js').then(function () {
-    //
-    //   }).catch(function () {
-    //     console.log('err script 1');
-    //   });
-    // }).catch(function () {
-    //   console.log('err script 1');
-    // });
-    /** END of Scripts Loading first Refresh **/
+    function initFacebookSentimental() {
+      vm.SentimentalFacebookData = [];
+      console.log(vm.selectedChannel)
+      vm.SentimentalFacebookData.push(['Date', 'Postivity', 'Negativity', 'Neutrality']);
+      FacebookService.getReputationBySentimental(filterSentimental).then(function (data) {
+        console.log("Sentimental", data);
+        data.forEach(function (obj) {
+          vm.SentimentalFacebookData.push([obj._id.dateContent, obj.positive_score, obj.negative_score, obj.neutral_score]);
+        });
+      })
+    }
 
+    function initReputationByReaction() {
+      vm.reputationByReactions = [];
+      console.log(vm.selectedChannel)
+      vm.reputationByReactions.push(['Date', 'Like', 'Love', 'Sad', 'Angry']);
+      FacebookService.getReputationByReaction(filterSentimental).then(function (data) {
+        console.log("Sentimental", data);
+        data.forEach(function (obj) {
+          vm.reputationByReactions.push([obj._id.dateContent, obj.like, obj.love, obj.sad, obj.angry]);
+        });
+      })
+    }
   };
 
 

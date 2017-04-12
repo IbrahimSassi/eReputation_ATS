@@ -264,23 +264,34 @@ module.exports.updateScore = function (dataProviderToUpdate, score) {
 }
 
 
-module.exports.getDataProviderMatchedAndGrouped = function (matchObject, groupObject, sortObject) {
+module.exports.getDataProviderMatchedAndGrouped = function (matchObject, groupObject, sortObject, unwindObj) {
   return new Promise(function (resolve, reject) {
 
     var query = [
       {$match: matchObject},
+      {$unwind: unwindObj},
       {$group: groupObject},
       {$sort: sortObject}
     ];
 
 
     if (matchObject === undefined)
-      query.splice(0, 1)
+      query[0].$match = undefined
+    if (unwindObj === undefined)
+      query[1].$unwind = undefined
     if (groupObject === undefined)
-      query.splice(1, 1)
+      query[2].$group = undefined
     if (sortObject === undefined)
-      query.splice(2, 1)
+      query[3].$sort = undefined
 
+
+    query.forEach(function (obj, index) {
+      if (Object.values(obj)[0] == undefined)
+        query.splice(index, 1)
+    });
+
+
+    console.log(query)
 
     DataProvider.aggregate(
       query

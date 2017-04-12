@@ -23,36 +23,36 @@
   <div class="row">
 
     <div class="input-field col s6 m6 l6">
-        <input input-date
-               type="text"
-               name="created"
-               id="since"
-               ng-model="vm.since"
-               format="ddd mmm dd yyyy HH:MM:ss"
-               today="today"
-               clear="clear"
-               close="close"
-               select-years="15"
-               min="2017/04/05"
-               max="2017/04/26"
-               ng-change="vm.onChange()"
-        />
+      <input input-date
+             type="text"
+             name="created"
+             id="since"
+             ng-model="vm.since"
+             format="ddd mmm dd yyyy HH:MM:ss"
+             today="today"
+             clear="clear"
+             close="close"
+             select-years="15"
+             min="2017/04/05"
+             max="2017/04/26"
+             ng-change="vm.onChange()"
+      />
       <label>From</label>
     </div>
     <div class="input-field col s6 m6 l6">
-        <input input-date
-               type="text"
-               name="created"
-               id="until"
-               ng-model="vm.until"
-               format="ddd mmm dd yyyy HH:MM:ss"
-               today="today"
-               clear="clear"
-               close="close"
-               min="2017/04/05"
-               max="2017/04/26"
-               ng-change="vm.onChange()"
-        />
+      <input input-date
+             type="text"
+             name="created"
+             id="until"
+             ng-model="vm.until"
+             format="ddd mmm dd yyyy HH:MM:ss"
+             today="today"
+             clear="clear"
+             close="close"
+             min="2017/04/05"
+             max="2017/04/26"
+             ng-change="vm.onChange()"
+      />
       <label>To</label>
     </div>
 
@@ -133,9 +133,27 @@
     </div>
   </div>
 
-{{ table = [['date','positive','negative'],['12/11/2014',20,10],['12/10/2014',10,40],['12/10/2016',80,50]]}}
+  <!--{{ vm.SentimentalFacebookData }}-->
+
   <div class="row">
-    <area-chart my-id="15" my-table="{{table}}"></area-chart>
+    <div class="card">
+      <div class="card-move-up waves-effect waves-block waves-light">
+        <div class="move-up grey lighten-2">
+          <area-chart my-id="15" my-table="{{vm.SentimentalFacebookData}}" title="Sentimental Analysis"
+                      h-axis="Date"></area-chart>
+        </div>
+      </div>
+    </div>
   </div>
+  <div class="card">
+    <div class="card-move-up waves-effect waves-block waves-light">
+      <div class="move-up grey lighten-2">
+        <area-chart my-id="5" my-table="{{vm.reputationByReactions}}" title="Reactions"
+                    h-axis="Date"></area-chart>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 
 </div>

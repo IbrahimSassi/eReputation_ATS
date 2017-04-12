@@ -43,6 +43,16 @@
           method: 'POST'
           , isArray: true
         },
+        'reputationBySentimental': {
+          url: '/api/facebook/reputationBySentimental',
+          method: 'POST'
+          , isArray: true
+        },
+        'reputationByReaction': {
+          url: '/api/facebook/reputationByReaction',
+          method: 'POST'
+          , isArray: true
+        },
       }
     );
   }
