@@ -94,3 +94,28 @@ module.exports.getTwitterSentimentalForReply = function (req, res, next) {
   })
 
 };
+
+
+
+module.exports.getTopTweet = function (req, res, next) {
+
+  var tweetType = req.body.tweetType;
+  var score = req.body.score;
+  var campaignId = req.body.campaignId;
+  var channelId = req.body.channelId;
+if(score=="positive")
+{console.log("ahaha")
+  DataProvider.findOne({tweetType:tweetType,channelId:channelId,campaignId:campaignId}).sort({'contentScore.positivity':-1}).then( function(doc,err) {
+    if(err) res.send(err)
+    res.json(doc)
+  })
+
+}
+else
+{
+  DataProvider.findOne({tweetType:tweetType,channelId:channelId,campaignId:campaignId}).sort({'contentScore.negativity':-1}).then( function(doc,err) {
+    if(err) res.send(err)
+    res.json(doc)
+  })
+}
+};

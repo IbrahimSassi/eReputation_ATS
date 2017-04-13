@@ -30,12 +30,16 @@
     function GetSentimentalForOneChannelForReply(filter) {
       return TwitterFactory.GetSentimentalForOneChannelForReply(filter).$promise;
     }
+    function GetTopTweet(condition) {
+      return TwitterFactory.GetTopTweet(condition).$promise;
+    }
 
     return {
       GetChannelByID : GetChannelByID,
       GetUserInfo : GetUserInfo,
       GetSentimentalForOneChannelForMention : GetSentimentalForOneChannelForMention,
-      GetSentimentalForOneChannelForReply : GetSentimentalForOneChannelForReply
+      GetSentimentalForOneChannelForReply : GetSentimentalForOneChannelForReply,
+      GetTopTweet : GetTopTweet
     };
 
 

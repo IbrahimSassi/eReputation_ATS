@@ -223,7 +223,7 @@
     <div class="col s6 m6 l6">
       <div class="row">
         <div class="col s12 m12 l12">
-          <pie-chart my-id="Replies" my-table="{{camp.reputationBySentimentMention}}"
+          <pie-chart height="400" my-id="Replies" my-table="{{camp.reputationBySentimentReply}}"
                      title="Tweets Replies Analytics"></pie-chart>
         </div>
         <div class="input-filed col s12s m12 l12">
@@ -231,14 +231,14 @@
           <label>Most Positive Tweet In Replies To Your Tweets</label>
           <blockquote class="twitter-tweet" data-lang="en">
             <p lang="en" dir="ltr">just setting up my twttr</p>&mdash; Jack (@jack) <a
-            href="https://twitter.com/medfirasouert/status/851157516738342913">March 21, 2006</a>
+            href="https://twitter.com/{{topPositiveReplyScreenName}}/status/{{topPositiveReplyId}}">March 21, 2006</a>
           </blockquote>
           </div>
           <div class="col s6">
           <label>Most Negative Tweet In Replies To Your Tweets</label>
           <blockquote class="twitter-tweet" data-lang="en" >
             <p lang="en" dir="ltr">just setting up my twttr</p>&mdash; Jack (@jack) <a
-            href="https://twitter.com/medfirasouert/status/851157516738342913">March 21, 2006</a>
+            href="https://twitter.com/{{topNegativeReplyScreenName}}/status/{{topNegativeReplyId}}">March 21, 2006</a>
           </blockquote>
           </div>
         </div>
@@ -248,22 +248,22 @@
     <div class="col s6 m6 l6">
       <div class="row">
         <div class="col s12 m12 l12">
-          <pie-chart my-id="Mentions" my-table="{{camp.reputationBySentimentReply}}"
-                     title="Tweets Replies Analytics"></pie-chart>
+          <pie-chart height="400" my-id="Mentions" my-table="{{camp.reputationBySentimentMention}}"
+                     title="Tweets Mentions Analytics"></pie-chart>
         </div>
         <div class="input-filed col s12s m12 l12">
           <div class="col s6">
           <label>Most Positive Tweet In Where You Are Mentioned</label>
           <blockquote class="twitter-tweet" data-lang="en">
             <p lang="en" dir="ltr">just setting up my twttr</p>&mdash; Jack (@jack) <a
-            href="https://twitter.com/medfirasouert/status/851157516738342913">March 21, 2006</a>
+            href="https://twitter.com/{{topPositiveMentionScreenName}}/status/{{topPositiveMentionId}}">March 21, 2006</a>
           </blockquote>
           </div>
           <div class="col s6">
           <label>Most Negative Tweet In Where You Are Mentioned</label>
           <blockquote class="twitter-tweet" data-lang="en">
             <p lang="en" dir="ltr">just setting up my twttr</p>&mdash; Jack (@jack) <a
-            href="https://twitter.com/medfirasouert/status/851157516738342913">March 21, 2006</a>
+            href="https://twitter.com/{{topNegativeMentionScreenName}}/status/{{topNegativeMentionId}}">March 21, 2006</a>
           </blockquote>
           </div>
         </div>

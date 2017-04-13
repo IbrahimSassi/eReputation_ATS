@@ -44,6 +44,10 @@
           url: '/api/twitter/getTwitterSentimentalForReply',
           method: 'POST'
           , isArray: true
+        },
+        'GetTopTweet': {
+          url: '/api/twitter/getTopTweet',
+          method: 'POST'
         }
 
       }

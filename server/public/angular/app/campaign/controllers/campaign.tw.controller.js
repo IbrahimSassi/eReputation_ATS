@@ -36,17 +36,49 @@
 
     var filterSentimentalForMention =
       {
-        "since": "2017-04-02T02:35:14+01:00",
+        "since": "2017-04-05T02:35:14+01:00",
         "until": "2017-04-12T19:35:14+01:00",
         "channelId": "58ecb8ee9f4c535d345dfc03",
         "campaignId": "58ecba269f4c535d345dfc05"
       };
     var filterSentimentalForReply =
       {
-        "since": "2017-04-02T02:35:14+01:00",
+        "since": "2017-04-05T02:35:14+01:00",
         "until": "2017-04-12T19:35:14+01:00",
         "channelId": "58ecb8ee9f4c535d345dfc03",
         "campaignId": "58ecba269f4c535d345dfc05"
+      };
+
+
+
+    var topNegativeMention =
+      {
+        "tweetType": null,
+        "score": null,
+        "campaignId": null,
+        "channelId": null
+      };
+    var topPositiveMention =
+      {
+        "tweetType": null,
+        "score": null,
+        "campaignId": null,
+        "channelId": null
+      };
+
+    var topNegativeReply =
+      {
+        "tweetType": null,
+        "score": null,
+        "campaignId": null,
+        "channelId": null
+      };
+    var topPositiveReply =
+      {
+        "tweetType": null,
+        "score": null,
+        "campaignId": null,
+        "channelId": null
       };
 
 
@@ -105,6 +137,7 @@
     /**
      //Get user data on select change
      */
+
     vm.onSelectChannel = function () {
 
       TwitterService.GetChannelByID(vm.selectChannelValue).then(function (data) {
@@ -126,6 +159,7 @@
           vm.profile_banner_url = item.profile_banner_url;
           vm.profile_sidebar_fill_color = '#' + item.profile_sidebar_border_color;
           console.log(vm.profile_sidebar_fill_color)
+          initReputationBySentiment();
         }).catch(function (err) {
           console.error(err);
         });
@@ -141,6 +175,8 @@
      */
     //OnDateChange
     vm.onChange = function () {
+
+
       console.log("onChange", vm.since);
       console.log("onChange", vm.until);
 
@@ -154,7 +190,21 @@
 
       else {
 
+
+        filterSentimentalForMention.since = moment(vm.since).format();//2017-04-02
+        filterSentimentalForMention.until = moment(vm.until).format();
+        filterSentimentalForMention.channelId = vm.selectChannelValue;
+        filterSentimentalForMention.campaignId = vm.idCampaign;
+        filterSentimentalForReply.since = moment(vm.since).format();
+        filterSentimentalForReply.until = moment(vm.until).format(); //"2017-04-12T02:35:14+01:00"
+        filterSentimentalForReply.channelId = vm.selectChannelValue;
+        filterSentimentalForReply.campaignId = vm.idCampaign;
+        initReputationBySentiment();
+        initTopTweets()
+        requestTopTweets()
+
       }
+
     };
     /**
      //End OndAteChNAGE
@@ -165,6 +215,7 @@
      //StartPieChartInsights
      */
     function initReputationBySentiment() {
+
       vm.reputationBySentimentMention = [];
       vm.reputationBySentimentReply = [];
       console.log(vm.selectedChannel)
@@ -173,7 +224,9 @@
       //vm.reputationBySentiment.push(['Positive', 70]);
       //vm.reputationBySentiment.push(['Negative', 20]);
       //vm.reputationBySentiment.push(['Neutral', 10]);
-      TwitterService.GetSentimentalForOneChannelForMention(filterSentimentalForMention).then(function (data) {
+      console.log("heyyyyyyyyyyyyyyyyyyyyyyy", filterSentimentalForReply)
+      console.log("/////////////////")
+      TwitterService.GetSentimentalForOneChannelForMention(filterSentimentalForReply).then(function (data) {
         data.forEach(function (obj) {
           console.log('obj: ', obj);
           vm.reputationBySentimentMention.push(['Positive', obj.positive_score]);
@@ -191,6 +244,65 @@
         });
       })
     }
+
+    function initTopTweets() {
+
+      topNegativeMention.tweetType = 'Mention'
+      topNegativeMention.score = 'negative'
+      topNegativeMention.campaignId = vm.idCampaign
+      topNegativeMention.channelId = vm.selectChannelValue;
+
+      topNegativeReply.tweetType = 'Reply'
+      topNegativeReply.score = 'negative'
+      topNegativeReply.campaignId = vm.idCampaign
+      topNegativeReply.channelId = vm.selectChannelValue;
+
+
+      topPositiveMention.tweetType = 'Mention'
+      topPositiveMention.score = 'positive'
+      topPositiveMention.campaignId = vm.idCampaign
+      topPositiveMention.channelId = vm.selectChannelValue;
+
+      topPositiveReply.tweetType = 'Reply'
+      topPositiveReply.score = 'positive'
+      topPositiveReply.campaignId = vm.idCampaign
+      topPositiveReply.channelId = vm.selectChannelValue;
+
+      console.log("topNegativeMention",topNegativeMention);
+      console.log("topNegativeReply",topNegativeReply);
+      console.log("topPositiveMention",topPositiveMention);
+      console.log("topPositiveReply",topPositiveReply);
+
+    }
+
+
+ function requestTopTweets()
+    {console.log('dkhallllll')
+      TwitterService.GetTopTweet(topPositiveReply).then(function (data) {
+        console.log("topPositiveReplyData: ", data)
+        $scope.topPositiveReplyScreenName = data.author.screenName;
+        $scope.topPositiveReplyId = data.id;
+      })
+
+      TwitterService.GetTopTweet(topPositiveMention).then(function (data) {
+        console.log("topPositiveMentionData: ", data)
+        $scope.topPositiveMentionScreenName = data.author.screenName;
+        $scope.topPositiveMentionId = data.id;
+      })
+
+      TwitterService.GetTopTweet(topNegativeReply).then(function (data) {
+        console.log("topNegativeReplyData: ", data)
+        $scope.topNegativeReplyScreenName = data.author.screenName;
+        $scope.topNegativeReplyId = data.id;
+      })
+
+      TwitterService.GetTopTweet(topNegativeMention).then(function (data) {
+        console.log("topNegativeMentionData: ", data)
+        $scope.topNegativeMentionScreenName = data.author.screenName;
+        $scope.topNegativeMentionId = data.id;
+      })
+    }
+
     initReputationBySentiment();
     /**
      //End PieChartInsights
