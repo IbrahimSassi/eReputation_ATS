@@ -71,7 +71,7 @@ module.exports.getFacebookDataProvider = function (req, res, next) {
     delete query.$text;
   }
 
-  if (!req.body.channelId) {
+  if (!req.body.channelId || req.body.channelId == "all") {
     delete query.channelId;
   }
 
@@ -137,12 +137,6 @@ module.exports.addFacebookComments = function (req, res, next) {
 
 module.exports.getFacebookSentimental = function (req, res, next) {
 
-  var since;
-  var until;
-  if (req.body.since && req.body.until) {
-    since = moment(req.body.since).format();
-    until = moment(req.body.until).format();
-  }
 
   var matchObject = {
       $and: [
@@ -165,10 +159,8 @@ module.exports.getFacebookSentimental = function (req, res, next) {
 
   if (req.body.channelId == "all") {
     matchObject.$and.splice(1, 1);
-    delete groupObject._id.channelId;
   }
 
-  var sortObject = {$sort: {dateContent: -1}};
   DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, undefined, undefined).then(function (data) {
     res.json(data);
   }).catch(function (err) {
@@ -179,14 +171,6 @@ module.exports.getFacebookSentimental = function (req, res, next) {
 ;
 
 module.exports.getReputationByReaction = function (req, res, next) {
-
-  console.log(req.body)
-  var since;
-  var until;
-  if (req.body.since && req.body.until) {
-    since = moment(req.body.since).format();
-    until = moment(req.body.until).format();
-  }
 
   var matchObject = {
     $and: [
@@ -208,10 +192,8 @@ module.exports.getReputationByReaction = function (req, res, next) {
 
   if (req.body.channelId == "all") {
     matchObject.$and.splice(1, 1);
-    delete groupObject._id.channelId;
   }
 
-  var sortObject = {$sort: {dateContent: -1}};
   DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, undefined, "$reactions").then(function (data) {
     res.json(data);
   }).catch(function (err) {
@@ -220,14 +202,6 @@ module.exports.getReputationByReaction = function (req, res, next) {
 
 };
 module.exports.getReputationByShares = function (req, res, next) {
-
-  console.log(req.body)
-  var since;
-  var until;
-  if (req.body.since && req.body.until) {
-    since = moment(req.body.since).format();
-    until = moment(req.body.until).format();
-  }
 
   var matchObject = {
     $and: [
@@ -245,7 +219,6 @@ module.exports.getReputationByShares = function (req, res, next) {
 
   if (req.body.channelId == "all") {
     matchObject.$and.splice(1, 1);
-    delete groupObject._id.channelId;
   }
 
   DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, undefined, undefined).then(function (data) {
@@ -257,14 +230,6 @@ module.exports.getReputationByShares = function (req, res, next) {
 };
 
 module.exports.getReputationByTypes = function (req, res, next) {
-
-  console.log(req.body)
-  var since;
-  var until;
-  if (req.body.since && req.body.until) {
-    since = moment(req.body.since).format();
-    until = moment(req.body.until).format();
-  }
 
   var matchObject = {
     $and: [
@@ -285,10 +250,36 @@ module.exports.getReputationByTypes = function (req, res, next) {
 
   if (req.body.channelId == "all") {
     matchObject.$and.splice(1, 1);
-    delete groupObject._id.channelId;
   }
 
   DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, undefined, undefined).then(function (data) {
+    res.json(data);
+  }).catch(function (err) {
+    res.json(err);
+  })
+
+};
+
+
+module.exports.getTopPosts = function (req, res, next) {
+
+
+  var matchObject = {
+    $and: [
+      {dateContent: {'$gte': new Date(req.body.since), '$lte': new Date(req.body.until)}},
+      {channelId: {'$eq': req.body.channelId}},
+      {campaignId: {'$eq': req.body.campaignId}},
+      {source: {'$eq': "FacebookPostsProvider"}}
+    ]
+  };
+
+
+  if (req.body.channelId == "all") {
+    matchObject.$and.splice(1, 1);
+  }
+
+  var sortObject = {shares: -1};
+  DataProvider.getDataProviderMatchedAndGrouped(matchObject, undefined, sortObject, undefined).then(function (data) {
     res.json(data);
   }).catch(function (err) {
     res.json(err);

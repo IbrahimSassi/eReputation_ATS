@@ -27,6 +27,7 @@ router.post('/reputationBySentimental', facebookDataProvider.getFacebookSentimen
 router.post('/reputationByReactions', facebookDataProvider.getReputationByReaction);
 router.post('/reputationByShares', facebookDataProvider.getReputationByShares);
 router.post('/reputationByTypes', facebookDataProvider.getReputationByTypes);
+router.post('/topPosts', facebookDataProvider.getTopPosts);
 
 
 module.exports = router;

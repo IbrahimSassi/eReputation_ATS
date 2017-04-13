@@ -1,3 +1,127 @@
+<style>
+
+
+  .fbButton {
+    text-decoration: none;
+    color: #385A97;
+  }
+
+  header {
+    padding: 0;
+    position: relative;
+  }
+
+  .status {
+    margin: 11px 0;
+  }
+
+  #wrapper {
+    box-sizing: border-box;
+    background-color: #fff;
+    width: 500px;
+    margin: 10px auto 0;
+    border: 1px solid #D0D1D5;
+    border-top: 0;
+    border-radius: 2px;
+    padding: 12px;
+  }
+
+  .arrow {
+    position: absolute;
+    width: 12px;
+    border: none;
+    height: auto;
+    right: 0px;
+  }
+
+  .profile-pic {
+    width: 40px;
+    height: auto;
+    float: left;
+    margin-right: 8px;
+  }
+
+  .name,
+  .date {
+    margin: 0;
+  }
+
+  .name {
+    color: #385A97;
+    font-size: 15px;
+    margin-bottom: 5px;
+  }
+
+  .date {
+    font-size: 12px;
+    color: #90949C;
+  }
+
+  main {
+    font-size: 13px;
+  }
+
+  main .status {
+    margin-bottom: 11px;
+  }
+
+  .img-content {
+    width: 100%;
+    margin-bottom: 11px;
+    border: 1px solid rgba(0, 0, 0, .1);
+  }
+
+  .action a {
+    color: #7F7F7F;
+  }
+
+  .action div {
+    display: inline-block;
+  }
+
+  .action div p:hover {
+    text-decoration: underline;
+  }
+
+  .action div:nth-child(n + 2) {
+    margin-left: 20px;
+  }
+
+  .like img,
+  .comment img,
+  .share img {
+    display: inline-block;
+    width: 18px;
+    vertical-align: text-bottom;
+  }
+
+  .like p {
+    color: #1787FA;
+  }
+
+  .like p,
+  .comment p,
+  .share p {
+    display: inline-block;
+  }
+
+  .share img {
+    opacity: .2;
+  }
+
+  .cf:before,
+  .cf:after {
+    content: "";
+    /* 1 */
+    display: table;
+    /* 2 */
+  }
+
+  .cf:after {
+    clear: both;
+  }
+</style>
+
 <div class="col s12">
   <div id="flight-card" class="card">
 
@@ -11,7 +135,7 @@
 
   <div class="row">
 
-    <div class="input-field col s11 m11 l11">
+    <div class="input-field col s12 m12 l12">
       <select ng-change="vm.onSelect()" ng-model="vm.selectedChannel._id" name="" id="" material-select watch>
         <option value="all" selected>All</option>
         <option ng-repeat="channel in vm.myChannels" value="{{channel._id}}">{{channel.name}}</option>
@@ -28,13 +152,13 @@
              name="created"
              id="since"
              ng-model="vm.since"
-             format="ddd mmm dd yyyy HH:MM:ss"
+             format="mmmm d, yyyy"
              today="today"
              clear="clear"
              close="close"
              select-years="15"
-             min="2017/04/05"
-             max="2017/04/26"
+             min="{{vm.min}}"
+             max="{{vm.max}}"
              ng-change="vm.onChange()"
       />
       <label>From</label>
@@ -45,12 +169,12 @@
              name="created"
              id="until"
              ng-model="vm.until"
-             format="ddd mmm dd yyyy HH:MM:ss"
+             format="mmmm d, yyyy"
              today="today"
              clear="clear"
              close="close"
-             min="2017/04/05"
-             max="2017/04/26"
+             min="{{vm.min}}"
+             max="{{vm.max}}"
              ng-change="vm.onChange()"
       />
       <label>To</label>
@@ -175,10 +299,11 @@
   </div>
 
   <div class="row">
-    <div class="card col s12 m12 l12" >
+    <div class="card col s12 m12 l12">
       <div class="card-move-up waves-effect waves-block waves-light">
-        <div ng-if="vm.reputationByTypes.length" class="move-up" >
-          <pie-chart width="100%" height="300" my-id="byPosts" my-table="{{vm.reputationByTypes}}" title="Posts By Type"></pie-chart>
+        <div ng-if="vm.reputationByTypes.length" class="move-up">
+          <pie-chart width="100%" height="300" my-id="byPosts" my-table="{{vm.reputationByTypes}}"
+                     title="Posts By Type"></pie-chart>
         </div>
         <div ng-if="!vm.reputationByTypes.length" class="move-up ">
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
@@ -191,7 +316,8 @@
     <div class="card col s12 m3 l3">
       <div class="card-move-up waves-effect waves-block waves-light">
         <div ng-if="vm.typesLink.length" class="move-up ">
-          <pie-chart width="250" height="250" my-id="links" my-table="{{vm.typesLink}}" title="Sentimental Analysis For Links"></pie-chart>
+          <pie-chart width="250" height="250" my-id="links" my-table="{{vm.typesLink}}"
+                     title="Sentimental Analysis For Links"></pie-chart>
         </div>
         <div ng-if="!vm.typesLink.length" class="move-up ">
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
@@ -253,5 +379,57 @@
     </div>
 
   </div>
+
+
+  <div class="row">
+
+    <div id="wrapper">
+
+      <header class="cf">
+        <img src="http://2016.igem.org/wiki/images/e/e0/Uclascrolldown.png" class="arrow"/>
+        <!--<a href=#><img class='profile-pic'-->
+                       <!--src="https://scontent-atl3-1.xx.fbcdn.net/v/t1.0-1/p320x320/15181_10152546593877801_7195567909714140576_n.png?oh=bdab6394098ec9afbdf619bb17f155b9&oe=5893B18E"></a>-->
+        <h1 class="name">
+          <a class="fbButton" href="#">Tesla</a>
+        </h1>
+        <p class="date">2 hr ago</p>
+      </header>
+
+      <p class="status">Tesla drivers just passed 3 billion electric miles, saving the world 120M gallons of gas 👍</p>
+      <img class="img-content" src="https://www.tesla.com/sites/default/files/red-tesla-model-s.jpg"/>
+
+      <div class="action">
+        <div class="like">
+          <a class="fbButton" href="#">
+            <img
+              src="http://1.bp.blogspot.com/-qns_lZPjg0I/VWY2dO1HN-I/AAAAAAAACVA/akLTMY7RJSk/s1600/Thumbs-up-facebook-icon-small.png"
+              alt="thumbs up"/>
+            <p>Like</p>
+          </a>
+        </div>
+
+        <div class="comment">
+          <a class="fbButton" href="#">
+            <img src="https://s0.wp.com/wp-content/themes/vip/facebook-groups/img/message_icon.png"/>
+            <p>Comment</p>
+          </a>
+        </div>
+
+        <div class="share">
+          <a class="fbButton" href="#">
+            <img src="http://download.seaicons.com/icons/icons8/windows-8/512/Arrows-Redo-icon.png" alt=""/>
+            <p>
+              Share
+            </p>
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
 </div>
 

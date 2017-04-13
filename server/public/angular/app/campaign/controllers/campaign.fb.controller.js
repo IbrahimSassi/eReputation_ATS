@@ -33,8 +33,8 @@
     // vm.selectedCampaign = "58eaaacdff57b30edc92fc4e";
     var filterPosts =
       {
-        "since": "2017-04-03T02:35:14+01:00",
-        "until": "2017-04-12T19:35:14+01:00",
+        "since": moment(vm.since).format(),
+        "until": moment(vm.until).format(),
         "channelId": "all",
         "campaignId": vm.selectedCampaign,
         "source": "FacebookPostsProvider",
@@ -42,8 +42,8 @@
       };
     var filterComments =
       {
-        "since": "2017-04-03T02:35:14+01:00",
-        "until": "2017-04-11T19:35:14+01:00",
+        "since": moment(vm.since).format(),
+        "until": moment(vm.until).format(),
         "channelId": "all",
         "campaignId": vm.selectedCampaign,
         "source": "FacebookCommentsProvider",
@@ -51,14 +51,21 @@
       };
     var filterSentimental =
       {
-        "since": "2017-04-02T02:35:14+01:00",
-        "until": "2017-04-12T19:35:14+01:00",
+        "since": moment(vm.since).format(),
+        "until": moment(vm.until).format(),
         "channelId": "all",
         "campaignId": vm.selectedCampaign
       };
     init();
 
     function init() {
+
+      vm.since = moment().subtract('days', 10)
+      vm.until = moment();
+      vm.min = moment().subtract('days', 15)
+      vm.max = moment();
+
+      selectDate();
 
       delete filterPosts.channelId;
       delete filterComments.channelId;
@@ -73,6 +80,17 @@
     }
 
 
+    function selectDate() {
+      filterPosts.since = moment(vm.since).format();
+      filterPosts.until = moment(vm.until).format();
+      filterComments.since = moment(vm.since).format();
+      filterComments.until = moment(vm.until).format();
+      filterSentimental.since = moment(vm.since).format();
+      filterSentimental.until = moment(vm.until).format();
+
+    }
+
+
     vm.onSelect = function () {
       if (vm.selectedChannel._id !== "all") {
         ChannelService.getChannelByID(vm.selectedChannel._id).then(function (item) {
@@ -80,6 +98,8 @@
           filterPosts.channelId = item._id;
           filterComments.channelId = item._id;
           filterSentimental.channelId = item._id;
+
+          selectDate();
 
           initFacebookPost();
           initFacebookComments();
@@ -93,13 +113,32 @@
       else {
         delete filterPosts.channelId;
         delete filterComments.channelId;
+        selectDate();
+
         initFacebookPost();
         initFacebookComments();
         initFacebookSentimental();
         initReputationByShares();
         initReputationByTypes();
       }
-    }
+    };
+
+
+    vm.onChange = function () {
+      // console.log(moment(vm.since).format())
+      // console.log(moment(vm.until).format())
+      selectDate();
+
+      initFacebookPost();
+      initFacebookComments();
+      initFacebookSentimental();
+      initReputationByReaction();
+      initReputationByShares();
+      initReputationByTypes();
+      initReputationByStorytellersByCountry();
+
+    };
+
 
     function getSelectedCampaign() {
       vm.myChannels = [];
@@ -131,7 +170,6 @@
     }
 
     function initFacebookPost() {
-      console.log(filterPosts)
       vm.Posts = [];
       vm.Shares = 0;
       vm.Likes = 0;
@@ -237,7 +275,6 @@
           vm.storytellersByCountry.push([keys[i], values[i]]);
 
 
-        console.log("vm.storytellersByCountry", vm.storytellersByCountry)
       });
     }
 
