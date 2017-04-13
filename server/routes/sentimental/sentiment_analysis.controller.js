@@ -63,7 +63,7 @@ module.exports.getChannelSentimental = function (req, res, next) {
     $and: [
       {dateContent: {'$gte': new Date(req.body.since), '$lte': new Date(req.body.until)}},
       {campaignId: {'$eq': req.body.campaignId}},
-      {channelId: {'$eq': req.body.channelId}}
+      {source: {'$eq': req.body.source}}
     ]
   };
 

@@ -34,8 +34,8 @@
                 title: scope.myTitle,
                 colors: ['#46BFBD', '#FDB45C', '#F7464A'],
                 pieHole: 0.4,
-                  'width':800,
-                  'height':300,
+
+                  'height':500,
                   backgroundColor: { fill:'transparent' }
               };
 

@@ -39,12 +39,20 @@
       return WwsaFactory.ChannelSentimental(filter).$promise;
     }
 
+    var FbSentimental=function (filter) {
+      return WwsaFactory.FbSentimental(filter).$promise;
+    }
+    var WebSentimental =function (filter) {
+      return WwsaFactory.WebSentimental(filter).$promise;
+    }
       return {
           getPositivity: getPositivity,
           getNegativity: getNegativity,
           getNeutrality:getNeutrality,
-        CompaignSentimental:CompaignSentimental,
-        ChannelSentimental:ChannelSentimental
+          CompaignSentimental:CompaignSentimental,
+          ChannelSentimental:ChannelSentimental,
+          FbSentimental:FbSentimental,
+        WebSentimental:WebSentimental
 
       };
   }
