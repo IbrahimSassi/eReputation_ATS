@@ -14,7 +14,7 @@
                 restrict: 'EA',
                 scope: {
                     myId: '@myId',
-                    nowPositive: '@nowPositive',
+                   /* nowPositive: '@nowPositive',
                     nowNegative: '@nowNegative',
                     nowNeutral: '@nowNeutral',
                     yesPositive: '@yesPositive',
@@ -22,24 +22,33 @@
                     yesNeutral: '@yesNeutral',
                     oldPositive: '@oldPositive',
                     oldNegative: '@oldNegative',
-                    oldNeutral: '@oldNeutral',
+                    oldNeutral: '@oldNeutral',*/
+                     myTable: '@myTable'
                 },
                 templateUrl: 'angular/app/components/googleCharts/ndrawStacked.template.html',
                 link: function (scope, elem, attrs) {
                     setTimeout(function () {
                         google.charts.load('current', {'packages': ['corechart', 'bar']});
+                          var LocalData = JSON.parse(scope.myTable);
+                      // var LocalData = [["date","positive","negative","neutre"],["2017-04-07",12,78,80],["2017-04-12",12,78,80]]
                         function drawStacked() {
-                            var data = google.visualization.arrayToDataTable([
-                                ['Genre',  'Positive', 'Neutral', 'Negative', { role: 'annotation' } ],
-                                [moment().format('DD/MM/YYYY'), parseFloat(scope.nowPositive), parseFloat(scope.nowNeutral), parseFloat(scope.nowNegative), ''],
-                                [moment().add(-1,'days').format('DD/MM/YYYY'),parseFloat(scope.yesPositive), parseFloat(scope.yesNeutral), parseFloat(scope.yesNegative),''],
-                                [moment().add(-2,'days').format('DD/MM/YYYY'), parseFloat(scope.oldPositive), parseFloat(scope.oldNeutral), parseFloat(scope.oldNegative), ''],
+                          if (LocalData)
+
+                            var data = google.visualization.arrayToDataTable(
+                             // [
+                               // ['Genre',  'Positive', 'Neutral', 'Negative', { role: 'annotation' } ],
+                               // [moment().format('DD/MM/YYYY'), parseFloat(scope.nowPositive), parseFloat(scope.nowNeutral), parseFloat(scope.nowNegative), ''],
+                               // [moment().add(-1,'days').format('DD/MM/YYYY'),parseFloat(scope.yesPositive), parseFloat(scope.yesNeutral), parseFloat(scope.yesNegative),''],
+                               // [moment().add(-2,'days').format('DD/MM/YYYY'), parseFloat(scope.oldPositive), parseFloat(scope.oldNeutral), parseFloat(scope.oldNegative), ''],
                                 //   [moment().add(-3,'days').format('DD/MM/YYYY'), parseFloat(scope.nowPositive), parseFloat(scope.nowNeutral), parseFloat(scope.nowNegative), '']
-                            ]);
+
+                           // ]
+                              LocalData
+                            );
 
                             var options = {
                                 title: 'Overview about How people reacts between '+moment().format('DD/MM/YYYY')+' and 3/30/2017',
-                                colors: ['#46BFBD', '#FDB45C', '#F7464A'],
+                                colors: ['#46BFBD', '#F7464A', '#FDB45C'],
                                 chartArea: {width: '50%'},
                                 isStacked: 'percent',
                                 height: 300,
@@ -61,6 +70,9 @@
                                 drawStacked();
 
                             });
+                      scope.$watch('myTable', function (newValue, oldValue) {
+                        drawStacked();
+                      });
 
                     }, 0);
 
