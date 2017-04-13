@@ -172,7 +172,7 @@ module.exports.SaveDatToTwitterProviderForRepliesToUserForChannel = function (re
 
     client.get('search/tweets', {
       q: 'to:' + mentionedUser + ' ' + finalKeywords + ' since:' + since + ' until:' + until + 'result_type:popular',
-      count: 100,
+      count: 50,
       max_id: max_id
     }, function (error, tweets, response) {
       if (error) {
@@ -275,7 +275,7 @@ module.exports.SaveDatToTwitterProviderForMentionedUserForChannel = function (re
 
     client.get('search/tweets', {
       q: '@' + mentionedUser + ' ' + finalKeywords + ' since:' + since + ' until:' + until + 'result_type:popular',
-      count: 100,
+      count: 50,
       max_id: max_id
     }, function (error, tweets, response) {
       if (error) {

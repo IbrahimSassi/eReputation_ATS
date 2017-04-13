@@ -7,10 +7,9 @@ var MongoClient = require('mongodb').MongoClient;
 var async = require('async');
 
 
-
 module.exports.getTwitterSentimentalForMention = function (req, res, next) {
 
-  console.log("ahawa: ",req.body.since)
+  console.log("ahawa: ", req.body.since)
 
   var since;
   var until;
@@ -25,7 +24,7 @@ module.exports.getTwitterSentimentalForMention = function (req, res, next) {
       {channelId: {'$eq': req.body.channelId}},
       {campaignId: {'$eq': req.body.campaignId}},
       {source: {'$eq': "tweetsProvider"}},
-      {tweetType : {'$eq': "Mention"}}
+      {tweetType: {'$eq': "Mention"}}
     ]
   };
 
@@ -54,7 +53,7 @@ module.exports.getTwitterSentimentalForMention = function (req, res, next) {
 
 module.exports.getTwitterSentimentalForReply = function (req, res, next) {
 
-  console.log("ahawa: ",req.body.since)
+  console.log("ahawa: ", req.body.since)
 
   var since;
   var until;
@@ -69,7 +68,7 @@ module.exports.getTwitterSentimentalForReply = function (req, res, next) {
       {channelId: {'$eq': req.body.channelId}},
       {campaignId: {'$eq': req.body.campaignId}},
       {source: {'$eq': "tweetsProvider"}},
-      {tweetType : {'$eq': "Reply"}}
+      {tweetType: {'$eq': "Reply"}}
     ]
   };
 
@@ -96,26 +95,41 @@ module.exports.getTwitterSentimentalForReply = function (req, res, next) {
 };
 
 
-
 module.exports.getTopTweet = function (req, res, next) {
 
   var tweetType = req.body.tweetType;
   var score = req.body.score;
   var campaignId = req.body.campaignId;
   var channelId = req.body.channelId;
-if(score=="positive")
-{console.log("ahaha")
-  DataProvider.findOne({tweetType:tweetType,channelId:channelId,campaignId:campaignId}).sort({'contentScore.positivity':-1}).then( function(doc,err) {
-    if(err) res.send(err)
-    res.json(doc)
-  })
+  var since = req.body.since;
+  var until = req.body.until;
 
-}
-else
-{
-  DataProvider.findOne({tweetType:tweetType,channelId:channelId,campaignId:campaignId}).sort({'contentScore.negativity':-1}).then( function(doc,err) {
-    if(err) res.send(err)
-    res.json(doc)
-  })
-}
+
+  if (score == "positive") {
+    console.log("ahaha")
+    DataProvider.findOne({
+      tweetType: tweetType, channelId: channelId, campaignId: campaignId, dateContent: {
+        $gte: new Date(since),
+        $lt: new Date(until)
+      }
+    }).sort({'contentScore.positivity': -1}).then(function (doc, err) {
+      if (err) res.send(err)
+      res.json(doc)
+    })
+
+  }
+  else {
+    DataProvider.findOne({
+      tweetType: tweetType,
+      channelId: channelId,
+      campaignId: campaignId,
+      dateContent: {
+        $gte: new Date(since),
+        $lt: new Date(until)
+      }
+    }).sort({'contentScore.negativity': -1}).then(function (doc, err) {
+      if (err) res.send(err)
+      res.json(doc)
+    })
+  }
 };

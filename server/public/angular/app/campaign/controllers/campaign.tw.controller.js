@@ -94,14 +94,18 @@
         "tweetType": null,
         "score": null,
         "campaignId": null,
-        "channelId": null
+        "channelId": null,
+        "since": "2017-04-05T02:35:14+01:00",
+        "until": "2017-04-12T19:35:14+01:00",
       };
     var topPositiveMention =
       {
         "tweetType": null,
         "score": null,
         "campaignId": null,
-        "channelId": null
+        "channelId": null,
+        "since": "2017-04-05T02:35:14+01:00",
+        "until": "2017-04-12T19:35:14+01:00",
       };
 
     var topNegativeReply =
@@ -109,14 +113,18 @@
         "tweetType": null,
         "score": null,
         "campaignId": null,
-        "channelId": null
+        "channelId": null,
+        "since": "2017-04-05T02:35:14+01:00",
+        "until": "2017-04-12T19:35:14+01:00",
       };
     var topPositiveReply =
       {
         "tweetType": null,
         "score": null,
         "campaignId": null,
-        "channelId": null
+        "channelId": null,
+        "since": "2017-04-05T02:35:14+01:00",
+        "until": "2017-04-12T19:35:14+01:00",
       };
 
 
@@ -290,22 +298,30 @@
       topNegativeMention.score = 'negative'
       topNegativeMention.campaignId = vm.idCampaign
       topNegativeMention.channelId = vm.selectChannelValue;
+      topNegativeMention.since = moment(vm.since).format();//2017-04-02
+      topNegativeMention.until = moment(vm.until).format();
 
       topNegativeReply.tweetType = 'Reply'
       topNegativeReply.score = 'negative'
       topNegativeReply.campaignId = vm.idCampaign
       topNegativeReply.channelId = vm.selectChannelValue;
+      topNegativeReply.since = moment(vm.since).format();//2017-04-02
+      topNegativeReply.until = moment(vm.until).format();
 
 
       topPositiveMention.tweetType = 'Mention'
       topPositiveMention.score = 'positive'
       topPositiveMention.campaignId = vm.idCampaign
       topPositiveMention.channelId = vm.selectChannelValue;
+      topPositiveMention.since = moment(vm.since).format();//2017-04-02
+      topPositiveMention.until = moment(vm.until).format();
 
       topPositiveReply.tweetType = 'Reply'
       topPositiveReply.score = 'positive'
       topPositiveReply.campaignId = vm.idCampaign
       topPositiveReply.channelId = vm.selectChannelValue;
+      topPositiveReply.since = moment(vm.since).format();//2017-04-02
+      topPositiveReply.until = moment(vm.until).format();
 
       console.log("topNegativeMention",topNegativeMention);
       console.log("topNegativeReply",topNegativeReply);
@@ -319,6 +335,7 @@
     {console.log('dkhallllll')
       TwitterService.GetTopTweet(topPositiveReply).then(function (data) {
         console.log("topPositiveReplyData: ", data)
+        document.getElementById('topPositiveReply').innerHTML = "";
         twttr.widgets.createTweet(
           data.id,
           document.getElementById('topPositiveReply'),
@@ -332,6 +349,7 @@
 
       TwitterService.GetTopTweet(topPositiveMention).then(function (data) {
         console.log("topPositiveMentionData: ", data)
+        document.getElementById('topPositiveMention').innerHTML = "";
         twttr.widgets.createTweet(
           data.id,
           document.getElementById('topPositiveMention'),
@@ -343,6 +361,7 @@
 
       TwitterService.GetTopTweet(topNegativeReply).then(function (data) {
         console.log("topNegativeReplyData: ", data)
+        document.getElementById('topNegativeReply').innerHTML = "";
         twttr.widgets.createTweet(
           data.id,
           document.getElementById('topNegativeReply'),
@@ -354,6 +373,7 @@
 
       TwitterService.GetTopTweet(topNegativeMention).then(function (data) {
         console.log("topNegativeMentionData: ", data)
+        document.getElementById('topNegativeMention').innerHTML = "";
         twttr.widgets.createTweet(
           data.id,
           document.getElementById('topNegativeMention'),
