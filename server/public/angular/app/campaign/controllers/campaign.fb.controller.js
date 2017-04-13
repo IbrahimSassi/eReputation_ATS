@@ -56,13 +56,15 @@
         "channelId": "all",
         "campaignId": vm.selectedCampaign
       };
+
+
     init();
 
     function init() {
 
-      vm.since = moment().subtract('days', 10)
+      vm.since = moment().subtract('days', 10);
       vm.until = moment();
-      vm.min = moment().subtract('days', 15)
+      vm.min = moment().subtract('days', 15);
       vm.max = moment();
 
       selectDate();
@@ -77,6 +79,7 @@
       initReputationByShares();
       initReputationByTypes();
       initReputationByStorytellersByCountry();
+      initTopPosts();
     }
 
 
@@ -107,6 +110,8 @@
           initReputationByReaction();
           initReputationByShares();
           initReputationByTypes();
+          initReputationByStorytellersByCountry();
+          initTopPosts();
 
         });
       }
@@ -118,8 +123,11 @@
         initFacebookPost();
         initFacebookComments();
         initFacebookSentimental();
+        initReputationByReaction();
         initReputationByShares();
         initReputationByTypes();
+        initReputationByStorytellersByCountry();
+        initTopPosts();
       }
     };
 
@@ -136,6 +144,8 @@
       initReputationByShares();
       initReputationByTypes();
       initReputationByStorytellersByCountry();
+      initReputationByTypes();
+      initTopPost()
 
     };
 
@@ -162,7 +172,6 @@
     function initFacebookComments() {
       vm.Comments = [];
       FacebookService.getFacebookPosts(filterComments).then(function (data) {
-        // console.log("facebook comments ", data)
         vm.Comments = data;
       });
 
@@ -174,7 +183,6 @@
       vm.Shares = 0;
       vm.Likes = 0;
       FacebookService.getFacebookPosts(filterPosts).then(function (data) {
-        // console.log("facebook posts ", data)
         vm.Posts = data;
 
         vm.Posts.forEach(function (post) {
@@ -197,29 +205,39 @@
         data.forEach(function (obj) {
           vm.SentimentalFacebookData.push([obj._id.dateContent, obj.positive_score, obj.negative_score, obj.neutral_score]);
         });
+        vm.SentimentalFacebookData.sort(function(a,b){
+          return new Date(a[0]) - new Date(b[0]);
+        });
+
       })
     }
 
     function initReputationByReaction() {
       vm.reputationByReactions = [];
-      // console.log(vm.selectedChannel)
       vm.reputationByReactions.push(['Date', 'Like', 'Love', 'Sad', 'Angry']);
       FacebookService.getReputationByReaction(filterSentimental).then(function (data) {
         data.forEach(function (obj) {
           vm.reputationByReactions.push(
             [obj._id.dateContent, obj.like, obj.love, obj.sad, obj.angry]);
         });
+        vm.reputationByReactions.sort(function(a,b){
+          return new Date(a[0]) - new Date(b[0]);
+        });
+
       })
     }
 
     function initReputationByShares() {
       vm.reputationByShares = [];
-      // console.log(vm.selectedChannel)
       vm.reputationByShares.push(['Date', 'Shares']);
       FacebookService.getReputationByShares(filterSentimental).then(function (data) {
         data.forEach(function (obj) {
           vm.reputationByShares.push([obj._id.dateContent, obj.shares]);
         });
+        vm.reputationByShares.sort(function(a,b){
+          return new Date(a[0]) - new Date(b[0]);
+        });
+
       })
     }
 
@@ -276,6 +294,26 @@
 
 
       });
+    }
+
+    function initTopPosts() {
+      vm.topSharedPost = new Object();
+      vm.topLikedPost = new Object();
+      FacebookService.getTopPosts(filterSentimental,'shares').then(function (data) {
+        console.log(data)
+        data[0].dateContent = moment(data[0].dateContent).fromNow();
+        vm.topSharedPost = data[0];
+        console.log("topSharedPost",vm.topSharedPost);
+      });
+
+      FacebookService.getTopPosts(filterSentimental,'likes').then(function (data) {
+        console.log(data)
+        data[0].dateContent = moment(data[0].dateContent).fromNow();
+        vm.topLikedPost = data[0];
+        console.log("topLikedPost",vm.topLikedPost);
+      });
+
+
     }
 
 

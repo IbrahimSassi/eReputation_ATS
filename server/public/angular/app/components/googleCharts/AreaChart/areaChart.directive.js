@@ -37,7 +37,7 @@
                 title: scope.title,
                 hAxis: {title: scope.hAxis, titleTextStyle: {color: '#333'}},
                 vAxis: {minValue: 0},
-                "backgroundColor": "#eeeeee"
+                // "backgroundColor": "#eeeeee"
 
               };
 

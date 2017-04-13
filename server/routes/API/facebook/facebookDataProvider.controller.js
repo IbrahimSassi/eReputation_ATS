@@ -67,7 +67,7 @@ module.exports.getFacebookDataProvider = function (req, res, next) {
   };
 
   if (!req.body.keywords.length) {
-    sortedBy = {dateContent: 1}
+    sortedBy = {dateContent: 1};
     delete query.$text;
   }
 
@@ -91,7 +91,7 @@ module.exports.getFacebookDataProvider = function (req, res, next) {
 
   if (req.body.keywords && req.body.keywords.length) {
     var keywords = req.body.keywords.join(" ");
-    console.log(query)
+    console.log(query);
     query.$text.$search = keywords.toString();
     options = {"score": {$meta: "textScore"}};
     sortedBy = {"score": {$meta: "textScore"}};
@@ -121,7 +121,7 @@ module.exports.addFacebookComments = function (req, res, next) {
 
     DataProvider.createDataProviderModel(newFacebookComment, function (err, item) {
       if (err)
-        handleError(res, err)
+        handleError(res, err);
       else {
         console.log('Success facebook comments saved saved', item._id);
       }
@@ -161,7 +161,7 @@ module.exports.getFacebookSentimental = function (req, res, next) {
     matchObject.$and.splice(1, 1);
   }
 
-  DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, undefined, undefined).then(function (data) {
+  DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, {dateContent: -1}, undefined).then(function (data) {
     res.json(data);
   }).catch(function (err) {
     res.json(err);
@@ -194,7 +194,7 @@ module.exports.getReputationByReaction = function (req, res, next) {
     matchObject.$and.splice(1, 1);
   }
 
-  DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, undefined, "$reactions").then(function (data) {
+  DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, {dateContent: -1}, "$reactions").then(function (data) {
     res.json(data);
   }).catch(function (err) {
     res.json(err);
@@ -221,7 +221,7 @@ module.exports.getReputationByShares = function (req, res, next) {
     matchObject.$and.splice(1, 1);
   }
 
-  DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, undefined, undefined).then(function (data) {
+  DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, {dateContent: -1}, undefined).then(function (data) {
     res.json(data);
   }).catch(function (err) {
     res.json(err);
@@ -252,7 +252,7 @@ module.exports.getReputationByTypes = function (req, res, next) {
     matchObject.$and.splice(1, 1);
   }
 
-  DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, undefined, undefined).then(function (data) {
+  DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, {dateContent: -1}, undefined).then(function (data) {
     res.json(data);
   }).catch(function (err) {
     res.json(err);
@@ -278,7 +278,17 @@ module.exports.getTopPosts = function (req, res, next) {
     matchObject.$and.splice(1, 1);
   }
 
-  var sortObject = {shares: -1};
+  var sortProperty = req.body.sort;
+  var sortObject;
+  if (sortProperty.toString() == "shares") {
+    sortObject = {shares: -1};
+  }
+  else if (sortProperty.toString() == "likes") {
+    sortObject = {'reactions.0.like.summary.total_count': -1};
+  }
+  else if (sortProperty.toString() == "loves") {
+    sortObject = {'reactions.0.love.summary.total_count': -1};
+  }
   DataProvider.getDataProviderMatchedAndGrouped(matchObject, undefined, sortObject, undefined).then(function (data) {
     res.json(data);
   }).catch(function (err) {

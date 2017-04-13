@@ -380,52 +380,19 @@
 
   </div>
 
+  <div class="divider"></div>
 
   <div class="row">
+    <h4 class="header">Top Facebook Post</h4>
 
-    <div id="wrapper">
+    <div class="col s6 m6 l6">
+      <h5 class="header">Top Shared Post</h5>
+      <div class="fb-post" data-href="{{vm.topSharedPost.link}}"></div>
 
-      <header class="cf">
-        <img src="http://2016.igem.org/wiki/images/e/e0/Uclascrolldown.png" class="arrow"/>
-        <!--<a href=#><img class='profile-pic'-->
-                       <!--src="https://scontent-atl3-1.xx.fbcdn.net/v/t1.0-1/p320x320/15181_10152546593877801_7195567909714140576_n.png?oh=bdab6394098ec9afbdf619bb17f155b9&oe=5893B18E"></a>-->
-        <h1 class="name">
-          <a class="fbButton" href="#">Tesla</a>
-        </h1>
-        <p class="date">2 hr ago</p>
-      </header>
-
-      <p class="status">Tesla drivers just passed 3 billion electric miles, saving the world 120M gallons of gas 👍</p>
-      <img class="img-content" src="https://www.tesla.com/sites/default/files/red-tesla-model-s.jpg"/>
-
-      <div class="action">
-        <div class="like">
-          <a class="fbButton" href="#">
-            <img
-              src="http://1.bp.blogspot.com/-qns_lZPjg0I/VWY2dO1HN-I/AAAAAAAACVA/akLTMY7RJSk/s1600/Thumbs-up-facebook-icon-small.png"
-              alt="thumbs up"/>
-            <p>Like</p>
-          </a>
-        </div>
-
-        <div class="comment">
-          <a class="fbButton" href="#">
-            <img src="https://s0.wp.com/wp-content/themes/vip/facebook-groups/img/message_icon.png"/>
-            <p>Comment</p>
-          </a>
-        </div>
-
-        <div class="share">
-          <a class="fbButton" href="#">
-            <img src="http://download.seaicons.com/icons/icons8/windows-8/512/Arrows-Redo-icon.png" alt=""/>
-            <p>
-              Share
-            </p>
-          </a>
-        </div>
-
-      </div>
-
+    </div>
+    <div class="col s6 m6 l6">
+      <h5 class="header">Top Liked Post</h5>
+      <div class="fb-post" data-href="{{vm.topLikedPost.link}}"></div>
     </div>
 
   </div>
@@ -433,3 +400,12 @@
 
 </div>
 
+<div id="fb-root"></div>
+<script>(function (d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.8&appId=583444071825924";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>

@@ -62,6 +62,11 @@
           url: '/api/facebook/reputationByTypes',
           method: 'POST'
           , isArray: true
+        },
+        'topPosts': {
+          url: '/api/facebook/topPosts',
+          method: 'POST'
+          , isArray: true
         }
       }
     );
