@@ -8,8 +8,41 @@
   /**My Module init**/
   angular
     .module('ATSApp.campaign')
-    .controller('CampaignTwCtrl', CampaignTwCtrl);
+    .controller('CampaignTwCtrl', CampaignTwCtrl)
 
+  /*  .directive("myHref", function() {
+      return {
+        restrict: 'E',
+        replace: true,
+        transclude: true,
+        link: function(scope, elem, attrs) {
+          var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+              scope.$parent.result = mutation.target.href;
+              scope.$apply();
+              scope.$watch("result",function(newValue,oldValue) {
+                //This gets called when data changes.
+              });
+            });
+          });
+
+          // configuration of the observer:
+          var config = {
+            attributes: true,
+            childList: true,
+            characterData: true
+          };
+
+          observer.observe(elem[0], config);
+
+        },
+        scope: {
+          myHref: '='
+        },
+        templateUrl: 'angular/app/twitter/directives/embedTweet.html',
+      };
+    });
+*/
   /**End My Module Init**/
 
   /**Injection**/
@@ -33,6 +66,11 @@
     var allChannels = null;
     vm.since = moment().subtract(1, 'weeks');
     vm.until = moment();
+
+
+
+
+
 
     var filterSentimentalForMention =
       {
@@ -149,7 +187,7 @@
 
           console.log(item)
           vm.name = item.name;
-          vm.created_at = moment(item.created_at, 'DD-MM-YYYY')._i;
+          vm.created_at = moment(item.created_at).format('DD-MMMM-YYYY');
           vm.screen_name = item.screen_name;
           vm.location = item.location;
           vm.followers_count = item.followers_count;
@@ -202,6 +240,7 @@
         initReputationBySentiment();
         initTopTweets()
         requestTopTweets()
+
 
       }
 
@@ -280,27 +319,55 @@
     {console.log('dkhallllll')
       TwitterService.GetTopTweet(topPositiveReply).then(function (data) {
         console.log("topPositiveReplyData: ", data)
-        $scope.topPositiveReplyScreenName = data.author.screenName;
-        $scope.topPositiveReplyId = data.id;
+        twttr.widgets.createTweet(
+          data.id,
+          document.getElementById('topPositiveReply'),
+          {
+
+          }
+        );
+
+
       })
 
       TwitterService.GetTopTweet(topPositiveMention).then(function (data) {
         console.log("topPositiveMentionData: ", data)
-        $scope.topPositiveMentionScreenName = data.author.screenName;
-        $scope.topPositiveMentionId = data.id;
+        twttr.widgets.createTweet(
+          data.id,
+          document.getElementById('topPositiveMention'),
+          {
+
+          }
+        );
       })
 
       TwitterService.GetTopTweet(topNegativeReply).then(function (data) {
         console.log("topNegativeReplyData: ", data)
-        $scope.topNegativeReplyScreenName = data.author.screenName;
-        $scope.topNegativeReplyId = data.id;
+        twttr.widgets.createTweet(
+          data.id,
+          document.getElementById('topNegativeReply'),
+          {
+
+          }
+        );
       })
 
       TwitterService.GetTopTweet(topNegativeMention).then(function (data) {
         console.log("topNegativeMentionData: ", data)
-        $scope.topNegativeMentionScreenName = data.author.screenName;
-        $scope.topNegativeMentionId = data.id;
+        twttr.widgets.createTweet(
+          data.id,
+          document.getElementById('topNegativeMention'),
+          {
+
+          }
+        );
       })
+
+
+        //$('.twitter-tweet').load( "<blockquote class='twitter-tweet' data-lang='en'> <p lang='en' dir='ltr'>just setting up my twttr</p>&mdash; Jack (@jack) <a href='https://twitter.com/medfirasouert/status/851157516738342913'>March 21, 2006</a> </blockquote>" );
+
+
+
     }
 
     initReputationBySentiment();
@@ -312,5 +379,9 @@
 
 
 })();
+
+
+
+
 
 

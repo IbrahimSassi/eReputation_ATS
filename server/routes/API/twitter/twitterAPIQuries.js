@@ -22,9 +22,10 @@ var count = 0;
 //START TEST*************************************************
 module.exports.SaveDatToTwitterProviderForRepliesToUserForChannelTest = function (req, res, next) {
 
+console.log(req.body.text)
 
-  client.get('search/tweets', {q: 'node.js'}, function(error, tweets, response) {
-    res.json(tweets)
+  translate(req.body.text, {to: 'en'}).then(function (result) {
+    res.json(result.text)
   });
 
 
@@ -179,7 +180,7 @@ module.exports.SaveDatToTwitterProviderForRepliesToUserForChannel = function (re
       }
       for (var i = 0; i < tweets.statuses.length; i++) {
         var newTwitterData = new dataProvider.tweetsProvider();
-        newTwitterData.id = tweets.statuses[i].id;
+        newTwitterData.id = tweets.statuses[i].id_str;
         newTwitterData.dateContent = tweets.statuses[i].created_at;
         newTwitterData.content = tweets.statuses[i].text;
         newTwitterData.contentLanguage = tweets.statuses[i].lang;
@@ -273,7 +274,7 @@ module.exports.SaveDatToTwitterProviderForMentionedUserForChannel = function (re
 
 
     client.get('search/tweets', {
-      q: 'to:' + mentionedUser + ' ' + finalKeywords + ' since:' + since + ' until:' + until + 'result_type:popular',
+      q: '@' + mentionedUser + ' ' + finalKeywords + ' since:' + since + ' until:' + until + 'result_type:popular',
       count: 100,
       max_id: max_id
     }, function (error, tweets, response) {
@@ -282,7 +283,7 @@ module.exports.SaveDatToTwitterProviderForMentionedUserForChannel = function (re
       }
       for (var i = 0; i < tweets.statuses.length; i++) {
         var newTwitterData = new dataProvider.tweetsProvider();
-        newTwitterData.id = tweets.statuses[i].id;
+        newTwitterData.id = tweets.statuses[i].id_str;
         newTwitterData.dateContent = tweets.statuses[i].created_at;
         newTwitterData.content = tweets.statuses[i].text;
         newTwitterData.contentLanguage = tweets.statuses[i].lang;
@@ -380,7 +381,7 @@ module.exports.TweetsScrapper = function (req, res, next) {
     }
     for (var i = 0; i < tweets.statuses.length; i++) {
       var newTwitterData = new dataProvider.tweetsProvider();
-      newTwitterData.id = tweets.statuses[i].id;
+      newTwitterData.id = tweets.statuses[i].id_str;
       newTwitterData.dateContent = tweets.statuses[i].created_at;
       newTwitterData.content = tweets.statuses[i].text;
       newTwitterData.contentLanguage = tweets.statuses[i].lang;
@@ -478,7 +479,7 @@ module.exports.TweetsScrapperWithGeo = function (req, res, next) {
     }
     for (var i = 0; i < tweets.statuses.length; i++) {
       var newTwitterData = new dataProvider.tweetsProvider();
-      newTwitterData.id = tweets.statuses[i].id;
+      newTwitterData.id = tweets.statuses[i].id_str;
       newTwitterData.dateContent = tweets.statuses[i].created_at;
       newTwitterData.content = tweets.statuses[i].text;
       newTwitterData.contentLanguage = tweets.statuses[i].lang;

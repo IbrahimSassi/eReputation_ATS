@@ -31,7 +31,7 @@ module.exports.getTwitterSentimentalForMention = function (req, res, next) {
 
 
   var groupObject = {
-    _id: {dateContent: {$substr: ["$dateContent", 0, 10]}},
+    _id: {Insights: "My Insights"},
     neutral_score: {$avg: "$contentScore.neutral"},
     positive_score: {$avg: "$contentScore.positivity"},
     negative_score: {$avg: "$contentScore.negativity"}
@@ -75,7 +75,7 @@ module.exports.getTwitterSentimentalForReply = function (req, res, next) {
 
 
   var groupObject = {
-    _id: {dateContent: {$substr: ["$dateContent", 0, 10]}},
+    _id: {Insights: "My Insights"},
     neutral_score: {$avg: "$contentScore.neutral"},
     positive_score: {$avg: "$contentScore.positivity"},
     negative_score: {$avg: "$contentScore.negativity"}
