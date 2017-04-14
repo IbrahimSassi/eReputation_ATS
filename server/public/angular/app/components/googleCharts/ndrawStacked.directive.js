@@ -29,12 +29,13 @@
         },
         templateUrl: 'angular/app/components/googleCharts/ndrawStacked.template.html',
         link: function (scope, elem, attrs) {
-          setTimeout(function () {
-            google.charts.load('current', {'packages': ['corechart', 'bar']});
-            var LocalData = JSON.parse(scope.myTable);
-            // var LocalData = [["date","positive","negative","neutre"],["2017-04-07",12,78,80],["2017-04-12",12,78,80]]
-            function drawStacked() {
-              // if (LocalData)
+          scope.$watchGroup(['myTitle','myTable'], function (newValue, oldValue) {
+            setTimeout(function () {
+              google.charts.load('current', {'packages': ['corechart', 'bar']});
+              var LocalData = JSON.parse(newValue[1]);
+              // var LocalData = [["date","positive","negative","neutre"],["2017-04-07",12,78,80],["2017-04-12",12,78,80]]
+              function drawStacked() {
+                // if (LocalData)
 
                 var data = google.visualization.arrayToDataTable(
                   // [
@@ -48,35 +49,36 @@
                   LocalData
                 );
 
-              var options = {
-                title: scope.myTitle == undefined ?'Overview about How people reacts for this compaign' : scope.myTitle,
-                colors: ['#46BFBD', '#F7464A', '#FDB45C'],
-                chartArea: {width: '50%'},
-                isStacked: 'percent',
-                height: 300,
-                legend: {position: 'top', maxLines: 3},
-                hAxis: {
-                  minValue: 0,
-                  ticks: [0, .3, .6, .9, 1]
-                },
+                var options = {
+                  title: scope.myTitle == undefined ? 'Overview about How people reacts for this compaign' : newValue[0],
+                  colors: ['#46BFBD', '#F7464A', '#FDB45C'],
+                  chartArea: {width: '50%'},
+                  isStacked: 'percent',
+                  height: 300,
+                  legend: {position: 'top', maxLines: 3},
+                  hAxis: {
+                    minValue: 0,
+                    ticks: [0, .3, .6, .9, 1]
+                  },
 
-              };
+                };
 
 
-              var chart = new google.visualization.BarChart(document.getElementById('ndrawChart' + scope.myId));
-              chart.draw(data, options);
-            }
+                var chart = new google.visualization.BarChart(document.getElementById('ndrawChart' + scope.myId));
+                chart.draw(data, options);
+              }
 
-            google.charts.setOnLoadCallback(
-              function () { // Anonymous function that calls drawChart1 and drawChart2
+              google.charts.setOnLoadCallback(
+                function () { // Anonymous function that calls drawChart1 and drawChart2
+                  drawStacked();
+
+                });
+              scope.$watch('myTable', function (newValue, oldValue) {
                 drawStacked();
-
               });
-            scope.$watch('myTable', function (newValue, oldValue) {
-              drawStacked();
-            });
 
-          }, 0);
+            }, 0);
+          });
 
         }
 

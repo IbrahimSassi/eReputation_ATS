@@ -20,6 +20,9 @@
     this.getWebsitesAnalysis = function (url) {
       return WebsitesFactory.websitesDataAnalisis({url:url}).$promise;
     }
+    this.getAllwebSitesProvider = function () {
+      return WebsitesFactory.query().$promise;
+    }
   }
 
 })();

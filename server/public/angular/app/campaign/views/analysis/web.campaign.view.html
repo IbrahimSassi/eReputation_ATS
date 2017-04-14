@@ -1,16 +1,54 @@
 <!--breadcrumbs start-->
+<style>
+  .result_area {
+    font-family: 'Roboto', sans-serif;
+  }
+
+  .result_area .result {
+  }
+
+  .result_area .link {
+
+    margin: 1px 0px 0px 0px;
+    padding: 0;
+    font-size: 14px;
+    line-height: 15px;
+    text-decoration: none;
+    color: #009930;
+  }
+
+  .result_area .description {
+    color: #545454;
+    margin: 3px 0px 30px 0px;
+    padding: 0px;
+  }
+
+  .result_area h2 {
+    font-size: 18px;
+    margin: 0px 0px 0px 0px;
+    padding: 0px;
+  }
+
+  .result_area a {
+    color: #10009b;
+    text-decoration: none;
+  }
+
+  .result_area a:hover {
+    text-decoration: underline;
+  }
+</style>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <span ng-init="camp.getWebsitesProviderAll('all')"></span>
 <div id="breadcrumbs-wrapper">
-  <div class="row">
-    <div class="col s12">
-      <br><br>
-    </div>
-  </div>
+
 
   <div class="row">
     <div class="col s12">
-      <div ng-if="tableAllAnalysis.length==0" style="font-size: medium;" class="spinner icon-spinner-5 center" aria-hidden="true"></div>
-      <ndraw-stacked my-title="Sentiment Analysis of Websites Channels" ng-if="tableAllAnalysis.length>0" my-id="all" my-table="{{tableAllAnalysis}}"></ndraw-stacked>
+      <div ng-if="tableAllAnalysis.length==0" style="font-size: medium;" class="spinner icon-spinner-5 center"
+           aria-hidden="true"></div>
+      <ndraw-stacked my-title="Sentiment Analysis of Websites Channels" ng-if="tableAllAnalysis.length>0" my-id="all"
+                     my-table="{{tableAllAnalysis}}"></ndraw-stacked>
     </div>
   </div>
   <div class="row">
@@ -46,8 +84,10 @@
     <div class="col s12 m6 l3">
       <div class="card">
         <div class="card-content pink white-text">
-          <p class="card-stats-title"><i class="mdi-action-trending-up"></i> Country Rank : {{websitesAnalysis.countryRank.country}}</p>
-          <h4 ng-if="websitesAnalysis.countryRank.rank" class="card-stats-number">{{websitesAnalysis.countryRank.rank}}</h4>
+          <p class="card-stats-title"><i class="mdi-action-trending-up"></i> Country Rank :
+            {{websitesAnalysis.countryRank.country}}</p>
+          <h4 ng-if="websitesAnalysis.countryRank.rank" class="card-stats-number">
+            {{websitesAnalysis.countryRank.rank}}</h4>
           <h4 ng-if="!websitesAnalysis.countryRank.rank" class="card-stats-number">
             <div style="font-size: medium;" class="spinner icon-spinner-5 center" aria-hidden="true"></div>
           </h4>
@@ -58,7 +98,8 @@
       <div class="card">
         <div class="card-content blue-grey white-text">
           <p class="card-stats-title"><i class="mdi-action-trending-up"></i> Bounce Rate</p>
-          <h4 ng-if="websitesAnalysis.engagement.bounceRate" class="card-stats-number">{{websitesAnalysis.engagement.bounceRate}}</h4>
+          <h4 ng-if="websitesAnalysis.engagement.bounceRate" class="card-stats-number">
+            {{websitesAnalysis.engagement.bounceRate}}</h4>
           <h4 ng-if="!websitesAnalysis.engagement.bounceRate" class="card-stats-number">
             <div style="font-size: medium;" class="spinner icon-spinner-5 center" aria-hidden="true"></div>
           </h4>
@@ -69,7 +110,8 @@
       <div class="card">
         <div class="card-content purple white-text">
           <p class="card-stats-title"><i class="mdi-action-trending-up"></i> Daily Time On Channel</p>
-          <h4 ng-if="websitesAnalysis.engagement.dailyTimeOnSite" class="card-stats-number">{{websitesAnalysis.engagement.dailyTimeOnSite}}</h4>
+          <h4 ng-if="websitesAnalysis.engagement.dailyTimeOnSite" class="card-stats-number">
+            {{websitesAnalysis.engagement.dailyTimeOnSite}}</h4>
           <h4 ng-if="!websitesAnalysis.engagement.dailyTimeOnSite" class="card-stats-number">
             <div style="font-size: medium;" class="spinner icon-spinner-5 center" aria-hidden="true"></div>
           </h4>
@@ -81,7 +123,8 @@
   <div class="row">
 
     <div class="col s12 m6">
-      <donut-chart ng-if="websitesChannels" my-title="Sentiment Analysis From Channel {{websitesAnalysis.websiteName}}" my-id="1"
+      <donut-chart ng-if="websitesChannels" my-title="Sentiment Analysis From Channel {{websitesAnalysis.websiteName}}"
+                   my-id="1"
                    positive="{{websitesChannels.positive_score}}"
                    negative="{{websitesChannels.negative_score}}"
                    neutral="{{websitesChannels.neutral_score}}">
@@ -89,7 +132,32 @@
       </donut-chart>
     </div>
     <div class="col s12 m6">
-      <combo-chart title="Sentiment Analysis By Date From Channel {{websitesAnalysis.websiteName}}" ng-if="tableAllAnalysisSpec.length>1" my-id="2" my-table="{{tableAllAnalysisSpec}}"></combo-chart>
+      <combo-chart title="Sentiment Analysis By Date From Channel {{websitesAnalysis.websiteName}}"
+                   ng-if="tableAllAnalysisSpec.length>1" my-id="2" my-table="{{tableAllAnalysisSpec}}"></combo-chart>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12">
+      <br><br>
+      <h5>Top Google Search <i>{{websitesAnalysis.websiteName}}</i></h5>
+      <span ng-repeat="ggleWeb in allWebsitesSearch | limitTo:3">
+
+
+     <div class="col s12 m4">
+       <div class="result_area">
+         <div style="background-color: white;padding: 10px;" class="result">
+           <h2><a target="_blank" href="{{ggleWeb.sourceLink}}">{{ggleWeb.name}}</a></h2>
+           <h3 class="link">
+             {{ggleWeb.sourceLink | limitTo:30}}
+           </h3>
+           <p class="description"> {{ggleWeb.content | limitTo:40}}</p>
+         </div>
+       </div>
+     </div>
+
+
+     </span>
     </div>
   </div>
 

@@ -85,7 +85,22 @@
       }).catch(function (err) {
         console.error(err);
       });
+
       ChannelService.getChannelByID(channelId).then(function (channelData) {
+
+        WebsitesService.getAllwebSitesProvider().then(function (webData) {
+          $scope.allWebsitesSearch=[];
+          webData.forEach(function (exactData) {
+            if(channelId==exactData.channelId)
+            {
+              $scope.allWebsitesSearch.push(exactData);
+            }
+          })
+
+
+        }).catch(function (err) {
+          console.error(err);
+        });
 
           WebsitesService.getWebsitesAnalysis(channelData.url).then(function (data) {
             console.info(data);

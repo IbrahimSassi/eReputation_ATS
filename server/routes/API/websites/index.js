@@ -46,6 +46,23 @@ router.post('/', function (req, res, next) {
 });
 
 
+
+
+router.get('/', function (req, res, next) {
+  DataProvider.getDataProvidersByConditionModel({"source":"websitesProvider"},function (err, docs) {
+    if (err) {
+      return handleError(res, err);
+    }
+    if (!docs) {
+      return res.status(404).send();
+    }
+    console.log(docs);
+    res.status(200)
+      .json(docs);
+
+  });
+});
+
 router.get('/getAnalysis/:url', function (req, res, next) {
   alexaData.AlexaWebData(req.params.url, function(error, result) {
     result.websiteName=req.params.url;
