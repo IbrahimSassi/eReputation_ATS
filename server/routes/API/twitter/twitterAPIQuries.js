@@ -172,7 +172,7 @@ module.exports.SaveDatToTwitterProviderForRepliesToUserForChannel = function (re
 
     client.get('search/tweets', {
       q: 'to:' + mentionedUser + ' ' + finalKeywords + ' since:' + since + ' until:' + until + 'result_type:popular',
-      count: 50,
+      count: 100,
       max_id: max_id
     }, function (error, tweets, response) {
       if (error) {
@@ -182,7 +182,8 @@ module.exports.SaveDatToTwitterProviderForRepliesToUserForChannel = function (re
         var newTwitterData = new dataProvider.tweetsProvider();
         newTwitterData.id = tweets.statuses[i].id_str;
         newTwitterData.dateContent = tweets.statuses[i].created_at;
-        newTwitterData.content = tweets.statuses[i].text;
+        var newContent = tweets.statuses[i].text.replace(/\r?\n|\r/g, " ");
+        newTwitterData.content = newContent;
         newTwitterData.contentLanguage = tweets.statuses[i].lang;
         newTwitterData.author = {
           screenName: tweets.statuses[i].user.screen_name,
@@ -275,7 +276,7 @@ module.exports.SaveDatToTwitterProviderForMentionedUserForChannel = function (re
 
     client.get('search/tweets', {
       q: '@' + mentionedUser + ' ' + finalKeywords + ' since:' + since + ' until:' + until + 'result_type:popular',
-      count: 50,
+      count: 100,
       max_id: max_id
     }, function (error, tweets, response) {
       if (error) {
@@ -285,7 +286,8 @@ module.exports.SaveDatToTwitterProviderForMentionedUserForChannel = function (re
         var newTwitterData = new dataProvider.tweetsProvider();
         newTwitterData.id = tweets.statuses[i].id_str;
         newTwitterData.dateContent = tweets.statuses[i].created_at;
-        newTwitterData.content = tweets.statuses[i].text;
+        var newContent = tweets.statuses[i].text.replace(/\r?\n|\r/g, " ");
+        newTwitterData.content = newContent;
         newTwitterData.contentLanguage = tweets.statuses[i].lang;
         newTwitterData.author = {
           screenName: tweets.statuses[i].user.screen_name,
@@ -383,7 +385,8 @@ module.exports.TweetsScrapper = function (req, res, next) {
       var newTwitterData = new dataProvider.tweetsProvider();
       newTwitterData.id = tweets.statuses[i].id_str;
       newTwitterData.dateContent = tweets.statuses[i].created_at;
-      newTwitterData.content = tweets.statuses[i].text;
+      var newContent = tweets.statuses[i].text.replace(/\r?\n|\r/g, " ");
+      newTwitterData.content = newContent;
       newTwitterData.contentLanguage = tweets.statuses[i].lang;
       newTwitterData.author = {
         screenName: tweets.statuses[i].user.screen_name,
@@ -481,7 +484,8 @@ module.exports.TweetsScrapperWithGeo = function (req, res, next) {
       var newTwitterData = new dataProvider.tweetsProvider();
       newTwitterData.id = tweets.statuses[i].id_str;
       newTwitterData.dateContent = tweets.statuses[i].created_at;
-      newTwitterData.content = tweets.statuses[i].text;
+      var newContent = tweets.statuses[i].text.replace(/\r?\n|\r/g, " ");
+      newTwitterData.content = newContent;
       newTwitterData.contentLanguage = tweets.statuses[i].lang;
       newTwitterData.author = {
         screenName: tweets.statuses[i].user.screen_name,

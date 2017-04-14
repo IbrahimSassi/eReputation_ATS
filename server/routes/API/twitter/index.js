@@ -41,6 +41,7 @@ router.post('/TweetsScrapperWithGeo',TwitterAPIQueries.TweetsScrapperWithGeo);
 router.post('/getTwitterSentimentalForMention',TwitterStatsGenerator.getTwitterSentimentalForMention);
 router.post('/getTwitterSentimentalForReply',TwitterStatsGenerator.getTwitterSentimentalForReply);
 router.post('/getTopTweet',TwitterStatsGenerator.getTopTweet);
+router.post('/getTopHashtags',TwitterStatsGenerator.getTopHashtags);
 
 
 //Test

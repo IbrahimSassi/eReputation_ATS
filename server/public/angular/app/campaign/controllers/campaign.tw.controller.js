@@ -11,38 +11,38 @@
     .controller('CampaignTwCtrl', CampaignTwCtrl)
 
   /*  .directive("myHref", function() {
-      return {
-        restrict: 'E',
-        replace: true,
-        transclude: true,
-        link: function(scope, elem, attrs) {
-          var observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-              scope.$parent.result = mutation.target.href;
-              scope.$apply();
-              scope.$watch("result",function(newValue,oldValue) {
-                //This gets called when data changes.
-              });
-            });
-          });
+   return {
+   restrict: 'E',
+   replace: true,
+   transclude: true,
+   link: function(scope, elem, attrs) {
+   var observer = new MutationObserver(function(mutations) {
+   mutations.forEach(function(mutation) {
+   scope.$parent.result = mutation.target.href;
+   scope.$apply();
+   scope.$watch("result",function(newValue,oldValue) {
+   //This gets called when data changes.
+   });
+   });
+   });
 
-          // configuration of the observer:
-          var config = {
-            attributes: true,
-            childList: true,
-            characterData: true
-          };
+   // configuration of the observer:
+   var config = {
+   attributes: true,
+   childList: true,
+   characterData: true
+   };
 
-          observer.observe(elem[0], config);
+   observer.observe(elem[0], config);
 
-        },
-        scope: {
-          myHref: '='
-        },
-        templateUrl: 'angular/app/twitter/directives/embedTweet.html',
-      };
-    });
-*/
+   },
+   scope: {
+   myHref: '='
+   },
+   templateUrl: 'angular/app/twitter/directives/embedTweet.html',
+   };
+   });
+   */
   /**End My Module Init**/
 
   /**Injection**/
@@ -68,10 +68,6 @@
     vm.until = moment();
 
 
-
-
-
-
     var filterSentimentalForMention =
       {
         "since": "2017-04-05T02:35:14+01:00",
@@ -86,7 +82,6 @@
         "channelId": "58ecb8ee9f4c535d345dfc03",
         "campaignId": "58ecba269f4c535d345dfc05"
       };
-
 
 
     var topNegativeMention =
@@ -121,6 +116,24 @@
       {
         "tweetType": null,
         "score": null,
+        "campaignId": null,
+        "channelId": null,
+        "since": "2017-04-05T02:35:14+01:00",
+        "until": "2017-04-12T19:35:14+01:00",
+      };
+
+    var topHashtagsReply =
+      {
+        "tweetType": null,
+        "campaignId": null,
+        "channelId": null,
+        "since": "2017-04-05T02:35:14+01:00",
+        "until": "2017-04-12T19:35:14+01:00",
+      };
+
+    var topHashtagsMention =
+      {
+        "tweetType": null,
         "campaignId": null,
         "channelId": null,
         "since": "2017-04-05T02:35:14+01:00",
@@ -206,6 +219,10 @@
           vm.profile_sidebar_fill_color = '#' + item.profile_sidebar_border_color;
           console.log(vm.profile_sidebar_fill_color)
           initReputationBySentiment();
+          initTopTweets();
+          requestTopTweets();
+          initTopHashtags();
+          requestTopHashtags();
         }).catch(function (err) {
           console.error(err);
         });
@@ -246,9 +263,10 @@
         filterSentimentalForReply.channelId = vm.selectChannelValue;
         filterSentimentalForReply.campaignId = vm.idCampaign;
         initReputationBySentiment();
-        initTopTweets()
-        requestTopTweets()
-
+        initTopTweets();
+        requestTopTweets();
+        initTopHashtags();
+        requestTopHashtags();
 
       }
 
@@ -271,11 +289,11 @@
       //vm.reputationBySentiment.push(['Positive', 70]);
       //vm.reputationBySentiment.push(['Negative', 20]);
       //vm.reputationBySentiment.push(['Neutral', 10]);
-      console.log("heyyyyyyyyyyyyyyyyyyyyyyy", filterSentimentalForReply)
-      console.log("/////////////////")
+      //console.log("heyyyyyyyyyyyyyyyyyyyyyyy", filterSentimentalForReply)
+      //console.log("/////////////////")
       TwitterService.GetSentimentalForOneChannelForMention(filterSentimentalForReply).then(function (data) {
         data.forEach(function (obj) {
-          console.log('obj: ', obj);
+          //console.log('obj: ', obj);
           vm.reputationBySentimentMention.push(['Positive', obj.positive_score]);
           vm.reputationBySentimentMention.push(['Negative', obj.negative_score]);
           vm.reputationBySentimentMention.push(['Neutral', obj.neutral_score]);
@@ -284,7 +302,7 @@
 
       TwitterService.GetSentimentalForOneChannelForReply(filterSentimentalForMention).then(function (data) {
         data.forEach(function (obj) {
-          console.log('obj: ', obj);
+          //console.log('obj: ', obj);
           vm.reputationBySentimentReply.push(['Positive', obj.positive_score]);
           vm.reputationBySentimentReply.push(['Negative', obj.negative_score]);
           vm.reputationBySentimentReply.push(['Neutral', obj.neutral_score]);
@@ -323,72 +341,116 @@
       topPositiveReply.since = moment(vm.since).format();//2017-04-02
       topPositiveReply.until = moment(vm.until).format();
 
-      console.log("topNegativeMention",topNegativeMention);
-      console.log("topNegativeReply",topNegativeReply);
-      console.log("topPositiveMention",topPositiveMention);
-      console.log("topPositiveReply",topPositiveReply);
+      //console.log("topNegativeMention", topNegativeMention);
+      //console.log("topNegativeReply", topNegativeReply);
+      //console.log("topPositiveMention", topPositiveMention);
+      //console.log("topPositiveReply", topPositiveReply);
 
     }
 
 
- function requestTopTweets()
-    {console.log('dkhallllll')
+    function requestTopTweets() {
       TwitterService.GetTopTweet(topPositiveReply).then(function (data) {
-        console.log("topPositiveReplyData: ", data)
+        //console.log("topPositiveReplyData: ", data)
         document.getElementById('topPositiveReply').innerHTML = "";
         twttr.widgets.createTweet(
           data.id,
           document.getElementById('topPositiveReply'),
-          {
-
-          }
+          {}
         );
 
 
       })
 
       TwitterService.GetTopTweet(topPositiveMention).then(function (data) {
-        console.log("topPositiveMentionData: ", data)
+        //console.log("topPositiveMentionData: ", data)
         document.getElementById('topPositiveMention').innerHTML = "";
         twttr.widgets.createTweet(
           data.id,
           document.getElementById('topPositiveMention'),
-          {
-
-          }
+          {}
         );
       })
 
       TwitterService.GetTopTweet(topNegativeReply).then(function (data) {
-        console.log("topNegativeReplyData: ", data)
+        //console.log("topNegativeReplyData: ", data)
         document.getElementById('topNegativeReply').innerHTML = "";
         twttr.widgets.createTweet(
           data.id,
           document.getElementById('topNegativeReply'),
-          {
-
-          }
+          {}
         );
       })
 
       TwitterService.GetTopTweet(topNegativeMention).then(function (data) {
-        console.log("topNegativeMentionData: ", data)
+        //console.log("topNegativeMentionData: ", data)
         document.getElementById('topNegativeMention').innerHTML = "";
         twttr.widgets.createTweet(
           data.id,
           document.getElementById('topNegativeMention'),
-          {
-
-          }
+          {}
         );
       })
 
+    }
 
-        //$('.twitter-tweet').load( "<blockquote class='twitter-tweet' data-lang='en'> <p lang='en' dir='ltr'>just setting up my twttr</p>&mdash; Jack (@jack) <a href='https://twitter.com/medfirasouert/status/851157516738342913'>March 21, 2006</a> </blockquote>" );
 
+    function initTopHashtags()
+    {
+
+      topHashtagsReply.tweetType = 'Reply'
+      topHashtagsReply.campaignId = vm.idCampaign
+      topHashtagsReply.channelId = vm.selectChannelValue;
+      topHashtagsReply.since = moment(vm.since).format();
+      topHashtagsReply.until = moment(vm.until).format();
+
+      topHashtagsMention.tweetType = 'Mention'
+      topHashtagsMention.campaignId = vm.idCampaign
+      topHashtagsMention.channelId = vm.selectChannelValue;
+      topHashtagsMention.since = moment(vm.since).format();
+      topHashtagsMention.until = moment(vm.until).format();
+
+      console.log("topHashtagsReply: ",topHashtagsReply)
+      console.log("topHashtagsMention: ",topHashtagsMention)
+    }
+    function requestTopHashtags()
+    {
+       vm.HashtagsReply = []
+      vm.HashtagsMention = []
+      vm.HRS = 0;
+      vm.HMS = 0;
+      TwitterService.GetTopHashtags(topHashtagsReply).then(function (data) {
+
+        for (var i=0 ; i<5;i++)
+        {
+          if(data[i])
+          {
+            vm.HRS = vm.HRS+data[i].nb;
+          vm.HashtagsReply.push(data[i])
+          }
+        }
+
+        console.log("HashtagsReply: ", vm.HashtagsReply)
+
+      })
+
+      TwitterService.GetTopHashtags(topHashtagsMention).then(function (data) {
+
+        for (var i=0 ; i<5;i++)
+        {
+          if(data[i])
+          {
+            vm.HMS = vm.HMS+data[i].nb;
+          vm.HashtagsMention.push(data[i])
+          }
+        }
+        console.log("HashtagsMention: ", vm.HashtagsMention)
+      })
 
 
     }
+
+
 
     initReputationBySentiment();
     /**

@@ -246,6 +246,62 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col s6 m6 l6">
+    <ul id="issues-collection" class="collection">
+      <li class="collection-item avatar">
+        <i class="mdi-action-bug-report circle red darken-2"></i>
+        <span class="collection-header">Top 5</span>
+        <p>Hashtags used in replies to your tweets</p>
+        <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
+      </li>
+      <li ng-repeat="ky in camp.HashtagsReply" class="collection-item">
+        <div class="row">
+          <div class="col s7">
+            <p class="collections-title"><strong>#{{ky._id.text}}</strong></p>
+
+          </div>
+          <div class="col s2">
+            <span class="task-cat pink accent-2">{{ky.nb}}</span>
+          </div>
+          <div class="col s3">
+            <div class="progress">
+              <div class="determinate" style="width: {{ky.nb*100/camp.HRS}}%"></div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+  <div class="col s6 m6 l6">
+    <ul id="issues-collection2" class="collection">
+      <li class="collection-item avatar">
+        <i class="mdi-action-bug-report circle red darken-2"></i>
+        <span class="collection-header">Top 5</span>
+        <p>Hashtags used in tweets you mentoned in</p>
+        <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
+      </li>
+      <li ng-repeat="ky in camp.HashtagsMention" class="collection-item">
+        <div class="row">
+          <div class="col s7">
+            <p class="collections-title"><strong>#{{ky._id.text}}</strong></p>
+
+          </div>
+          <div class="col s2">
+            <span class="task-cat pink accent-2">{{ky.nb}}</span>
+          </div>
+          <div class="col s3">
+            <div class="progress">
+              <div class="determinate" style="width: {{ky.nb*100/camp.HMS}}%"></div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</div>
 
 <script type="text/javascript">
   $(document).ready(function () {

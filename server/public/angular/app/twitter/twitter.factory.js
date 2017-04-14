@@ -48,6 +48,11 @@
         'GetTopTweet': {
           url: '/api/twitter/getTopTweet',
           method: 'POST'
+        },
+        'GetTopHashtags': {
+          url: '/api/twitter/getTopHashtags',
+          method: 'POST'
+          , isArray: true
         }
 
       }

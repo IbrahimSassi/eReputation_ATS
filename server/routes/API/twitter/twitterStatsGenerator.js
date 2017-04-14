@@ -133,3 +133,29 @@ module.exports.getTopTweet = function (req, res, next) {
     })
   }
 };
+
+
+module.exports.getTopHashtags = function (req, res, next) {
+
+  DataProvider.aggregate([{
+    $match: {
+
+      source: {'$eq': "tweetsProvider"},
+      tweetType: {'$eq': req.body.tweetType},
+
+
+      dateContent: {'$gte': new Date(req.body.since), '$lte': new Date(req.body.until)},
+      campaignId: {'$eq': req.body.campaignId},
+      channelId: {'$eq': req.body.channelId},
+    }
+  }, {$unwind: "$hashtags"}, {$group: {_id: "$hashtags", assets: {$push: {assets_id: "$_id"}}, nb: {$sum: 1}}},
+
+    {$sort: {score: {$meta: "textScore"}, nb: -1}}])
+
+    .then(function (data) {
+      res.json(data);
+    }).catch(function (err) {
+    res.json(err);
+  })
+
+};

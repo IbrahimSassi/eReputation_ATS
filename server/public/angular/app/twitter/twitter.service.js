@@ -33,13 +33,17 @@
     function GetTopTweet(condition) {
       return TwitterFactory.GetTopTweet(condition).$promise;
     }
+    function GetTopHashtags(condition) {
+      return TwitterFactory.GetTopHashtags(condition).$promise;
+    }
 
     return {
       GetChannelByID : GetChannelByID,
       GetUserInfo : GetUserInfo,
       GetSentimentalForOneChannelForMention : GetSentimentalForOneChannelForMention,
       GetSentimentalForOneChannelForReply : GetSentimentalForOneChannelForReply,
-      GetTopTweet : GetTopTweet
+      GetTopTweet : GetTopTweet,
+      GetTopHashtags : GetTopHashtags
     };
 
 
