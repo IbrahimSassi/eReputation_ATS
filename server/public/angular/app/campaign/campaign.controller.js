@@ -49,6 +49,11 @@
       })
       .state('campaignDetail.campaignFbAnalysis', {
         url: '/facebook',
+        templateUrl: 'angular/app/campaign/views/analysis/fb.campaign.global.view.html',
+        controller: 'CampaignFbCtrl as vm',
+      })
+      .state('campaignDetail.campaignFbAnalysis.overview', {
+        url: '/overview',
         templateUrl: 'angular/app/campaign/views/analysis/fb.campaign.view.html',
         controller: 'CampaignFbCtrl as vm',
       })

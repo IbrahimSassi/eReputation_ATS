@@ -17,14 +17,14 @@
   /* @ngInject */
   function config($stateProvider, $urlRouterProvider) {
     $stateProvider
-      .state('facebookOverview', {
-        url: '/facebook/overview',
+      .state('campaignDetail.campaignFbAnalysis.facebookOverview', {
+        url: '/myPages',
         templateUrl: 'angular/app/facebook/views/overview.view.html',
         controller: 'FacebookController as vm',
         cache: false
       })
-      .state('facebookCommunity', {
-        url: '/facebook/community',
+      .state('campaignDetail.campaignFbAnalysis.facebookCommunity', {
+        url: '/community',
         templateUrl: 'angular/app/facebook/views/facebookCommunity.view.html',
         controller: 'FacebookCommunityController as vm',
         cache: false
