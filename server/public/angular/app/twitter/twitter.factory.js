@@ -53,6 +53,11 @@
           url: '/api/twitter/getTopHashtags',
           method: 'POST'
           , isArray: true
+        },
+        'getTwitterSentimentalForAll': {
+          url: '/api/twitter/getTwitterSentimentalForAll',
+          method: 'POST'
+          , isArray: true
         }
 
       }

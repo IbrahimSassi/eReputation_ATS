@@ -95,6 +95,38 @@ module.exports.getTwitterSentimentalForReply = function (req, res, next) {
 };
 
 
+//For All
+module.exports.getTwitterSentimentalForAll = function (req, res, next) {
+
+  console.log("ahawa: ", req.body.since);
+
+  var matchObject = {
+    $and: [
+      {dateContent: {'$gte': new Date(req.body.since), '$lte': new Date(req.body.until)}},
+      {campaignId: {'$eq': req.body.campaignId}},
+      {source: {'$eq': "tweetsProvider"}}
+
+    ]
+  };
+
+  var groupObject = {
+    _id: {Insights: "My Insights"},
+    neutral_score: {$avg: "$contentScore.neutral"},
+    positive_score: {$avg: "$contentScore.positivity"},
+    negative_score: {$avg: "$contentScore.negativity"}
+  };
+
+  DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, undefined, undefined).then(function (data) {
+    res.json(data);
+  }).catch(function (err) {
+    res.json(err);
+  })
+
+};
+
+
+
+
 module.exports.getTopTweet = function (req, res, next) {
 
   var tweetType = req.body.tweetType;
@@ -104,6 +136,17 @@ module.exports.getTopTweet = function (req, res, next) {
   var since = req.body.since;
   var until = req.body.until;
 
+  if (req.body.channelId == "all") {
+    DataProvider.findOne({
+       campaignId: campaignId, dateContent: {
+        $gte: new Date(since),
+        $lt: new Date(until)
+      }
+    }).sort({'contentScore.positivity': -1}).then(function (doc, err) {
+      if (err) res.send(err)
+      res.json(doc)
+    })
+  }
 
   if (score == "positive") {
     console.log("ahaha")
@@ -137,6 +180,32 @@ module.exports.getTopTweet = function (req, res, next) {
 
 module.exports.getTopHashtags = function (req, res, next) {
 
+
+
+  if (req.body.channelId == "all") {
+    DataProvider.aggregate([{
+      $match: {
+
+        source: {'$eq': "tweetsProvider"},
+
+
+
+        dateContent: {'$gte': new Date(req.body.since), '$lte': new Date(req.body.until)},
+        campaignId: {'$eq': req.body.campaignId},
+
+      }
+    }, {$unwind: "$hashtags"}, {$group: {_id: "$hashtags", assets: {$push: {assets_id: "$_id"}}, nb: {$sum: 1}}},
+
+      {$sort: {score: {$meta: "textScore"}, nb: -1}}])
+
+      .then(function (data) {
+        res.json(data);
+      }).catch(function (err) {
+      res.json(err);
+    })
+  }
+
+else {
   DataProvider.aggregate([{
     $match: {
 
@@ -156,6 +225,6 @@ module.exports.getTopHashtags = function (req, res, next) {
       res.json(data);
     }).catch(function (err) {
     res.json(err);
-  })
+  })}
 
 };

@@ -44,6 +44,8 @@ router.post('/getTopTweet',TwitterStatsGenerator.getTopTweet);
 router.post('/getTopHashtags',TwitterStatsGenerator.getTopHashtags);
 
 
+router.post('/getTwitterSentimentalForAll',TwitterStatsGenerator.getTwitterSentimentalForAll);
+
 //Test
 router.post('/UserRepForChannelTest',TwitterAPIQueries.SaveDatToTwitterProviderForRepliesToUserForChannelTest);
 

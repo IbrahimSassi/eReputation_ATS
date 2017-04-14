@@ -36,14 +36,17 @@
     function GetTopHashtags(condition) {
       return TwitterFactory.GetTopHashtags(condition).$promise;
     }
-
+    function getTwitterSentimentalForAll(filter) {
+      return TwitterFactory.getTwitterSentimentalForAll(filter).$promise;
+    }
     return {
       GetChannelByID : GetChannelByID,
       GetUserInfo : GetUserInfo,
       GetSentimentalForOneChannelForMention : GetSentimentalForOneChannelForMention,
       GetSentimentalForOneChannelForReply : GetSentimentalForOneChannelForReply,
       GetTopTweet : GetTopTweet,
-      GetTopHashtags : GetTopHashtags
+      GetTopHashtags : GetTopHashtags,
+      getTwitterSentimentalForAll : getTwitterSentimentalForAll
     };
 
 

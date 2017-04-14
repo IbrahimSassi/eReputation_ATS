@@ -40,6 +40,7 @@
       <label>Please select your channel</label>
       <select ng-change="camp.onSelectChannel()" material-select watch ng-model="camp.selectChannelValue">
         <option value="" disabled selected>Choose your option</option>
+        <option value="all">Follow All Channels</option>
         <option ng-repeat="allchannels in camp.allChannelsInArray" value="{{allchannels._id}}">{{allchannels.name}}
         </option>
       </select>
@@ -87,7 +88,7 @@
 </div>
 
 
-<div id="breadcrumbs-wrapper">
+<div id="breadcrumbs-wrapper" ng-if="camp.selectChannelValue!='all'">
   <div class="col s12">
     <div id="tab-twitter" class="col s12 ">
       <!-- your In tab Work-->
@@ -204,7 +205,25 @@
 
 </div>
 
-<div class="row">
+
+
+
+
+<div class="row" ng-if="camp.selectChannelValue=='all'">
+  <div class="col s12 m12 l12">
+    <pie-chart height="400" my-id="Replies" my-table="{{camp.reputationBySentimentAll}}"
+               title="Tweets Analytics"></pie-chart>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+<div class="row" ng-if="camp.selectChannelValue!='all'">
   <div class="col s12 m12 l12">
     <div class="col s6 m6 l6">
       <div class="row">
@@ -246,7 +265,7 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row" ng-if="camp.selectChannelValue!='all'">
   <div class="col s6 m6 l6">
     <ul id="issues-collection" class="collection">
       <li class="collection-item avatar">
@@ -302,6 +321,43 @@
     </ul>
   </div>
 </div>
+
+
+
+<div class="row" ng-if="camp.selectChannelValue=='all'">
+
+  <div class="col s12 m12 l12">
+    <ul id="issues-collection3" class="collection">
+      <li class="collection-item avatar">
+        <i class="mdi-action-bug-report circle red darken-2"></i>
+        <span class="collection-header">Top 5</span>
+        <p>Hashtags used in tweets based on your campaign keywords</p>
+        <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
+      </li>
+      <li ng-repeat="ky in camp.HashtagsAll" class="collection-item">
+        <div class="row">
+          <div class="col s7">
+            <p class="collections-title"><strong>#{{ky._id.text}}</strong></p>
+
+          </div>
+          <div class="col s2">
+            <span class="task-cat pink accent-2">{{ky.nb}}</span>
+          </div>
+          <div class="col s3">
+            <div class="progress">
+              <div class="determinate" style="width: {{ky.nb*100/camp.HA}}%"></div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</div>
+
+
+
+
 
 <script type="text/javascript">
   $(document).ready(function () {
