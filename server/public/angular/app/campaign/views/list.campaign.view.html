@@ -25,7 +25,7 @@
             <div class="card-action right">
                <a ui-sref="campaignDetail({idCampaign:'{{c._id}}'})"  style="margin: 5px" class="btn-floating waves-effect grey darken-1 waves-light"><i
                  class="mdi-image-remove-red-eye"></i></a>
-               <a style="margin: 5px" class="btn-floating waves-effect grey darken-1 waves-light"><i
+               <a ui-sref="campaignEdit({idCampaign:'{{c._id}}'})"  style="margin: 5px" class="btn-floating waves-effect grey darken-1 waves-light"><i
                  class="mdi-action-settings"></i></a>
                <a id="realDelete{{c._id}}" style="display: none" ng-click="camp.deleteCampaign(c)" style="margin: 5px" class="btn-floating waves-effect grey darken-1 waves-light"><i
                  class="mdi-action-delete"></i></a>
