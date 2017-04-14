@@ -76,7 +76,8 @@
                                 hAxis: {title: 'Days'},
                                 seriesType: 'bars',
                                 series: {3: {type: 'line'}},
-                                backgroundColor: {fill: 'transparent'}
+                                // backgroundColor: {fill: 'transparent'},
+                                height:300
                             };
 
                             var chart = new google.visualization.ComboChart(document.getElementById('combochart' + scope.myId));

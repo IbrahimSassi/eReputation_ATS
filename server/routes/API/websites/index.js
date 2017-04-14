@@ -10,30 +10,9 @@ var google = require('google');
 var myRequest = require('request');
 var scraper = require('../webScraping/scraper');
 var async = require('async');
-// router.post('/', function (req, res, next) {
-//
-//   var newWebsitesArticle = new DataProvider.websitesProvider(req.body);
-//
-//   DataProvider.createDataProviderModel(newWebsitesArticle, function (err, item) {
-//     if (err) return handleError(res, err);
-//     else {
-//       console.log('Success websites article saved');
-//       console.log(item);
-//       res.status(201)
-//         .json(item);
-//     }
-//   });
-//
-// });
+var alexaData = require('alexa-traffic-rank');
 
 router.post('/', function (req, res, next) {
-
-  // var since;
-  // var until;
-  // if (req.body.since && req.body.until) {
-  //   since = moment(req.body.since).format();
-  //   until = moment(req.body.until).format();
-  // }
 
   var matchObject = {
     $and: [
@@ -46,7 +25,7 @@ router.post('/', function (req, res, next) {
 
 
   var groupObject = {
-    _id: { dateContent: {$substr: ["$dateContent", 0, 10]}},
+     _id: { dateContent: {$substr: ["$dateContent", 0, 10]}},
     neutral_score: {$avg: "$contentScore.neutral"},
     positive_score: {$avg: "$contentScore.positivity"},
     negative_score: {$avg: "$contentScore.negativity"}
@@ -66,18 +45,15 @@ router.post('/', function (req, res, next) {
 
 });
 
-// function websitesToWorkOn() {
-//   return new Promise(function (resolve, reject) {
-//     myCampaign.find({_id: id}, function (err, docs) {
-//       if (err) {
-//         reject(err);
-//       }
-//       resolve(docs);
-//     });
-//   });
-// }
 
-router.put('/', function (req, result, next) {
+router.get('/getAnalysis/:url', function (req, res, next) {
+  alexaData.AlexaWebData(req.params.url, function(error, result) {
+    result.websiteName=req.params.url;
+    res.json(result);
+  })
+});
+
+router.get('/getData', function (req, result, next) {
   var websitesAndKeywords = [];
   CampaignModel.findAllCampaigns().then(function (campaigns) {
     var channelPromise;

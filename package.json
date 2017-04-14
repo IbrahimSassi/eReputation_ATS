@@ -32,6 +32,7 @@
   "private": true,
   "dependencies": {
     "activator": "^3.0.1",
+    "alexa-traffic-rank": "^1.0.1",
     "body-parser": "~1.16.0",
     "cheerio": "^0.22.0",
     "cookie-parser": "~1.4.3",
