@@ -52,6 +52,20 @@
           method: 'POST',
           isArray: true
         },
+
+        'FbSentimental': {
+          url: '/api/wwsa/ChannelSentimental',
+          method: 'POST',
+          isArray: true
+        },
+        'WebSentimental': {
+          url: '/api/wwsa/ChannelSentimental',
+          method: 'POST',
+          isArray: true
+        },
+
+
+
       }
     );
 

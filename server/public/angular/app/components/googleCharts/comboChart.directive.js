@@ -37,6 +37,7 @@
                     oooldNegative: '@oooldNegative',
                     oooldNeutral: '@oooldNeutral',
                     oooldAvg: '@oooldAvg',*/
+                  title: '@title',
                   myTable: '@myTable'
 
                 },
@@ -61,15 +62,15 @@
                             );
 
                             var options = {
-                                title: 'Number of Tweets by Time and sentiment',
+                              title: scope.title,
 
-                                titleTextStyle: {
+                               /* titleTextStyle: {
                                     color: '#848484',    // any HTML string color ('red', '#cc00cc')
                                     fontName: 'Arial Black', // i.e. 'Times New Roman'
                                     fontSize: 22, // 12, 18 whatever you want (don't specify px)
                                     // bold: true,    // true or false
                                     // italic: true   // true of false
-                                },
+                                },*/
                                 colors: ['#46BFBD', '#F7464A', '#FDB45C', '#BF00FF'],
                                 vAxis: {title: 'Motions'},
                                 hAxis: {title: 'Days'},
