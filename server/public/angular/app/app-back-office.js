@@ -6,6 +6,7 @@ angular.module('ATSApp', [
   'ATSApp.twitter',
   'ATSApp.campaign',
   'ATSApp.facebook',
+  'ATSApp.websites',
   'ui.materialize',
   'ATSApp.channel',
   'ATSApp.profile',

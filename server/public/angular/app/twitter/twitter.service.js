@@ -24,9 +24,29 @@
       return TwitterFactory.GetUserInfo({screen_name:screen_name}).$promise;
     };
 
+    function GetSentimentalForOneChannelForMention(filter) {
+      return TwitterFactory.GetSentimentalForOneChannelForMention(filter).$promise;
+    }
+    function GetSentimentalForOneChannelForReply(filter) {
+      return TwitterFactory.GetSentimentalForOneChannelForReply(filter).$promise;
+    }
+    function GetTopTweet(condition) {
+      return TwitterFactory.GetTopTweet(condition).$promise;
+    }
+    function GetTopHashtags(condition) {
+      return TwitterFactory.GetTopHashtags(condition).$promise;
+    }
+    function getTwitterSentimentalForAll(filter) {
+      return TwitterFactory.getTwitterSentimentalForAll(filter).$promise;
+    }
     return {
       GetChannelByID : GetChannelByID,
-      GetUserInfo : GetUserInfo
+      GetUserInfo : GetUserInfo,
+      GetSentimentalForOneChannelForMention : GetSentimentalForOneChannelForMention,
+      GetSentimentalForOneChannelForReply : GetSentimentalForOneChannelForReply,
+      GetTopTweet : GetTopTweet,
+      GetTopHashtags : GetTopHashtags,
+      getTwitterSentimentalForAll : getTwitterSentimentalForAll
     };
 
 

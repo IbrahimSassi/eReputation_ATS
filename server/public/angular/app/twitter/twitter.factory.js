@@ -35,13 +35,31 @@
             screen_name: '@screen_name',
           }
         },
-        'SendVerificationEmail': {
-          url: '/users/verification/generate/:email',
-          method: 'POST',
-          params: {
-            email: '@email',
-          },
+        'GetSentimentalForOneChannelForMention': {
+          url: '/api/twitter/getTwitterSentimentalForMention',
+          method: 'POST'
+          , isArray: true
+        },
+        'GetSentimentalForOneChannelForReply': {
+          url: '/api/twitter/getTwitterSentimentalForReply',
+          method: 'POST'
+          , isArray: true
+        },
+        'GetTopTweet': {
+          url: '/api/twitter/getTopTweet',
+          method: 'POST'
+        },
+        'GetTopHashtags': {
+          url: '/api/twitter/getTopHashtags',
+          method: 'POST'
+          , isArray: true
+        },
+        'getTwitterSentimentalForAll': {
+          url: '/api/twitter/getTwitterSentimentalForAll',
+          method: 'POST'
+          , isArray: true
         }
+
       }
     );
 

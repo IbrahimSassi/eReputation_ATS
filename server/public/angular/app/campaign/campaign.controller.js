@@ -29,6 +29,11 @@
     $stateProvider
       .state('campaignCreate', {
         url: '/campaign/create',
+        templateUrl: 'angular/app/campaign/views/edit.campaign.view.html',
+        controller: 'CampaignCtrl as camp'
+      })
+      .state('campaignEdit', {
+        url: '/campaign/edit/:idCampaign',
         templateUrl: 'angular/app/campaign/views/create.campaign.view.html',
         controller: 'CampaignCtrl as camp'
       })
@@ -88,6 +93,28 @@
     /**
      * View Detail Methods
      */
+
+
+
+    vm.displayEdit=function (id) {
+      CampaignService.getCampaignById(id).then(function (data) {
+        console.info("cammpaign : ",data[0]);
+        $scope.campaignToEdit = data[0];
+        // data[0].channels.forEach(function (channelPartial) {
+        //   ChannelService.getChannelByID(channelPartial.channelId).then(function (channel) {
+        //     $scope.allChannelTodisplay.push(channel);
+        //   });
+        // });
+      }).catch(function (err) {
+        console.error(err);
+      });
+
+    };
+
+    if(vm.idCampaign)
+    {
+      vm.displayEdit(vm.idCampaign);
+    }
 
     vm.getCampaignDetail = function (id) {
       if (id !== undefined) {

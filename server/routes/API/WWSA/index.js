@@ -3,6 +3,7 @@ var router = express.Router();
 var myRequest = require('request');
 var translate = require('google-translate-api');
 var dataProviderModel = require('../../../models/dataProvider/dataProvider.model');
+var sentimentalController = require('../../sentimental/sentiment_analysis.controller')
 
 /* POST TEXT SEARCH . */
 //POST BODY EXEMPLE
@@ -164,34 +165,6 @@ router.get('/NegativityByCompaign/:id', function (req, res, next) {
   });
 
 });
-/*
-router.get('/Datestat/:id', function (req, res, next) {
-  var data1
-    var data2
-    var data3
-    dataProviderModel.avgNegativitybyCompaign(req.params.id).then(function (data) {
-        data1 = data;
-    }).catch(function (err) {
-        res.status(400).json(err);
-    });
-
-    dataProviderModel.avgNegativitybyCompaign(req.params.id).then(function (data) {
-        data2 = data
-    }).catch(function (err) {
-        res.status(400).json(err);
-    });
-
-    dataProviderModel.avgNegativitybyCompaign(req.params.id).then(function (data) {
-       data3 = data
-    }).catch(function (err) {
-        res.status(400).json(err);
-    });
-
-    res.json({data1:data1,data2:data2,data3:data3})
-
-
-});
-*/
 
 
 router.get('/NeutralByCompaign/:id', function (req, res, next) {
@@ -206,71 +179,12 @@ router.get('/NeutralByCompaign/:id', function (req, res, next) {
 
 });
 
-router.get('/SentimentalAnalysisStackedBar/:id', function (req, res, next) {
 
-    var data1 = null
-    var data2 = null
-    var data3= null
-    dataProviderModel.SentimentalAnalysisByCompaignForToday(req.params.id).then(function (data) {
-
-        data1 = data;
-        console.log("data1",data1)
-        dataProviderModel.SentimentalAnalysisByCompaignForYesterday(req.params.id).then(function (data) {
-
-            data2 = data;
-            console.log("data2",data2)
-
-        })
-        dataProviderModel.SentimentalAnalysisByCompaignFortwodaysago(req.params.id).then(function (data) {
-
-            data3 = data;
-            console.log("data3",data3)
-            res.status(200).json({data1:data1,data2:data2,data3:data3})
-        })
-
-    }).catch(function (err) {
-        res.status(400).json(err);
-    });
-
-});
-
-
-router.get('/SentimentalAnalysiscombochart/:idcam/:idch', function (req, res, next) {
-    var data1 = null
-    var data2 = null
-    var data3= null
-    var data4= null
-    var data5= null
+router.post('/CompaignSentimental', sentimentalController.getCampaignSentimental);
+router.post('/ChannelSentimental', sentimentalController.getChannelSentimental);
 
 
 
-    dataProviderModel.SentimentalAnalysisByCompaignandChannelFortoday(req.params.idcam ,req.params.idch).then(function (data) {
-
-
-        data1 = data;
-        dataProviderModel.SentimentalAnalysisByCompaignandChannelForyesday(req.params.idcam ,req.params.idch).then(function (data) {
-
-            data2 = data;
-        })
-
-        dataProviderModel.SentimentalAnalysisByCompaignandChannelForoldday(req.params.idcam ,req.params.idch).then(function (data) {
-            data3 = data;
-        })
-
-        dataProviderModel.SentimentalAnalysisByCompaignandChannelForooldday(req.params.idcam ,req.params.idch).then(function (data) {
-            data4 = data;
-        })
-        dataProviderModel.SentimentalAnalysisByCompaignandChannelForoooldday(req.params.idcam ,req.params.idch).then(function (data) {
-            data5 = data;
-            res.status(200).json({data1:data1,data2:data2,data3:data3,data4:data4,data5:data5})
-        })
-
-    }).catch(function (err) {
-        res.status(204).json(err);
-    });
-
-
-});
 
 
 

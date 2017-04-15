@@ -7,6 +7,7 @@ var config = require('../twitter/config');
 var TwitterStream = require('twitter');
 var dataProvider = require('../../../models/dataProvider/dataProvider.model');
 var TwitterAPIQueries = require('./twitterAPIQuries');
+var TwitterStatsGenerator = require('./twitterStatsGenerator');
 
 
 var client = new TwitterStream({
@@ -37,6 +38,13 @@ router.post('/GetUserInfo/:screen_name',TwitterAPIQueries.GetUserInfo);
 router.post('/TweetsScrapper',TwitterAPIQueries.TweetsScrapper);
 router.post('/TweetsScrapperWithGeo',TwitterAPIQueries.TweetsScrapperWithGeo);
 
+router.post('/getTwitterSentimentalForMention',TwitterStatsGenerator.getTwitterSentimentalForMention);
+router.post('/getTwitterSentimentalForReply',TwitterStatsGenerator.getTwitterSentimentalForReply);
+router.post('/getTopTweet',TwitterStatsGenerator.getTopTweet);
+router.post('/getTopHashtags',TwitterStatsGenerator.getTopHashtags);
+
+
+router.post('/getTwitterSentimentalForAll',TwitterStatsGenerator.getTwitterSentimentalForAll);
 
 //Test
 router.post('/UserRepForChannelTest',TwitterAPIQueries.SaveDatToTwitterProviderForRepliesToUserForChannelTest);
