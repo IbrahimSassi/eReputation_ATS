@@ -125,16 +125,6 @@
 <div class="col s12">
   <h1>Overview</h1>
 
-  <!--<div id="flight-card" class="card">-->
-
-    <!--<div class="card-header indigo darken-1">-->
-      <!--<div class="card-title">-->
-        <!--<h4 class="flight-card-title">Overview</h4>-->
-        <!--<p class="flight-card-date">Last operation : 4 hours ago</p>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-
   <div class="row">
 
     <div class="input-field col s12 m12 l12">
@@ -387,19 +377,51 @@
   <div class="row">
     <h4 class="header">Top Facebook Post</h4>
 
-    <div class="col s6 m6 l6">
-      <h5 class="header">Top Shared Post</h5>
-      <div class="fb-post" data-href="{{vm.topSharedPost.link}}"></div>
+    <div class="col s12 m12 l6">
+      <ul id="TopSharedPosts" class="collection">
+        <li class="collection-item avatar">
+          <i class="fa fa-facebook red circle"></i>
+          <span class="collection-header">Top Shared Posts</span>
+          <p>{{vm.selectedChannel.name}}</p>
+          <a href="#" class="secondary-content"><i class="fa fa-share"></i></a>
+        </li>
+        <li class="collection-item">
+          <div class="row">
+            <!--<div class="fb-post" data-href="{{vm.topSharedPost.link}}" data-width="500" data-show-text="false">-->
+            <!--<div class="fb-xfbml-parse-ignore">-->
+            <!--<blockquote cite="{{vm.topSharedPost.link}}">-->
+            <!--<a href="{{vm.topSharedPost.link}}">How to Share With Just Friends</a>-->
+            <!--<p>How to share with just friends.</p>-->
+            <!--Posted by <a href="https://www.facebook.com/facebook/">Facebook</a> on Friday, December 5, 2014-->
+            <!--</blockquote>-->
+            <!--</div>-->
+            <!--</div>-->
 
+            <div data-width="500" class="fb-post" data-href="{{vm.topSharedPost.link}}"></div>
+          </div>
+        </li>
+      </ul>
     </div>
-    <div class="col s6 m6 l6">
-      <h5 class="header">Top Liked Post</h5>
-      <div class="fb-post" data-href="{{vm.topLikedPost.link}}"></div>
+    <div class="col s12 m12 l6">
+      <ul id="TopLikedPosts" class="collection">
+        <li class="collection-item avatar">
+          <i class="fa fa-facebook red circle"></i>
+          <span class="collection-header">Top Liked Posts</span>
+          <p>{{vm.selectedChannel.name}}</p>
+          <a href="#" class="secondary-content"><i class="fa fa-thumbs-up"></i></a>
+        </li>
+        <li class="collection-item">
+          <div class="row">
+            <div data-width="500" class="fb-post" data-href="{{vm.topLikedPost.link}}"></div>
+          </div>
+        </li>
+      </ul>
     </div>
 
   </div>
 
 
 </div>
+<fb app-id='583444071825924'></fb>
 
-<div id="fb-root"></div>
+<!--<script src="angular/app/assets/js/charts/ggleloader.js"></script>-->

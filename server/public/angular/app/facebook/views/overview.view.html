@@ -1,17 +1,19 @@
 <div class="col s12">
   <h1>My Pages</h1>
-  <hr>
 
-  <div ng-if="vm.myChannels.length" class="row input-field">
-    <select ng-change="vm.onSelect()" ng-model="vm.selectedChannel._id" name="" id="" material-select watch>
-      <option value="" selected disabled>Pick a page</option>
-      <option ng-repeat="channel in vm.myChannels" value="{{channel._id}}">{{channel.name}}</option>
-    </select>
-    <label for="">Page</label>
+  <div ng-if="vm.myChannels.length" class="row ">
+    <div class="input-field col s12 m12 l12">
+
+      <select ng-change="vm.onSelect()" ng-model="vm.selectedChannel._id" name="" id="" material-select watch>
+        <option value="" selected disabled>Pick a page</option>
+        <option ng-repeat="channel in vm.myChannels" value="{{channel._id}}">{{channel.name}}</option>
+      </select>
+      <label for="">Page</label>
+    </div>
   </div>
   <div ng-if="!vm.myChannels.length" class="row center-align">
     No Pages Yet
-    <div class="spinner icon-spinner-3 cyan-text" aria-hidden="true"></div>
+    <div class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
   </div>
   <div class="row">
     <div class="input-field col s6 m6 l6">
@@ -133,7 +135,8 @@
               <p class="margin white-text">The total number of people who have liked your Page.</p>
             </div>
             <div ng-if="vm.dataPageFans.length" class="card-content">
-              <line-chart-curved line-labels="{{vm.labelsPageFans}}" line-data="{{vm.dataPageFans}}"></line-chart-curved>
+              <line-chart-curved line-labels="{{vm.labelsPageFans}}"
+                                 line-data="{{vm.dataPageFans}}"></line-chart-curved>
             </div>
             <div ng-if="!vm.dataPageFans.length" class="card-content center-align">
               <div class="spinner icon-spinner-5" aria-hidden="true"></div>
@@ -163,7 +166,8 @@
       <div class="card">
         <div class="card-move-up teal waves-effect waves-block waves-light">
           <div class="move-up">
-            <p class="margin white-text">The number of times a Page's profile has been viewed by logged in and logged out
+            <p class="margin white-text">The number of times a Page's profile has been viewed by logged in and logged
+              out
               people.</p>
           </div>
         </div>
@@ -198,7 +202,7 @@
           </div>
         </div>
         <div ng-if="!vm.pageStories.length" class="card-content center-align">
-          <div class="spinner icon-spinner-3 cyan-text" aria-hidden="true"></div>
+          <div class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
 
       </div>
