@@ -31,6 +31,18 @@
     vm.selectedCampaign = $stateParams.idCampaign; //TODO Change It Dynamic
     // vm.selectedCampaign = "58ec64b17b0eab2accff5f34";
     // vm.selectedCampaign = "58eaaacdff57b30edc92fc4e";
+    // vm.Comments = [];
+    // vm.topSharedPost = new Object();
+    // vm.topLikedPost = new Object();
+    // vm.Posts = [];
+    // vm.reputationByTypes = [];
+    // vm.reputationByShares = [];
+    // vm.typesLink = [];
+    // vm.typesStatus = [];
+    // vm.typesVideo = [];
+    // vm.typesPhoto = [];
+
+
     var filterPosts =
       {
         "since": moment(vm.since).format(),
@@ -72,6 +84,11 @@
       delete filterPosts.channelId;
       delete filterComments.channelId;
       getSelectedCampaign();
+
+      updatingCharts();
+    }
+
+    function updatingCharts() {
       initFacebookPost();
       initFacebookComments();
       initFacebookSentimental();
@@ -81,7 +98,6 @@
       initReputationByStorytellersByCountry();
       initTopPosts();
     }
-
 
     function selectDate() {
       filterPosts.since = moment(vm.since).format();
@@ -104,14 +120,7 @@
 
           selectDate();
 
-          initFacebookPost();
-          initFacebookComments();
-          initFacebookSentimental();
-          initReputationByReaction();
-          initReputationByShares();
-          initReputationByTypes();
-          initReputationByStorytellersByCountry();
-          initTopPosts();
+          updatingCharts();
 
         });
       }
@@ -120,14 +129,7 @@
         delete filterComments.channelId;
         selectDate();
 
-        initFacebookPost();
-        initFacebookComments();
-        initFacebookSentimental();
-        initReputationByReaction();
-        initReputationByShares();
-        initReputationByTypes();
-        initReputationByStorytellersByCountry();
-        initTopPosts();
+        updatingCharts();
       }
     };
 
@@ -137,15 +139,7 @@
       // console.log(moment(vm.until).format())
       selectDate();
 
-      initFacebookPost();
-      initFacebookComments();
-      initFacebookSentimental();
-      initReputationByReaction();
-      initReputationByShares();
-      initReputationByTypes();
-      initReputationByStorytellersByCountry();
-      initReputationByTypes();
-      initTopPost()
+      updatingCharts();
 
     };
 
@@ -205,7 +199,7 @@
         data.forEach(function (obj) {
           vm.SentimentalFacebookData.push([obj._id.dateContent, obj.positive_score, obj.negative_score, obj.neutral_score]);
         });
-        vm.SentimentalFacebookData.sort(function(a,b){
+        vm.SentimentalFacebookData.sort(function (a, b) {
           return new Date(a[0]) - new Date(b[0]);
         });
 
@@ -220,7 +214,7 @@
           vm.reputationByReactions.push(
             [obj._id.dateContent, obj.like, obj.love, obj.sad, obj.angry]);
         });
-        vm.reputationByReactions.sort(function(a,b){
+        vm.reputationByReactions.sort(function (a, b) {
           return new Date(a[0]) - new Date(b[0]);
         });
 
@@ -234,7 +228,7 @@
         data.forEach(function (obj) {
           vm.reputationByShares.push([obj._id.dateContent, obj.shares]);
         });
-        vm.reputationByShares.sort(function(a,b){
+        vm.reputationByShares.sort(function (a, b) {
           return new Date(a[0]) - new Date(b[0]);
         });
 
@@ -299,18 +293,18 @@
     function initTopPosts() {
       vm.topSharedPost = new Object();
       vm.topLikedPost = new Object();
-      FacebookService.getTopPosts(filterSentimental,'shares').then(function (data) {
-        console.log(data)
+      FacebookService.getTopPosts(filterSentimental, 'shares').then(function (data) {
+        // console.log(data)
         data[0].dateContent = moment(data[0].dateContent).fromNow();
         vm.topSharedPost = data[0];
-        console.log("topSharedPost",vm.topSharedPost);
+        // console.log("topSharedPost", vm.topSharedPost);
       });
 
-      FacebookService.getTopPosts(filterSentimental,'likes').then(function (data) {
-        console.log(data)
+      FacebookService.getTopPosts(filterSentimental, 'likes').then(function (data) {
+        // console.log(data)
         data[0].dateContent = moment(data[0].dateContent).fromNow();
         vm.topLikedPost = data[0];
-        console.log("topLikedPost",vm.topLikedPost);
+        // console.log("topLikedPost", vm.topLikedPost);
       });
 
 

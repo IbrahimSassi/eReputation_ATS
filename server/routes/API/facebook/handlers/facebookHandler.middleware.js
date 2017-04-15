@@ -28,7 +28,7 @@ module.exports.transformPostsData = function (req, res, next) {
 
   channelPromise.then(function (channel) {
 
-    console.log("channel[3]",channel[3])
+    console.log("channel[3]", channel[3])
     var page_id = channel[3];
     var node = page_id + "/posts";
     var fields = "?fields=message,link,created_time,type,name,id" +
@@ -99,7 +99,6 @@ module.exports.transformPostsData = function (req, res, next) {
     });
 
 
-
   });
 
 };
@@ -129,7 +128,7 @@ module.exports.transformCommentsData = function (req, res, next) {
               var initialComments = JSON.parse(body);
               if (initialComments.paging && initialComments.paging.next) {
                 // console.log("initialComments.data", initialComments.data)
-                urls.push(url)
+                urls.push(url);
                 var nextPromise = handleData(initialComments, 'next');
 
                 nextPromise.then(function (data) {
@@ -138,8 +137,10 @@ module.exports.transformCommentsData = function (req, res, next) {
 
               }
               else {
+                console.log("first page")
                 for (var i = 0; i < initialComments.data.length; i++)
                   comments.push(transformComments(initialComments.data[i], req.body.channelId, post.id, req.body.campaignId))
+                console.log("commentscomments", comments)
                 resolve(body)
 
               }
@@ -152,6 +153,7 @@ module.exports.transformCommentsData = function (req, res, next) {
         });
 
         promise.then(function () {
+          console.log(post)
           callback();
         })
 
@@ -159,31 +161,36 @@ module.exports.transformCommentsData = function (req, res, next) {
       }, function done() {
         console.log("urls", urls)
 
-        var getRestOfComments = new Promise(function (resolve, reject) {
-          urls.forEach(function (u) {
-            var postId = getPostId(u);
+        async.eachSeries(urls, function iteratee(u, callback) {
+          var postId = getPostId(u);
+
+          var SavePromise = new Promise(function (resolve,reject) {
             request(u, function (error, response, body) {
               if (!error && response.statusCode == 200) {
                 var LocalBody = JSON.parse(body);
                 for (var i = 0; i < LocalBody.data.length; i++) {
                   comments.push(transformComments(LocalBody.data[i], req.body.channelId, postId, req.body.campaignId));
                 }
-              }
-              else {
-                reject(error)
+                resolve(comments);
               }
             });
-          });
-          resolve(comments);
 
-        });
-        getRestOfComments.then(function (data) {
+          });
+
+          SavePromise.then(function (data) {
+            callback()
+          })
+
+        },function done() {
+          console.log("req.comments", comments)
           setTimeout(function () {
             req.comments = comments;
             next()
           }, 1100)
 
         });
+
+
 
         // async.eachSeries(urls, function iteratee(u, callback) {
         //   request(u, function (error, response, body) {
@@ -245,11 +252,11 @@ function getData(url) {
 function transformPosts(post, author, campaignId) {
   return {
     id: post.id,
-    content: post.message.replace(/(\r\n|\n|\r)/gm,""),
+    content: post.message.replace(/(\r\n|\n|\r)/gm, ""),
     dateContent: post.created_time,
     type: post.type,
     sourceLink: "https://www.facebook.com/" + post.id,
-    name: post.name.replace(/(\r\n|\n|\r)/gm,""),
+    name: post.name.replace(/(\r\n|\n|\r)/gm, ""),
     link: post.link,
     author: {
       name: author
@@ -265,8 +272,8 @@ function transformPosts(post, author, campaignId) {
 function transformComments(comment, channel, parent, campaign) {
   return {
 
-  id: comment.id,
-    content: comment.message.replace(/(\r\n|\n|\r)/gm,""),
+    id: comment.id,
+    content: comment.message.replace(/(\r\n|\n|\r)/gm, ""),
     dateContent: comment.created_time,
     author: {
       name: comment.from.name,

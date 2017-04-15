@@ -117,17 +117,24 @@ module.exports.addFacebookComments = function (req, res, next) {
 
 
   async.eachSeries(req.comments, function iteratee(comment, callback) {
-    var newFacebookComment = new DataProvider.FacebookCommentsProvider(comment);
 
-    DataProvider.createDataProviderModel(newFacebookComment, function (err, item) {
-      if (err)
-        handleError(res, err);
-      else {
-        console.log('Success facebook comments saved saved', item._id);
-      }
+    var storingPromise = new Promise(function (resolve,reject) {
+      var newFacebookComment = new DataProvider.FacebookCommentsProvider(comment);
+      DataProvider.createDataProviderModel(newFacebookComment, function (err, item) {
+        if (err)
+          handleError(res, err);
+        else {
+          resolve(item);
+          console.log('Success facebook comments saved saved', item._id);
+        }
 
+      });
     });
-    callback();
+
+    storingPromise.then(function (item) {
+      callback();
+    });
+
   }, function done() {
     res.json(req.comments)
   });

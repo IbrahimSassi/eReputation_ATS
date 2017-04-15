@@ -30,31 +30,36 @@
             var LocalData = JSON.parse(scope.myTable);
 
             function drawChart() {
-              if (LocalData)
+
                 var data = google.visualization.arrayToDataTable(JSON.parse(scope.myTable));
 
-              var options = {
-                title: scope.title,
-                hAxis: {title: scope.hAxis, titleTextStyle: {color: '#333'}},
-                vAxis: {minValue: 0},
-                // "backgroundColor": "#eeeeee"
+                var options = {
+                  title: scope.title,
+                  hAxis: {title: scope.hAxis, titleTextStyle: {color: '#333'}},
+                  vAxis: {minValue: 0},
+                  // "backgroundColor": "#eeeeee"
 
-              };
+                };
 
-              var chart = new google.visualization.AreaChart(document.getElementById('areaChart' + scope.myId));
-              chart.draw(data, options);
+                var chart = new google.visualization.AreaChart(document.getElementById('areaChart' + scope.myId));
+                chart.draw(data, options);
+
             }
 
-            google.charts.setOnLoadCallback(
-              function () { // Anonymous function that calls drawChart1 and drawChart2
-                drawChart();
+            if (LocalData && LocalData.length > 1) {
+              google.charts.setOnLoadCallback(
+                function () { // Anonymous function that calls drawChart1 and drawChart2
+                  drawChart();
 
-              });
+                });
 
+            }
 
             scope.$watch('myTable', function (newValue, oldValue) {
               drawChart();
             });
+
+
 
 
           }, 0);

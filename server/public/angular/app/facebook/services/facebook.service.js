@@ -370,9 +370,7 @@
 
     function getTopPostsFN(filter, sort) {
       var LocalFilter = $.extend({}, filter);
-      console.log(LocalFilter)
       LocalFilter.sort = sort;
-      console.log(FacebookFactory.topPosts(LocalFilter).$promise)
       return FacebookFactory.topPosts(LocalFilter).$promise;
     }
   }
