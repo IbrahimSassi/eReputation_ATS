@@ -272,7 +272,7 @@
           <column-chart my-id="5" my-table="{{vm.reputationByReactions}}" title="Reactions"
                         h-axis="Date"></column-chart>
         </div>
-        <div ng-if="!vm.reputationByReactions.length <=1" class="move-up center-align">
+        <div ng-if="vm.reputationByReactions.length <=1" class="move-up center-align">
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
@@ -283,7 +283,7 @@
           <column-chart my-id="6" my-table="{{vm.reputationByShares}}" title="Shares"
                         h-axis="Date"></column-chart>
         </div>
-        <div ng-if="!vm.reputationByShares.length<=1" class="move-up center-align">
+        <div ng-if="vm.reputationByShares.length<=1" class="move-up center-align">
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
@@ -297,7 +297,7 @@
           <pie-chart width="100%" height="300" my-id="byPosts" my-table="{{vm.reputationByTypes}}"
                      title="Posts By Type"></pie-chart>
         </div>
-        <div ng-if="!vm.reputationByTypes.length<=1" class="move-up center-align">
+        <div ng-if="vm.reputationByTypes.length<=1" class="move-up center-align">
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
@@ -311,7 +311,7 @@
           <pie-chart width="250" height="250" my-id="links" my-table="{{vm.typesLink}}"
                      title="Sentimental Analysis For Links"></pie-chart>
         </div>
-        <div ng-if="!vm.typesLink.length<=1" class="move-up center-align">
+        <div ng-if="vm.typesLink.length<=1" class="move-up center-align">
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
@@ -322,7 +322,7 @@
           <pie-chart width="250" height="250" my-id="status" my-table="{{vm.typesStatus}}"
                      title="Sentimental Analysis For Status"></pie-chart>
         </div>
-        <div ng-if="!vm.typesStatus.length<=1" class="move-up center-align">
+        <div ng-if="vm.typesStatus.length<=1" class="move-up center-align">
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
@@ -334,7 +334,7 @@
           <pie-chart width="250" height="250" my-id="photo" my-table="{{vm.typesLink}}"
                      title="Sentimental Analysis For Photos"></pie-chart>
         </div>
-        <div ng-if="!vm.typesPhoto.length<=1" class="move-up center-align">
+        <div ng-if="vm.typesPhoto.length<=1" class="move-up center-align">
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
@@ -345,7 +345,7 @@
           <pie-chart width="250" height="250" my-id="video" my-table="{{vm.typesVideo}}"
                      title="Sentimental Analysis For Video"></pie-chart>
         </div>
-        <div ng-if="!vm.typesVideo.length<=1" class="move-up center-align">
+        <div ng-if="vm.typesVideo.length<=1" class="move-up center-align">
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
@@ -364,7 +364,7 @@
             The number of People Talking About the Page by user country.
           </div>
         </div>
-        <div ng-if="!vm.storytellersByCountry.length<=1" class="move-up center-align ">
+        <div ng-if="vm.storytellersByCountry.length<=1" class="move-up center-align ">
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>

@@ -32,20 +32,6 @@
 
     updateData();
 
-    //
-    // setInterval(function () {
-    //   console.log("get called")
-    //   console.log(typeof $scope.FacebookFansLineChart)
-    //
-    //   if (typeof $scope.FacebookFansLineChart != "undefined") {
-    //     console.log("helooo")
-    //     // Update one of the points in the second dataset
-    //     $scope.FacebookFansLineChart.datasets[0].points =  JSON.parse($scope.lineData);
-    //     $scope.FacebookFansLineChart.labels = JSON.parse($scope.lineLabels);
-    //     $scope.FacebookFansLineChart.update();
-    //   }
-    //
-    // }, 1000);
 
     function updateData() {
 
@@ -88,24 +74,25 @@
 
     $scope.$watch('lineData', function (newValue, oldValue) {
 
-      // console.log($scope.lineLabels)
-      // console.log($scope.lineData)
-      // var localLabel = JSON.parse($scope.lineLabels);
-      // var localData = JSON.parse($scope.lineData);
-      console.log("salemm")
-      console.log($scope.lineLabels)
-      console.log($scope.lineData)
-      updateData();
-      // if (typeof FacebookFansLineChart != "undefined") {
-      //   console.log(window.FacebookFansLineChart)
-      //   for (var i = 0; i < localLabel.length - 1; i++) {
-      //     window.FacebookFansLineChart.datasets[0].points[i].value = localData[i];
-      //     window.FacebookFansLineChart.datasets[0].points[i].label = localLabel[i];
-      //   }
-      //   $scope.data.labels = localLabel;
-      //   window.FacebookFansLineChart.update();
-      //
-      // }
+
+      setTimeout(function () {
+
+        if (JSON.parse($scope.lineData)) {
+          var data = JSON.parse($scope.lineData);
+          var labels = JSON.parse($scope.lineLabels);
+          for (var i = 0; i < data.length; i++) {
+            window.lineChart.datasets[0].points[i].label = labels[i];
+            window.lineChart.datasets[0].points[i].value = data[i];
+          }
+
+        }
+
+
+      }, 1000)
+
+
+
+      // updateData();
 
     });
 

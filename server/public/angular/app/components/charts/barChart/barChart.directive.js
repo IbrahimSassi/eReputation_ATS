@@ -69,7 +69,25 @@
 
 
     $scope.$watch('barData', function (newValue, oldValue) {
-      updateData();
+
+      setTimeout(function () {
+
+        if (JSON.parse($scope.barData)) {
+          var data = JSON.parse($scope.barData);
+          var labels = JSON.parse($scope.barLabels);
+          for (var i = 0; i < data.length; i++) {
+            window.trendingBarChart.datasets[0].points[i].label = labels[i];
+            window.trendingBarChart.datasets[0].points[i].value = data[i];
+          }
+
+        }
+
+
+      }, 1000)
+
+
+
+      // updateData();
     });
 
 

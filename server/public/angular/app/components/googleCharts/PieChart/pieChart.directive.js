@@ -31,7 +31,7 @@
 
               var options = {
                 title: scope.title,
-                colors: ["#00897b", "#b71c1c", "#ff9800"],
+                colors: ["#00897b", "#b71c1c", "#ff9800","#2980b9"],
                 height: scope.height,
                 width: scope.width,
               };

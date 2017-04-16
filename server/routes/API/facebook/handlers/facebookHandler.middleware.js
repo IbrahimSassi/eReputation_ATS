@@ -252,11 +252,12 @@ function getData(url) {
 function transformPosts(post, author, campaignId) {
   return {
     id: post.id,
-    content: post.message.replace(/(\r\n|\n|\r)/gm, ""),
+    content: post.message != "undefined" ? post.message.replace(/(\r\n|\n|\r)/gm, "") : '' ,
     dateContent: post.created_time,
     type: post.type,
     sourceLink: "https://www.facebook.com/" + post.id,
-    name: post.name.replace(/(\r\n|\n|\r)/gm, ""),
+    name: post.name  ,
+    // name: post.name != "undefined" ? post.name.replace(/(\r\n|\n|\r)/gm, "") : '' ,
     link: post.link,
     author: {
       name: author
@@ -273,7 +274,7 @@ function transformComments(comment, channel, parent, campaign) {
   return {
 
     id: comment.id,
-    content: comment.message.replace(/(\r\n|\n|\r)/gm, ""),
+    content: comment.message != "undefined" ? comment.message.replace(/(\r\n|\n|\r)/gm, "") : '' ,
     dateContent: comment.created_time,
     author: {
       name: comment.from.name,

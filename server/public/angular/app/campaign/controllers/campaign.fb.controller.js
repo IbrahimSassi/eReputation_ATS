@@ -85,10 +85,10 @@
       delete filterComments.channelId;
       getSelectedCampaign();
 
-      updatingCharts();
+      initCharts();
     }
 
-    function updatingCharts() {
+    function initCharts() {
       initFacebookPost();
       initFacebookComments();
       initFacebookSentimental();
@@ -120,7 +120,7 @@
 
           selectDate();
 
-          updatingCharts();
+          initCharts();
 
         });
       }
@@ -129,7 +129,7 @@
         delete filterComments.channelId;
         selectDate();
 
-        updatingCharts();
+        initCharts();
       }
     };
 
@@ -139,7 +139,7 @@
       // console.log(moment(vm.until).format())
       selectDate();
 
-      updatingCharts();
+      initCharts();
 
     };
 
@@ -276,7 +276,7 @@
     function initReputationByStorytellersByCountry() {
       vm.storytellersByCountry = [];
       FacebookService.getPageStorytellersByCountry(
-        "mosaiquefm", "null",
+        "DonaldTrump", "null",
         encodeURIComponent(filterSentimental.since),
         encodeURIComponent(filterSentimental.until)).then(function (data) {
 

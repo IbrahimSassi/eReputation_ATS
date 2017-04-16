@@ -59,7 +59,7 @@
     vm.dataPageFansOnline = [];
     vm.labelsPageViews = [];
     vm.dataPageViews = [];
-
+    vm.TotalStories = {};
     // vm.labels = ["January", "February", "March", "April", "May", "June", "July"];
     // vm.data = [65, 59, 80, 81, 56, 55, 40];
     activate();
@@ -81,7 +81,7 @@
 
       ChannelService.getChannelsByUser(vm.connectedUserId).then(function (myChannels) {
         vm.myChannels = $filter('filter')(myChannels, {type: 'facebook', personal: true});
-        console.log(vm.myChannels);
+        // console.log(vm.myChannels);
         // vm.selectedChannel = vm.myChannels[0];
 
       });
@@ -94,8 +94,8 @@
 
 
     vm.onChange = function () {
-      console.log("onChange", vm.since);
-      console.log("onChange", vm.until);
+      // console.log("onChange", vm.since);
+      // console.log("onChange", vm.until);
 
       if (new Date(vm.since) > new Date(vm.until)) {
         Materialize.toast("Until Date Must be greater than since", 3000, "rounded");
@@ -145,6 +145,9 @@
 
     function initPageStoriesByStoryType() {
 
+      vm.range = "Between " + moment(new Date(vm.since)).format("DD-MM-YYYY") + " and "
+        + moment(new Date(vm.until)).add(1, 'days').format("DD-MM-YYYY");
+
       vm.pageStories = []
       FacebookService.getPageStoriesByStoryType(
         vm.selectedChannel.url,
@@ -152,11 +155,33 @@
         moment(new Date(vm.since)).format("DD-MM-YYYY"),
         moment(new Date(vm.until)).add(1, 'days').format("DD-MM-YYYY")
       ).then(function (stories, err) {
-        vm.pageStories = stories.data[2].values;
+          vm.pageStories = stories.data[2].values;
 
-        console.log("vm.pageStories", vm.pageStories)
 
-      })
+          vm.TotalStories = {
+            "page_post": 0,
+            "other": 0,
+            "fan": 0,
+            "user_post": 0,
+            "checkin": 0,
+            "question": 0,
+            "coupon": 0,
+            "event": 0,
+            "mention": 0
+        };
+
+          for (var type in vm.TotalStories) {
+            vm.pageStories.forEach(function (story) {
+              for (var i in story.value) {
+                if (i == type)
+                  vm.TotalStories[type] += story.value[i]
+              }
+            })
+          }
+
+
+        }
+      )
 
 
     }
@@ -185,7 +210,8 @@
 
     function initPageFansInsights() {
 
-
+      vm.dataPage = [];
+      vm.dataPage.push(['Date', 'Number Of Fans'])
       vm.labelsPageFans = [];
       vm.dataPageFans = [];
 
@@ -203,6 +229,7 @@
         insights.data[0].values.forEach(function (fans) {
           vm.labelsPageFans.push(moment(fans.end_time).format("DD-MM-YYYY"));
           vm.dataPageFans.push(fans.value);
+          vm.dataPage.push([moment(fans.end_time).format("DD-MM-YYYY"), fans.value])
 
         });
 
@@ -268,7 +295,7 @@
             }
           }
         });
-        console.log("vm.totalPositiveFeedback", vm.totalPositiveFeedback)
+        // console.log("vm.totalPositiveFeedback", vm.totalPositiveFeedback)
       });
 
     }
@@ -300,7 +327,7 @@
             }
           }
         });
-        console.log("vm.totalNegativeFeedback", vm.totalNegativeFeedback)
+        // console.log("vm.totalNegativeFeedback", vm.totalNegativeFeedback)
       });
 
     }
@@ -397,5 +424,6 @@
 
   }
 
-})();
+})
+();
 
