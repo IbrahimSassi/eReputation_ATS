@@ -10,7 +10,7 @@
     .config(config)
     .controller('FacebookController', FacebookControllerFN);
 
-  FacebookControllerFN.$inject = ['$scope', 'FacebookService', 'ChannelService', '$filter', '$rootScope'];
+  FacebookControllerFN.$inject = ['$scope', 'FacebookService', 'ChannelService', 'CampaignService', '$rootScope','$stateParams'];
   config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 
@@ -41,10 +41,12 @@
 
 
   /* @ngInject */
-  function FacebookControllerFN($scope, FacebookService, ChannelService, $filter, $rootScope) {
+  function FacebookControllerFN($scope, FacebookService, ChannelService, CampaignService, $rootScope,$stateParams) {
     var vm = this;
     vm.title = 'FacebookController';
     // vm.connectedUserId = "58d3dc815d391346a06f48c3";
+
+    vm.selectedCampaign = $stateParams.idCampaign; //TODO Change It Dynamic
     vm.connectedUserId = $rootScope.currentUser._id;
     vm.selectedChannel = {};
     vm.myChannels = [];
@@ -60,8 +62,6 @@
     vm.labelsPageViews = [];
     vm.dataPageViews = [];
     vm.TotalStories = {};
-    // vm.labels = ["January", "February", "March", "April", "May", "June", "July"];
-    // vm.data = [65, 59, 80, 81, 56, 55, 40];
     activate();
 
     ////////////////
@@ -78,17 +78,30 @@
 
       // console.log(vm.since);
       // console.log(vm.until);
-
-      ChannelService.getChannelsByUser(vm.connectedUserId).then(function (myChannels) {
-        vm.myChannels = $filter('filter')(myChannels, {type: 'facebook', personal: true});
-        // console.log(vm.myChannels);
-        // vm.selectedChannel = vm.myChannels[0];
-
-      });
+      getSelectedCampaign();
 
 
       // initPageFansInsights();
 
+
+    }
+
+    function getSelectedCampaign() {
+      vm.myChannels = [];
+      if (vm.selectedCampaign !== undefined) {
+        CampaignService.getCampaignById(vm.selectedCampaign).then(function (data) {
+          data[0].channels.forEach(function (channelPartial) {
+            // console.log(channelPartial.channelId)
+            ChannelService.getChannelByID(channelPartial.channelId).then(function (channel) {
+              if (channel.type == "facebook" && channel.personal)
+                vm.myChannels.push(channel);
+            })
+          });
+        })
+          .catch(function (err) {
+            console.error(err);
+          });
+      }
 
     }
 

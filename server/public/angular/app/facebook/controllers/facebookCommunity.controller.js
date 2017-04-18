@@ -13,16 +13,17 @@
     .controller('FacebookCommunityController', FacebookCommunityControllerFN);
 
   FacebookCommunityControllerFN.$inject = ['$scope',
-    'FacebookService', 'ChannelService', '$filter', 'colorPickerService',
+    'FacebookService', 'ChannelService', '$stateParams', 'CampaignService',
     '$rootScope'];
 
 
   /* @ngInject */
-  function FacebookCommunityControllerFN($scope, FacebookService, ChannelService, $filter, colorPickerService, $rootScope) {
+  function FacebookCommunityControllerFN($scope, FacebookService, ChannelService, $stateParams, CampaignService, $rootScope) {
     var vm = this;
     vm.title = 'FacebookController';
-    // vm.connectedUserId = "58d3dc815d391346a06f48c3";
     vm.connectedUserId = $rootScope.currentUser._id;
+    vm.selectedCampaign = $stateParams.idCampaign; //TODO Change It Dynamic
+
     vm.selectedChannel = {};
     vm.myChannels = [];
     vm.pageStorytellers = [];
@@ -41,11 +42,27 @@
       vm.since = moment().subtract(1, 'weeks');
       vm.until = moment();
 
-      ChannelService.getChannelsByUser(vm.connectedUserId).then(function (myChannels) {
-        vm.myChannels = $filter('filter')(myChannels, {type: 'facebook', personal: true});
-        // console.log(vm.myChannels)
-        // vm.selectedChannel = vm.myChannels[1];
-      });
+      getSelectedCampaign();
+    }
+
+
+
+    function getSelectedCampaign() {
+      vm.myChannels = [];
+      if (vm.selectedCampaign !== undefined) {
+        CampaignService.getCampaignById(vm.selectedCampaign).then(function (data) {
+          data[0].channels.forEach(function (channelPartial) {
+            ChannelService.getChannelByID(channelPartial.channelId).then(function (channel) {
+              if (channel.type == "facebook" && channel.personal)
+                vm.myChannels.push(channel);
+            })
+          });
+        })
+          .catch(function (err) {
+            console.error(err);
+          });
+      }
+
     }
 
 

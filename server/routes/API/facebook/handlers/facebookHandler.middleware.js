@@ -17,7 +17,7 @@ module.exports.transformPostsData = function (req, res, next) {
     request(config.host + "/api/channels/" + req.body.channelId, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         var channel = JSON.parse(body);
-        console.log()
+        // console.log()
         resolve(channel.url.split("/"));
       }
       else {
@@ -76,6 +76,9 @@ module.exports.transformPostsData = function (req, res, next) {
                       var reactions = JSON.parse(reactionBody);
                       resolveReaction(reactions);
                     }
+                    else {
+                      reject(reactionError)
+                    }
                   });
                 });
 
@@ -87,6 +90,7 @@ module.exports.transformPostsData = function (req, res, next) {
                   story.reactions.push(data);
                   AllPosts.push(story);
                 });
+
               });
               callback(error, body);
             });
@@ -131,17 +135,22 @@ module.exports.transformCommentsData = function (req, res, next) {
                 urls.push(url);
                 var nextPromise = handleData(initialComments, 'next');
 
-                nextPromise.then(function (data) {
-                  resolve(urls)
-                });
+                nextPromise
+                  .then(function (data) {
+                    resolve(urls)
+                  })
+                  .catch(function (err) {
+                    console.log("next promise error", err)
+                    resolve(urls)
+                  });
 
               }
               else {
                 console.log("first page")
                 for (var i = 0; i < initialComments.data.length; i++)
                   comments.push(transformComments(initialComments.data[i], req.body.channelId, post.id, req.body.campaignId))
-                console.log("commentscomments", comments)
-                resolve(body)
+                // console.log("commentscomments", comments)
+                resolve(comments)
 
               }
             }
@@ -153,9 +162,14 @@ module.exports.transformCommentsData = function (req, res, next) {
         });
 
         promise.then(function () {
-          console.log(post)
+          // console.log(post)
           callback();
         })
+          .catch(function (err) {
+
+            console.log("getting comments err", err)
+            callback();
+          })
 
 
       }, function done() {
@@ -164,7 +178,7 @@ module.exports.transformCommentsData = function (req, res, next) {
         async.eachSeries(urls, function iteratee(u, callback) {
           var postId = getPostId(u);
 
-          var SavePromise = new Promise(function (resolve,reject) {
+          var SavePromise = new Promise(function (resolve, reject) {
             request(u, function (error, response, body) {
               if (!error && response.statusCode == 200) {
                 var LocalBody = JSON.parse(body);
@@ -173,16 +187,23 @@ module.exports.transformCommentsData = function (req, res, next) {
                 }
                 resolve(comments);
               }
+              else {
+                reject(error)
+              }
             });
 
           });
 
-          SavePromise.then(function (data) {
-            callback()
-          })
+          SavePromise
+            .then(function (data) {
+              callback()
+            })
+            .catch(function (err) {
+              callback()
+            })
 
-        },function done() {
-          console.log("req.comments", comments)
+        }, function done() {
+          // console.log("req.comments", comments)
           setTimeout(function () {
             req.comments = comments;
             next()
@@ -190,24 +211,6 @@ module.exports.transformCommentsData = function (req, res, next) {
 
         });
 
-
-
-        // async.eachSeries(urls, function iteratee(u, callback) {
-        //   request(u, function (error, response, body) {
-        //     if (!error && response.statusCode == 200) {
-        //       var LocalBody = JSON.parse(body);
-        //       for (var i = 0; i < LocalBody.data.length; i++)
-        //         comments.push(LocalBody.data[i])
-        //     }
-        //   });
-        //   callback()
-        //
-        // }, function done() {
-        //   setTimeout(function () {
-        //     console.log(comments.length)
-        //     res.json(comments);
-        //   }, 1100)
-        // });
 
       });
     })
@@ -217,7 +220,7 @@ module.exports.transformCommentsData = function (req, res, next) {
 
 function handleData(data, direction) {
   console.log("direction", direction)
-  return new Promise(function (resolve) {
+  return new Promise(function (resolve, reject) {
     if (data.paging && data.paging[direction]) {
       urls.push(data.paging[direction]);
       getData(data.paging[direction]).then(function (newData) {
@@ -229,6 +232,8 @@ function handleData(data, direction) {
     else {
       resolve(urls)
     }
+    reject(error)
+
   })
 }
 
@@ -252,11 +257,11 @@ function getData(url) {
 function transformPosts(post, author, campaignId) {
   return {
     id: post.id,
-    content: post.message != "undefined" ? post.message.replace(/(\r\n|\n|\r)/gm, "") : '' ,
+    content: post.message != "undefined" ? post.message.replace(/(\r\n|\n|\r)/gm, "") : '',
     dateContent: post.created_time,
     type: post.type,
     sourceLink: "https://www.facebook.com/" + post.id,
-    name: post.name  ,
+    name: post.name,
     // name: post.name != "undefined" ? post.name.replace(/(\r\n|\n|\r)/gm, "") : '' ,
     link: post.link,
     author: {
@@ -274,7 +279,7 @@ function transformComments(comment, channel, parent, campaign) {
   return {
 
     id: comment.id,
-    content: comment.message != "undefined" ? comment.message.replace(/(\r\n|\n|\r)/gm, "") : '' ,
+    content: comment.message != "undefined" ? comment.message.replace(/(\r\n|\n|\r)/gm, "") : '',
     dateContent: comment.created_time,
     author: {
       name: comment.from.name,

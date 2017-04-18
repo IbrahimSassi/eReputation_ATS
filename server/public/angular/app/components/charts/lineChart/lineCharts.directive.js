@@ -84,6 +84,8 @@
             window.lineChart.datasets[0].points[i].label = labels[i];
             window.lineChart.datasets[0].points[i].value = data[i];
           }
+          window.lineChart.update()
+
 
         }
 

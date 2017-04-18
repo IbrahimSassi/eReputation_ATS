@@ -118,7 +118,7 @@ module.exports.addFacebookComments = function (req, res, next) {
 
   async.eachSeries(req.comments, function iteratee(comment, callback) {
 
-    var storingPromise = new Promise(function (resolve,reject) {
+    var storingPromise = new Promise(function (resolve, reject) {
       var newFacebookComment = new DataProvider.FacebookCommentsProvider(comment);
       DataProvider.createDataProviderModel(newFacebookComment, function (err, item) {
         if (err)
@@ -149,7 +149,9 @@ module.exports.getFacebookSentimental = function (req, res, next) {
       $and: [
         {dateContent: {'$gte': new Date(req.body.since), '$lte': new Date(req.body.until)}},
         {channelId: {'$eq': req.body.channelId}},
-        {campaignId: {'$eq': req.body.campaignId}}
+        {campaignId: {'$eq': req.body.campaignId}},
+        {$text: {$search: ""}}
+
 
       ],
       $or: [{source: 'FacebookCommentsProvider'}, {source: 'FacebookPostsProvider'}]
@@ -164,9 +166,34 @@ module.exports.getFacebookSentimental = function (req, res, next) {
     negative_score: {$avg: "$contentScore.negativity"}
   };
 
-  if (req.body.channelId == "all") {
-    matchObject.$and.splice(1, 1);
+  if (req.body.channelId == "all" || !req.body.channelId) {
+    // matchObject.$and.splice(1, 1);
+    matchObject.$and[1]=undefined;
   }
+
+  console.log("before")
+
+
+  if (!req.body.keywords || !req.body.keywords.length ) {
+    matchObject.$and[3]=undefined;
+  }
+
+
+  if (req.body.keywords && req.body.keywords.length) {
+    var keywords = req.body.keywords.join(" ");
+    console.log(keywords)
+    matchObject.$and[3].$text.$search = keywords.toString();
+  }
+
+
+  for (var i = 0; i < matchObject.$and.length; i++) {
+    if (matchObject.$and[i] == undefined) {
+      matchObject.$and.splice(i, 1);
+      i = 0;
+    }
+  }
+
+
 
   DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, {dateContent: -1}, undefined).then(function (data) {
     res.json(data);
@@ -197,7 +224,7 @@ module.exports.getReputationByReaction = function (req, res, next) {
     angry: {$sum: "$reactions.angry.summary.total_count"}
   };
 
-  if (req.body.channelId == "all") {
+  if (req.body.channelId == "all" || !req.body.channelId) {
     matchObject.$and.splice(1, 1);
   }
 
@@ -224,7 +251,7 @@ module.exports.getReputationByShares = function (req, res, next) {
     shares: {$sum: "$shares"}
   };
 
-  if (req.body.channelId == "all") {
+  if (req.body.channelId == "all" || !req.body.channelId) {
     matchObject.$and.splice(1, 1);
   }
 
@@ -255,7 +282,7 @@ module.exports.getReputationByTypes = function (req, res, next) {
 
   };
 
-  if (req.body.channelId == "all") {
+  if (req.body.channelId == "all" || !req.body.channelId) {
     matchObject.$and.splice(1, 1);
   }
 
@@ -281,7 +308,7 @@ module.exports.getTopPosts = function (req, res, next) {
   };
 
 
-  if (req.body.channelId == "all") {
+  if (req.body.channelId == "all" || !req.body.channelId) {
     matchObject.$and.splice(1, 1);
   }
 

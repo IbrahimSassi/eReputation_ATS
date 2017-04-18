@@ -107,6 +107,8 @@
             window.FacebookFansLineChart.datasets[0].points[i].label = labels[i];
             window.FacebookFansLineChart.datasets[0].points[i].value = data[i];
           }
+          window.FacebookFansLineChart.update();
+
 
         }
 

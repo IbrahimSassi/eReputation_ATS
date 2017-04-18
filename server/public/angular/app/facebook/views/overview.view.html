@@ -137,9 +137,6 @@
             <div ng-if="vm.dataPageFans.length" class="card-content">
               <line-chart-curved line-labels="{{vm.labelsPageFans}}"
                                  line-data="{{vm.dataPageFans}}"></line-chart-curved>
-              <area-chart my-id="fans" my-table="{{vm.dataPage}}"
-                          title="The total number of people who have liked your Page"
-                          h-axis="Date"></area-chart>
             </div>
             <div ng-if="!vm.dataPageFans.length" class="card-content center-align">
               <div class="spinner icon-spinner-5" aria-hidden="true"></div>
@@ -192,11 +189,12 @@
         <div class="card-move-up waves-effect waves-block waves-light">
           <div class="move-up">
             <p class="margin black-text">The number of stories about your Page's stories, by Page story type</p>
+            <p>{{vm.range}}</p>
           </div>
         </div>
 
         <!--<div ng-repeat="story in vm.pageStories" class="col s12 m4 l4">-->
-        <div class="col s12 m4 l4">
+        <div class="col s12 m4 l4 center-align">
           <!--<div class="col s12 m4 l4">-->
           <div class="card">
             <div class="card-move-up teal waves-effect waves-block waves-light">
