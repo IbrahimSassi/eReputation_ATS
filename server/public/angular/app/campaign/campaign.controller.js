@@ -240,8 +240,12 @@
 
       CampaignService.addCampaign(campaign).then(function (data) {
         console.log("Campaign Added");
+        swal("Good job!", "Campaign "+data.name+" Created !", "success");
         console.log(data);
+      }).catch(function (err) {
+        swal("Problem !", "Campaign NOT Created ! \n  please verify entries ...", "warning");
       });
+
 
 
     };
