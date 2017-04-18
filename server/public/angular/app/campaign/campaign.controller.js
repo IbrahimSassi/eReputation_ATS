@@ -30,47 +30,56 @@
       .state('campaignCreate', {
         url: '/campaign/create',
         templateUrl: 'angular/app/campaign/views/edit.campaign.view.html',
-        controller: 'CampaignCtrl as camp'
+        controller: 'CampaignCtrl as camp',
+        authenticate: true,
       })
       .state('campaignEdit', {
         url: '/campaign/edit/:idCampaign',
         templateUrl: 'angular/app/campaign/views/create.campaign.view.html',
-        controller: 'CampaignCtrl as camp'
+        controller: 'CampaignCtrl as camp',
+        authenticate: true,
       })
       .state('campaignList', {
         url: '/campaign/list',
         templateUrl: 'angular/app/campaign/views/list.campaign.view.html',
-        controller: 'CampaignCtrl as camp'
+        controller: 'CampaignCtrl as camp',
+        authenticate: true,
       })
       .state('campaignDetail', {
         url: '/campaign/detail/:idCampaign',
         templateUrl: 'angular/app/campaign/views/detail.campaign.view.html',
-        controller: 'CampaignCtrl as camp'
+        controller: 'CampaignCtrl as camp',
+        authenticate: true,
       })
       .state('campaignDetail.campaignSentimentAnalysis', {
         url: '/sentiment',
         templateUrl: 'angular/app/campaign/views/analysis/sentiment.campaign.view.html',
         controller: 'CampaignSentimentCtrl as camp',
+        authenticate: true,
       })
       .state('campaignDetail.campaignFbAnalysis', {
         url: '/facebook',
         templateUrl: 'angular/app/campaign/views/analysis/fb.campaign.global.view.html',
         controller: 'CampaignFbCtrl as vm',
+        authenticate: true,
       })
       .state('campaignDetail.campaignFbAnalysis.overview', {
         url: '/overview',
         templateUrl: 'angular/app/campaign/views/analysis/fb.campaign.view.html',
         controller: 'CampaignFbCtrl as vm',
+        authenticate: true,
       })
       .state('campaignDetail.campaignTwitterAnalysis', {
         url: '/twitter',
         templateUrl: 'angular/app/campaign/views/analysis/tw.campaign.view.html',
         controller: 'CampaignTwCtrl as camp',
+        authenticate: true,
       })
       .state('campaignDetail.campaignWebAnalysis', {
         url: '/web',
         templateUrl: 'angular/app/campaign/views/analysis/web.campaign.view.html',
         controller: 'CampaignWebCtrl as camp',
+        authenticate: true,
       })
     ;
 

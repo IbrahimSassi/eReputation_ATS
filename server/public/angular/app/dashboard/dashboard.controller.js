@@ -27,7 +27,8 @@
         url: '/dashboard',
         templateUrl: 'angular/app/dashboard/views/main.dashboard.view.html',
         controller: 'DashboardCtrl as dash',
-        dash: true
+        dash: true,
+        authenticate: true,
       })
 
 
