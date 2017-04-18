@@ -27,6 +27,13 @@ angular.module('ATSApp', [
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 
+      if ($window.location.href == '/' && !ProfileService.isLoggedIn())
+
+      {
+        $window.location.href = '/';
+
+      }
+
       if (toState.authenticate && !ProfileService.isLoggedIn()){
         // User isn’t authenticated
         //$state.transitionTo("login");
