@@ -1,226 +1,232 @@
-<h1>Analytics</h1>
-<hr>
+<div class="col s12">
+  <h1>My Pages</h1>
 
+  <div ng-if="vm.myChannels.length" class="row ">
+    <div class="input-field col s12 m12 l12">
 
-<div ng-if="vm.myChannels.length" class="row input-field">
-  <select ng-change="vm.onSelect()" ng-model="vm.selectedChannel._id" name="" id="" material-select watch>
-    <option value="" selected disabled>Pick a page</option>
-    <option ng-repeat="channel in vm.myChannels" value="{{channel._id}}">{{channel.name}}</option>
-  </select>
-  <label for="">Page</label>
-</div>
-<div ng-if="!vm.myChannels.length" class="row center-align">
-  No Pages Yet
-  <div class="spinner icon-spinner-3 cyan-text" aria-hidden="true"></div>
-</div>
-<div class="row">
-  <div class="input-field col s6 m6 l6">
-    <input input-date
-           type="text"
-           name="created"
-           id="since"
-           ng-model="vm.since"
-           format="mmmm d, yyyy"
-           today="today"
-           clear="clear"
-           close="close"
-           select-years="15"
-           ng-change="vm.onChange()"
-    />
-    <label for="">Since</label>
+      <select ng-change="vm.onSelect()" ng-model="vm.selectedChannel._id" name="" id="" material-select watch>
+        <option value="" selected disabled>Pick a page</option>
+        <option ng-repeat="channel in vm.myChannels" value="{{channel._id}}">{{channel.name}}</option>
+      </select>
+      <label for="">Page</label>
+    </div>
   </div>
-
-
-  <div class="input-field col s6 m6 l6">
-    <input input-date
-           type="text"
-           name="created"
-           id="until"
-           ng-model="vm.until"
-           format="mmmm d, yyyy"
-           today="today"
-           clear="clear"
-           close="close"
-           select-years="15"
-           ng-change="vm.onChange()"
-    />
-    <label for="">Until</label>
+  <div ng-if="!vm.myChannels.length" class="row center-align">
+    No Pages Yet
+    <div class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
   </div>
-
-</div>
-
-
-<div id="card-stats">
   <div class="row">
-    <div class="col s12 m6 l3">
-      <div class="card">
-        <div class="card-content  green white-text">
-          <p class="card-stats-title"><i class="mdi-action-trending-up"></i> Positive Feedback </p>
-          <h4 ng-if="vm.totalPositiveFeedback" class="card-stats-number"> {{ vm.totalPositiveFeedback }}</h4>
-          <h4 ng-if="!vm.totalPositiveFeedback" class="card-stats-number">
-            <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
-          </h4>
-          <p class="card-stats-compare">
-            <i class="mdi-hardware-keyboard-arrow-up"></i> 15% <span
-            class="green-text text-lighten-5">from last week</span>
-          </p>
-        </div>
-        <div class="card-action  green darken-2">
-          <div id="clients-bar" class="center-align"></div>
-        </div>
-      </div>
+    <div class="input-field col s6 m6 l6">
+      <input input-date
+             type="text"
+             name="created"
+             id="since"
+             ng-model="vm.since"
+             format="mmmm d, yyyy"
+             today="today"
+             clear="clear"
+             close="close"
+             select-years="15"
+             ng-change="vm.onChange()"
+      />
+      <label for="">Since</label>
     </div>
-    <div class="col s12 m6 l3">
-      <div class="card">
-        <div class="card-content red lighten-1 white-text">
-          <p class="card-stats-title"><i class="mdi-action-trending-down"></i> Negative Feedback</p>
-          <h4 ng-if="vm.totalNegativeFeedback" class="card-stats-number">{{vm.totalNegativeFeedback }}</h4>
-          <h4 ng-if="!vm.totalNegativeFeedback" class="card-stats-number">
-            <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
-          </h4>
-          <p class="card-stats-compare">
-            <i class="mdi-hardware-keyboard-arrow-down"></i> 3% <span class="deep-purple-text text-lighten-5">from last month</span>
-          </p>
-        </div>
-        <div class="card-action  pink darken-2">
-          <div id="invoice-line" class="center-align"></div>
-        </div>
-      </div>
+
+
+    <div class="input-field col s6 m6 l6">
+      <input input-date
+             type="text"
+             name="created"
+             id="until"
+             ng-model="vm.until"
+             format="mmmm d, yyyy"
+             today="today"
+             clear="clear"
+             close="close"
+             select-years="15"
+             ng-change="vm.onChange()"
+      />
+      <label for="">Until</label>
     </div>
-    <div class="col s12 m6 l3">
-      <div class="card">
-        <div class="card-content blue-grey white-text">
-          <p class="card-stats-title"><i class="mdi-social-group-add"></i> Total Fans</p>
-          <h4 class="card-stats-number">
-            <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
-          </h4>
-          <p class="card-stats-compare">
-            <i class="mdi-hardware-keyboard-arrow-up"></i> 80% <span class="blue-grey-text text-lighten-5">from yesterday</span>
-          </p>
-        </div>
-        <div class="card-action blue-grey darken-2">
-          <div id="profit-tristate" class="center-align"></div>
-        </div>
-      </div>
-    </div>
-    <div class="col s12 m6 l3">
-      <div class="card">
-        <div class="card-content purple white-text">
-          <p class="card-stats-title"><i class="mdi-editor-border-color"></i> Total Post</p>
-          <h4 class="card-stats-number">
-            <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
-          </h4>
-          <p class="card-stats-compare">
-            <i class="mdi-hardware-keyboard-arrow-up"></i> 70% <span
-            class="purple-text text-lighten-5">last month</span>
-          </p>
-        </div>
-        <div class="card-action purple darken-2">
-          <div id="sales-compositebar" class="center-align"></div>
-        </div>
-      </div>
-    </div>
+
   </div>
-</div>
 
 
-<div class="row">
-  <div class="col s12 m12 l12">
-    <div class="card">
-      <div class="card-move-up waves-effect waves-block waves-light">
-        <div class="move-up cyan darken-1">
-          <div>
-            <p class="margin white-text">The total number of people who have liked your Page.</p>
-          </div>
-          <div ng-if="vm.dataPageFans.length" class="card-content">
-            <line-chart-curved line-labels="{{vm.labelsPageFans}}" line-data="{{vm.dataPageFans}}"></line-chart-curved>
-          </div>
-          <div ng-if="!vm.dataPageFans.length" class="card-content center-align">
-            <div class="spinner icon-spinner-5" aria-hidden="true"></div>
-          </div>
-
-        </div>
-      </div>
-      <div class="card-move-up waves-effect waves-block waves-light">
-        <div class="move-up cyan ">
-          <p class="margin white-text">The number of your fans who saw any posts on Facebook on a given day</p>
-        </div>
-      </div>
-      <div ng-if="vm.labelsPageFansOnline.length" class="card-content">
-        <bar-chart bar-labels="{{vm.labelsPageFansOnline}}" bar-data="{{vm.dataPageFansOnline}}"></bar-chart>
-      </div>
-      <div ng-if="!vm.labelsPageFansOnline.length" class="card-content center-align">
-        <div class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
-      </div>
-
-
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col s12 m12 l12">
-    <div class="card">
-      <div class="card-move-up teal waves-effect waves-block waves-light">
-        <div class="move-up">
-          <p class="margin white-text">The number of times a Page's profile has been viewed by logged in and logged out
-            people.</p>
-        </div>
-      </div>
-      <div ng-if="vm.dataPageViews.length" class="card-content teal darken-2">
-        <line-chart line-labels="{{vm.labelsPageViews}}" line-data="{{vm.dataPageViews}}"></line-chart>
-      </div>
-      <div ng-if="!vm.dataPageViews.length" class="card-content teal darken-2 center-align">
-        <div class="spinner icon-spinner-5" aria-hidden="true"></div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-
-<div class="row">
-  <div class="col s12 m12 l12">
-    <div class="card ">
-      <div class="card-move-up waves-effect waves-block waves-light">
-        <div class="move-up">
-          <p class="margin black-text">The number of stories about your Page's stories, by Page story type</p>
-        </div>
-      </div>
-
-      <div ng-repeat="story in vm.pageStories" class="col s12 m4 l4">
-        <!--<div class="col s12 m4 l4">-->
+  <div id="card-stats">
+    <div class="row">
+      <div class="col s12 m6 l3">
         <div class="card">
-          <div class="card-move-up teal waves-effect waves-block waves-light">
-            <radar-chart labels="{{story.end_time}}" data="{{story}}"></radar-chart>
-
+          <div class="card-content  green white-text">
+            <p class="card-stats-title"><i class="mdi-action-trending-up"></i> Positive Feedback </p>
+            <h4 ng-if="vm.totalPositiveFeedback" class="card-stats-number"> {{ vm.totalPositiveFeedback }}</h4>
+            <h4 ng-if="!vm.totalPositiveFeedback" class="card-stats-number">
+              <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
+            </h4>
+            <p class="card-stats-compare">
+              <i class="mdi-hardware-keyboard-arrow-up"></i> 15% <span
+              class="green-text text-lighten-5">from last week</span>
+            </p>
+          </div>
+          <div class="card-action  green darken-2">
+            <div id="clients-bar" class="center-align"></div>
           </div>
         </div>
       </div>
-      <div ng-if="!vm.pageStories.length" class="card-content center-align">
-        <div class="spinner icon-spinner-3 cyan-text" aria-hidden="true"></div>
+      <div class="col s12 m6 l3">
+        <div class="card">
+          <div class="card-content red lighten-1 white-text">
+            <p class="card-stats-title"><i class="mdi-action-trending-down"></i> Negative Feedback</p>
+            <h4 ng-if="vm.totalNegativeFeedback" class="card-stats-number">{{vm.totalNegativeFeedback }}</h4>
+            <h4 ng-if="!vm.totalNegativeFeedback" class="card-stats-number">
+              <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
+            </h4>
+            <p class="card-stats-compare">
+              <i class="mdi-hardware-keyboard-arrow-down"></i> 3% <span class="deep-purple-text text-lighten-5">from last month</span>
+            </p>
+          </div>
+          <div class="card-action  pink darken-2">
+            <div id="invoice-line" class="center-align"></div>
+          </div>
+        </div>
       </div>
-
+      <div class="col s12 m6 l3">
+        <div class="card">
+          <div class="card-content blue-grey white-text">
+            <p class="card-stats-title"><i class="mdi-social-group-add"></i> Total Fans</p>
+            <h4 class="card-stats-number">
+              <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
+            </h4>
+            <p class="card-stats-compare">
+              <i class="mdi-hardware-keyboard-arrow-up"></i> 80% <span class="blue-grey-text text-lighten-5">from yesterday</span>
+            </p>
+          </div>
+          <div class="card-action blue-grey darken-2">
+            <div id="profit-tristate" class="center-align"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col s12 m6 l3">
+        <div class="card">
+          <div class="card-content purple white-text">
+            <p class="card-stats-title"><i class="mdi-editor-border-color"></i> Total Post</p>
+            <h4 class="card-stats-number">
+              <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
+            </h4>
+            <p class="card-stats-compare">
+              <i class="mdi-hardware-keyboard-arrow-up"></i> 70% <span
+              class="purple-text text-lighten-5">last month</span>
+            </p>
+          </div>
+          <div class="card-action purple darken-2">
+            <div id="sales-compositebar" class="center-align"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
+
+  <div class="row">
+    <div class="col s12 m12 l12">
+      <div class="card">
+        <div class="card-move-up waves-effect waves-block waves-light">
+          <div class="move-up cyan darken-1">
+            <div>
+              <p class="margin white-text">The total number of people who have liked your Page.</p>
+            </div>
+            <div ng-if="vm.dataPageFans.length" class="card-content">
+              <line-chart-curved line-labels="{{vm.labelsPageFans}}"
+                                 line-data="{{vm.dataPageFans}}"></line-chart-curved>
+            </div>
+            <div ng-if="!vm.dataPageFans.length" class="card-content center-align">
+              <div class="spinner icon-spinner-5" aria-hidden="true"></div>
+            </div>
+
+          </div>
+        </div>
+        <div class="card-move-up waves-effect waves-block waves-light">
+          <div class="move-up cyan ">
+            <p class="margin white-text">The number of your fans who saw any posts on Facebook on a given day</p>
+          </div>
+        </div>
+        <div ng-if="vm.labelsPageFansOnline.length" class="card-content">
+          <bar-chart bar-labels="{{vm.labelsPageFansOnline}}" bar-data="{{vm.dataPageFansOnline}}"></bar-chart>
+        </div>
+        <div ng-if="!vm.labelsPageFansOnline.length" class="card-content center-align">
+          <div class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12 m12 l12">
+      <div class="card">
+        <div class="card-move-up teal waves-effect waves-block waves-light">
+          <div class="move-up">
+            <p class="margin white-text">The number of times a Page's profile has been viewed by logged in and logged
+              out
+              people.</p>
+          </div>
+        </div>
+        <div ng-if="vm.dataPageViews.length" class="card-content teal darken-2">
+          <line-chart line-labels="{{vm.labelsPageViews}}" line-data="{{vm.dataPageViews}}"></line-chart>
+        </div>
+        <div ng-if="!vm.dataPageViews.length" class="card-content teal darken-2 center-align">
+          <div class="spinner icon-spinner-5" aria-hidden="true"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col s12 m12 l12">
+      <div class="card ">
+        <div class="card-move-up waves-effect waves-block waves-light">
+          <div class="move-up">
+            <p class="margin black-text">The number of stories about your Page's stories, by Page story type</p>
+          </div>
+        </div>
+
+        <div ng-repeat="story in vm.pageStories" class="col s12 m4 l4">
+          <!--<div class="col s12 m4 l4">-->
+          <div class="card">
+            <div class="card-move-up teal waves-effect waves-block waves-light">
+              <radar-chart labels="{{story.end_time}}" data="{{story}}"></radar-chart>
+
+            </div>
+          </div>
+        </div>
+        <div ng-if="!vm.pageStories.length" class="card-content center-align">
+          <div class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!--<div >-->
+  <!--<fusioncharts-->
+  <!--width= "100%"-->
+  <!--height= "400"-->
+  <!--type= "column2d"-->
+  <!--dataFormat= "json"-->
+  <!--dataSource= "{{vm.dataSource}}"-->
+  <!--events="vm.events"-->
+  <!--&gt;-->
+  <!--</fusioncharts>-->
+  <!--</div>-->
+
+  <!--<div class="statusbar" >{{ vm.selectedValue }}</div>-->
+
+  <!-- chartist -->
+  <!--<script type="text/javascript" src="angular/app/assets/js/plugins/chartist-js/chartist.min.js"></script>-->
+  <!-- chartjs -->
+  <!--<script type="text/javascript" src="angular/app/assets/js/plugins/chartjs/chart-script.js"></script>-->
+
 </div>
-
-<!--<div >-->
-<!--<fusioncharts-->
-<!--width= "100%"-->
-<!--height= "400"-->
-<!--type= "column2d"-->
-<!--dataFormat= "json"-->
-<!--dataSource= "{{vm.dataSource}}"-->
-<!--events="vm.events"-->
-<!--&gt;-->
-<!--</fusioncharts>-->
-<!--</div>-->
-
-<!--<div class="statusbar" >{{ vm.selectedValue }}</div>-->
-
-<!-- chartist -->
-<!--<script type="text/javascript" src="angular/app/assets/js/plugins/chartist-js/chartist.min.js"></script>-->
-<!-- chartjs -->
 <script type="text/javascript" src="angular/app/assets/js/plugins/chartjs/chart.min.js"></script>
-<!--<script type="text/javascript" src="angular/app/assets/js/plugins/chartjs/chart-script.js"></script>-->

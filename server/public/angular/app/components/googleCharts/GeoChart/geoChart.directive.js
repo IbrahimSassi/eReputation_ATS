@@ -19,19 +19,11 @@
           setTimeout(function () {
             google.charts.load('current', {'packages': ['geochart']});
 
+            var LocalData = JSON.parse(scope.myTable);
 
             function drawChart() {
               var data = google.visualization.arrayToDataTable(
                 JSON.parse(scope.myTable)
-                // [
-                //   ['Country', 'Popularity'],
-                //   ['Germany', 200],
-                //   ['United States', 300],
-                //   ['Brazil', 400],
-                //   ['Canada', 500],
-                //   ['France', 600],
-                //   ['RU', 700]
-                // ]
               );
 
               var options = {
@@ -43,17 +35,21 @@
               var chart = new google.visualization.GeoChart(document.getElementById('regions-chart' + scope.myId));
 
               chart.draw(data, options);
+
+
             }
 
-            google.charts.setOnLoadCallback(
-              function () { // Anonymous function that calls drawChart1 and drawChart2
+            if (LocalData && LocalData.length > 1) {
+              google.charts.setOnLoadCallback(
+                function () { // Anonymous function that calls drawChart1 and drawChart2
+                  drawChart();
+
+                });
+
+              scope.$watch('myTable', function (newValue, oldValue) {
                 drawChart();
-
               });
-
-            scope.$watch('myTable', function (newValue, oldValue) {
-              drawChart();
-            });
+            }
 
 
           }, 0);

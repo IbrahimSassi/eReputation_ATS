@@ -1,17 +1,133 @@
-<div class="col s12">
-  <div id="flight-card" class="card">
+<style>
 
-    <div class="card-header indigo darken-1">
-      <div class="card-title">
-        <h4 class="flight-card-title">Overview</h4>
-        <p class="flight-card-date">Last operation : 4 hours ago</p>
-      </div>
-    </div>
-  </div>
+
+  .fbButton {
+    text-decoration: none;
+    color: #385A97;
+  }
+
+  header {
+    padding: 0;
+    position: relative;
+  }
+
+  .status {
+    margin: 11px 0;
+  }
+
+  #wrapper {
+    box-sizing: border-box;
+    background-color: #fff;
+    width: 500px;
+    margin: 10px auto 0;
+    border: 1px solid #D0D1D5;
+    border-top: 0;
+    border-radius: 2px;
+    padding: 12px;
+  }
+
+  .arrow {
+    position: absolute;
+    width: 12px;
+    border: none;
+    height: auto;
+    right: 0px;
+  }
+
+  .profile-pic {
+    width: 40px;
+    height: auto;
+    float: left;
+    margin-right: 8px;
+  }
+
+  .name,
+  .date {
+    margin: 0;
+  }
+
+  .name {
+    color: #385A97;
+    font-size: 15px;
+    margin-bottom: 5px;
+  }
+
+  .date {
+    font-size: 12px;
+    color: #90949C;
+  }
+
+  main {
+    font-size: 13px;
+  }
+
+  main .status {
+    margin-bottom: 11px;
+  }
+
+  .img-content {
+    width: 100%;
+    margin-bottom: 11px;
+    border: 1px solid rgba(0, 0, 0, .1);
+  }
+
+  .action a {
+    color: #7F7F7F;
+  }
+
+  .action div {
+    display: inline-block;
+  }
+
+  .action div p:hover {
+    text-decoration: underline;
+  }
+
+  .action div:nth-child(n + 2) {
+    margin-left: 20px;
+  }
+
+  .like img,
+  .comment img,
+  .share img {
+    display: inline-block;
+    width: 18px;
+    vertical-align: text-bottom;
+  }
+
+  .like p {
+    color: #1787FA;
+  }
+
+  .like p,
+  .comment p,
+  .share p {
+    display: inline-block;
+  }
+
+  .share img {
+    opacity: .2;
+  }
+
+  .cf:before,
+  .cf:after {
+    content: "";
+    /* 1 */
+    display: table;
+    /* 2 */
+  }
+
+  .cf:after {
+    clear: both;
+  }
+</style>
+
+<div class="col s12">
+  <h1>Overview</h1>
 
   <div class="row">
 
-    <div class="input-field col s11 m11 l11">
+    <div class="input-field col s12 m12 l12">
       <select ng-change="vm.onSelect()" ng-model="vm.selectedChannel._id" name="" id="" material-select watch>
         <option value="all" selected>All</option>
         <option ng-repeat="channel in vm.myChannels" value="{{channel._id}}">{{channel.name}}</option>
@@ -28,13 +144,13 @@
              name="created"
              id="since"
              ng-model="vm.since"
-             format="ddd mmm dd yyyy HH:MM:ss"
+             format="mmmm d, yyyy"
              today="today"
              clear="clear"
              close="close"
              select-years="15"
-             min="2017/04/05"
-             max="2017/04/26"
+             min="{{vm.min}}"
+             max="{{vm.max}}"
              ng-change="vm.onChange()"
       />
       <label>From</label>
@@ -45,12 +161,12 @@
              name="created"
              id="until"
              ng-model="vm.until"
-             format="ddd mmm dd yyyy HH:MM:ss"
+             format="mmmm d, yyyy"
              today="today"
              clear="clear"
              close="close"
-             min="2017/04/05"
-             max="2017/04/26"
+             min="{{vm.min}}"
+             max="{{vm.max}}"
              ng-change="vm.onChange()"
       />
       <label>To</label>
@@ -136,11 +252,11 @@
   <div class="row">
     <div class="card">
       <div class="card-move-up waves-effect waves-block waves-light">
-        <div ng-if="vm.SentimentalFacebookData.length" class="move-up ">
+        <div ng-if="vm.SentimentalFacebookData.length > 1" class="move-up ">
           <area-chart my-id="15" my-table="{{vm.SentimentalFacebookData}}" title="Sentimental Analysis"
                       h-axis="Date"></area-chart>
         </div>
-        <div ng-if="!vm.SentimentalFacebookData" class="move-up ">
+        <div ng-if="vm.SentimentalFacebookData.length <=1" class="move-up center-align">
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
 
         </div>
@@ -152,22 +268,22 @@
   <div class="row">
     <div class="card col s6 m6 l6">
       <div class="card-move-up waves-effect waves-block waves-light">
-        <div ng-if="vm.reputationByReactions.length" class="move-up ">
+        <div ng-if="vm.reputationByReactions.length >1" class="move-up ">
           <column-chart my-id="5" my-table="{{vm.reputationByReactions}}" title="Reactions"
                         h-axis="Date"></column-chart>
         </div>
-        <div ng-if="!vm.reputationByReactions" class="move-up ">
+        <div ng-if="!vm.reputationByReactions.length <=1" class="move-up center-align">
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
     </div>
     <div class="card col s6 m6 l6">
       <div class="card-move-up waves-effect waves-block waves-light">
-        <div ng-if="vm.reputationByShares.length" class="move-up">
+        <div ng-if="vm.reputationByShares.length>1" class="move-up">
           <column-chart my-id="6" my-table="{{vm.reputationByShares}}" title="Shares"
                         h-axis="Date"></column-chart>
         </div>
-        <div ng-if="!vm.reputationByShares.length" class="move-up ">
+        <div ng-if="!vm.reputationByShares.length<=1" class="move-up center-align">
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
@@ -175,12 +291,13 @@
   </div>
 
   <div class="row">
-    <div class="card col s12 m12 l12" >
+    <div class="card col s12 m12 l12">
       <div class="card-move-up waves-effect waves-block waves-light">
-        <div ng-if="vm.reputationByTypes.length" class="move-up" >
-          <pie-chart width="100%" height="300" my-id="byPosts" my-table="{{vm.reputationByTypes}}" title="Posts By Type"></pie-chart>
+        <div ng-if="vm.reputationByTypes.length>1" class="move-up">
+          <pie-chart width="100%" height="300" my-id="byPosts" my-table="{{vm.reputationByTypes}}"
+                     title="Posts By Type"></pie-chart>
         </div>
-        <div ng-if="!vm.reputationByTypes.length" class="move-up ">
+        <div ng-if="!vm.reputationByTypes.length<=1" class="move-up center-align">
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
@@ -190,21 +307,22 @@
   <div class="row">
     <div class="card col s12 m3 l3">
       <div class="card-move-up waves-effect waves-block waves-light">
-        <div ng-if="vm.typesLink.length" class="move-up ">
-          <pie-chart width="250" height="250" my-id="links" my-table="{{vm.typesLink}}" title="Sentimental Analysis For Links"></pie-chart>
+        <div ng-if="vm.typesLink.length>1" class="move-up ">
+          <pie-chart width="250" height="250" my-id="links" my-table="{{vm.typesLink}}"
+                     title="Sentimental Analysis For Links"></pie-chart>
         </div>
-        <div ng-if="!vm.typesLink.length" class="move-up ">
+        <div ng-if="!vm.typesLink.length<=1" class="move-up center-align">
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
     </div>
     <div class="card col s12 m3 l3">
       <div class="card-move-up waves-effect waves-block waves-light">
-        <div ng-if="vm.typesStatus.length" class="move-up ">
+        <div ng-if="vm.typesStatus.length>1" class="move-up ">
           <pie-chart width="250" height="250" my-id="status" my-table="{{vm.typesStatus}}"
                      title="Sentimental Analysis For Status"></pie-chart>
         </div>
-        <div ng-if="!vm.typesStatus.length" class="move-up ">
+        <div ng-if="!vm.typesStatus.length<=1" class="move-up center-align">
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
@@ -212,22 +330,22 @@
 
     <div class="card col s12 m3 l3">
       <div class="card-move-up waves-effect waves-block waves-light">
-        <div ng-if="vm.typesPhoto.length" class="move-up ">
+        <div ng-if="vm.typesPhoto.length>1" class="move-up ">
           <pie-chart width="250" height="250" my-id="photo" my-table="{{vm.typesLink}}"
                      title="Sentimental Analysis For Photos"></pie-chart>
         </div>
-        <div ng-if="!vm.typesPhoto.length" class="move-up ">
+        <div ng-if="!vm.typesPhoto.length<=1" class="move-up center-align">
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
     </div>
     <div class="card col s12 m3 l3">
       <div class="card-move-up waves-effect waves-block waves-light">
-        <div ng-if="vm.typesVideo.length" class="move-up ">
+        <div ng-if="vm.typesVideo.length>1" class="move-up ">
           <pie-chart width="250" height="250" my-id="video" my-table="{{vm.typesVideo}}"
                      title="Sentimental Analysis For Video"></pie-chart>
         </div>
-        <div ng-if="!vm.typesVideo.length" class="move-up ">
+        <div ng-if="!vm.typesVideo.length<=1" class="move-up center-align">
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
@@ -239,19 +357,73 @@
   <div class="row">
     <div class="card col s12 m12 l12">
       <div class="card-move-up waves-effect waves-block waves-light">
-        <div ng-if="vm.storytellersByCountry.length" class="move-up ">
+        <div ng-if="vm.storytellersByCountry.length>1" class="move-up ">
           <geo-chart my-id="storytellerByCountry" my-table="{{vm.storytellersByCountry}}"
                      title="The number of People Talking About the Page by user country"></geo-chart>
           <div>
             The number of People Talking About the Page by user country.
           </div>
         </div>
-        <div ng-if="!vm.storytellersByCountry.length" class="move-up ">
+        <div ng-if="!vm.storytellersByCountry.length<=1" class="move-up center-align ">
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
     </div>
 
   </div>
+
+  <div class="divider"></div>
+
+  <div class="row">
+    <h4 class="header">Top Facebook Post</h4>
+
+    <div class="col s12 m12 l6">
+      <ul id="TopSharedPosts" class="collection">
+        <li class="collection-item avatar">
+          <i class="fa fa-facebook red circle"></i>
+          <span class="collection-header">Top Shared Posts</span>
+          <p>{{vm.selectedChannel.name}}</p>
+          <a href="#" class="secondary-content"><i class="fa fa-share"></i></a>
+        </li>
+        <li class="collection-item">
+          <div class="row">
+            <!--<div class="fb-post" data-href="{{vm.topSharedPost.link}}" data-width="500" data-show-text="false">-->
+            <!--<div class="fb-xfbml-parse-ignore">-->
+            <!--<blockquote cite="{{vm.topSharedPost.link}}">-->
+            <!--<a href="{{vm.topSharedPost.link}}">How to Share With Just Friends</a>-->
+            <!--<p>How to share with just friends.</p>-->
+            <!--Posted by <a href="https://www.facebook.com/facebook/">Facebook</a> on Friday, December 5, 2014-->
+            <!--</blockquote>-->
+            <!--</div>-->
+            <!--</div>-->
+
+            <div data-width="500" class="fb-post" data-href="{{vm.topSharedPost.link}}"></div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="col s12 m12 l6">
+      <ul id="TopLikedPosts" class="collection">
+        <li class="collection-item avatar">
+          <i class="fa fa-facebook red circle"></i>
+          <span class="collection-header">Top Liked Posts</span>
+          <p>{{vm.selectedChannel.name}}</p>
+          <a href="#" class="secondary-content"><i class="fa fa-thumbs-up"></i></a>
+        </li>
+        <li class="collection-item">
+          <div class="row">
+            <div data-width="500" class="fb-post" data-href="{{vm.topLikedPost.link}}"></div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+
 </div>
 
+<fb app-id='583444071825924'></fb>
+
+
+<!--<script src="angular/app/assets/js/charts/ggleloader.js"></script>-->

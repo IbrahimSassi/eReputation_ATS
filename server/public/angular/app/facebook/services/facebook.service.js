@@ -40,6 +40,7 @@
     this.getReputationByReaction = getReputationByReactionFN;
     this.getReputationByShares = getReputationBySharesFN;
     this.getReputationByTypes = getReputationByTypesFN;
+    this.getTopPosts = getTopPostsFN;
 
 
     function statusChangeCallbackFN(response) {
@@ -367,6 +368,11 @@
       return FacebookFactory.reputationByTypes(filter).$promise;
     }
 
+    function getTopPostsFN(filter, sort) {
+      var LocalFilter = $.extend({}, filter);
+      LocalFilter.sort = sort;
+      return FacebookFactory.topPosts(LocalFilter).$promise;
+    }
   }
 
 })();

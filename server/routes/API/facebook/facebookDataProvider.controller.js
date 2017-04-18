@@ -67,11 +67,11 @@ module.exports.getFacebookDataProvider = function (req, res, next) {
   };
 
   if (!req.body.keywords.length) {
-    sortedBy = {dateContent: 1}
+    sortedBy = {dateContent: 1};
     delete query.$text;
   }
 
-  if (!req.body.channelId) {
+  if (!req.body.channelId || req.body.channelId == "all") {
     delete query.channelId;
   }
 
@@ -91,7 +91,7 @@ module.exports.getFacebookDataProvider = function (req, res, next) {
 
   if (req.body.keywords && req.body.keywords.length) {
     var keywords = req.body.keywords.join(" ");
-    console.log(query)
+    console.log(query);
     query.$text.$search = keywords.toString();
     options = {"score": {$meta: "textScore"}};
     sortedBy = {"score": {$meta: "textScore"}};
@@ -117,17 +117,24 @@ module.exports.addFacebookComments = function (req, res, next) {
 
 
   async.eachSeries(req.comments, function iteratee(comment, callback) {
-    var newFacebookComment = new DataProvider.FacebookCommentsProvider(comment);
 
-    DataProvider.createDataProviderModel(newFacebookComment, function (err, item) {
-      if (err)
-        handleError(res, err)
-      else {
-        console.log('Success facebook comments saved saved', item._id);
-      }
+    var storingPromise = new Promise(function (resolve,reject) {
+      var newFacebookComment = new DataProvider.FacebookCommentsProvider(comment);
+      DataProvider.createDataProviderModel(newFacebookComment, function (err, item) {
+        if (err)
+          handleError(res, err);
+        else {
+          resolve(item);
+          console.log('Success facebook comments saved saved', item._id);
+        }
 
+      });
     });
-    callback();
+
+    storingPromise.then(function (item) {
+      callback();
+    });
+
   }, function done() {
     res.json(req.comments)
   });
@@ -137,12 +144,6 @@ module.exports.addFacebookComments = function (req, res, next) {
 
 module.exports.getFacebookSentimental = function (req, res, next) {
 
-  var since;
-  var until;
-  if (req.body.since && req.body.until) {
-    since = moment(req.body.since).format();
-    until = moment(req.body.until).format();
-  }
 
   var matchObject = {
       $and: [
@@ -165,11 +166,9 @@ module.exports.getFacebookSentimental = function (req, res, next) {
 
   if (req.body.channelId == "all") {
     matchObject.$and.splice(1, 1);
-    delete groupObject._id.channelId;
   }
 
-  var sortObject = {$sort: {dateContent: -1}};
-  DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, undefined, undefined).then(function (data) {
+  DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, {dateContent: -1}, undefined).then(function (data) {
     res.json(data);
   }).catch(function (err) {
     res.json(err);
@@ -179,14 +178,6 @@ module.exports.getFacebookSentimental = function (req, res, next) {
 ;
 
 module.exports.getReputationByReaction = function (req, res, next) {
-
-  console.log(req.body)
-  var since;
-  var until;
-  if (req.body.since && req.body.until) {
-    since = moment(req.body.since).format();
-    until = moment(req.body.until).format();
-  }
 
   var matchObject = {
     $and: [
@@ -208,11 +199,9 @@ module.exports.getReputationByReaction = function (req, res, next) {
 
   if (req.body.channelId == "all") {
     matchObject.$and.splice(1, 1);
-    delete groupObject._id.channelId;
   }
 
-  var sortObject = {$sort: {dateContent: -1}};
-  DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, undefined, "$reactions").then(function (data) {
+  DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, {dateContent: -1}, "$reactions").then(function (data) {
     res.json(data);
   }).catch(function (err) {
     res.json(err);
@@ -220,14 +209,6 @@ module.exports.getReputationByReaction = function (req, res, next) {
 
 };
 module.exports.getReputationByShares = function (req, res, next) {
-
-  console.log(req.body)
-  var since;
-  var until;
-  if (req.body.since && req.body.until) {
-    since = moment(req.body.since).format();
-    until = moment(req.body.until).format();
-  }
 
   var matchObject = {
     $and: [
@@ -245,10 +226,9 @@ module.exports.getReputationByShares = function (req, res, next) {
 
   if (req.body.channelId == "all") {
     matchObject.$and.splice(1, 1);
-    delete groupObject._id.channelId;
   }
 
-  DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, undefined, undefined).then(function (data) {
+  DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, {dateContent: -1}, undefined).then(function (data) {
     res.json(data);
   }).catch(function (err) {
     res.json(err);
@@ -257,14 +237,6 @@ module.exports.getReputationByShares = function (req, res, next) {
 };
 
 module.exports.getReputationByTypes = function (req, res, next) {
-
-  console.log(req.body)
-  var since;
-  var until;
-  if (req.body.since && req.body.until) {
-    since = moment(req.body.since).format();
-    until = moment(req.body.until).format();
-  }
 
   var matchObject = {
     $and: [
@@ -285,10 +257,46 @@ module.exports.getReputationByTypes = function (req, res, next) {
 
   if (req.body.channelId == "all") {
     matchObject.$and.splice(1, 1);
-    delete groupObject._id.channelId;
   }
 
-  DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, undefined, undefined).then(function (data) {
+  DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, {dateContent: -1}, undefined).then(function (data) {
+    res.json(data);
+  }).catch(function (err) {
+    res.json(err);
+  })
+
+};
+
+
+module.exports.getTopPosts = function (req, res, next) {
+
+
+  var matchObject = {
+    $and: [
+      {dateContent: {'$gte': new Date(req.body.since), '$lte': new Date(req.body.until)}},
+      {channelId: {'$eq': req.body.channelId}},
+      {campaignId: {'$eq': req.body.campaignId}},
+      {source: {'$eq': "FacebookPostsProvider"}}
+    ]
+  };
+
+
+  if (req.body.channelId == "all") {
+    matchObject.$and.splice(1, 1);
+  }
+
+  var sortProperty = req.body.sort;
+  var sortObject;
+  if (sortProperty.toString() == "shares") {
+    sortObject = {shares: -1};
+  }
+  else if (sortProperty.toString() == "likes") {
+    sortObject = {'reactions.0.like.summary.total_count': -1};
+  }
+  else if (sortProperty.toString() == "loves") {
+    sortObject = {'reactions.0.love.summary.total_count': -1};
+  }
+  DataProvider.getDataProviderMatchedAndGrouped(matchObject, undefined, sortObject, undefined).then(function (data) {
     res.json(data);
   }).catch(function (err) {
     res.json(err);
