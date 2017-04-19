@@ -52,7 +52,7 @@
       console.log("succ", response)
       vm.success = true;
       UserService.saveToken(response.token);
-      setTimeout(function(){ $window.location.href = '/admin'; }, 3000);
+      setTimeout(function(){ $window.location.href = '/admin'; }, 1000);
 
 
     }
