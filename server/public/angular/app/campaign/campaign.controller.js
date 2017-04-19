@@ -97,8 +97,8 @@
     /**Scope Replace**/
     var vm = this;
     vm.idCampaign = $stateParams.idCampaign;
-    $scope.allChannelTodisplay = [];
-
+    $scope.allChannelTodisplay=[];
+    $scope.allChannelEditTodisplay=[];
     /**
      * View Detail Methods
      */
@@ -107,21 +107,22 @@
 
     vm.displayEdit = function (id) {
       CampaignService.getCampaignById(id).then(function (data) {
+
         console.info("cammpaign : ", data[0]);
         $scope.campaignToEdit = data[0];
-        // data[0].channels.forEach(function (channelPartial) {
-        //   ChannelService.getChannelByID(channelPartial.channelId).then(function (channel) {
-        //     $scope.allChannelTodisplay.push(channel);
-        //   });
-        // });
+        data[0].channels.forEach(function (channelPartial) {
+          ChannelService.getChannelByID(channelPartial.channelId).then(function (channel) {
+            $scope.allChannelEditTodisplay.push(channel);
+          });
+        });
       }).catch(function (err) {
         console.error(err);
       });
 
     };
 
-    if (vm.idCampaign) {
-      vm.displayEdit(vm.idCampaign);
+    if (vm.idCampaign && $state.includes('campaignEdit')) {
+       vm.displayEdit(vm.idCampaign);
     }
 
     vm.getCampaignDetail = function (id) {
@@ -164,14 +165,16 @@
 
     vm.deleteCampaign = function (campaign) {
 
-      swal({    title: "Are you sure?",
+      swal({
+          title: "Are you sure?",
           text: "You will not be able to recover this Campaign !",
           type: "warning",
           showCancelButton: true,
           confirmButtonColor: "#DD6B55",
           confirmButtonText: "Yes, delete it!",
-          closeOnConfirm: false },
-        function(){
+          closeOnConfirm: false
+        },
+        function () {
           CampaignService.deleteCampaign(campaign);
           vm.getAllCampaigns();
           swal("Deleted!", "Your Campaign has been deleted.", "success");

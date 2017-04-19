@@ -63,6 +63,7 @@ module.exports.transformPostsData = function (req, res, next) {
         promisePrevious = handleData(posts, "previous");
         Promise.all([promisePrevious, promiseNext]).then(function (tab) {
 
+          console.log("tabtab", tab[0])
           //Requesting Data for all those urls
           async.eachSeries(tab[0], function iteratee(listItem, callback) {
             request(listItem, function (error, response, body) {
@@ -89,6 +90,8 @@ module.exports.transformPostsData = function (req, res, next) {
                   data.date = new Date();
                   story.reactions.push(data);
                   AllPosts.push(story);
+                }).catch(function () {
+                  callback()
                 });
 
               });
@@ -226,13 +229,19 @@ function handleData(data, direction) {
       getData(data.paging[direction]).then(function (newData) {
         handleData(newData, direction).then(function (data) {
           resolve(urls)
+        }).catch(function () {
+          reject({error: 'error handling next paging'})
+
         })
+      }).catch(function () {
+        reject({error: 'error handling next paging'})
+
       })
     }
     else {
       resolve(urls)
     }
-    reject({error:'error handling next paging'})
+    reject({error: 'error handling next paging'})
 
   })
 }
