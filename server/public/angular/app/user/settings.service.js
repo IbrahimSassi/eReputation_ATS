@@ -38,16 +38,12 @@
       }).$promise;
     };
 
-    var EditAdditionalInformation = function (userToEdit) {
+    var EditAdditionalInformation = function (userToEdit,file) {
+      $http.post('/users/settings/profile', {
+        file: file
+      });
       //return $http.post('/users/register', user)
-      return SettingsFactory.additionalInformation({
-        activeEmail: userToEdit.activeEmail,
-        profilePicture: userToEdit.profilePicture,
-        coverPicture: userToEdit.coverPicture,
-        about: userToEdit.about,
-        birthday: userToEdit.birthday,
-        country: userToEdit.country
-      }).$promise;
+      return SettingsFactory.additionalInformation(userToEdit).$promise;
     };
 
     var changePassword = function (userToEdit) {

@@ -92,7 +92,7 @@
       newpassword: "",
       newpasswordagain: ""
     }
-    vm.birthday = moment($rootScope.currentUser.birthday, 'DD-MM-YYYY')._i;
+    vm.birthday = moment($rootScope.currentUser.birthday).format('DD-MM-YYYY');
     //vm.birthdayInd = moment($rootScope.currentUser.birthday, 'DD-MM-YYYY')._i;
     console.log(vm.birthday)
     vm.EditBasicInformationIndividual = function () {
@@ -145,7 +145,7 @@
     };
 //*************************************
     vm.EditAdditionalInformation = function () {
-      vm.additionalInformation.birthday = moment(vm.birthday, 'DD-MM-YYYY')._i;
+      vm.additionalInformation.birthday = moment(vm.birthday).format('DD-MM-YYYY');
       SettingsService
         .EditAdditionalInformation(vm.additionalInformation)
         .then(successCallback, errorCallback);

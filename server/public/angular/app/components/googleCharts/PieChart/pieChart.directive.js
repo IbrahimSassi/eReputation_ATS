@@ -54,7 +54,6 @@
 
 
             }
-
             if (LocalData && LocalData.length > 1) {
 
               google.charts.setOnLoadCallback(

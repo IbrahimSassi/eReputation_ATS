@@ -93,20 +93,29 @@ router.put('/basicinformationBuss/:activeEmail/:email/:businessName/:businessTyp
   }
 });
 
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
 
+router.post('/profile', upload.single('avatar'), function (req, res, next) {
+  console.log("dkhal haha")
 
-router.put('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:about/:birthday/:country', function (req, res, next) {
-  console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+  console.log("dkhal haha",req.file )
 
-  console.log("Profile: ",req.params.profilePicture);
+  // req.body will hold the text fields, if there were any
+})
 
-  if (req.params.activeEmail && req.params.profilePicture && req.params.coverPicture && req.params.about && req.params.birthday && req.params.country) {
-    var activeEmail = req.params.activeEmail;
-    var profilePicture = req.params.profilePicture;
-    var coverPicture = req.params.coverPicture;
-    var about = req.params.about;
-    var birthday = req.params.birthday;
-    var country = req.params.country;
+router.put('/additionalInformation', function (req, res, next) {
+  //console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+
+ // console.log("Profile: ",req.params.profilePicture);
+
+  if (req.body.activeEmail && req.body.profilePicture && req.body.coverPicture && req.body.about && req.body.birthday && req.body.country) {
+    var activeEmail = req.body.activeEmail;
+    var profilePicture = req.body.profilePicture;
+    var coverPicture = req.body.coverPicture;
+    var about = req.body.about;
+    var birthday = req.body.birthday;
+    var country = req.body.country;
     var profilePictureName = randomstring.generate(12);
     var coverPictureName = randomstring.generate(12);
     //*
@@ -139,7 +148,7 @@ router.put('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:a
 
         var token;
         token = userFound.generateJwt();
-        console.log('token: ' + userFound);
+        //console.log('token: ' + userFound);
         res.status(200).json({"token": token});
       });
     });
@@ -156,18 +165,18 @@ router.put('/changepassword/:activeEmail/:oldpassword/:newpassword', function (r
     var activeEmail = req.params.activeEmail;
     var oldpassword = req.params.oldpassword;
     var newpassword = req.params.newpassword;
-    console.log("Passed: ", activeEmail, oldpassword, newpassword)
+    //console.log("Passed: ", activeEmail, oldpassword, newpassword)
 
     User.findOne({email: activeEmail}, function (err, user) {
 
       if (err) {
-        console.log('err ', err);
+       // console.log('err ', err);
         return res.status(500).json(err);
       }
 
       // Return if password is wrong
       if (!user.validPassword(oldpassword)) {
-        console.log('notvalid ');
+        //console.log('notvalid ');
         return res.status(401).json({"err": "Password is wrong"});
       }
 

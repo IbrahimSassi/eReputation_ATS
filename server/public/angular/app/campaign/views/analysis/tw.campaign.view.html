@@ -39,7 +39,7 @@
     <div class="input-field col s12">
       <label>Please select your channel</label>
       <select ng-change="camp.onSelectChannel()" material-select watch ng-model="camp.selectChannelValue">
-        <option value="" disabled selected>Choose your option</option>
+        <option value="" disabled>Choose your option</option>
         <option value="all">Follow All Channels</option>
         <option ng-repeat="allchannels in camp.allChannelsInArray" value="{{allchannels._id}}">{{allchannels.name}}
         </option>
@@ -210,10 +210,12 @@
 
 
 <div class="row" ng-if="camp.selectChannelValue=='all'">
-  <div class="col s12 m12 l12">
+  <div ng-if="camp.reputationBySentimentAll.length > 1 " class="col s12 m12 l12">
     <pie-chart height="400" my-id="Replies" my-table="{{camp.reputationBySentimentAll}}"
                title="Tweets Analytics"></pie-chart>
-
+  </div>
+  <div ng-if="camp.reputationBySentimentAll.length <= 1 " class="col s12 m12 l12">
+    <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
   </div>
 </div>
 
@@ -227,9 +229,12 @@
   <div class="col s12 m12 l12">
     <div class="col s6 m6 l6">
       <div class="row">
-        <div class="col s12 m12 l12">
+        <div ng-if="camp.reputationBySentimentReply.length > 1 " class="col s12 m12 l12">
           <pie-chart height="400" my-id="Replies" my-table="{{camp.reputationBySentimentReply}}"
                      title="Tweets Replies Analytics"></pie-chart>
+        </div>
+        <div ng-if="camp.reputationBySentimentReply.length <= 1 " class="col s12 m12 l12">
+          <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
         </div>
         <div class="input-filed col s12s m12 l12">
           <div class="col s6">
@@ -246,7 +251,11 @@
 
     <div class="col s6 m6 l6">
       <div class="row">
-        <div class="col s12 m12 l12">
+        <div  ng-if="camp.reputationBySentimentMention.length > 1 " class="col s12 m12 l12">
+          <pie-chart height="400" my-id="Mentions" my-table="{{camp.reputationBySentimentMention}}"
+                     title="Tweets Mentions Analytics"></pie-chart>
+        </div>
+        <div ng-if="camp.reputationBySentimentMention.length <= 1 " class="col s12 m12 l12">
           <pie-chart height="400" my-id="Mentions" my-table="{{camp.reputationBySentimentMention}}"
                      title="Tweets Mentions Analytics"></pie-chart>
         </div>

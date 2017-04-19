@@ -70,15 +70,15 @@
 
     var filterSentimentalForMention =
       {
-        "since": null,
-        "until": null,
+        "since": "2017-04-01T00:00:00+01:00",
+        "until": "2017-04-15T00:00:00+01:00",
         "channelId": null,
         "campaignId": null
       };
     var filterSentimentalForReply =
       {
-        "since": null,
-        "until": null,
+        "since": "2017-04-01T00:00:00+01:00",
+        "until": "2017-04-15T00:00:00+01:00",
         "channelId": null,
         "campaignId": null
       };
@@ -274,7 +274,7 @@
       }
       else {
         SentimentalAttrInitializer()
-        initReputationBySentimentForAll()
+        //initReputationBySentimentForAll()
         initReputationBySentiment();
         initTopTweets();
         requestTopTweets();
@@ -308,7 +308,7 @@
 
         if (vm.selectChannelValue != 'all') {
           SentimentalAttrInitializer()
-          initReputationBySentimentForAll()
+          //initReputationBySentimentForAll()
           initReputationBySentiment();
           initTopTweets();
           requestTopTweets();
@@ -335,36 +335,6 @@
     /**
      //StartPieChartInsights
      */
-    function initReputationBySentiment() {
-      console.log("wanted oneeee", filterSentimentalForAll);
-      vm.reputationBySentimentMention = [];
-      vm.reputationBySentimentReply = [];
-      console.log(vm.selectedChannel)
-      vm.reputationBySentimentMention.push(['Type', 'Number'])
-      vm.reputationBySentimentReply.push(['Type', 'Number'])
-      //vm.reputationBySentiment.push(['Positive', 70]);
-      //vm.reputationBySentiment.push(['Negative', 20]);
-      //vm.reputationBySentiment.push(['Neutral', 10]);
-      //console.log("heyyyyyyyyyyyyyyyyyyyyyyy", filterSentimentalForReply)
-      //console.log("/////////////////")
-      TwitterService.GetSentimentalForOneChannelForMention(filterSentimentalForReply).then(function (data) {
-        data.forEach(function (obj) {
-          //console.log('obj: ', obj);
-          vm.reputationBySentimentMention.push(['Positive', obj.positive_score]);
-          vm.reputationBySentimentMention.push(['Negative', obj.negative_score]);
-          vm.reputationBySentimentMention.push(['Neutral', obj.neutral_score]);
-        });
-      })
-
-      TwitterService.GetSentimentalForOneChannelForReply(filterSentimentalForMention).then(function (data) {
-        data.forEach(function (obj) {
-          //console.log('obj: ', obj);
-          vm.reputationBySentimentReply.push(['Positive', obj.positive_score]);
-          vm.reputationBySentimentReply.push(['Negative', obj.negative_score]);
-          vm.reputationBySentimentReply.push(['Neutral', obj.neutral_score]);
-        });
-      })
-    }
 
 
     function SentimentalAttrInitializer() {
@@ -382,6 +352,43 @@
       filterSentimentalForAll.campaignId = vm.idCampaign;
 
     }
+
+
+
+
+    function initReputationBySentiment() {
+      console.log("wanted oneeee", filterSentimentalForAll);
+      vm.reputationBySentimentMention = [];
+      vm.reputationBySentimentReply = [];
+      console.log(vm.selectedChannel)
+      vm.reputationBySentimentMention.push(['Type', 'Number'])
+      vm.reputationBySentimentReply.push(['Type', 'Number'])
+      //vm.reputationBySentiment.push(['Positive', 70]);
+      //vm.reputationBySentiment.push(['Negative', 20]);
+      //vm.reputationBySentiment.push(['Neutral', 10]);
+      //console.log("heyyyyyyyyyyyyyyyyyyyyyyy", filterSentimentalForReply)
+      //console.log("/////////////////")
+      TwitterService.GetSentimentalForOneChannelForMention(filterSentimentalForReply).then(function (data) {
+        data.forEach(function (obj) {
+          console.log('objdogdof: ', obj);
+          vm.reputationBySentimentMention.push(['Positive', obj.positive_score]);
+          vm.reputationBySentimentMention.push(['Negative', obj.negative_score]);
+          vm.reputationBySentimentMention.push(['Neutral', obj.neutral_score]);
+        });
+      })
+
+      TwitterService.GetSentimentalForOneChannelForReply(filterSentimentalForMention).then(function (data) {
+        data.forEach(function (obj) {
+          //console.log('obj: ', obj);
+          vm.reputationBySentimentReply.push(['Positive', obj.positive_score]);
+          vm.reputationBySentimentReply.push(['Negative', obj.negative_score]);
+          vm.reputationBySentimentReply.push(['Neutral', obj.neutral_score]);
+        });
+      })
+    }
+
+
+
 
 
     function initReputationBySentimentForAll() {
@@ -580,10 +587,17 @@
     }
 
 
-    initReputationBySentiment();
+   // initReputationBySentiment();
     /**
      //End PieChartInsights
      */
+
+    /** Scripts Loading first Refresh **/
+    angularLoad.loadScript('angular/app/assets/js/charts/ggleloader.js').then(function () {
+    }).catch(function () {
+      console.log('err script 1');
+    });
+    /** END of Scripts Loading first Refresh **/
 
   };
 

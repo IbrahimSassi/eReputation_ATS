@@ -49,17 +49,9 @@
           }
         },
         'additionalInformation': {
-          url: '/users/settings/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:about/:birthday/:country',
+          url: '/users/settings/additionalInformation',
           method: 'PUT',
-          params: {
-            activeEmail: '@activeEmail',
-            profilePicture: '@profilePicture',
-            coverPicture: '@coverPicture',
-            about: '@about',
-            birthday: '@birthday',
-            country: '@country',
 
-          },
 
         },
         'changepaswword': {
