@@ -48,7 +48,7 @@ mongoose.connect('mongodb://bro:brobro0055@ds157469.mlab.com:57469/ats-digital',
 //Adding passport require
 require('./config/passport');
 app.use(passport.initialize());
-app.use(bodyParser.json({limit: '5mb'}));
+app.use(bodyParser.json({limit: '100mb'}));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
