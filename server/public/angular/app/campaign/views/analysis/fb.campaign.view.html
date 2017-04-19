@@ -122,6 +122,8 @@
   }
 </style>
 
+<fb app-id='583444071825924'></fb>
+
 <div class="col s12">
   <h1>Overview</h1>
 
@@ -129,7 +131,7 @@
 
     <div class="input-field col s12 m12 l12">
       <select ng-change="vm.onSelect()" ng-model="vm.selectedChannel._id" name="" id="" material-select watch>
-        <option value="all" selected>All</option>
+        <option value="all">All</option>
         <option ng-repeat="channel in vm.myChannels" value="{{channel._id}}">{{channel.name}}</option>
       </select>
       <label>Page</label>
@@ -423,7 +425,9 @@
 
 </div>
 
-<fb app-id='583444071825924'></fb>
 
+<script>
+//  loadScriptOnlyIfNotLoaded("angular/app/assets/js/charts/ggleloader.js");
+</script>
 
 <!--<script src="angular/app/assets/js/charts/ggleloader.js"></script>-->

@@ -50,7 +50,6 @@
               google.charts.setOnLoadCallback(
                 function () { // Anonymous function that calls drawChart1 and drawChart2
                   drawChart();
-
                 });
 
             }

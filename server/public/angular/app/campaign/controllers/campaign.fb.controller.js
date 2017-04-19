@@ -258,6 +258,7 @@
       vm.reputationByReactions.push(['Date', 'Like', 'Love', 'Sad', 'Angry']);
       FacebookService.getReputationByReaction(LocalFilter).then(function (data) {
         data.forEach(function (obj) {
+          // console.log("reactions",obj);
           vm.reputationByReactions.push(
             [obj._id.dateContent, obj.like, obj.love, obj.sad, obj.angry]);
         });
@@ -372,6 +373,16 @@
 
 
     }
+
+
+
+    /** Scripts Loading first Refresh **/
+    angularLoad.loadScript('angular/app/assets/js/charts/ggleloader.js').then(function () {
+    }).catch(function () {
+      console.log('err script 1');
+    });
+    /** END of Scripts Loading first Refresh **/
+
 
 
   };
