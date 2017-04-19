@@ -18,6 +18,12 @@
         media="screen,projection">
 
   <link href="angular/app/assets/css/spinner.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <style>
+    a.disabled {
+      pointer-events: none;
+      cursor: default;
+    }
+  </style>
 </head>
 <body>
 <!-- Start Page Loading -->
@@ -168,9 +174,9 @@
                 Campaign</a>
               <div class="collapsible-body">
                 <ul>
-                  <li ui-sref-active="active"><a ui-sref="campaignCreate">Create Campaign</a>
+                  <li ui-sref-active="active"><a ng-class="disabled?'disabled':''" ui-sref="campaignCreate">Create Campaign</a>
                   </li>
-                  <li ui-sref-active="active"><a ui-sref="campaignList">Show Campaigns</a>
+                  <li ui-sref-active="active"><a ng-class="disabled?'disabled':''" ui-sref="campaignList">Show Campaigns</a>
                   </li>
                 </ul>
               </div>
@@ -186,9 +192,9 @@
                 Channels</a>
               <div class="collapsible-body">
                 <ul>
-                  <li ui-sref-active="active"><a ui-sref="newChannel">Create Channel</a>
+                  <li ui-sref-active="active"><a ng-class="disabled?'disabled':''" ui-sref="newChannel">Create Channel</a>
                   </li>
-                  <li ui-sref-active="active"><a ui-sref="channels">Show Channels</a>
+                  <li ui-sref-active="active"><a ng-class="disabled?'disabled':''" ui-sref="channels">Show Channels</a>
                   </li>
                 </ul>
               </div>

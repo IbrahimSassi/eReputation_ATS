@@ -23,10 +23,14 @@ angular.module('ATSApp-front', [
      /* if (UserService.isLoggedIn() && ($location.path('/login').$$path == 'login' || $location.path('/register').$$path == 'register')) {
         $window.location.href = '/admin';
       }*/
-      if (UserService.isLoggedIn())
+
+
+
+
+    /*  if (UserService.isLoggedIn())
       {
         $window.location.href = '/admin';
-      }
+      }*/
 
 
 
