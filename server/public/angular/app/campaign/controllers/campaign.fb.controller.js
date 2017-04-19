@@ -31,7 +31,7 @@
     vm.selectedCampaign = $stateParams.idCampaign; //TODO Change It Dynamic
     vm.selectedChannel = {
       _id: "all"
-    }
+    };
 
     // vm.selectedCampaign = "58ec64b17b0eab2accff5f34";
     // vm.selectedCampaign = "58eaaacdff57b30edc92fc4e";
@@ -89,13 +89,13 @@
 
     function init() {
 
-      vm.since = moment().subtract(10,'days');
-      vm.until = moment().add(1,'days');
-      vm.min = moment().subtract(15,'days');
-      vm.max = moment().add(1,'days');
+      vm.since = moment().subtract(10, 'days');
+      vm.until = moment().add(1, 'days');
+      vm.min = moment().subtract(15, 'days');
+      vm.max = moment().add(1, 'days');
 
       selectDate();
-      console.log("vm.selectedChannel",vm.selectedChannel)
+      console.log("vm.selectedChannel", vm.selectedChannel)
 
       delete filter.channelId;
       getSelectedCampaign().then(function (data) {
@@ -123,6 +123,7 @@
 
 
     vm.onSelect = function () {
+
       if (vm.selectedChannel._id !== "all") {
         ChannelService.getChannelByID(vm.selectedChannel._id).then(function (item) {
           vm.selectedChannel = item;
@@ -137,7 +138,7 @@
         });
       }
       else {
-        // delete filter.channelId;
+        delete filter.channelId
         selectDate();
 
         initCharts();
@@ -166,7 +167,7 @@
             data[0].keywords.forEach(function (keyword) {
               vm.myKeywords.push(keyword.content);
             })
-            console.log("vm.myKeywords",vm.myKeywords)
+            console.log("vm.myKeywords", vm.myKeywords)
 
             data[0].channels.forEach(function (channelPartial) {
               // console.log(channelPartial.channelId)
@@ -227,7 +228,7 @@
 
     function initFacebookSentimental() {
       var LocalFilter = $.extend({}, filter);
-      if(LocalFilter.source)
+      if (LocalFilter.source)
         delete LocalFilter.source;
 
       vm.SentimentalFacebookData = [];
@@ -235,7 +236,7 @@
       // console.log(vm.selectedChannel)
       vm.SentimentalFacebookData.push(['Date', 'Postivity', 'Negativity', 'Neutrality']);
       LocalFilter.keywords = vm.myKeywords;
-      console.log("filterSentimental",LocalFilter)
+      console.log("filterSentimental", LocalFilter)
       FacebookService.getReputationBySentimental(LocalFilter).then(function (data) {
         // console.log("Sentimental", data);
         data.forEach(function (obj) {
@@ -250,7 +251,7 @@
 
     function initReputationByReaction() {
       var LocalFilter = $.extend({}, filter);
-      if(LocalFilter.source)
+      if (LocalFilter.source)
         delete LocalFilter.source;
 
       vm.reputationByReactions = [];
@@ -269,7 +270,7 @@
 
     function initReputationByShares() {
       var LocalFilter = $.extend({}, filter);
-      if(LocalFilter.source)
+      if (LocalFilter.source)
         delete LocalFilter.source;
 
       vm.reputationByShares = [];
@@ -287,7 +288,7 @@
 
     function initReputationByTypes() {
       var LocalFilter = $.extend({}, filter);
-      if(LocalFilter.source)
+      if (LocalFilter.source)
         delete LocalFilter.source;
 
       vm.reputationByTypes = [];
@@ -329,7 +330,7 @@
 
     function initReputationByStorytellersByCountry() {
       var LocalFilter = $.extend({}, filter);
-      if(LocalFilter.source)
+      if (LocalFilter.source)
         delete LocalFilter.source;
 
       vm.storytellersByCountry = [];
@@ -350,7 +351,7 @@
 
     function initTopPosts() {
       var LocalFilter = $.extend({}, filter);
-      if(LocalFilter.source)
+      if (LocalFilter.source)
         delete LocalFilter.source;
 
       vm.topSharedPost = new Object();
@@ -362,7 +363,7 @@
         // console.log("topSharedPost", vm.topSharedPost);
       });
 
-      FacebookService.getTopPosts(filterSentimental, 'likes').then(function (data) {
+      FacebookService.getTopPosts(LocalFilter, 'likes').then(function (data) {
         // console.log(data)
         data[0].dateContent = moment(data[0].dateContent).fromNow();
         vm.topLikedPost = data[0];

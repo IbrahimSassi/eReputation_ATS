@@ -122,7 +122,10 @@ module.exports.addFacebookComments = function (req, res, next) {
       var newFacebookComment = new DataProvider.FacebookCommentsProvider(comment);
       DataProvider.createDataProviderModel(newFacebookComment, function (err, item) {
         if (err)
+        {
           handleError(res, err);
+          reject(err)
+        }
         else {
           resolve(item);
           console.log('Success facebook comments saved saved', item._id);

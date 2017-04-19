@@ -232,7 +232,7 @@ function handleData(data, direction) {
     else {
       resolve(urls)
     }
-    reject(error)
+    reject({error:'error handling next paging'})
 
   })
 }
