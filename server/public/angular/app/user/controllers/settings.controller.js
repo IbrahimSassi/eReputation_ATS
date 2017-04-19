@@ -80,8 +80,8 @@
     }
     vm.additionalInformation = {
       activeEmail: $rootScope.currentUser.email,
-      profilePicture: $rootScope.currentUser.profilePicture,
-      coverPicture:$rootScope.currentUser.coverPicture,
+      profilePicture: "",
+      coverPicture:"",
       birthday: "",
       about: $rootScope.currentUser.about,
       country: $rootScope.currentUser.country

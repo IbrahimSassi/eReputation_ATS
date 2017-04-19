@@ -109,7 +109,11 @@ router.put('/additionalInformation', function (req, res, next) {
 
  // console.log("Profile: ",req.params.profilePicture);
 
-  if (req.body.activeEmail && req.body.profilePicture && req.body.coverPicture && req.body.about && req.body.birthday && req.body.country) {
+
+
+
+  if (req.body.activeEmail && req.body.about && req.body.birthday && req.body.country) {
+
     var activeEmail = req.body.activeEmail;
     var profilePicture = req.body.profilePicture;
     var coverPicture = req.body.coverPicture;
@@ -121,7 +125,8 @@ router.put('/additionalInformation', function (req, res, next) {
     //*
     var profilePictureBase64 = profilePicture;
     var coverPictureBase64 = coverPicture;
-
+    if (req.body.profilePicture !="" && req.body.coverPicture !="")
+    {
     fs.writeFile(__dirname + "/../../public/uploads/images/"+profilePictureName+".png", profilePictureBase64, 'base64', function(err) {
       if (err) console.log(err);
     });
@@ -129,7 +134,6 @@ router.put('/additionalInformation', function (req, res, next) {
     fs.writeFile(__dirname + "/../../public/uploads/images/"+coverPictureName+".jpg", coverPictureBase64, 'base64', function(err) {
       if (err) console.log(err);
     });
-
     //*
 
     User.findOneAndUpdate({email: activeEmail}, {
@@ -153,6 +157,32 @@ router.put('/additionalInformation', function (req, res, next) {
       });
     });
     res.status(200)
+    }
+else
+    {
+
+      User.findOneAndUpdate({email: activeEmail}, {
+        $set: {
+          about: about,
+          birthday: birthday,
+          country: country
+        }
+      }, function (err, user) {
+        if (err) return res.status(401);
+
+        User.findOne({ email: user.email, username:user.username }, function (err, userFound) {
+          if (err) return res.status(401);
+
+          var token;
+          token = userFound.generateJwt();
+          //console.log('token: ' + userFound);
+          res.status(200).json({"token": token});
+        });
+      });
+      res.status(200)
+
+
+    }
   }
   else {
     res.status(400).json({"error": "All field are required!"})
