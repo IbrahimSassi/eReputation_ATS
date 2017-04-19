@@ -41,6 +41,7 @@ angular.module('ATSApp', [
         if(index==data.length-1)
         {
           $rootScope.currentUser.numberOfCampaigns =allMainCampaigns.length;
+          $rootScope.currentUser.lastOneCreated =  allMainCampaigns[allMainCampaigns.length-1].dateCreation;
         }
 
       })

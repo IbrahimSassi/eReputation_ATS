@@ -15,6 +15,10 @@ var campaignSchema = new Schema({
     type: String,
     required: true
   },
+  dateCreation: {
+    type: Date,
+    default: new Date()
+  },
   url: {
     type: String,
     required: true
