@@ -35,18 +35,21 @@
         url: '/channels/all',
         templateUrl: 'angular/app/channel/views/manage-channels.view.html',
         controller: 'ChannelCtrl as vm',
-        cache: false
+        cache: false,
+        authenticate: true
       })
       .state('channel-detail', {
         url: '/channels/detail/:channelId',
         templateUrl: 'angular/app/channel/views/channel-detail.view.html',
         controller: 'DetailChannel as vm',
-        cache: false
+        cache: false,
+        authenticate: true
       })
       .state('newChannel', {
         url: '/channels/new',
         templateUrl: 'angular/app/channel/views/create-channel.view.html',
-        controller: 'CreateChannelCtrl as vm'
+        controller: 'CreateChannelCtrl as vm',
+        authenticate: true
       })
       .state("otherwise", {url: '/channels/all'})
     ;

@@ -254,12 +254,7 @@
               vm.profile_banner_url = item.profile_banner_url;
               vm.profile_sidebar_fill_color = '#' + item.profile_sidebar_border_color;
               console.log(vm.profile_sidebar_fill_color)
-              initReputationBySentimentForAll()
-              initReputationBySentiment();
-              initTopTweets();
-              requestTopTweets();
-              initTopHashtags();
-              requestTopHashtags();
+
             }
 
 
@@ -271,10 +266,20 @@
         console.error(err);
       });
       if (vm.selectChannelValue == 'all') {
+        SentimentalAttrInitializer()
         initReputationBySentimentForAll();
         initTopHashtags();
         requestTopHashtags();
 
+      }
+      else {
+        SentimentalAttrInitializer()
+        initReputationBySentimentForAll()
+        initReputationBySentiment();
+        initTopTweets();
+        requestTopTweets();
+        initTopHashtags();
+        requestTopHashtags();
       }
 
     };
@@ -299,20 +304,10 @@
       else {
 
 
-        filterSentimentalForMention.since = moment(vm.since).format();//2017-04-02
-        filterSentimentalForMention.until = moment(vm.until).format();
-        filterSentimentalForMention.channelId = vm.selectChannelValue;
-        filterSentimentalForMention.campaignId = vm.idCampaign;
-        filterSentimentalForReply.since = moment(vm.since).format();
-        filterSentimentalForReply.until = moment(vm.until).format(); //"2017-04-12T02:35:14+01:00"
-        filterSentimentalForReply.channelId = vm.selectChannelValue;
-        filterSentimentalForReply.campaignId = vm.idCampaign;
 
-        filterSentimentalForAll.since = moment(vm.since).format();//2017-04-02
-        filterSentimentalForAll.until = moment(vm.until).format();
-        filterSentimentalForAll.campaignId = vm.idCampaign;
 
         if (vm.selectChannelValue != 'all') {
+          SentimentalAttrInitializer()
           initReputationBySentimentForAll()
           initReputationBySentiment();
           initTopTweets();
@@ -321,6 +316,7 @@
           requestTopHashtags();
         }
         if (vm.selectChannelValue == 'all') {
+          SentimentalAttrInitializer()
           initReputationBySentimentForAll();
           initTopHashtags();
           requestTopHashtags();
@@ -369,6 +365,24 @@
         });
       })
     }
+
+
+    function SentimentalAttrInitializer() {
+      filterSentimentalForMention.since = moment(vm.since).format();//2017-04-02
+      filterSentimentalForMention.until = moment(vm.until).format();
+      filterSentimentalForMention.channelId = vm.selectChannelValue;
+      filterSentimentalForMention.campaignId = vm.idCampaign;
+      filterSentimentalForReply.since = moment(vm.since).format();
+      filterSentimentalForReply.until = moment(vm.until).format(); //"2017-04-12T02:35:14+01:00"
+      filterSentimentalForReply.channelId = vm.selectChannelValue;
+      filterSentimentalForReply.campaignId = vm.idCampaign;
+
+      filterSentimentalForAll.since = moment(vm.since).format();//2017-04-02
+      filterSentimentalForAll.until = moment(vm.until).format();
+      filterSentimentalForAll.campaignId = vm.idCampaign;
+
+    }
+
 
     function initReputationBySentimentForAll() {
 

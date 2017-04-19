@@ -16,16 +16,22 @@ angular.module('ATSApp-front', [
 
 
 
-/*
+
 
     $rootScope.$on('$stateChangeStart', function(event, nextRoute, currentRoute) {
       console.log("location: ")
-      if (UserService.isLoggedIn() && ($location.path('/login').$$path == 'login' || $location.path('/register').$$path == 'register')) {
+     /* if (UserService.isLoggedIn() && ($location.path('/login').$$path == 'login' || $location.path('/register').$$path == 'register')) {
+        $window.location.href = '/admin';
+      }*/
+      if (UserService.isLoggedIn())
+      {
         $window.location.href = '/admin';
       }
 
-    });
-*/
+
+
+        });
+
 
 
   });

@@ -9,11 +9,13 @@ var crypto = require('crypto');
 var randomstring = require("randomstring");
 var fs = require('fs');
 
+var authenticate = require('../users/middleware/authenticate').authenticate
+
 router.get('/a', function (req, res, next) {
   res.json({"a": 1})
 });
 
-router.post('/basicinformationIndiv', function (req, res, next) {
+router.put('/basicinformationIndiv',authenticate, function (req, res, next) {
 
   if (req.query.activeEmail && req.query.email && req.query.firstName && req.query.lastName && req.query.username && req.query.phoneNumber) {
     var activeEmail = req.query.activeEmail;
@@ -56,7 +58,7 @@ router.post('/basicinformationIndiv', function (req, res, next) {
 
 });
 
-router.post('/basicinformationBuss/:activeEmail/:email/:businessName/:businessType/:employeesNumber/:phoneNumber', function (req, res, next) {
+router.put('/basicinformationBuss/:activeEmail/:email/:businessName/:businessType/:employeesNumber/:phoneNumber', function (req, res, next) {
   if (req.params.activeEmail && req.params.email && req.params.businessName && req.params.businessType && req.params.employeesNumber && req.params.phoneNumber) {
     var activeEmail = req.params.activeEmail;
     var email = req.params.email;
@@ -93,7 +95,7 @@ router.post('/basicinformationBuss/:activeEmail/:email/:businessName/:businessTy
 
 
 
-router.post('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:about/:birthday/:country', function (req, res, next) {
+router.put('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:about/:birthday/:country', function (req, res, next) {
   console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 
   console.log("Profile: ",req.params.profilePicture);
@@ -149,7 +151,7 @@ router.post('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:
 });
 
 
-router.post('/changepassword/:activeEmail/:oldpassword/:newpassword', function (req, res, next) {
+router.put('/changepassword/:activeEmail/:oldpassword/:newpassword', function (req, res, next) {
   if (req.params.activeEmail && req.params.oldpassword && req.params.newpassword) {
     var activeEmail = req.params.activeEmail;
     var oldpassword = req.params.oldpassword;
