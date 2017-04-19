@@ -17,25 +17,25 @@
   /**End My Module Init**/
 
   /**Injection**/
-  config.$inject = ['$stateProvider', '$qProvider','$urlRouterProvider'];
+  config.$inject = ['$stateProvider', '$qProvider', '$urlRouterProvider'];
 
-  CampaignCtrl.$inject = ['CampaignService', 'ChannelService', 'FacebookService', 'angularLoad', '$scope', '$rootScope', '$stateParams'];
+  CampaignCtrl.$inject = ['CampaignService', 'ChannelService', 'FacebookService', 'angularLoad', '$scope', '$rootScope', '$stateParams', '$state'];
   /**End Of Injection**/
 
 
   /** Route Config **/
-  function config($stateProvider, $qProvider,$urlRouterProvider) {
+  function config($stateProvider, $qProvider, $urlRouterProvider) {
 
     $stateProvider
       .state('campaignCreate', {
         url: '/campaign/create',
-        templateUrl: 'angular/app/campaign/views/edit.campaign.view.html',
+        templateUrl: 'angular/app/campaign/views/create.campaign.view.html',
         controller: 'CampaignCtrl as camp',
         authenticate: true,
       })
       .state('campaignEdit', {
         url: '/campaign/edit/:idCampaign',
-        templateUrl: 'angular/app/campaign/views/create.campaign.view.html',
+        templateUrl: 'angular/app/campaign/views/edit.campaign.view.html',
         controller: 'CampaignCtrl as camp',
         authenticate: true,
       })
@@ -92,7 +92,7 @@
   /**End of Route Config**/
 
 
-  function CampaignCtrl(CampaignService, ChannelService, FacebookService, angularLoad, $scope, $rootScope, $stateParams) {
+  function CampaignCtrl(CampaignService, ChannelService, FacebookService, angularLoad, $scope, $rootScope, $stateParams, $state) {
 
     /**Scope Replace**/
     var vm = this;
@@ -105,9 +105,9 @@
 
 
 
-    vm.displayEdit=function (id) {
+    vm.displayEdit = function (id) {
       CampaignService.getCampaignById(id).then(function (data) {
-        console.info("cammpaign : ",data[0]);
+        console.info("cammpaign : ", data[0]);
         $scope.campaignToEdit = data[0];
         // data[0].channels.forEach(function (channelPartial) {
         //   ChannelService.getChannelByID(channelPartial.channelId).then(function (channel) {
@@ -120,8 +120,7 @@
 
     };
 
-    if(vm.idCampaign)
-    {
+    if (vm.idCampaign) {
       vm.displayEdit(vm.idCampaign);
     }
 
@@ -150,10 +149,9 @@
 
     vm.getAllCampaigns = function () {
       CampaignService.getAllCampaigns().then(function (data) {
-        vm.campaigns= [];
+        vm.campaigns = [];
         data.forEach(function (campaign) {
-          if($rootScope.currentUser._id===campaign.userId)
-          {
+          if ($rootScope.currentUser._id === campaign.userId) {
             vm.campaigns.push(campaign);
           }
 
@@ -165,8 +163,20 @@
     };
 
     vm.deleteCampaign = function (campaign) {
-      CampaignService.deleteCampaign(campaign);
-      vm.getAllCampaigns();
+
+      swal({    title: "Are you sure?",
+          text: "You will not be able to recover this Campaign !",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Yes, delete it!",
+          closeOnConfirm: false },
+        function(){
+          CampaignService.deleteCampaign(campaign);
+          vm.getAllCampaigns();
+          swal("Deleted!", "Your Campaign has been deleted.", "success");
+        });
+
 
     };
 
@@ -219,6 +229,11 @@
       console.info($scope.keywords);
     };
 
+    vm.removeChannelsFromAdd = function (index) {
+      $scope.channelsId.splice(index, 1);
+      console.info($scope.channelsId);
+    };
+
 
     /**
      * addCampaign
@@ -248,12 +263,24 @@
 
       CampaignService.addCampaign(campaign).then(function (data) {
         console.log("Campaign Added");
-        swal("Good job!", "Campaign "+data.name+" Created !", "success");
+        swal({
+            title: "Good job!",
+            text: "Campaign Created !",
+            type: "success",
+          },
+          function () {
+            $state.go("campaignList");
+          });
         console.log(data);
       }).catch(function (err) {
-        swal("Problem !", "Campaign NOT Created ! \n  please verify entries ...", "warning");
-      });
 
+        swal({
+          title: "Problem !",
+          text: "Campaign NOT Created ! \n  please verify entries ...",
+          type: "warning",
+        });
+
+      });
 
 
     };

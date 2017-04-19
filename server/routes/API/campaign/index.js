@@ -33,7 +33,7 @@ router.post('/', function (req, res, next) {
   var myCampaign = new CampaignModel(campaignPosted);
 
   CampaignModel.saveCampaign(myCampaign).then(function (data) {
-    res.status(201).json(data);
+    res.status(201).json(data[0]);
   }).catch(function (err) {
     res.status(500).send(err);
   });
