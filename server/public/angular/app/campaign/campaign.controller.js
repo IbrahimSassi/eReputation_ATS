@@ -150,9 +150,17 @@
 
     vm.getAllCampaigns = function () {
       CampaignService.getAllCampaigns().then(function (data) {
-        vm.campaigns = data;
+        vm.campaigns= [];
+        data.forEach(function (campaign) {
+          if($rootScope.currentUser._id===campaign.userId)
+          {
+            vm.campaigns.push(campaign);
+          }
+
+        })
+
         //$scope.myId='58d5810511260618b0196d4e';
-        console.log(vm.campaigns);
+        // console.log(vm.campaigns);
       });
     };
 
