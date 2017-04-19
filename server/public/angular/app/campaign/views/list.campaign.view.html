@@ -27,9 +27,9 @@
                  class="mdi-image-remove-red-eye"></i></a>
                <a ui-sref="campaignEdit({idCampaign:'{{c._id}}'})"  style="margin: 5px" class="btn-floating waves-effect grey darken-1 waves-light"><i
                  class="mdi-action-settings"></i></a>
-               <a id="realDelete{{c._id}}" style="display: none" ng-click="camp.deleteCampaign(c)" style="margin: 5px" class="btn-floating waves-effect grey darken-1 waves-light"><i
+               <a ng-click="camp.deleteCampaign(c)" style="margin: 5px" class="btn-floating waves-effect red darken-1 waves-light"><i
                  class="mdi-action-delete"></i></a>
-              <confirmation-alert my-id="{{c._id}}"></confirmation-alert>
+
             </div>
          </div>
       </div>

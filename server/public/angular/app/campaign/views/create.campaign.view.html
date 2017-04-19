@@ -244,6 +244,8 @@
                                          err-src
                                          alt="logo">
                                     {{channel.name}}
+                                        <i ng-click="camp.removeChannelsFromAdd($index)" class="material-icons mdi-navigation-close"></i>
+
                                  </div>
                               </span>
                       <br/><br/><br/>
@@ -286,18 +288,21 @@
 
                   <div class="input-field col s12">
                     <div class="input-field col s3 offset-s2">
-                      <input ng-model="camp.keyword.importance" value="low" class="with-gap" name="importanceKey" type="radio"
-                      id="low"/>
+                      <input ng-model="camp.keyword.importance" value="low" class="with-gap" name="importanceKey"
+                             type="radio"
+                             id="low"/>
                       <label for="low">Low</label>
                     </div>
                     <div class="input-field col s3">
-                      <input ng-model="camp.keyword.importance" value="medium" class="with-gap" name="importanceKey" type="radio"
-                      id="medium"/>
+                      <input ng-model="camp.keyword.importance" value="medium" class="with-gap" name="importanceKey"
+                             type="radio"
+                             id="medium"/>
                       <label for="medium">Medium</label>
                     </div>
                     <div class="input-field col s2">
-                      <input ng-model="camp.keyword.importance" value="high" class="with-gap" name="importanceKey" type="radio"
-                      id="high"/>
+                      <input ng-model="camp.keyword.importance" value="high" class="with-gap" name="importanceKey"
+                             type="radio"
+                             id="high"/>
                       <label for="high">High</label>
                     </div>
                   </div>
@@ -307,7 +312,8 @@
                                  <div class="chip white-text teal">
                                     {{k.content}}
 
-                                     <i ng-click="camp.removeKeywordsFromAdd($index)" class="material-icons mdi-navigation-close"></i>
+                                     <i ng-click="camp.removeKeywordsFromAdd($index)"
+                                        class="material-icons mdi-navigation-close"></i>
                                  </div>
                               </span>
                     <br/><br/><br/>
@@ -324,7 +330,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div  class="input-field col s6">
+                  <div class="input-field col s6">
                     <button onclick="validateAndGoNext('#assign-section')"
                             class="btn grey darken-3 waves-effect waves-light left" name="action">Previous
                       <i class="mdi-image-navigate-before left"></i>
