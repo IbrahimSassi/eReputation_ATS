@@ -22,8 +22,37 @@ angular.module('ATSApp', [
 
 
     }])
-  .run(function ($rootScope, $state,$location, ProfileService,$window) {
+  .run(function ($rootScope, $state,$location, ProfileService,CampaignService,$window) {
+
     $rootScope.currentUser = ProfileService.currentUser();
+
+    /***
+     *
+     */
+
+    CampaignService.getAllCampaigns().then(function (data) {
+      var allMainCampaigns=[];
+      data.forEach(function (campaign,index) {
+        if($rootScope.currentUser._id===campaign.userId)
+        {
+          allMainCampaigns.push(campaign);
+        }
+
+        if(index==data.length-1)
+        {
+          $rootScope.currentUser.numberOfCampaigns =allMainCampaigns.length;
+        }
+
+      })
+
+    });
+
+
+    /**
+     *
+     *
+     */
+
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
 
