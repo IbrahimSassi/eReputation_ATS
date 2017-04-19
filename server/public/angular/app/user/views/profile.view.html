@@ -117,8 +117,8 @@
                 <div id="flight-card" class="card">
                   <div class="card-header amber darken-2">
                     <div class="card-title">
-                      <h4 class="flight-card-title">Your Have Created 20 Campaigns</h4>
-                      <p class="flight-card-date">Last one was in June 18, Thu 04:50</p>
+                      <h4 class="flight-card-title">Your Have Created {{currentUser.numberOfCampaigns}} Campaigns</h4>
+                      <p class="flight-card-date">Last one was in {{currentUser.lastOneCreated | date}}</p>
                     </div>
                   </div>
                   <div class="card-content-bg white-text">
