@@ -54,7 +54,7 @@
 
   <div id="card-stats">
     <div class="row">
-      <div class="col s12 m6 l3">
+      <div class="col s12 m6 l4">
         <div class="card">
           <div class="card-content  green white-text">
             <p class="card-stats-title"><i class="mdi-action-trending-up"></i> Positive Feedback </p>
@@ -72,7 +72,7 @@
           </div>
         </div>
       </div>
-      <div class="col s12 m6 l3">
+      <div class="col s12 m6 l4">
         <div class="card">
           <div class="card-content red lighten-1 white-text">
             <p class="card-stats-title"><i class="mdi-action-trending-down"></i> Negative Feedback</p>
@@ -89,36 +89,22 @@
           </div>
         </div>
       </div>
-      <div class="col s12 m6 l3">
+      <div class="col s12 m6 l4">
         <div class="card">
           <div class="card-content blue-grey white-text">
             <p class="card-stats-title"><i class="mdi-social-group-add"></i> Total Fans</p>
-            <h4 class="card-stats-number">
+            <h4 ng-if="vm.totalFans"
+                class="card-stats-number">{{vm.totalFans }}</h4>
+
+            <h4 class="card-stats-number" ng-if="!vm.totalFans">
               <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
             </h4>
             <p class="card-stats-compare">
-              <i class="mdi-hardware-keyboard-arrow-up"></i> 80% <span class="blue-grey-text text-lighten-5">from yesterday</span>
+              <i class="mdi-hardware-keyboard-arrow-up"></i> {{vm.totalFansPercent}}  80% <span class="blue-grey-text text-lighten-5">from yesterday</span>
             </p>
           </div>
           <div class="card-action blue-grey darken-2">
             <div id="profit-tristate" class="center-align"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col s12 m6 l3">
-        <div class="card">
-          <div class="card-content purple white-text">
-            <p class="card-stats-title"><i class="mdi-editor-border-color"></i> Total Post</p>
-            <h4 class="card-stats-number">
-              <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
-            </h4>
-            <p class="card-stats-compare">
-              <i class="mdi-hardware-keyboard-arrow-up"></i> 70% <span
-              class="purple-text text-lighten-5">last month</span>
-            </p>
-          </div>
-          <div class="card-action purple darken-2">
-            <div id="sales-compositebar" class="center-align"></div>
           </div>
         </div>
       </div>

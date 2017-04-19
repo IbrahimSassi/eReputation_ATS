@@ -123,7 +123,6 @@
         initPageStorytellersByAgeGender();
         initPageFansOnlinePerDayInsights();
         initPositiveFeedbackInsights();
-        initNegativeFeedbackInsights();
         initPageActionsPostReactions();
         initPageViewsTotalInsights();
         initPositiveFeedbackInsights();
@@ -144,7 +143,6 @@
         initPageStorytellersByAgeGender();
         initPageFansOnlinePerDayInsights();
         initPositiveFeedbackInsights();
-        initNegativeFeedbackInsights();
         initPageActionsPostReactions();
         initPageViewsTotalInsights();
         initPositiveFeedbackInsights();
@@ -238,7 +236,10 @@
           Materialize.toast("There is no data in this range for Page Fans", 3000, "rounded");
           return;
         }
-
+        vm.totalFans = insights.data[0].values[insights.data[0].values.length-1].value;
+        vm.totalFansPercent = (( insights.data[0].values[insights.data[0].values.length-1].value -
+          insights.data[0].values[insights.data[0].values.length-2].value ) / insights.data[0].values[insights.data[0].values.length-2].value ) *100;
+        vm.totalFansPercent = Math.ceil10(vm.totalFansPercent,-3)
         insights.data[0].values.forEach(function (fans) {
           vm.labelsPageFans.push(moment(fans.end_time).format("DD-MM-YYYY"));
           vm.dataPageFans.push(fans.value);
@@ -250,6 +251,13 @@
       });
 
     }
+
+    if (!Math.ceil10) {
+      Math.ceil10 = function(value, exp) {
+        return decimalAdjust('ceil', value, exp);
+      };
+    }
+
 
     function initPageFansOnlinePerDayInsights() {
       vm.labelsPageFansOnline = [];
@@ -340,8 +348,9 @@
             }
           }
         });
-        // console.log("vm.totalNegativeFeedback", vm.totalNegativeFeedback)
+        console.log("vm.totalNegativeFeedback", vm.totalNegativeFeedback)
       });
+
 
     }
 

@@ -95,7 +95,7 @@
       vm.max = moment().add(1, 'days');
 
       selectDate();
-      console.log("vm.selectedChannel", vm.selectedChannel)
+      // console.log("vm.selectedChannel", vm.selectedChannel)
 
       delete filter.channelId;
       getSelectedCampaign().then(function (data) {
@@ -167,7 +167,7 @@
             data[0].keywords.forEach(function (keyword) {
               vm.myKeywords.push(keyword.content);
             })
-            console.log("vm.myKeywords", vm.myKeywords)
+            // console.log("vm.myKeywords", vm.myKeywords)
 
             data[0].channels.forEach(function (channelPartial) {
               // console.log(channelPartial.channelId)
@@ -236,7 +236,7 @@
       // console.log(vm.selectedChannel)
       vm.SentimentalFacebookData.push(['Date', 'Postivity', 'Negativity', 'Neutrality']);
       LocalFilter.keywords = vm.myKeywords;
-      console.log("filterSentimental", LocalFilter)
+      // console.log("filterSentimental", LocalFilter)
       FacebookService.getReputationBySentimental(LocalFilter).then(function (data) {
         // console.log("Sentimental", data);
         data.forEach(function (obj) {

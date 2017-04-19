@@ -122,7 +122,6 @@
   }
 </style>
 
-<fb app-id='583444071825924'></fb>
 
 <div class="col s12">
   <h1>Overview</h1>
@@ -388,18 +387,14 @@
           <a href="#" class="secondary-content"><i class="fa fa-share"></i></a>
         </li>
         <li class="collection-item">
-          <div class="row">
-            <!--<div class="fb-post" data-href="{{vm.topSharedPost.link}}" data-width="500" data-show-text="false">-->
-            <!--<div class="fb-xfbml-parse-ignore">-->
-            <!--<blockquote cite="{{vm.topSharedPost.link}}">-->
-            <!--<a href="{{vm.topSharedPost.link}}">How to Share With Just Friends</a>-->
-            <!--<p>How to share with just friends.</p>-->
-            <!--Posted by <a href="https://www.facebook.com/facebook/">Facebook</a> on Friday, December 5, 2014-->
-            <!--</blockquote>-->
-            <!--</div>-->
-            <!--</div>-->
+          <div class="row" ng-if="vm.topSharedPost.sourceLink">
+            <div class="row" ng-if="vm.topSharedPost.sourceLink">
+              <fb app-id="583444071825924" link="{{vm.topSharedPost.sourceLink}}"></fb>
+            </div>
+          </div>
+          <div class="row" ng-if="!vm.topSharedPost.sourceLink">
+            <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
 
-            <div data-width="500" class="fb-post" data-href="{{vm.topSharedPost.link}}"></div>
           </div>
         </li>
       </ul>
@@ -413,8 +408,12 @@
           <a href="#" class="secondary-content"><i class="fa fa-thumbs-up"></i></a>
         </li>
         <li class="collection-item">
-          <div class="row">
-            <div data-width="500" class="fb-post" data-href="{{vm.topLikedPost.link}}"></div>
+          <div class="row" ng-if="vm.topLikedPost.sourceLink">
+
+            <fb app-id="583444071825924" link="{{vm.topLikedPost.sourceLink}}"></fb>
+          </div>
+          <div class="row" ng-if="!vm.topLikedPost.sourceLink">
+            <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
           </div>
         </li>
       </ul>
@@ -425,9 +424,13 @@
 
 </div>
 
-
-<script>
-//  loadScriptOnlyIfNotLoaded("angular/app/assets/js/charts/ggleloader.js");
-</script>
-
 <!--<script src="angular/app/assets/js/charts/ggleloader.js"></script>-->
+<!--<div id="fb-root"></div>-->
+<!--<script>(function (d, s, id) {-->
+  <!--var js, fjs = d.getElementsByTagName(s)[0];-->
+  <!--if (d.getElementById(id)) return;-->
+  <!--js = d.createElement(s);-->
+  <!--js.id = id;-->
+  <!--js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.9&appId=583444071825924";-->
+  <!--fjs.parentNode.insertBefore(js, fjs);-->
+<!--}(document, 'script', 'facebook-jssdk'));</script>-->
