@@ -52,7 +52,7 @@
 
     <div  class="card col s6  ">
       <div class="card-move-up waves-effect waves-block waves-light">
-    <donut-chart ng-if="camp.detailCampaign._id" my-id="{{camp.detailCampaign._id}}" positive="{{camp.positive}}" negative="{{camp.negative}}" neutral="{{camp.neutral}}" my-title="Reactions for this compaign"></donut-chart>
+    <donut-chart ng-if="camp.detailCampaign._id && camp.positive && camp.negative && camp.neutral" my-id="{{camp.detailCampaign._id}}" positive="{{camp.positive}}" negative="{{camp.negative}}" neutral="{{camp.neutral}}" my-title="Reactions for this compaign"></donut-chart>
     </div>
     </div>
 
