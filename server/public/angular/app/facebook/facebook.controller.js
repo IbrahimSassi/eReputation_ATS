@@ -10,7 +10,7 @@
     .config(config)
     .controller('FacebookController', FacebookControllerFN);
 
-  FacebookControllerFN.$inject = ['$scope', 'FacebookService', 'ChannelService', 'CampaignService', '$rootScope','$stateParams'];
+  FacebookControllerFN.$inject = ['$scope', 'FacebookService', 'ChannelService', 'CampaignService', '$rootScope', '$stateParams'];
   config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 
@@ -41,7 +41,7 @@
 
 
   /* @ngInject */
-  function FacebookControllerFN($scope, FacebookService, ChannelService, CampaignService, $rootScope,$stateParams) {
+  function FacebookControllerFN($scope, FacebookService, ChannelService, CampaignService, $rootScope, $stateParams) {
     var vm = this;
     vm.title = 'FacebookController';
     // vm.connectedUserId = "58d3dc815d391346a06f48c3";
@@ -122,7 +122,6 @@
         initPageFansInsights();
         initPageStorytellersByAgeGender();
         initPageFansOnlinePerDayInsights();
-        initPositiveFeedbackInsights();
         initPageActionsPostReactions();
         initPageViewsTotalInsights();
         initPositiveFeedbackInsights();
@@ -179,7 +178,7 @@
             "coupon": 0,
             "event": 0,
             "mention": 0
-        };
+          };
 
           for (var type in vm.TotalStories) {
             vm.pageStories.forEach(function (story) {
@@ -236,10 +235,14 @@
           Materialize.toast("There is no data in this range for Page Fans", 3000, "rounded");
           return;
         }
-        vm.totalFans = insights.data[0].values[insights.data[0].values.length-1].value;
-        vm.totalFansPercent = (( insights.data[0].values[insights.data[0].values.length-1].value -
-          insights.data[0].values[insights.data[0].values.length-2].value ) / insights.data[0].values[insights.data[0].values.length-2].value ) *100;
-        vm.totalFansPercent = Math.ceil10(vm.totalFansPercent,-3)
+        vm.totalFans = insights.data[0].values[insights.data[0].values.length - 1].value;
+        vm.totalFansPercent =
+          (( insights.data[0].values[insights.data[0].values.length - 1].value -
+          insights.data[0].values[insights.data[0].values.length - 2].value ) /
+          insights.data[0].values[insights.data[0].values.length - 2].value ) * 100;
+        vm.totalFansPercent = vm.totalFansPercent.toFixed(4);
+
+
         insights.data[0].values.forEach(function (fans) {
           vm.labelsPageFans.push(moment(fans.end_time).format("DD-MM-YYYY"));
           vm.dataPageFans.push(fans.value);
@@ -250,12 +253,6 @@
 
       });
 
-    }
-
-    if (!Math.ceil10) {
-      Math.ceil10 = function(value, exp) {
-        return decimalAdjust('ceil', value, exp);
-      };
     }
 
 
@@ -442,6 +439,40 @@
       });
 
     }
+
+
+    function decimalAdjust(type, value, exp) {
+      // Si l'exposant vaut undefined ou zero...
+      if (typeof exp === 'undefined' || +exp === 0) {
+        return Math[type](value);
+      }
+      value = +value;
+      exp = +exp;
+      // Si value n'est pas un nombre
+      // ou si l'exposant n'est pas entier
+      if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+        return NaN;
+      }
+      // Décalage
+      value = value.toString().split('e');
+      value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
+      // Re "calage"
+      value = value.toString().split('e');
+      return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
+    }
+
+    var ceil10 = function (value, exp) {
+      return decimalAdjust('ceil', value, exp);
+    };
+
+
+    var round10 = function (value, exp) {
+      return decimalAdjust('round', value, exp);
+    };
+
+    var floor10 = function (value, exp) {
+      return decimalAdjust('floor', value, exp);
+    };
 
 
   }
