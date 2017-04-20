@@ -3,11 +3,16 @@
       media="screen,projection">
 <link href="angular/app/assets/js/plugins/ionRangeSlider/css/ion.rangeSlider.skinFlat.css" type="text/css"
       rel="stylesheet" media="screen,projection">
-<link href="angular/app/assets/js/plugins/sweetalert/sweetalert.css" type="text/css" rel="stylesheet" media="screen,projection">
+<link href="angular/app/assets/js/plugins/sweetalert/sweetalert.css" type="text/css" rel="stylesheet"
+      media="screen,projection">
 <script type="text/javascript" src="angular/app/assets/js/plugins/ionRangeSlider/js/ion.rangeSlider.js"></script>
 <script type="text/javascript" src="angular/app/assets/js/plugins/sweetalert/sweetalert.min.js"></script>
+
 <div class="row">
-   <span ng-repeat="c in camp.campaigns">
+<span ng-if="!camp.campaigns">
+  <div style="" class="spinner red-text icon-spinner-5" aria-hidden="true"></div>
+</span>
+  <span ng-repeat="c in camp.campaigns">
       <div class="col s12 m4 4">
          <div class="card ">
             <div class="card-content darken-4-text">
@@ -23,11 +28,14 @@
             </div>
 
             <div class="card-action right">
-               <a ui-sref="campaignDetail({idCampaign:'{{c._id}}'})"  style="margin: 5px" class="btn-floating waves-effect grey darken-1 waves-light"><i
+               <a ui-sref="campaignDetail({idCampaign:'{{c._id}}'})" style="margin: 5px"
+                  class="btn-floating waves-effect grey darken-1 waves-light"><i
                  class="mdi-image-remove-red-eye"></i></a>
-               <a ui-sref="campaignEdit({idCampaign:'{{c._id}}'})"  style="margin: 5px" class="btn-floating waves-effect grey darken-1 waves-light"><i
+               <a ui-sref="campaignEdit({idCampaign:'{{c._id}}'})" style="margin: 5px"
+                  class="btn-floating waves-effect grey darken-1 waves-light"><i
                  class="mdi-action-settings"></i></a>
-               <a ng-click="camp.deleteCampaign(c)" style="margin: 5px" class="btn-floating waves-effect red darken-1 waves-light"><i
+               <a ng-click="camp.deleteCampaign(c)" style="margin: 5px"
+                  class="btn-floating waves-effect red darken-1 waves-light"><i
                  class="mdi-action-delete"></i></a>
 
             </div>
@@ -39,9 +47,9 @@
 </div>
 
 <script>
-//  $(document).ready(function(){
-//    $('.tooltipped').tooltip({delay: 50});
-//  });
+  //  $(document).ready(function(){
+  //    $('.tooltipped').tooltip({delay: 50});
+  //  });
 </script>
 
 

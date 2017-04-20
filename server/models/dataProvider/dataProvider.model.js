@@ -174,16 +174,12 @@ module.exports.avgPositivitybyCompaign = function (id) {
     DataProvider.aggregate([
       {
         $match: {
-          $and: [{
-            dateContent: {
-              '$gte': new Date(new Date().setDate(new Date().getDate() - 3)),
-              '$lt': new Date()
-            }
-          }, {channelId: {'$eq': id}}]
+
+          campaignId: {'$eq': id}
         }
       },
       {
-        $group: {_id: "$channelId", positive_score: {$avg: "$contentScore.positivity"}}
+        $group: {_id: "campaignId", positive_score: {$avg: "$contentScore.positivity"}}
       }], function (err, docs) {
       if (err) {
         reject(err);
@@ -198,15 +194,11 @@ module.exports.avgNegativitybyCompaign = function (id) {
     DataProvider.aggregate([
       {
         $match: {
-          $and: [{
-            dateContent: {
-              '$gte': new Date(new Date().setDate(new Date().getDate() - 3)),
-              '$lt': new Date()
-            }
-          }, {channelId: {'$eq': id}}]
+
+          campaignId: {'$eq': id}
         }
       },
-      {$group: {_id: "$channelId", negative_score: {$avg: "$contentScore.negativity"}}}], function (err, docs) {
+      {$group: {_id: "campaignId", negative_score: {$avg: "$contentScore.negativity"}}}], function (err, docs) {
       if (err) {
         reject(err);
       }
@@ -219,15 +211,11 @@ module.exports.avgNeutralitybyCompaign = function (id) {
     DataProvider.aggregate([
       {
         $match: {
-          $and: [{
-            dateContent: {
-              '$gte': new Date(new Date().setDate(new Date().getDate() - 3)),
-              '$lt': new Date()
-            }
-          }, {channelId: {'$eq': id}}]
+
+          campaignId: {'$eq': id}
         }
       },
-      {$group: {_id: "$channelId", neutral_score: {$avg: "$contentScore.neutral"}}}], function (err, docs) {
+      {$group: {_id: "campaignId", neutral_score: {$avg: "$contentScore.neutral"}}}], function (err, docs) {
       if (err) {
         reject(err);
       }
