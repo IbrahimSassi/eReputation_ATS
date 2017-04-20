@@ -152,6 +152,7 @@
       //   console.log('err script 1');
       // });
     }).catch(function () {
+      //
       console.log('err script 1');
     });
 
