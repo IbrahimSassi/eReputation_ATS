@@ -43,6 +43,7 @@
     this.getTopPosts = getTopPostsFN;
 
 
+
     function statusChangeCallbackFN(response) {
       return new Promise(function (resolve, reject) {
 

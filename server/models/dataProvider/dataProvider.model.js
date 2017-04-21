@@ -3,9 +3,11 @@
  */
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+mongoose.Promise = global.Promise;
+
+
 
 //Version 1 TODO To Improve
-
 var options = {
   discriminatorKey: 'source'
 };

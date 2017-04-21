@@ -28,7 +28,12 @@ module.exports.transformPostsData = function (req, res, next) {
 
   channelPromise.then(function (channel) {
 
-    console.log("channel[3]", channel[3])
+
+    var since =moment(req.body.since).format("DD-MM-YYYY");
+    var until =moment(req.body.until).format("DD-MM-YYYY");
+    console.log("since",since)
+    console.log("until",until)
+    console.log("channel", channel[3])
     var page_id = channel[3];
     var node = page_id + "/posts";
     var fields = "?fields=message,link,created_time,type,name,id" +
@@ -36,8 +41,8 @@ module.exports.transformPostsData = function (req, res, next) {
       ",shares" +
       ",reactions" +
       ".limit(0).summary(true)" +
-      "&since=" + encodeURIComponent(req.body.since) +
-      "&until=" + encodeURIComponent(req.body.until) +
+      "&since=" + since +
+      "&until=" + until +
       "&limit=100";
 
     var parameters = "&access_token=" + config.ACCESS_TOKEN;
@@ -90,16 +95,18 @@ module.exports.transformPostsData = function (req, res, next) {
                   data.date = new Date();
                   story.reactions.push(data);
                   AllPosts.push(story);
-                }).catch(function () {
-                  callback()
                 });
+
 
               });
               callback(error, body);
             });
           }, function done() {
-            req.posts = AllPosts;
-            next();
+            setTimeout(function () {
+              req.posts = AllPosts;
+              next();
+
+            },1000)
           });
         });
       }
@@ -241,13 +248,14 @@ function handleData(data, direction) {
     else {
       resolve(urls)
     }
-    reject({error: 'error handling next paging'})
+    //reject({error: 'error handling next paging'})
 
   })
 }
 
 
 function getData(url) {
+
   return new Promise(function (resolve, reject) {
     request(url, function (error, response, body) {
       if (!error && response.statusCode == 200) {
@@ -264,14 +272,16 @@ function getData(url) {
 
 
 function transformPosts(post, author, campaignId) {
+  console.log("postpostpost",post)
+  console.log(!post.message)
+
   return {
     id: post.id,
-    content: post.message != "undefined" ? post.message.replace(/(\r\n|\n|\r)/gm, "") : '',
+    content: !post.message ? "" : post.message.replace(/(\r\n|\n|\r)/gm, ""),
     dateContent: post.created_time,
     type: post.type,
     sourceLink: "https://www.facebook.com/" + post.id,
-    name: post.name,
-    // name: post.name != "undefined" ? post.name.replace(/(\r\n|\n|\r)/gm, "") : '' ,
+    name: !post.name ? "" : post.name.replace(/(\r\n|\n|\r)/gm, ""),
     link: post.link,
     author: {
       name: author
@@ -288,7 +298,7 @@ function transformComments(comment, channel, parent, campaign) {
   return {
 
     id: comment.id,
-    content: comment.message != "undefined" ? comment.message.replace(/(\r\n|\n|\r)/gm, "") : '',
+    content: !comment.message ? "" : comment.message.replace(/(\r\n|\n|\r)/gm, ""),
     dateContent: comment.created_time,
     author: {
       name: comment.from.name,
