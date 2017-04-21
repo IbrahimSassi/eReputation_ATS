@@ -40,7 +40,7 @@ module.exports.transformPostsData = function (req, res, next) {
     var posts;
     var promiseNext;
     var promisePrevious;
-    var promiseReactions;
+    var donePromise;
     var AllPosts = [];
     //Getting First Page
     getData(url).then(function (data) {
@@ -50,36 +50,40 @@ module.exports.transformPostsData = function (req, res, next) {
       promiseNext = handleFbPaging(data, "next");
       promisePrevious = handleFbPaging(data, "previous");
       Promise.all([promisePrevious, promiseNext]).then(function () {
-
         //Requesting Data for all those urls
         async.eachSeries(_urls, function iteratee(url, callback) {
           getData(url).then(function (posts) {
-            posts.data.forEach(function (story) {
+            async.eachSeries(posts.data, function iteratee(story, callback) {
 
               // Getting Reactions For each story
-              promiseReactions = new Promise(function (resolve, reject) {
-                var reactionsUrl = config.host + '/api/facebook/posts/' + story.id + '/reactions';
-                getData(reactionsUrl)
-                  .then(function (reactions) {
-                    resolve(reactions);
-                  })
-                  .catch(function (err) {
-                    reject(err)
-                  });
-              });
+              var reactionsUrl = config.host + '/api/facebook/posts/' + story.id + '/reactions';
+              getData(reactionsUrl)
+                .then(function (reactions) {
+                  return reactions;
+                })
+                .then(function (reaction) {
+                  //Transform Data to match with our DB
+                  story = transformPosts(story, req.body.channelId, req.body.campaignId);
+                  story.reactions = [];
+                  data.date = new Date();
+                  story.reactions.push(reaction);
+                  AllPosts.push(story);
+                  return true;
 
-              //Transform Data to match with our DB
-              promiseReactions.then(function (reaction) {
-                story = transformPosts(story, req.body.channelId, req.body.campaignId);
-                story.reactions = [];
-                data.date = new Date();
-                story.reactions.push(reaction);
-                AllPosts.push(story);
+                })
+                .then(function () {
+                  callback()
+                })
+                .catch(function (err) {
+                  console.log(err)
+                });
 
-              });
 
+            }, function done() {
+              callback();
             });
-            callback();
+
+
           });
 
         }, function done() {
@@ -113,13 +117,11 @@ module.exports.transformCommentsData = function (req, res, next) {
     }, function (err, posts) {
 
       async.eachSeries(posts, function iteratee(post, callback) {
-        // var newFacebookPost = new DataProvider.FacebookPostsProvider(post);
 
         var url = config.host + "/api/facebook/posts/" + post.id + "/comments";
         var promise = new Promise(function (resolve, reject) {
           getData(url).then(function (initialComments) {
             if (initialComments.paging && initialComments.paging.next) {
-              // console.log("initialComments.data", initialComments.data)
               _urls.push(url);
               var nextPromise = handleFbPaging(initialComments, 'next');
 
@@ -147,13 +149,12 @@ module.exports.transformCommentsData = function (req, res, next) {
 
         });
 
-        promise.then(function () {
-          callback();
-        })
-          .catch(function (err) {
-
-            console.log("getting comments err", err)
+        promise
+          .then(function () {
             callback();
+          })
+          .catch(function (err) {
+            console.log("getting comments err", err)
           })
 
 
