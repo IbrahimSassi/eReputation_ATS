@@ -30,7 +30,7 @@ module.exports.getPostsByPage = function (req, res, next) {
       if (err)
         return res.status(500).send(err);
       else {
-        console.log('Success facebook posts saved saved', item.id);
+        console.log('Success facebook post saved', item.id);
       }
 
     });
@@ -72,13 +72,12 @@ module.exports.getReactionsByPost = function (req, res, next) {
     "reactions.type(ANGRY).limit(0).summary(total_count).as(angry)";
   var parameters = "&access_token=" + config.ACCESS_TOKEN;
   var url = config.base + node + fields + parameters;
-  console.log(url);
+  // console.log(url);
   request(url, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       res.json(JSON.parse(body));
     }
   })
-
 
 };
 
