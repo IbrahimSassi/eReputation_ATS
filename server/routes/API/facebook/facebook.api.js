@@ -45,16 +45,17 @@ module.exports.getPostsByPage = function (req, res, next) {
 
 module.exports.getCommentsByPost = function (req, res, next) {
 
-  // var page_id = "mosaiquefm";
-  var page_id = req.params.id;
-  // var node =  "posts/";
+  var post_id = req.params.id;
   var fields = "/comments?limit=100";
   var parameters = "&access_token=" + config.ACCESS_TOKEN;
-  var url = config.base + page_id + fields + parameters;
+  var url = config.base + post_id + fields + parameters;
   // console.log(url);
   request(url, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       res.json(JSON.parse(body));
+    }
+    else {
+      res.json(JSON.parse(error));
     }
   })
 
@@ -77,6 +78,10 @@ module.exports.getReactionsByPost = function (req, res, next) {
     if (!error && response.statusCode == 200) {
       res.json(JSON.parse(body));
     }
+    else {
+      res.json(JSON.parse(error));
+    }
+
   })
 
 };
@@ -103,6 +108,10 @@ module.exports.pageInsights = function (req, res, next) {
       // console.log(JSON.parse(body))
       res.json(JSON.parse(body));
     }
+    else {
+      res.json(JSON.parse(error));
+    }
+
   });
 
   // return req.pipe(request(url)).pipe(res);

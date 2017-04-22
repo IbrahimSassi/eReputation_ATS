@@ -20,7 +20,7 @@ module.exports.transformPostsData = function (req, res, next) {
 
     var since = moment(req.body.since).format("DD-MM-YYYY");
     var until = moment(req.body.until).format("DD-MM-YYYY");
-    console.log("Channel Selected :", channel)
+    console.log("Channel Selected :", channel);
     var page_id = channel;
     var node = page_id + "/posts";
     var fields = "?fields=message,link,created_time,type,name,id" +
@@ -46,6 +46,7 @@ module.exports.transformPostsData = function (req, res, next) {
     getData(url).then(function (data) {
 
       _urls.push(url);
+
       //Getting All Nexr and previous paging _urls
       promiseNext = handleFbPaging(data, "next");
       promisePrevious = handleFbPaging(data, "previous");
@@ -106,8 +107,7 @@ module.exports.transformCommentsData = function (req, res, next) {
 
   var since = moment(req.body.since).format();
   var until = moment(req.body.until).format();
-  var comments = [];
-  _urls = [];
+  var _comments = [];
   DataProvider.getDataProvidersByConditionModel(
     {
       source: 'FacebookPostsProvider',
@@ -116,115 +116,97 @@ module.exports.transformCommentsData = function (req, res, next) {
       dateContent: {$gte: since, $lte: until}
     }, function (err, posts) {
 
+      //For Each post we will request its comments
       async.eachSeries(posts, function iteratee(post, callback) {
 
-        var url = config.host + "/api/facebook/posts/" + post.id + "/comments";
-        var promise = new Promise(function (resolve, reject) {
-          getData(url).then(function (initialComments) {
-            if (initialComments.paging && initialComments.paging.next) {
-              _urls.push(url);
-              var nextPromise = handleFbPaging(initialComments, 'next');
+        //Tab to store all urls to get comments for one post (Pagination Urls)
+        _urls = [];
 
-              nextPromise
-                .then(function (data) {
-                  resolve(_urls)
-                })
-                .catch(function (err) {
-                  console.log("next promise error", err)
-                  resolve(_urls)
+        var post_id = post.id;
+        var fields = "/comments?limit=100";
+        var parameters = "&access_token=" + config.ACCESS_TOKEN;
+        var url = config.base + post_id + fields + parameters;
+        _urls.push(url);
+
+        //Get Comment For The First Comment
+        getData(url)
+          .then(function (initialComments) {
+
+            //Start Handling Paging to get all comments urls request
+            handleFbPaging(initialComments, 'next', post.id)
+              .then(function () {
+
+                //All Urls are here, we will loop through them to get all comments and store them in our _comments
+                console.log("Urls For Posts " + post.id, _urls);
+                async.eachSeries(_urls, function iteratee(u, cb) {
+                  getData(u)
+                    .then(function (comments) {
+
+                      comments.data.forEach(function (comment) {
+                        _comments.push(transformComments(comment, req.body.channelId, post.id, req.body.campaignId));
+                      });
+
+                    })
+                    .then(function () {
+                      cb();
+                    })
+                }, function done() {
+                  callback();
+
                 });
 
-            }
-            else {
-              // console.log("first page")
-              for (var i = 0; i < initialComments.data.length; i++)
-                comments.push(transformComments(initialComments.data[i], req.body.channelId, post.id, req.body.campaignId))
-              resolve(comments)
+              })
+              .catch(function (err) {
+                console.log("next promise error", err)
+              });
 
-            }
 
-          }).catch(function (err) {
-            reject(err)
-          });
-
-        });
-
-        promise
-          .then(function () {
-            callback();
           })
           .catch(function (err) {
-            console.log("getting comments err", err)
-          })
+            console.log("Error When Getting Comments From Post " + post.id, err);
+            // reject(err)
+          });
 
 
       }, function done() {
 
-        async.eachSeries(_urls, function iteratee(u, callback) {
-          var postId = getPostId(u);
-
-          var SavePromise = new Promise(function (resolve, reject) {
-            request(u, function (error, response, body) {
-              if (!error && response.statusCode == 200) {
-                var LocalBody = JSON.parse(body);
-                for (var i = 0; i < LocalBody.data.length; i++) {
-                  comments.push(transformComments(LocalBody.data[i], req.body.channelId, postId, req.body.campaignId));
-                }
-                resolve(comments);
-              }
-              else {
-                reject(error)
-              }
-            });
-
-          });
-
-          SavePromise
-            .then(function (data) {
-              callback()
-            })
-            .catch(function (err) {
-              callback()
-            })
-
-        }, function done() {
-          // console.log("req.comments", comments)
-          setTimeout(function () {
-            req.comments = comments;
-            next()
-          }, 1100)
-
-        });
-
+        setTimeout(function () {
+          req.comments = _comments;
+          next()
+        }, 1100)
 
       });
     })
 
-}
+};
 
 
-function handleFbPaging(data, direction) {
-  console.log("Getting Data .. From", direction)
+function handleFbPaging(data, direction, postId) {
+  console.log("Gettin Data .. From " + postId, direction);
   return new Promise(function (resolve, reject) {
     if (data.paging && data.paging[direction]) {
       _urls.push(data.paging[direction]);
-      getData(data.paging[direction]).then(function (newData) {
-        handleFbPaging(newData, direction).then(function (data) {
-          resolve(_urls)
-        }).catch(function () {
-          reject({error: 'error handling next paging'})
+      getData(data.paging[direction])
+        .then(function (newData) {
+          handleFbPaging(newData, direction, postId)
+            .then(function () {
+              resolve(_urls)
+            }).catch(function () {
+            reject({error: 'error handling next paging'})
 
-        })
-      }).catch(function () {
+          })
+        }).catch(function () {
         reject({error: 'error handling next paging'})
 
       })
     }
     else {
+      console.log("Resolving Urls for post ", postId);
       resolve(_urls)
     }
   })
 }
+
 
 function getChannelSelected(channelId) {
   return new Promise(function (resolve, reject) {
@@ -294,11 +276,11 @@ function transformComments(comment, channel, parent, campaign) {
   }
 
 }
-
-function getPostId(url) {
-  var parts = url.split('/');
-  if (url.indexOf('localhost') !== -1)
-    return parts[6];
-  else
-    return parts[4]
-}
+//
+// function getPostId(url) {
+//   var parts = url.split('/');
+//   if (url.indexOf('localhost') !== -1)
+//     return parts[6];
+//   else
+//     return parts[4]
+// }
