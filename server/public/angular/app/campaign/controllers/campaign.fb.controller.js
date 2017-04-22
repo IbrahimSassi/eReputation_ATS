@@ -352,6 +352,8 @@
     }
 
     function initTopPosts() {
+
+
       var LocalFilter = $.extend({}, filter);
       if (LocalFilter.source)
         delete LocalFilter.source;
@@ -359,17 +361,21 @@
       vm.topSharedPost = {};
       vm.topLikedPost = {};
       FacebookService.getTopPosts(LocalFilter, 'shares').then(function (data) {
-        // console.log(data)
-        data[0].dateContent = moment(data[0].dateContent).fromNow();
         vm.topSharedPost = data[0];
         // console.log("topSharedPost", vm.topSharedPost);
       });
 
       FacebookService.getTopPosts(LocalFilter, 'likes').then(function (data) {
-        // console.log(data)
-        data[0].dateContent = moment(data[0].dateContent).fromNow();
-        vm.topLikedPost = data[0];
-        // console.log("topLikedPost", vm.topLikedPost);
+        data.sort(function (a, b) {
+          return b.reactions[0].like.summary.total_count -a.reactions[0].like.summary.total_count ;
+        });
+
+        setTimeout(function () {
+          vm.topLikedPost = data[0];
+
+        },50)
+
+
       });
 
 

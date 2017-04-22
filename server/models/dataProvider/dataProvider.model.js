@@ -6,7 +6,6 @@ var Schema = mongoose.Schema;
 mongoose.Promise = global.Promise;
 
 
-
 //Version 1 TODO To Improve
 var options = {
   discriminatorKey: 'source'
@@ -501,21 +500,24 @@ module.exports.updateScore = function (dataProviderToUpdate, score) {
 module.exports.getDataProviderMatchedAndGrouped = function (matchObject, groupObject, sortObject, unwindObj) {
   return new Promise(function (resolve, reject) {
 
+    console.log("data model")
+    // console.log("matchObject",matchObject)
     var query = [
       {$match: matchObject},
-      {$unwind: unwindObj},
       {$group: groupObject},
-      {$sort: sortObject}
+      {$unwind: unwindObj},
+      {$sort: sortObject},
     ];
 
-    if (matchObject === undefined)
+    if (matchObject == undefined)
       query[0].$match = undefined;
-    if (unwindObj === undefined)
-      query[1].$unwind = undefined;
-    if (groupObject === undefined)
-      query[2].$group = undefined;
-    if (sortObject === undefined)
+    if (unwindObj == undefined)
+      query[2].$unwind = undefined;
+    if (groupObject == undefined)
+      query[1].$group = undefined;
+    if (sortObject == undefined)
       query[3].$sort = undefined;
+
 
     for (var i = 0; i < query.length; i++) {
       if (Object.values(query[i])[0] == undefined) {
@@ -523,6 +525,9 @@ module.exports.getDataProviderMatchedAndGrouped = function (matchObject, groupOb
         i = 0;
       }
     }
+
+    console.log("length", query.length)
+
 
     DataProvider.aggregate(
       query

@@ -157,6 +157,7 @@ module.exports.getFacebookSentimental = function (req, res, next) {
         {dateContent: {'$gte': new Date(req.body.since), '$lte': new Date(req.body.until)}},
         {channelId: {'$eq': req.body.channelId}},
         {campaignId: {'$eq': req.body.campaignId}},
+        {source: undefined},
         {$text: {$search: ""}}
 
 
@@ -256,10 +257,18 @@ module.exports.getFacebookSentimental = function (req, res, next) {
       sortObject = {shares: -1};
     }
     else if (sortProperty.toString() == "likes") {
-      sortObject = {'reactions.0.like.summary.total_count': -1};
+      sortObject = {"reactions.0.like.summary.total_count": -1};
+
     }
     else if (sortProperty.toString() == "loves") {
       sortObject = {'reactions.0.love.summary.total_count': -1};
+    }
+    else if (sortProperty.toString()=="positive")
+    {
+      sortObject = {"contentScore.positivity": -1};
+    }else if (sortProperty.toString()=="negative")
+    {
+      sortObject = {"contentScore.negativity": -1};
     }
 
   }
@@ -271,12 +280,12 @@ module.exports.getFacebookSentimental = function (req, res, next) {
 
 
   if (!req.body.keywords || !req.body.keywords.length) {
-    matchObject.$and[3] = undefined;
+    matchObject.$and[4] = undefined;
   }
   else {
     var keywords = req.body.keywords.join(" ");
     console.log(keywords)
-    matchObject.$and[3].$text.$search = keywords.toString();
+    matchObject.$and[4].$text.$search = keywords.toString();
 
   }
 
@@ -287,6 +296,10 @@ module.exports.getFacebookSentimental = function (req, res, next) {
       i = 0;
     }
   }
+
+
+  console.log("typee :", type)
+  console.log(" sort:", sortObject)
 
   DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, sortObject, unwindObject).then(function (data) {
     res.json(data);

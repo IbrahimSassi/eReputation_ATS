@@ -97,7 +97,7 @@
       console.log("getPermissions");
       FacebookService.initFacebookApi()
         .then(function (data) {
-          console.log("here we are token  + user ,,promise bouh kalb", data);
+          console.log("here we are ", data);
           var token = data.authResponse.accessToken;
 
           FacebookService.getLongLivedToken(token).then(function (newLongToken) {

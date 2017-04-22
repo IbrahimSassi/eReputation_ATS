@@ -32,7 +32,6 @@ angular.module('ATSApp.facebook')
           fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk', fbAppId));
 
-        setTimeout(function () {
 
           // Setup the post-load callback
           window.fbAsyncInit = function () {
@@ -44,30 +43,28 @@ angular.module('ATSApp.facebook')
           };
 
 
-        }, 0);
-
 
         init();
         function init() {
 
-          setTimeout(function () {
             var preTransformed = scope.link;
-            console.log("scope", scope.link)
             var tab = preTransformed.split("/")
             preTransformed = tab[3].split("_");
             var link = "https://www.facebook.com/" + preTransformed[0] + "/posts/" + preTransformed[1];
             scope.mylink = link;
 
-          }, 0)
-
         }
 
-        scope.$watch('link', function (newvalue, oldvalue) {
-          console.log("newvalue",newvalue)
-          console.log("oldvalue",oldvalue)
-          console.log("hello")
-          init();
-        })
+        scope.$watch(function () {
+          $FB._init(fb_params);
+          return $FB.loaded
+        }, function () {
+          setTimeout(function () {
+            if($FB.loaded)
+              init();
+            console.log('$FB.loaded', $FB.loaded);
+          },0)
+        });
 
 
       }
