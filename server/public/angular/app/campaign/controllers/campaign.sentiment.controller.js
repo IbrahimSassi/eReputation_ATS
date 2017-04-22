@@ -31,6 +31,9 @@
     vm.idCampaign = $stateParams.idCampaign;
     vm.idChannel = "58dd0dfc6a60631dbc879ddb";
 
+    vm.until = moment();
+    vm.since = moment().subtract(20,"days");
+
     var filterSentimental =
       {
         "since": "2017-04-07T02:35:14+01:00",
@@ -63,15 +66,15 @@
 
 
     /** Scripts Loading first Refresh **/
-    // angularLoad.loadScript('angular/app/assets/js/charts/ggleloader.js').then(function () {
-    //   // angularLoad.loadScript('angular/app/assets/js/charts/narimen/columnchart.js').then(function () {
-    //   //
-    //   // }).catch(function () {
-    //   //   console.log('err script 1');
-    //   // });
-    // }).catch(function () {
-    //   console.log('err script 1');
-    // });
+    angularLoad.loadScript('angular/app/assets/js/charts/ggleloader.js').then(function () {
+      // angularLoad.loadScript('angular/app/assets/js/charts/narimen/columnchart.js').then(function () {
+      //
+      // }).catch(function () {
+      //   console.log('err script 1');
+      // });
+    }).catch(function () {
+      console.log('err script 1');
+    });
     /** END of Scripts Loading first Refresh **/
 
 
