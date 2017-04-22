@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var extendToken = require('./handlers/extendLLT.middleware');
 var facebookHandler = require('./handlers/facebookHandler.middleware');
 var facebookDataProvider = require('./facebookDataProvider.controller');
 var facebookApi = require('./facebook.api');
@@ -11,8 +10,7 @@ router.get('/', function (req, res, next) {
 
 
 //Directly From Facebook API
-router.get('/token/:token', extendToken, facebookApi.getToken);
-router.get('/posts/:id/comments', facebookApi.getCommentsByPost);
+router.get('/token/:token', facebookHandler.extendToken, facebookApi.getToken);
 router.get('/posts/:id/reactions', facebookApi.getReactionsByPost);
 router.get('/page/:id/insights/:metric/:token/:since/:until', facebookApi.pageInsights);
 

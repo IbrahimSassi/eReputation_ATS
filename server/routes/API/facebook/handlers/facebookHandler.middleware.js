@@ -208,6 +208,35 @@ function handleFbPaging(data, direction, postId) {
 }
 
 
+module.exports.extendToken = function (req, res, next) {
+
+  var node = "oauth/access_token?" +
+    "client_id=" + config.APP_ID + "&" +
+    "client_secret=" + config.APP_SECRET + "&" +
+    "grant_type=fb_exchange_token&" +
+    "fb_exchange_token=" + req.params.token;
+
+  var url = config.base + node;
+
+  console.log("before **", req.params.token);
+
+  var promise = new Promise(function (resolve, reject) {
+    getData(url).then(function (data) {
+
+        var ExtendedToken = data.access_token;
+        resolve(ExtendedToken);
+        console.log("after **", ExtendedToken);
+
+    });
+  });
+
+  req.ExtendedToken = promise;
+  next();
+
+
+};
+
+
 function getChannelSelected(channelId) {
   return new Promise(function (resolve, reject) {
     request(config.host + "/api/channels/" + channelId, function (error, response, body) {

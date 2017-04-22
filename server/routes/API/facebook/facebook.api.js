@@ -10,7 +10,7 @@ var request = require('request');
 
 module.exports.getToken = function (req, res, next) {
   req.ExtendedToken.then(function (value) {
-    console.log("toooken", value);
+    console.log("token", value);
     res.json({longToken: value});
   })
 
@@ -18,9 +18,6 @@ module.exports.getToken = function (req, res, next) {
 
 
 module.exports.getPostsByPage = function (req, res, next) {
-
-  // var page_id = "mosaiquefm";
-  console.log("req.posts.length", req.posts.length)
 
 
   async.eachSeries(req.posts, function iteratee(post, callback) {
@@ -42,24 +39,6 @@ module.exports.getPostsByPage = function (req, res, next) {
 
 };
 
-
-module.exports.getCommentsByPost = function (req, res, next) {
-
-  var post_id = req.params.id;
-  var fields = "/comments?limit=100";
-  var parameters = "&access_token=" + config.ACCESS_TOKEN;
-  var url = config.base + post_id + fields + parameters;
-  // console.log(url);
-  request(url, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      res.json(JSON.parse(body));
-    }
-    else {
-      res.json(JSON.parse(error));
-    }
-  })
-
-};
 
 module.exports.getReactionsByPost = function (req, res, next) {
 
@@ -114,7 +93,6 @@ module.exports.pageInsights = function (req, res, next) {
 
   });
 
-  // return req.pipe(request(url)).pipe(res);
 
 };
 
