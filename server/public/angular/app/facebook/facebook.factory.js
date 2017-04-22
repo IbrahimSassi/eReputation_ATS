@@ -47,26 +47,6 @@
           url: '/api/facebook/reputationBySentimental',
           method: 'POST'
           , isArray: true
-        },
-        'reputationByReactions': {
-          url: '/api/facebook/reputationByReactions',
-          method: 'POST'
-          , isArray: true
-        },
-        'reputationByShares': {
-          url: '/api/facebook/reputationByShares',
-          method: 'POST'
-          , isArray: true
-        },
-        'reputationByTypes': {
-          url: '/api/facebook/reputationByTypes',
-          method: 'POST'
-          , isArray: true
-        },
-        'topPosts': {
-          url: '/api/facebook/topPosts',
-          method: 'POST'
-          , isArray: true
         }
       }
     );

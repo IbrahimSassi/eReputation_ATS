@@ -40,7 +40,6 @@ module.exports.transformPostsData = function (req, res, next) {
     var posts;
     var promiseNext;
     var promisePrevious;
-    var donePromise;
     var AllPosts = [];
     //Getting First Page
     getData(url).then(function (data) {

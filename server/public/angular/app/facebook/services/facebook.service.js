@@ -43,7 +43,6 @@
     this.getTopPosts = getTopPostsFN;
 
 
-
     function statusChangeCallbackFN(response) {
       return new Promise(function (resolve, reject) {
 
@@ -354,25 +353,35 @@
     }
 
     function getReputationBySentimentalFN(filter) {
-      return FacebookFactory.reputationBySentimental(filter).$promise;
+      var LocalFilter = $.extend({}, filter);
+      LocalFilter.type = "sentimental";
+      return FacebookFactory.reputationBySentimental(LocalFilter).$promise;
     }
 
     function getReputationByReactionFN(filter) {
-      return FacebookFactory.reputationByReactions(filter).$promise;
+      var LocalFilter = $.extend({}, filter);
+      LocalFilter.type = "reactions";
+      return FacebookFactory.reputationBySentimental(LocalFilter).$promise;
     }
 
     function getReputationBySharesFN(filter) {
-      return FacebookFactory.reputationByShares(filter).$promise;
+      var LocalFilter = $.extend({}, filter);
+      LocalFilter.type = "shares";
+      return FacebookFactory.reputationBySentimental(LocalFilter).$promise;
     }
 
     function getReputationByTypesFN(filter) {
-      return FacebookFactory.reputationByTypes(filter).$promise;
+      var LocalFilter = $.extend({}, filter);
+      LocalFilter.type = "postsType";
+
+      return FacebookFactory.reputationBySentimental(LocalFilter).$promise;
     }
 
     function getTopPostsFN(filter, sort) {
       var LocalFilter = $.extend({}, filter);
+      LocalFilter.type = "topPosts";
       LocalFilter.sort = sort;
-      return FacebookFactory.topPosts(LocalFilter).$promise;
+      return FacebookFactory.reputationBySentimental(LocalFilter).$promise;
     }
   }
 

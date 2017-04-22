@@ -21,10 +21,10 @@ router.post('/facebookComments', facebookHandler.transformCommentsData, facebook
 router.post('/facebookDataProvider/get', facebookDataProvider.getFacebookDataProvider);
 
 router.post('/reputationBySentimental', facebookDataProvider.getFacebookSentimental);
-router.post('/reputationByReactions', facebookDataProvider.getReputationByReaction);
-router.post('/reputationByShares', facebookDataProvider.getReputationByShares);
-router.post('/reputationByTypes', facebookDataProvider.getReputationByTypes);
-router.post('/topPosts', facebookDataProvider.getTopPosts);
+// router.post('/reputationByReactions', facebookDataProvider.getReputationByReaction);
+// router.post('/reputationByShares', facebookDataProvider.getReputationByShares);
+// router.post('/reputationByTypes', facebookDataProvider.getReputationByTypes);
+// router.post('/topPosts', facebookDataProvider.getTopPosts);
 
 
 module.exports = router;

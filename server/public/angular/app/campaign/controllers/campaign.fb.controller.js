@@ -304,7 +304,8 @@
       vm.typesPhoto.push(['Sentimental', 'Number']);
       FacebookService.getReputationByTypes(LocalFilter).then(function (data) {
         data.forEach(function (obj) {
-          vm.reputationByTypes.push([obj._id.type, obj.nb]);
+          if (obj._id.type !== null)
+            vm.reputationByTypes.push([obj._id.type, obj.nb]);
           if (obj._id.type == "link") {
             vm.typesLink.push(['Positive', obj.positive_score])
             vm.typesLink.push(['Negative', obj.negative_score])
@@ -355,8 +356,8 @@
       if (LocalFilter.source)
         delete LocalFilter.source;
 
-      vm.topSharedPost = new Object();
-      vm.topLikedPost = new Object();
+      vm.topSharedPost = {};
+      vm.topLikedPost = {};
       FacebookService.getTopPosts(LocalFilter, 'shares').then(function (data) {
         // console.log(data)
         data[0].dateContent = moment(data[0].dateContent).fromNow();
@@ -375,14 +376,12 @@
     }
 
 
-
     /** Scripts Loading first Refresh **/
     angularLoad.loadScript('angular/app/assets/js/charts/ggleloader.js').then(function () {
     }).catch(function () {
       console.log('err script 1');
     });
     /** END of Scripts Loading first Refresh **/
-
 
 
   };
