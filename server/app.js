@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
+var compression = require('compression');
 
 var admin = require('./routes/admin');
 var index = require('./routes/index');
@@ -41,7 +42,12 @@ app.engine('html', ejs.renderFile);
 //MongoDB Connection
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://bro:brobro0055@ds157469.mlab.com:57469/ats-digital',{
- server: { socketOptions: { connectTimeoutMS: 9879978979 }}
+ server: {
+   socketOptions: {
+     socketTimeoutMS: 0,
+     connectTimeoutMS: 0
+   }
+ }
 });
  //mongoose.connect('mongodb://localhost:27017/ats-digital-local');
 
@@ -49,7 +55,7 @@ mongoose.connect('mongodb://bro:brobro0055@ds157469.mlab.com:57469/ats-digital',
 require('./config/passport');
 app.use(passport.initialize());
 app.use(bodyParser.json({limit: '100mb'}));
-
+app.use(compression());
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
