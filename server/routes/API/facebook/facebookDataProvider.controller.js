@@ -4,24 +4,11 @@
 //TODO - Organize the structure LATER
 
 var DataProvider = require('../../../models/dataProvider/dataProvider.model');
+var Campaign = require('../../../models/campaign.model');
 var moment = require('moment');
 var async = require('async');
-
-exports.getAllFacebookPosts = function (req, res, next) {
-
-  DataProvider.getAllDataProvidersModel(function (err, docs) {
-    if (err) {
-      return handleError(res, err);
-    }
-    if (!docs) {
-      return res.status(404).send();
-    }
-    console.log(docs);
-    res.status(200)
-      .json(docs);
-
-  });
-};
+var utils = require('../helpers/utils.helper');
+var config = require('../../../config/facebook.config');
 
 module.exports.saveFacebookPosts = function (req, res, next) {
 
@@ -51,7 +38,7 @@ module.exports.getFacebookDataProvider = function (req, res, next) {
     since = moment(req.body.since).format();
     until = moment(req.body.until).format();
   }
-
+  console.log("hello")
   // console.log("datejs formated to moment,", moment(datejs).format())
   var query;
   var sortedBy;
@@ -65,7 +52,7 @@ module.exports.getFacebookDataProvider = function (req, res, next) {
     $text: {$search: ""}
   };
 
-  if (!req.body.keywords.length) {
+  if (!req.body.keywords || !req.body.keywords.length) {
     sortedBy = {dateContent: 1};
     delete query.$text;
   }
@@ -95,7 +82,6 @@ module.exports.getFacebookDataProvider = function (req, res, next) {
     options = {"score": {$meta: "textScore"}};
     sortedBy = {"score": {$meta: "textScore"}};
   }
-
 
   // Create DB Index !!!!!!!
   // db.dataproviders.createIndex( { content: "text",name:"text" } )
@@ -157,10 +143,7 @@ module.exports.getFacebookSentimental = function (req, res, next) {
         {dateContent: {'$gte': new Date(req.body.since), '$lte': new Date(req.body.until)}},
         {channelId: {'$eq': req.body.channelId}},
         {campaignId: {'$eq': req.body.campaignId}},
-        {source: undefined},
         {$text: {$search: ""}}
-
-
       ],
       $or: [{source: 'FacebookCommentsProvider'}, {source: 'FacebookPostsProvider'}]
     };
@@ -196,7 +179,7 @@ module.exports.getFacebookSentimental = function (req, res, next) {
     };
 
     unwindObject = "$reactions";
-    sortObject = {dateContent: -1}
+    // sortObject = {dateContent: -1}
 
   }
   else if (type == "shares") {
@@ -263,11 +246,9 @@ module.exports.getFacebookSentimental = function (req, res, next) {
     else if (sortProperty.toString() == "loves") {
       sortObject = {'reactions.0.love.summary.total_count': -1};
     }
-    else if (sortProperty.toString()=="positive")
-    {
+    else if (sortProperty.toString() == "positive") {
       sortObject = {"contentScore.positivity": -1};
-    }else if (sortProperty.toString()=="negative")
-    {
+    } else if (sortProperty.toString() == "negative") {
       sortObject = {"contentScore.negativity": -1};
     }
 
@@ -278,15 +259,15 @@ module.exports.getFacebookSentimental = function (req, res, next) {
     matchObject.$and[1] = undefined;
   }
 
-
-  if (!req.body.keywords || !req.body.keywords.length) {
-    matchObject.$and[4] = undefined;
-  }
-  else {
-    var keywords = req.body.keywords.join(" ");
-    console.log(keywords)
-    matchObject.$and[4].$text.$search = keywords.toString();
-
+  if (type == "sentimental") {
+    if (!req.body.keywords || !req.body.keywords.length) {
+      matchObject.$and[3] = undefined;
+    }
+    else {
+      var keywords = req.body.keywords.join(" ");
+      console.log(keywords)
+      matchObject.$and[3].$text.$search = keywords.toString();
+    }
   }
 
 
@@ -299,13 +280,99 @@ module.exports.getFacebookSentimental = function (req, res, next) {
 
 
   console.log("typee :", type)
-  console.log(" sort:", sortObject)
 
   DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, sortObject, unwindObject).then(function (data) {
     res.json(data);
   }).catch(function (err) {
+    console.log("Error")
+    console.log(err)
     res.json(err);
   })
+
+};
+
+
+module.exports.getSentimentalByPost = function (req, res, next) {
+
+
+
+  res.json(req.comments);
+
+};
+
+
+module.exports.updateFacebookPost = function (req, res, next) {
+
+  var _queryCampaign = {
+    state: "active",
+    dateStart: {'$lte': new Date()},
+    dateEnd: {'$gte': new Date()}
+  };
+
+
+  Campaign.getCampaignsByQuery(_queryCampaign).then(function (campaigns) {
+
+    var _posts = [];
+    async.eachSeries(campaigns, function iteratee(campaign, callback) {
+
+      var _until = new Date();
+      var _since = new Date(new Date().setDate(_until.getDate() - 1));
+
+
+      var _queryDP = {
+        $and: [
+          // {dateContent: {'$gte': _since, '$lte': _until}},
+          {source: "FacebookPostsProvider"},
+          {campaignId: campaign._id}
+        ]
+      };
+
+      DataProvider.getDataProvidersByConditionModel(_queryDP, function (err, posts) {
+
+        if (err)
+          return;
+
+        async.eachSeries(posts, function iteratee(post, cb) {
+
+          var reactionsUrl = config.host + '/api/facebook/posts/' + post.id + '/reactions';
+          utils.getData(reactionsUrl)
+            .then(function (reaction) {
+              reaction.date = new Date();
+              post.reactions[0] = reaction;
+              return post;
+
+            })
+            .then(function (postUpdated) {
+
+              DataProvider.updateDataProviderModel(postUpdated._id, postUpdated, function (err, item) {
+
+                if (err)
+                  return;
+                console.log("Post update successfully with id ", item.id);
+                _posts.push(post.id);
+                cb();
+
+              })
+            })
+            .catch(function (err) {
+              console.log(err);
+              res.json(err);
+            })
+
+        }, function done() {
+          callback();
+        })
+
+      });
+
+    }, function done() {
+      res.json({message: 'Done', ModifiedPosts: _posts});
+
+    });
+
+
+  });
+
 
 };
 

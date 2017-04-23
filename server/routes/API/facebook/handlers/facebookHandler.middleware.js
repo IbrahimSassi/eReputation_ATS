@@ -7,7 +7,7 @@ var request = require('request');
 var async = require('async');
 var DataProvider = require('../../../../models/dataProvider/dataProvider.model');
 var moment = require("moment");
-
+var utils = require('../../helpers/utils.helper');
 var _urls = [];
 
 module.exports.transformPostsData = function (req, res, next) {
@@ -180,6 +180,81 @@ module.exports.transformCommentsData = function (req, res, next) {
 };
 
 
+module.exports.getComments = function (req, res, next) {
+
+  utils.getFacebookLongUrl(req.body.url)
+    .then(function (post_id) {
+      console.log(post_id)
+      var fields = "/comments?limit=100";
+      var parameters = "&access_token=" + config.ACCESS_TOKEN;
+      var url = config.base + post_id + fields + parameters;
+
+      var _comments = [];
+      _urls = [];
+      _urls.push(url);
+      utils.getData(url)
+        .then(function (initialComments) {
+          handleFbPaging(initialComments, 'next', post_id)
+            .then(function () {
+
+              async.eachSeries(_urls, function iteratee(u, callback) {
+
+                getData(u)
+                  .then(function (comments) {
+
+                    comments.data.forEach(function (comment) {
+                      _comments.push(comment);
+                    });
+                    callback();
+
+                  })
+
+              }, function done() {
+                req.comments = _comments;
+                next()
+              })
+
+
+            })
+
+        })
+    })
+    .catch(function (err) {
+      console.log("error",err);
+      res.json(err);
+    });
+
+}
+
+module.exports.extendToken = function (req, res, next) {
+
+  var node = "oauth/access_token?" +
+    "client_id=" + config.APP_ID + "&" +
+    "client_secret=" + config.APP_SECRET + "&" +
+    "grant_type=fb_exchange_token&" +
+    "fb_exchange_token=" + req.params.token;
+
+  var url = config.base + node;
+
+  console.log("before **", req.params.token);
+
+  var promise = new Promise(function (resolve, reject) {
+    getData(url).then(function (data) {
+
+      var ExtendedToken = data.access_token;
+      resolve(ExtendedToken);
+      console.log("after **", ExtendedToken);
+
+    });
+  });
+
+  req.ExtendedToken = promise;
+  next();
+
+
+};
+
+
 function handleFbPaging(data, direction, postId) {
   console.log("Gettin Data .. From " + postId, direction);
   return new Promise(function (resolve, reject) {
@@ -205,36 +280,6 @@ function handleFbPaging(data, direction, postId) {
     }
   })
 }
-
-
-module.exports.extendToken = function (req, res, next) {
-
-  var node = "oauth/access_token?" +
-    "client_id=" + config.APP_ID + "&" +
-    "client_secret=" + config.APP_SECRET + "&" +
-    "grant_type=fb_exchange_token&" +
-    "fb_exchange_token=" + req.params.token;
-
-  var url = config.base + node;
-
-  console.log("before **", req.params.token);
-
-  var promise = new Promise(function (resolve, reject) {
-    getData(url).then(function (data) {
-
-        var ExtendedToken = data.access_token;
-        resolve(ExtendedToken);
-        console.log("after **", ExtendedToken);
-
-    });
-  });
-
-  req.ExtendedToken = promise;
-  next();
-
-
-};
-
 
 function getChannelSelected(channelId) {
   return new Promise(function (resolve, reject) {

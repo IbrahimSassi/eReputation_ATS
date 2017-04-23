@@ -17,14 +17,13 @@ router.get('/page/:id/insights/:metric/:token/:since/:until', facebookApi.pageIn
 router.post('/facebookPosts', facebookHandler.transformPostsData, facebookApi.getPostsByPage);
 router.post('/facebookComments', facebookHandler.transformCommentsData, facebookDataProvider.addFacebookComments);
 
+router.put('/facebookPosts', facebookDataProvider.updateFacebookPost);
+
 //From Our DB After Transformation
 router.post('/facebookDataProvider/get', facebookDataProvider.getFacebookDataProvider);
-
 router.post('/reputationBySentimental', facebookDataProvider.getFacebookSentimental);
-// router.post('/reputationByReactions', facebookDataProvider.getReputationByReaction);
-// router.post('/reputationByShares', facebookDataProvider.getReputationByShares);
-// router.post('/reputationByTypes', facebookDataProvider.getReputationByTypes);
-// router.post('/topPosts', facebookDataProvider.getTopPosts);
+router.post('/posts/reputation',facebookHandler.getComments, facebookDataProvider.getSentimentalByPost);
+
 
 
 module.exports = router;

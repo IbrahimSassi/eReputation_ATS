@@ -68,10 +68,10 @@ var campaignSchema = new Schema({
         type: Date,
         default: Date.now
       },
-      state:{
+      state: {
         type: String,
-        enum:['active','inactive'],
-        default:'active'
+        enum: ['active', 'inactive'],
+        default: 'active'
       }
     }
   ],
@@ -249,3 +249,16 @@ module.exports.updateKeywordsByIdFromCampaign = function (campaignId, keywordId,
 
   });
 };
+
+
+// Added By Ibrahim
+module.exports.getCampaignsByQuery = function (query) {
+  return new Promise(function (resolve, reject) {
+    myCampaign.find(query, function (err, docs) {
+      if (err) {
+        reject(err);
+      }
+      resolve(docs);
+    })
+  })
+}

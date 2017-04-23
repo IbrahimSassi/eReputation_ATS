@@ -164,8 +164,21 @@ module.exports.getDataProvidersByConditionSortedModel = function (query, options
     .exec(callback);
 };
 
-module.exports.updateDataProviderModel = function (id, update, options, callback) {
-  DataProvider.findByIdAndUpdate(id, update, options, callback)
+module.exports.updateDataProviderModel = function (id, update, callback) {
+
+  DataProvider.findById(id, function (err, item) {
+    if (!item) {
+      console.log("errorrr",err)
+      return next(new Error('Could not load item'));
+    }
+    else {
+      item = update;
+      item.save(callback);
+    }
+  });
+
+
+
 };
 
 /**** start donut chart ****/
@@ -501,32 +514,34 @@ module.exports.getDataProviderMatchedAndGrouped = function (matchObject, groupOb
   return new Promise(function (resolve, reject) {
 
     console.log("data model")
-    // console.log("matchObject",matchObject)
+    console.log(unwindObj)
     var query = [
       {$match: matchObject},
       {$group: groupObject},
-      {$unwind: unwindObj},
       {$sort: sortObject},
+      {$unwind: unwindObj},
+
     ];
 
     if (matchObject == undefined)
-      query[0].$match = undefined;
-    if (unwindObj == undefined)
-      query[2].$unwind = undefined;
+      query[0] = undefined;
     if (groupObject == undefined)
-      query[1].$group = undefined;
+      query[1] = undefined;
+    if (unwindObj == undefined)
+      query[3] = undefined;
     if (sortObject == undefined)
-      query[3].$sort = undefined;
+      query[2] = undefined;
 
 
+    console.log("before",query)
     for (var i = 0; i < query.length; i++) {
-      if (Object.values(query[i])[0] == undefined) {
+      if (query[i] == undefined) {
         query.splice(i, 1);
         i = 0;
       }
     }
+    console.log("after",query[1].$group)
 
-    console.log("length", query.length)
 
 
     DataProvider.aggregate(
@@ -540,7 +555,6 @@ module.exports.getDataProviderMatchedAndGrouped = function (matchObject, groupOb
   });
 
 };
-
 
 
 
