@@ -41,7 +41,12 @@ app.engine('html', ejs.renderFile);
 //MongoDB Connection
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://bro:brobro0055@ds157469.mlab.com:57469/ats-digital',{
- server: { socketOptions: { connectTimeoutMS: 9879978979 }}
+ server: {
+   socketOptions: {
+     socketTimeoutMS: 0,
+     connectTimeoutMS: 0
+   }
+ }
 });
  //mongoose.connect('mongodb://localhost:27017/ats-digital-local');
 
