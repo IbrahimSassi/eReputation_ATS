@@ -22,13 +22,10 @@ var count = 0;
 //START TEST*************************************************
 module.exports.SaveDatToTwitterProviderForRepliesToUserForChannelTest = function (req, res, next) {
 
-console.log(req.body.text)
-
-  translate(req.body.text, {to: 'en'}).then(function (result) {
-    res.json(result.text)
+  client.get('statuses/retweets', {id: '855489561614536708'}, function(error, tweets, response) {
+    console.log(tweets);
+    res.json(tweets);
   });
-
-
 
 
 

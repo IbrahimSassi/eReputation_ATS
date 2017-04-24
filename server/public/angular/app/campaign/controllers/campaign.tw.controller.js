@@ -67,6 +67,10 @@
     vm.since = moment().subtract(1, 'weeks');
     vm.until = moment();
 
+//For tab management
+    vm.overview = true;
+    vm.live = false;
+
 
     var filterSentimentalForMention =
       {
@@ -304,8 +308,6 @@
       else {
 
 
-
-
         if (vm.selectChannelValue != 'all') {
           SentimentalAttrInitializer()
           //initReputationBySentimentForAll()
@@ -354,8 +356,6 @@
     }
 
 
-
-
     function initReputationBySentiment() {
       console.log("wanted oneeee", filterSentimentalForAll);
       vm.reputationBySentimentMention = [];
@@ -386,9 +386,6 @@
         });
       })
     }
-
-
-
 
 
     function initReputationBySentimentForAll() {
@@ -439,8 +436,6 @@
       topPositiveReply.until = moment(vm.until).format();
 
 
-
-
       topPositiveAll.score = 'positive'
       topPositiveAll.campaignId = vm.idCampaign
       topPositiveAll.since = moment(vm.since).format();//2017-04-02
@@ -460,7 +455,6 @@
 
 
     function requestTopTweets() {
-
 
 
       TwitterService.GetTopTweet(topPositiveReply).then(function (data) {
@@ -537,40 +531,39 @@
 
         console.log("alllllllllllllllllllllll")
 
-      vm.HashtagsReply = []
+        vm.HashtagsReply = []
         vm.HashtagsMention = []
         vm.HashtagsAll = []
-      vm.HRS = 0;
-      vm.HMS = 0;
+        vm.HRS = 0;
+        vm.HMS = 0;
         vm.HA = 0
-      TwitterService.GetTopHashtags(topHashtagsReply).then(function (data) {
-        vm.HashtagsReply = []
-        for (var i = 0; i < 5; i++) {
-          if (data[i]) {
-            vm.HRS = vm.HRS + data[i].nb;
-            vm.HashtagsReply.push(data[i])
+        TwitterService.GetTopHashtags(topHashtagsReply).then(function (data) {
+          vm.HashtagsReply = []
+          for (var i = 0; i < 5; i++) {
+            if (data[i]) {
+              vm.HRS = vm.HRS + data[i].nb;
+              vm.HashtagsReply.push(data[i])
+            }
           }
-        }
 
-        console.log("HashtagsReply: ", vm.HashtagsReply)
+          console.log("HashtagsReply: ", vm.HashtagsReply)
 
-      })
+        })
 
-      TwitterService.GetTopHashtags(topHashtagsMention).then(function (data) {
-        vm.HashtagsMention = []
-        for (var i = 0; i < 5; i++) {
-          if (data[i]) {
-            vm.HMS = vm.HMS + data[i].nb;
-            vm.HashtagsMention.push(data[i])
+        TwitterService.GetTopHashtags(topHashtagsMention).then(function (data) {
+          vm.HashtagsMention = []
+          for (var i = 0; i < 5; i++) {
+            if (data[i]) {
+              vm.HMS = vm.HMS + data[i].nb;
+              vm.HashtagsMention.push(data[i])
+            }
           }
-        }
-        console.log("HashtagsMention: ", vm.HashtagsMention)
-      })
+          console.log("HashtagsMention: ", vm.HashtagsMention)
+        })
 
       }
 
-      else
-      {
+      else {
         TwitterService.GetTopHashtags(topHashtagsAll).then(function (data) {
           vm.HashtagsAll = []
           for (var i = 0; i < 5; i++) {
@@ -587,7 +580,18 @@
     }
 
 
-   // initReputationBySentiment();
+    //Tab Management
+    vm.overviewClicked = function () {
+      vm.overview = true;
+      vm.live = false;
+    }
+
+    vm.liveClicked = function() {
+      vm.overview = false;
+      vm.live = true;
+    }
+
+    // initReputationBySentiment();
     /**
      //End PieChartInsights
      */

@@ -33,7 +33,23 @@
 </div>
 -->
 
+<div class="row margin">
+  <div style="margin-top: 25px;" class="col s12">
+    <ul class="tabs tab-demo-active z-depth-1">
+      <li class="tab col s3"><a class="white-text red darken-1 waves-effect waves-light" ng-click="camp.overviewClicked()"><i class="mdi-action-perm-identity"></i> Overview</a>
+      </li>
+      <li class="tab col s3"><a class="white-text purple darken-1 waves-effect waves-light active" ng-click="camp.liveClicked()"><i class="mdi-action-settings-display"></i> Live</a>
+      </li>
 
+    </ul>
+  </div>
+</div>
+
+
+<!--
+Overview Start Here!
+-->
+<div ng-show="camp.overview">
 <div id="input-select" class="row">
   <div style="margin-top: 25px;" class="col s12 m12 l12">
     <div class="input-field col s12">
@@ -86,7 +102,6 @@
   </div>
 
 </div>
-
 
 <div id="breadcrumbs-wrapper" ng-if="camp.selectChannelValue!='all'">
   <div class="col s12">
@@ -205,10 +220,6 @@
 
 </div>
 
-
-
-
-
 <div class="row" ng-if="camp.selectChannelValue=='all'">
   <div ng-if="camp.reputationBySentimentAll.length > 1 " class="col s12 m12 l12">
     <pie-chart height="400" my-id="Replies" my-table="{{camp.reputationBySentimentAll}}"
@@ -218,12 +229,6 @@
     <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
   </div>
 </div>
-
-
-
-
-
-
 
 <div class="row" ng-if="camp.selectChannelValue!='all'">
   <div class="col s12 m12 l12">
@@ -331,8 +336,6 @@
   </div>
 </div>
 
-
-
 <div class="row" ng-if="camp.selectChannelValue=='all'">
 
   <div class="col s12 m12 l12">
@@ -363,8 +366,27 @@
     </ul>
   </div>
 </div>
+</div>
 
 
+
+
+
+<!--
+Live Start Here!
+-->
+<div ng-show="camp.live">
+
+  <div class="row">
+    <div class="input-field col offset-s2 s8">
+      <i class="mdi-action-account-circle prefix"></i>
+      <input id="icon_prefix3" type="text" class="validate">
+      <label for="icon_prefix3">Tweet Url</label>
+    </div>
+  </div>
+
+
+</div>
 
 
 
