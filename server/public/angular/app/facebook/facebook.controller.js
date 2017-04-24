@@ -29,6 +29,12 @@
         controller: 'FacebookCommunityController as vm',
         cache: false
       })
+      .state('campaignDetail.campaignFbAnalysis.facebookSpecific', {
+        url: '/specific',
+        templateUrl: 'angular/app/facebook/views/facebookSpecific.view.html',
+        controller: 'FacebookSpecificController as vm',
+        cache: false
+      })
     // .state('page_stories_by_story_type', {
     //   url: '/facebook/pageFans',
     //   templateUrl: 'angular/app/facebook/views/overview.view.html',

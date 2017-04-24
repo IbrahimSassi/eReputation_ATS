@@ -10,7 +10,19 @@ var async = require('async');
 var utils = require('../helpers/utils.helper');
 var config = require('../../../config/facebook.config');
 
-module.exports.saveFacebookPosts = function (req, res, next) {
+
+
+module.exports = {
+  saveFacebookPosts : saveFacebookPosts,
+  getFacebookDataProvider : getFacebookDataProvider,
+  addFacebookComments : addFacebookComments,
+  getFacebookSentimental : getFacebookSentimental,
+  getSentimentalByPost : getSentimentalByPost,
+  updateFacebookPost : updateFacebookPost
+};
+
+
+function saveFacebookPosts(req, res, next) {
 
   // console.log(req.body);
   var newFacebookPost = new DataProvider.FacebookPostsProvider(req.body);
@@ -28,7 +40,7 @@ module.exports.saveFacebookPosts = function (req, res, next) {
 };
 
 
-module.exports.getFacebookDataProvider = function (req, res, next) {
+function getFacebookDataProvider(req, res, next) {
 
   // var since = new Date(req.params.since);
   // var until = new Date(req.params.until);
@@ -98,7 +110,7 @@ module.exports.getFacebookDataProvider = function (req, res, next) {
 };
 
 
-module.exports.addFacebookComments = function (req, res, next) {
+function addFacebookComments(req, res, next) {
 
 
   async.eachSeries(req.comments, function iteratee(comment, callback) {
@@ -129,7 +141,7 @@ module.exports.addFacebookComments = function (req, res, next) {
 };
 
 
-module.exports.getFacebookSentimental = function (req, res, next) {
+function getFacebookSentimental(req, res, next) {
 
   var matchObject;
   var groupObject;
@@ -292,16 +304,56 @@ module.exports.getFacebookSentimental = function (req, res, next) {
 };
 
 
-module.exports.getSentimentalByPost = function (req, res, next) {
+function getSentimentalByPost (req, res, next) {
+
+  var _mostPositiveComment ={
+    "score": {
+      "positivity": 0
+    }
+  };
+  var _mostNegativeComment ={
+    "score": {
+      "negativity": 0
+    }
+  };
 
 
+  async.eachSeries(req.comments, function iteratee(comment, callback) {
+    utils.getSentimentalAnalysis(comment.message)
+      .then(function (result) {
 
-  res.json(req.comments);
+        console.log("result",result)
+        comment.score = result;
+
+        if(comment.score.positivity>_mostPositiveComment.score.positivity)
+           _mostPositiveComment = comment;
+
+        if(comment.score.negativity>_mostNegativeComment.score.negativity)
+           _mostNegativeComment = comment;
+
+        callback()
+      })
+      .catch(function (err) {
+        callback()
+
+      })
+
+  },function done() {
+    console.log("DONE")
+    console.log("_mostPositiveComment",_mostPositiveComment)
+    console.log("_mostNegativeComment",_mostNegativeComment)
+    res.json({
+      mostPositiveComment : _mostPositiveComment,
+      mostNegativeComment : _mostNegativeComment,
+    });
+  })
+
+
 
 };
 
 
-module.exports.updateFacebookPost = function (req, res, next) {
+function updateFacebookPost (req, res, next) {
 
   var _queryCampaign = {
     state: "active",

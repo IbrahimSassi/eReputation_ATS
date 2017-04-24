@@ -1,9 +1,6 @@
 /**
  * Created by Ibrahim on 31/03/2017.
  */
-/**
- * Created by Ibrahim on 25/03/2017.
- */
 
 (function () {
   'use strict';

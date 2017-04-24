@@ -3,7 +3,6 @@ var router = express.Router();
 var facebookHandler = require('./handlers/facebookHandler.middleware');
 var facebookDataProvider = require('./facebookDataProvider.controller');
 var facebookApi = require('./facebook.api');
-
 router.get('/', function (req, res, next) {
   res.render('TestFacebookScraping', {});
 });
@@ -17,12 +16,14 @@ router.get('/page/:id/insights/:metric/:token/:since/:until', facebookApi.pageIn
 router.post('/facebookPosts', facebookHandler.transformPostsData, facebookApi.getPostsByPage);
 router.post('/facebookComments', facebookHandler.transformCommentsData, facebookDataProvider.addFacebookComments);
 
+//Update Reactions
 router.put('/facebookPosts', facebookDataProvider.updateFacebookPost);
 
 //From Our DB After Transformation
 router.post('/facebookDataProvider/get', facebookDataProvider.getFacebookDataProvider);
 router.post('/reputationBySentimental', facebookDataProvider.getFacebookSentimental);
 router.post('/posts/reputation',facebookHandler.getComments, facebookDataProvider.getSentimentalByPost);
+
 
 
 

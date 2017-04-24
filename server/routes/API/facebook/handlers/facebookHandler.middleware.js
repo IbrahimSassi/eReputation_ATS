@@ -10,7 +10,15 @@ var moment = require("moment");
 var utils = require('../../helpers/utils.helper');
 var _urls = [];
 
-module.exports.transformPostsData = function (req, res, next) {
+
+module.exports = {
+  transformPostsData:transformPostsData,
+  transformCommentsData:transformCommentsData,
+  getComments:getComments,
+  extendToken:extendToken
+};
+
+function transformPostsData(req, res, next) {
   _urls = [];
 
   var channelPromise = getChannelSelected(req.body.channelId);
@@ -101,8 +109,7 @@ module.exports.transformPostsData = function (req, res, next) {
 
 };
 
-
-module.exports.transformCommentsData = function (req, res, next) {
+function transformCommentsData (req, res, next) {
 
   var since = moment(req.body.since).format();
   var until = moment(req.body.until).format();
@@ -179,8 +186,7 @@ module.exports.transformCommentsData = function (req, res, next) {
 
 };
 
-
-module.exports.getComments = function (req, res, next) {
+function getComments(req, res, next) {
 
   utils.getFacebookLongUrl(req.body.url)
     .then(function (post_id) {
@@ -220,13 +226,13 @@ module.exports.getComments = function (req, res, next) {
         })
     })
     .catch(function (err) {
-      console.log("error",err);
+      console.log("error", err);
       res.json(err);
     });
 
 }
 
-module.exports.extendToken = function (req, res, next) {
+function extendToken (req, res, next) {
 
   var node = "oauth/access_token?" +
     "client_id=" + config.APP_ID + "&" +
@@ -316,11 +322,13 @@ function transformPosts(post, author, campaignId) {
 
   return {
     id: post.id,
-    content: !post.message ? "" : post.message.replace(/(\r\n|\n|\r)/gm, ""),
+    content: !post.message ? "" : utils.cleanText(post.message),
+    // content: !post.message ? "" : post.message.replace(/(\r\n|\n|\r)/gm, ""),
     dateContent: post.created_time,
     type: post.type,
     sourceLink: "https://www.facebook.com/" + post.id,
-    name: !post.name ? "" : post.name.replace(/(\r\n|\n|\r)/gm, ""),
+    name: !post.name ? "" : utils.cleanText(post.name),
+    // name: !post.name ? "" : post.name.replace(/(\r\n|\n|\r)/gm, ""),
     link: post.link,
     author: {
       name: author
@@ -337,7 +345,8 @@ function transformComments(comment, channel, parent, campaign) {
   return {
 
     id: comment.id,
-    content: !comment.message ? "" : comment.message.replace(/(\r\n|\n|\r)/gm, ""),
+    content: !comment.message ? "" : utils.cleanText(comment.message),
+    // content: !comment.message ? "" : comment.message.replace(/(\r\n|\n|\r)/gm, ""),
     dateContent: comment.created_time,
     author: {
       name: comment.from.name,

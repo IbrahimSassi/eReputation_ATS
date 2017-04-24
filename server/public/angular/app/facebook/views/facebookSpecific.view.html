@@ -1,0 +1,28 @@
+<div class="col s12">
+  <h1>Specific</h1>
+  <div class="row center-align">
+
+    <div class="col s12 m8 l8 push-l2 push-m2">
+      <div class="card hoverable grey lighten-5">
+        <div class="input-field col s12 m12 l12">
+          <input ng-model="vm.url" id="post_url" type="url" class="validate">
+          <label for="post_url">Paste your post url </label>
+        </div>
+        <div class="grey lighten-3">
+          <div class="row">
+            <div class="col s12 m12 l12 center">
+              <a ng-click="vm.pasteUrl($event)" style=gin-left: 10px" class="waves-effect left "><i
+                style="font-size: medium" class="mdi-content-content-paste black-text"></i></a>
+              <a class="btn-flat waves-effect right-align right">Send</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="col s12 m8 l8 push-l2 push-m2" ng-if="vm.url">
+      <fb app-id="583444071825924" link="{{vm.url}}"></fb>
+    </div>
+  </div>
+</div>
+

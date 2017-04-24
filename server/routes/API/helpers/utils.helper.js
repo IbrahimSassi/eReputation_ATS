@@ -4,8 +4,19 @@
 
 var request = require('request');
 var config = require('../../../config/facebook.config');
+var translate = require('google-translate-api');
 
-var getData = module.exports.getData = function (url) {
+module.exports = {
+  getData: getData,
+  cleanText: cleanText,
+  getFacebookUrl: getFacebookUrl,
+  getFacebookPostId: getFacebookPostId,
+  getFacebookLongUrl: getFacebookLongUrl,
+  getSentimentalAnalysis: getSentimentalAnalysis
+};
+
+
+function getData(url) {
 
   return new Promise(function (resolve, reject) {
     request(url, function (error, response, body) {
@@ -13,7 +24,7 @@ var getData = module.exports.getData = function (url) {
         resolve(JSON.parse(body))
       }
       else {
-        reject(JSON.parse(error))
+        reject(error)
       }
 
     });
@@ -22,11 +33,28 @@ var getData = module.exports.getData = function (url) {
 };
 
 
+String.prototype.replaceAll = function (str1, str2, ignore) {
+  return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g, "\\$&"), (ignore ? "gi" : "g")), (typeof(str2) == "string") ? str2.replace(/\$/g, "$$$$") : str2);
+};
+
+function cleanText(text) {
+
+  text = text.replaceAll("\"", " ");
+  text = text.replace(/(\r\n|\n|\r)/gm, " ")
+  text = text.replaceAll("'", " ");
+  text = text.replaceAll(",", " ");
+  text = text.replaceAll("@", " ");
+  text = text.replaceAll(".", " ");
+  text = text.replaceAll("  ", " ");
+  text = text.replaceAll("   ", " ");
+  return text;
+}
+
 //When User gives us something like that :
 // https://www.facebook.com/5281959998_10151150035389999
 // And we want somethink like that
 // https://www.facebook.com/5281959998/posts/10151150035389999
-module.exports.getFacebookUrl = function (url) {
+function getFacebookUrl(url) {
   var tab = url.split("/");
   preTransformed = tab[3].split("_");
   var link = "https://www.facebook.com/" + preTransformed[0] + "/posts/" + preTransformed[1];
@@ -36,7 +64,7 @@ module.exports.getFacebookUrl = function (url) {
 
 // when we Want somethink like that : 5281959998_10151150035389999
 
-module.exports.getFacebookPostId = function (url) {
+function getFacebookPostId(url) {
   var tab = url.split("/");
   preTransformed = tab[3].split("_");
   var link = preTransformed[0] + "_" + preTransformed[1];
@@ -48,7 +76,7 @@ module.exports.getFacebookPostId = function (url) {
 // And we want somethink like that
 // https://www.facebook.com/5281959998_10151150035389999
 
-module.exports.getFacebookLongUrl = function (url) {
+function getFacebookLongUrl(url) {
   return new Promise(function (resolve, reject) {
     var tab = url.split("/");
     var pageId = tab[3];
@@ -58,7 +86,6 @@ module.exports.getFacebookLongUrl = function (url) {
 
     getData(_url)
       .then(function (data) {
-        console.log("data", data);
         var link = data.id + "_" + postId;
         resolve(link);
 
@@ -68,4 +95,94 @@ module.exports.getFacebookLongUrl = function (url) {
       })
 
   });
-};
+}
+
+
+function getSentimentalAnalysis(text) {
+
+  return new Promise(function (resolve, reject) {
+
+    var positive = null;
+    var negative = null;
+    var neutral = null;
+
+
+    translate(cleanText(text), {to: 'en'}).then(function (res) {
+      request({
+        url: 'http://apidemo.theysay.io/api/v1/sentiment',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: '{"text": "' + res.text + '", "level": "sentence"}'
+      }, function (error, response, body) {
+        if (error) {
+          // console.log(error);
+          reject(error)
+        } else {
+          // console.log( JSON.parse(body)[0]);
+          //RESPONSE
+
+          //Clean code
+
+          var resultsLenght = JSON.parse(body).length;
+          // console.log('len:', resultsLenght)
+          for (var i = 0; i < resultsLenght; i++) {
+            positive = positive + ((JSON.parse(body)[i].sentiment.positive) / resultsLenght) * 100;
+            negative = negative + ((JSON.parse(body)[i].sentiment.negative) / resultsLenght) * 100;
+            neutral = neutral + ((JSON.parse(body)[i].sentiment.neutral) / resultsLenght) * 100;
+          }
+          //End clean code
+
+          /*******here*****/
+
+          var scoreResults = {positivity: positive.toFixed(3), negativity: negative.toFixed(3), neutral: neutral.toFixed(3)}
+          resolve(scoreResults)
+          // console.log('scoreResults: ', scoreResults);
+
+
+        }
+      });
+    }).catch(function (err) {
+
+
+      request({
+        url: 'http://apidemo.theysay.io/api/v1/sentiment',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: '{"text": "' + cleanText(text) + '", "level": "sentence"}'
+      }, function (error, response, body) {
+        if (error || response.statusCode == 400) {
+          // console.log(error);
+          reject(error)
+
+        } else {
+          var resultsLenght = JSON.parse(body).length;
+          // console.log('len:', resultsLenght)
+          for (var i = 0; i < resultsLenght; i++) {
+            positive = positive + ((JSON.parse(body)[i].sentiment.positive) / resultsLenght) * 100;
+            negative = negative + ((JSON.parse(body)[i].sentiment.negative) / resultsLenght) * 100;
+            neutral = neutral + ((JSON.parse(body)[i].sentiment.neutral) / resultsLenght) * 100;
+          }
+
+
+          /*******here*****/
+
+          var scoreResults = {positivity: positive.toFixed(3), negativity: negative.toFixed(3), neutral: neutral.toFixed(3)}
+          // console.log('scoreResults: ', scoreResults);
+          resolve(scoreResults)
+
+        }
+      });
+
+
+      // console.log("herre i am",err)
+
+
+    });
+
+  })
+
+}

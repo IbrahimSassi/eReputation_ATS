@@ -5,10 +5,18 @@ var config = require('../../../config/facebook.config');
 var controller = require('./facebookDataProvider.controller');
 var DataProvider = require('../../../models/dataProvider/dataProvider.model');
 var async = require('async');
-
 var request = require('request');
 
-module.exports.getToken = function (req, res, next) {
+
+module.exports = {
+  getToken : getToken,
+  getPostsByPage: getPostsByPage,
+  getReactionsByPost : getReactionsByPost,
+  pageInsights : pageInsights
+};
+
+
+function getToken (req, res, next) {
   req.ExtendedToken.then(function (value) {
     console.log("token", value);
     res.json({longToken: value});
@@ -16,8 +24,7 @@ module.exports.getToken = function (req, res, next) {
 
 };
 
-
-module.exports.getPostsByPage = function (req, res, next) {
+function getPostsByPage (req, res, next) {
 
 
   async.eachSeries(req.posts, function iteratee(post, callback) {
@@ -39,8 +46,7 @@ module.exports.getPostsByPage = function (req, res, next) {
 
 };
 
-
-module.exports.getReactionsByPost = function (req, res, next) {
+function getReactionsByPost (req, res, next) {
 
   var posts_id = req.params.id;
   var node = posts_id;
@@ -65,8 +71,7 @@ module.exports.getReactionsByPost = function (req, res, next) {
 
 };
 
-
-module.exports.pageInsights = function (req, res, next) {
+function pageInsights (req, res, next) {
 
   var page_id = req.params.id;
   var node = page_id;
@@ -88,7 +93,7 @@ module.exports.pageInsights = function (req, res, next) {
       res.json(JSON.parse(body));
     }
     else {
-      res.json(JSON.parse(error));
+      res.json(error);
     }
 
   });
