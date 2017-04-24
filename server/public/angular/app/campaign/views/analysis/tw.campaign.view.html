@@ -232,6 +232,7 @@ Overview Start Here!
 
 <div class="row" ng-if="camp.selectChannelValue!='all'">
   <div class="col s12 m12 l12">
+
     <div class="col s6 m6 l6">
       <div class="row">
         <div ng-if="camp.reputationBySentimentReply.length > 1 " class="col s12 m12 l12">
@@ -244,11 +245,11 @@ Overview Start Here!
         <div class="input-filed col s12s m12 l12">
           <div class="col s6">
           <label>Most Positive Tweet In Replies To Your Tweets</label>
-          <div id="topPositiveReply"></div>
+          <div id="topPositiveReply{{camp.pn}}"></div>
           </div>
           <div class="col s6">
           <label>Most Negative Tweet In Replies To Your Tweets</label>
-            <div id="topNegativeReply"></div>
+            <div id="topNegativeReply{{camp.pn}}"></div>
           </div>
         </div>
       </div>
@@ -267,11 +268,11 @@ Overview Start Here!
         <div class="input-filed col s12s m12 l12">
           <div class="col s6">
           <label>Most Positive Tweet In Where You Are Mentioned</label>
-            <div id="topPositiveMention"></div>
+            <div id="topPositiveMention{{camp.pn}}"></div>
           </div>
           <div class="col s6">
           <label>Most Negative Tweet In Where You Are Mentioned</label>
-            <div id="topNegativeMention"></div>
+            <div id="topNegativeMention{{camp.pn}}"></div>
           </div>
         </div>
       </div>
@@ -279,6 +280,20 @@ Overview Start Here!
   </div>
 </div>
 
+
+  <div class="container ">
+    <div class="center">
+  <ul class="pagination">
+    <li class="disabled"><a ><i class="material-icons">chevron_left</i></a></li>
+    <li class="active"><a ng-click="camp.topPageClicked(1)">1</a></li>
+    <li class="waves-effect"><a ng-click="camp.topPageClicked(2)">2</a></li>
+    <li class="waves-effect"><a ng-click="camp.topPageClicked(3)">3</a></li>
+    <li class="waves-effect"><a ng-click="camp.topPageClicked(4)">4</a></li>
+    <li class="waves-effect"><a ng-click="camp.topPageClicked(5)">5</a></li>
+    <li class="waves-effect"><a ><i class="material-icons">chevron_right</i></a></li>
+  </ul>
+    </div>
+  </div>
 <div class="row" ng-if="camp.selectChannelValue!='all'">
   <div class="col s6 m6 l6">
     <ul id="issues-collection" class="collection">
@@ -384,8 +399,13 @@ Live Start Here!
       <label for="icon_prefix3">Tweet Url</label>
     </div>
   </div>
-
-
+  <div class="row">
+    <div class="col offset-s9">
+  <button class="btn waves-effect waves-light " type="submit" name="action">Scan
+    <i class="mdi-content-send right"></i>
+  </button>
+    </div>
+  </div>
 </div>
 
 

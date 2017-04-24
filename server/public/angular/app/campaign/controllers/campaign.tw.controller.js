@@ -10,39 +10,6 @@
     .module('ATSApp.campaign')
     .controller('CampaignTwCtrl', CampaignTwCtrl)
 
-  /*  .directive("myHref", function() {
-   return {
-   restrict: 'E',
-   replace: true,
-   transclude: true,
-   link: function(scope, elem, attrs) {
-   var observer = new MutationObserver(function(mutations) {
-   mutations.forEach(function(mutation) {
-   scope.$parent.result = mutation.target.href;
-   scope.$apply();
-   scope.$watch("result",function(newValue,oldValue) {
-   //This gets called when data changes.
-   });
-   });
-   });
-
-   // configuration of the observer:
-   var config = {
-   attributes: true,
-   childList: true,
-   characterData: true
-   };
-
-   observer.observe(elem[0], config);
-
-   },
-   scope: {
-   myHref: '='
-   },
-   templateUrl: 'angular/app/twitter/directives/embedTweet.html',
-   };
-   });
-   */
   /**End My Module Init**/
 
   /**Injection**/
@@ -71,6 +38,7 @@
     vm.overview = true;
     vm.live = false;
 
+    vm.pn = 1;
 
     var filterSentimentalForMention =
       {
@@ -89,8 +57,8 @@
 //For All
     var filterSentimentalForAll =
       {
-        "since": null,
-        "until": null,
+        "since": "2017-04-01T00:00:00+01:00",
+        "until": "2017-04-15T00:00:00+01:00",
         "campaignId": null
       };
     var topNegativeAll =
@@ -99,8 +67,9 @@
         "score": null,
         "campaignId": null,
         "channelId": "all",
-        "since": null,
-        "until": null,
+        "since": "2017-04-01T00:00:00+01:00",
+        "until": "2017-04-15T00:00:00+01:00",
+        "pn": 1
       };
     var topPositiveAll =
       {
@@ -108,16 +77,17 @@
         "score": null,
         "campaignId": null,
         "channelId": "all",
-        "since": null,
-        "until": null,
+        "since": "2017-04-01T00:00:00+01:00",
+        "until": "2017-04-15T00:00:00+01:00",
+        "pn": 1
       };
     var topHashtagsAll =
       {
 
         "campaignId": null,
         "channelId": "all",
-        "since": null,
-        "until": null,
+        "since": "2017-04-01T00:00:00+01:00",
+        "until": "2017-04-15T00:00:00+01:00",
       };
     //End For All
     var topNegativeMention =
@@ -126,8 +96,9 @@
         "score": null,
         "campaignId": null,
         "channelId": null,
-        "since": null,
-        "until": null,
+        "since": "2017-04-01T00:00:00+01:00",
+        "until": "2017-04-15T00:00:00+01:00",
+        "pn": 1
       };
     var topPositiveMention =
       {
@@ -135,8 +106,9 @@
         "score": null,
         "campaignId": null,
         "channelId": null,
-        "since": null,
-        "until": null,
+        "since": "2017-04-01T00:00:00+01:00",
+        "until": "2017-04-15T00:00:00+01:00",
+        "pn": 1
       };
 
     var topNegativeReply =
@@ -145,8 +117,9 @@
         "score": null,
         "campaignId": null,
         "channelId": null,
-        "since": null,
-        "until": null,
+        "since": "2017-04-01T00:00:00+01:00",
+        "until": "2017-04-15T00:00:00+01:00",
+        "pn": 1
       };
     var topPositiveReply =
       {
@@ -154,8 +127,9 @@
         "score": null,
         "campaignId": null,
         "channelId": null,
-        "since": null,
-        "until": null,
+        "since": "2017-04-01T00:00:00+01:00",
+        "until": "2017-04-15T00:00:00+01:00",
+        "pn": 1
       };
 
     var topHashtagsReply =
@@ -163,8 +137,8 @@
         "tweetType": null,
         "campaignId": null,
         "channelId": null,
-        "since": null,
-        "until": null,
+        "since": "2017-04-01T00:00:00+01:00",
+        "until": "2017-04-15T00:00:00+01:00",
       };
 
     var topHashtagsMention =
@@ -172,8 +146,8 @@
         "tweetType": null,
         "campaignId": null,
         "channelId": null,
-        "since": null,
-        "until": null,
+        "since": "2017-04-01T00:00:00+01:00",
+        "until": "2017-04-15T00:00:00+01:00",
       };
 
 
@@ -280,8 +254,8 @@
         SentimentalAttrInitializer()
         //initReputationBySentimentForAll()
         initReputationBySentiment();
-        initTopTweets();
-        requestTopTweets();
+        initTopTweets(1);
+        requestTopTweets(1);
         initTopHashtags();
         requestTopHashtags();
       }
@@ -312,8 +286,8 @@
           SentimentalAttrInitializer()
           //initReputationBySentimentForAll()
           initReputationBySentiment();
-          initTopTweets();
-          requestTopTweets();
+          initTopTweets(1);
+          requestTopTweets(1);
           initTopHashtags();
           requestTopHashtags();
         }
@@ -412,6 +386,7 @@
       topNegativeMention.channelId = vm.selectChannelValue;
       topNegativeMention.since = moment(vm.since).format();//2017-04-02
       topNegativeMention.until = moment(vm.until).format();
+      topNegativeMention.pn = vm.pn;
 
       topNegativeReply.tweetType = 'Reply'
       topNegativeReply.score = 'negative'
@@ -419,7 +394,7 @@
       topNegativeReply.channelId = vm.selectChannelValue;
       topNegativeReply.since = moment(vm.since).format();//2017-04-02
       topNegativeReply.until = moment(vm.until).format();
-
+      topNegativeReply.pn = vm.pn;
 
       topPositiveMention.tweetType = 'Mention'
       topPositiveMention.score = 'positive'
@@ -427,6 +402,7 @@
       topPositiveMention.channelId = vm.selectChannelValue;
       topPositiveMention.since = moment(vm.since).format();//2017-04-02
       topPositiveMention.until = moment(vm.until).format();
+      topPositiveMention.pn = vm.pn;
 
       topPositiveReply.tweetType = 'Reply'
       topPositiveReply.score = 'positive'
@@ -434,18 +410,19 @@
       topPositiveReply.channelId = vm.selectChannelValue;
       topPositiveReply.since = moment(vm.since).format();//2017-04-02
       topPositiveReply.until = moment(vm.until).format();
-
+      topPositiveReply.pn = vm.pn;
 
       topPositiveAll.score = 'positive'
       topPositiveAll.campaignId = vm.idCampaign
       topPositiveAll.since = moment(vm.since).format();//2017-04-02
       topPositiveAll.until = moment(vm.until).format();
-
+      topPositiveAll.pn = vm.pn;
 
       topNegativeAll.score = 'negative'
       topNegativeAll.campaignId = vm.idCampaign
       topNegativeAll.since = moment(vm.since).format();//2017-04-02
       topNegativeAll.until = moment(vm.until).format();
+      topNegativeAll.pn = vm.pn;
       //console.log("topNegativeMention", topNegativeMention);
       //console.log("topNegativeReply", topNegativeReply);
       //console.log("topPositiveMention", topPositiveMention);
@@ -454,15 +431,13 @@
     }
 
 
-    function requestTopTweets() {
-
-
+    function requestTopTweets(pn) {
       TwitterService.GetTopTweet(topPositiveReply).then(function (data) {
         //console.log("topPositiveReplyData: ", data)
-        document.getElementById('topPositiveReply').innerHTML = "";
+        document.getElementById('topPositiveReply'+pn).innerHTML = "";
         twttr.widgets.createTweet(
           data.id,
-          document.getElementById('topPositiveReply'),
+          document.getElementById('topPositiveReply'+pn),
           {}
         );
 
@@ -471,36 +446,42 @@
 
       TwitterService.GetTopTweet(topPositiveMention).then(function (data) {
         //console.log("topPositiveMentionData: ", data)
-        document.getElementById('topPositiveMention').innerHTML = "";
+        document.getElementById('topPositiveMention'+pn).innerHTML = "";
         twttr.widgets.createTweet(
           data.id,
-          document.getElementById('topPositiveMention'),
+          document.getElementById('topPositiveMention'+pn),
           {}
         );
       })
 
       TwitterService.GetTopTweet(topNegativeReply).then(function (data) {
         //console.log("topNegativeReplyData: ", data)
-        document.getElementById('topNegativeReply').innerHTML = "";
+        document.getElementById('topNegativeReply'+pn).innerHTML = "";
         twttr.widgets.createTweet(
           data.id,
-          document.getElementById('topNegativeReply'),
+          document.getElementById('topNegativeReply'+pn),
           {}
         );
       })
 
       TwitterService.GetTopTweet(topNegativeMention).then(function (data) {
         //console.log("topNegativeMentionData: ", data)
-        document.getElementById('topNegativeMention').innerHTML = "";
+        document.getElementById('topNegativeMention'+pn).innerHTML = "";
         twttr.widgets.createTweet(
           data.id,
-          document.getElementById('topNegativeMention'),
+          document.getElementById('topNegativeMention'+pn),
           {}
         );
       })
 
     }
 
+    vm.topPageClicked = function(pn) {
+      vm.pn = pn;
+      initTopTweets(pn);
+      requestTopTweets(pn);
+
+    }
 
     function initTopHashtags() {
 

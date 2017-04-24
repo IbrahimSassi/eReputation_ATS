@@ -47,7 +47,7 @@ mongoose.connect('mongodb://bro:brobro0055@ds157469.mlab.com:57469/ats-digital',
  server: {
    socketOptions: {
      socketTimeoutMS: 0,
-     connectTimeoutMS: 0
+     connectTimeoutMS: 9879978979
    }
  }
 });
