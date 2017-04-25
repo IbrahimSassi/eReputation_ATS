@@ -46,7 +46,7 @@ angular.module('ATSApp.facebook')
         init();
         function init() {
 
-          if(scope.link.indexOf("posts")!==-1)
+          if(scope.link.indexOf("posts")!==-1 || scope.link.indexOf("videos")!==-1 || scope.link.indexOf("photos")!==-1)
           {
              FacebookService.getLongUrl(scope.link).then(function (newUrl) {
                console.log(newUrl)

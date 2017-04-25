@@ -33,7 +33,6 @@ function getData(url) {
 };
 
 
-
 function cleanText(text) {
 
   text = text.replaceAll("\"", " ");
@@ -76,8 +75,12 @@ function getFacebookPostId(url) {
 function getFacebookLongUrl(url) {
   return new Promise(function (resolve, reject) {
     var tab = url.split("/");
+    var postId;
     var pageId = tab[3];
-    var postId = tab[5];
+    if (url.indexOf('photos') !== -1)
+      postId = tab[6];
+    else
+      postId = tab[5];
     var parameters = "?access_token=" + config.ACCESS_TOKEN;
     var _url = config.base + pageId + parameters;
 
@@ -133,7 +136,11 @@ function getSentimentalAnalysis(text) {
 
           /*******here*****/
 
-          var scoreResults = {positivity: positive.toFixed(3), negativity: negative.toFixed(3), neutral: neutral.toFixed(3)}
+          var scoreResults = {
+            positivity: positive.toFixed(3),
+            negativity: negative.toFixed(3),
+            neutral: neutral.toFixed(3)
+          }
           resolve(scoreResults)
           // console.log('scoreResults: ', scoreResults);
 
@@ -167,7 +174,11 @@ function getSentimentalAnalysis(text) {
 
           /*******here*****/
 
-          var scoreResults = {positivity: positive.toFixed(3), negativity: negative.toFixed(3), neutral: neutral.toFixed(3)}
+          var scoreResults = {
+            positivity: positive.toFixed(3),
+            negativity: negative.toFixed(3),
+            neutral: neutral.toFixed(3)
+          }
           // console.log('scoreResults: ', scoreResults);
           resolve(scoreResults)
 
