@@ -85,33 +85,21 @@
 
 
     vm.onSubmitRegister = function () {
-      console.log('Email: ' + vm.credentialsRegister.email);
-      console.log('FirstName: ' + vm.credentialsRegister.firstName);
-      console.log('lastName: ' + vm.credentialsRegister.lastName);
-      console.log('username: ' + vm.credentialsRegister.username);
-      console.log('password: ' + vm.credentialsRegister.password);
-      console.log('passwordAgain: ' + vm.credentialsRegister.passwordAgain);
-      console.log('businessName: ' + vm.credentialsRegister.businessName);
-      console.log('employeesNumber: ' + vm.credentialsRegister.employeesNumber);
-      console.log('businessType: ' + vm.credentialsRegister.businessType);
-      console.log('accountType: ' + vm.credentialsRegister.accountType);
+
 
       UserService
         .register(vm.credentialsRegister)
         .then(successCallback, errorCallback);
 
       function successCallback(response) {
-        console.log("succ", response)
         //swal("Your account was successfully created!", "We sent you an email! Please confirm your registration", "success");
         UserService.saveToken(response.token);
         $window.location.href = '/admin';
         UserService.SendVerificationEmail(vm.credentialsRegister.email).then(function (data) {
-          console.log('Email: ', data)
         })
       }
 
       function errorCallback(error) {
-        console.log("error", error);
         if (error.status == 401) {
           vm.emailExists = true;
         }

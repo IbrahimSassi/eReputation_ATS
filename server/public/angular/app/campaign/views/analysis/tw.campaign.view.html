@@ -36,9 +36,9 @@
 <div class="row margin">
   <div style="margin-top: 25px;" class="col s12">
     <ul class="tabs tab-demo-active z-depth-1">
-      <li class="tab col s3"><a class="white-text red darken-1 waves-effect waves-light" ng-click="camp.overviewClicked()"><i class="mdi-action-perm-identity"></i> Overview</a>
+      <li class="tab col s3"><a class="white-text light-blue darken-1 waves-effect waves-light" ng-click="camp.overviewClicked()"><i class="mdi-action-perm-identity"></i> Overview</a>
       </li>
-      <li class="tab col s3"><a class="white-text purple darken-1 waves-effect waves-light active" ng-click="camp.liveClicked()"><i class="mdi-action-settings-display"></i> Live</a>
+      <li class="tab col s3"><a class="white-text blue darken-1 waves-effect waves-light active" ng-click="camp.liveClicked()"><i class="mdi-action-settings-display"></i> Live</a>
       </li>
 
     </ul>
@@ -150,7 +150,7 @@ Overview Start Here!
         <div class="row">
           <div class="col s12 m6 l3">
             <div class="card">
-              <div class="card-content  green white-text">
+              <div class="card-content  light-blue white-text">
                 <p class="card-stats-title"><i class="mdi-social-group-add"></i> Followers</p>
                 <h4 ng-if="camp.followers_count" class="card-stats-number">{{camp.followers_count}}</h4>
                 <h4 ng-if="!camp.followers_count" class="card-stats-number">
@@ -165,7 +165,7 @@ Overview Start Here!
           </div>
           <div class="col s12 m6 l3">
             <div class="card">
-              <div class="card-content pink lighten-1 white-text">
+              <div class="card-content light-blue lighten-1 white-text">
                 <p class="card-stats-title"><i class="fa fa-users" aria-hidden="true"></i> Following</p>
                 <h4 ng-if="camp.friends_count" class="card-stats-number">{{camp.friends_count}}</h4>
                 <h4 ng-if="!camp.friends_count" class="card-stats-number">
@@ -182,7 +182,7 @@ Overview Start Here!
           </div>
           <div class="col s12 m6 l3">
             <div class="card">
-              <div class="card-content blue-grey white-text">
+              <div class="card-content light-blue white-text">
                 <p class="card-stats-title"><i class="mdi-action-favorite"></i> Favourites</p>
                 <h4 ng-if="camp.favourites_count" class="card-stats-number">{{camp.favourites_count}}</h4>
                 <h4 ng-if="!camp.favourites_count" class="card-stats-number">
@@ -197,7 +197,7 @@ Overview Start Here!
           </div>
           <div class="col s12 m6 l3">
             <div class="card">
-              <div class="card-content purple white-text">
+              <div class="card-content light-blue white-text">
                 <p class="card-stats-title"><i class="mdi-action-perm-identity"></i>Tweets</p>
                 <h4 ng-if="camp.statuses_count" class="card-stats-number">{{camp.statuses_count}}</h4>
                 <h4 ng-if="!camp.statuses_count" class="card-stats-number">
@@ -239,6 +239,14 @@ Overview Start Here!
           <pie-chart height="400" my-id="Replies" my-table="{{camp.reputationBySentimentReply}}"
                      title="Tweets Replies Analytics"></pie-chart>
         </div>
+
+        <div style="position: relative;" class="col s12 m12 l12">
+          <div class="progress light-blue">
+            <div class="indeterminate hide red"></div>
+          </div>
+        </div>
+
+
         <div ng-if="camp.reputationBySentimentReply.length <= 1 " class="col s12 m12 l12">
           <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
         </div>
@@ -265,6 +273,15 @@ Overview Start Here!
           <pie-chart height="400" my-id="Mentions" my-table="{{camp.reputationBySentimentMention}}"
                      title="Tweets Mentions Analytics"></pie-chart>
         </div>
+
+
+        <div style="position: relative;" class="col s12 m12 l12">
+          <div class="progress light-blue">
+            <div class="indeterminate hide red"></div>
+          </div>
+        </div>
+
+
         <div class="input-filed col s12s m12 l12">
           <div class="col s6">
           <label>Most Positive Tweet In Where You Are Mentioned</label>
@@ -285,12 +302,12 @@ Overview Start Here!
     <div class="center">
   <ul class="pagination">
     <li class="disabled"><a ><i class="material-icons">chevron_left</i></a></li>
-    <li class="active"><a ng-click="camp.topPageClicked(1)">1</a></li>
-    <li class="waves-effect"><a ng-click="camp.topPageClicked(2)">2</a></li>
-    <li class="waves-effect"><a ng-click="camp.topPageClicked(3)">3</a></li>
-    <li class="waves-effect"><a ng-click="camp.topPageClicked(4)">4</a></li>
-    <li class="waves-effect"><a ng-click="camp.topPageClicked(5)">5</a></li>
-    <li class="waves-effect"><a ><i class="material-icons">chevron_right</i></a></li>
+    <li  class="active paginationC" id="p1"><a ng-click="camp.topPageClicked(1)">1</a></li>
+    <li class="waves-effect paginationC" id="p2"><a ng-click="camp.topPageClicked(2)">2</a></li>
+    <li class="waves-effect paginationC" id="p3"><a ng-click="camp.topPageClicked(3)">3</a></li>
+    <li class="waves-effect paginationC" id="p4"><a ng-click="camp.topPageClicked(4)">4</a></li>
+    <li class="waves-effect paginationC" id="p5"><a ng-click="camp.topPageClicked(5)">5</a></li>
+    <li class="disabled" id="p6"><a ><i class="material-icons">chevron_right</i></a></li>
   </ul>
     </div>
   </div>

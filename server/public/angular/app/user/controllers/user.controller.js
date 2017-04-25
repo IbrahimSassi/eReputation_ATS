@@ -62,7 +62,6 @@
     vm.getAllUsers = function () {
       UserService.getAllUsers().then(function (data) {
         vm.users = data;
-        console.log(vm.users);
       });
     };
 
@@ -108,16 +107,7 @@
       password: ""
     };
     vm.onSubmitRegister = function () {
-      console.log('Email: ' + vm.credentialsRegister.email);
-      console.log('FirstName: ' + vm.credentialsRegister.firstName);
-      console.log('lastName: ' + vm.credentialsRegister.lastName);
-      console.log('username: ' + vm.credentialsRegister.username);
-      console.log('password: ' + vm.credentialsRegister.password);
-      console.log('passwordAgain: ' + vm.credentialsRegister.passwordAgain);
-      console.log('businessName: ' + vm.credentialsRegister.businessName);
-      console.log('employeesNumber: ' + vm.credentialsRegister.employeesNumber);
-      console.log('businessType: ' + vm.credentialsRegister.businessType);
-      console.log('accountType: ' + vm.credentialsRegister.accountType);
+
 
       UserService
         .register(vm.credentialsRegister)

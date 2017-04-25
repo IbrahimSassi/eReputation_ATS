@@ -42,23 +42,23 @@
 
     var filterSentimentalForMention =
       {
-        "since": "2017-04-01T00:00:00+01:00",
-        "until": "2017-04-15T00:00:00+01:00",
+        "since": vm.since,
+        "until": vm.until,
         "channelId": null,
         "campaignId": null
       };
     var filterSentimentalForReply =
       {
-        "since": "2017-04-01T00:00:00+01:00",
-        "until": "2017-04-15T00:00:00+01:00",
+        "since": vm.since,
+        "until": vm.until,
         "channelId": null,
         "campaignId": null
       };
 //For All
     var filterSentimentalForAll =
       {
-        "since": "2017-04-01T00:00:00+01:00",
-        "until": "2017-04-15T00:00:00+01:00",
+        "since": vm.since,
+        "until": vm.until,
         "campaignId": null
       };
     var topNegativeAll =
@@ -67,8 +67,8 @@
         "score": null,
         "campaignId": null,
         "channelId": "all",
-        "since": "2017-04-01T00:00:00+01:00",
-        "until": "2017-04-15T00:00:00+01:00",
+        "since": vm.since,
+        "until": vm.until,
         "pn": 1
       };
     var topPositiveAll =
@@ -77,8 +77,8 @@
         "score": null,
         "campaignId": null,
         "channelId": "all",
-        "since": "2017-04-01T00:00:00+01:00",
-        "until": "2017-04-15T00:00:00+01:00",
+        "since": vm.since,
+        "until": vm.until,
         "pn": 1
       };
     var topHashtagsAll =
@@ -86,8 +86,8 @@
 
         "campaignId": null,
         "channelId": "all",
-        "since": "2017-04-01T00:00:00+01:00",
-        "until": "2017-04-15T00:00:00+01:00",
+        "since": vm.since,
+        "until": vm.until,
       };
     //End For All
     var topNegativeMention =
@@ -96,8 +96,8 @@
         "score": null,
         "campaignId": null,
         "channelId": null,
-        "since": "2017-04-01T00:00:00+01:00",
-        "until": "2017-04-15T00:00:00+01:00",
+        "since": vm.since,
+        "until": vm.until,
         "pn": 1
       };
     var topPositiveMention =
@@ -106,8 +106,8 @@
         "score": null,
         "campaignId": null,
         "channelId": null,
-        "since": "2017-04-01T00:00:00+01:00",
-        "until": "2017-04-15T00:00:00+01:00",
+        "since": vm.since,
+        "until": vm.until,
         "pn": 1
       };
 
@@ -117,8 +117,8 @@
         "score": null,
         "campaignId": null,
         "channelId": null,
-        "since": "2017-04-01T00:00:00+01:00",
-        "until": "2017-04-15T00:00:00+01:00",
+        "since": vm.since,
+        "until": vm.until,
         "pn": 1
       };
     var topPositiveReply =
@@ -127,8 +127,8 @@
         "score": null,
         "campaignId": null,
         "channelId": null,
-        "since": "2017-04-01T00:00:00+01:00",
-        "until": "2017-04-15T00:00:00+01:00",
+        "since": vm.since,
+        "until": vm.until,
         "pn": 1
       };
 
@@ -137,8 +137,8 @@
         "tweetType": null,
         "campaignId": null,
         "channelId": null,
-        "since": "2017-04-01T00:00:00+01:00",
-        "until": "2017-04-15T00:00:00+01:00",
+        "since": vm.since,
+        "until": vm.until,
       };
 
     var topHashtagsMention =
@@ -146,8 +146,8 @@
         "tweetType": null,
         "campaignId": null,
         "channelId": null,
-        "since": "2017-04-01T00:00:00+01:00",
-        "until": "2017-04-15T00:00:00+01:00",
+        "since": vm.since,
+        "until": vm.until,
       };
 
 
@@ -160,9 +160,9 @@
         CampaignService.getCampaignById(id).then(function (data) {
           allChannels = data[0].channels;
           vm.detailCampaign = data[0];
-          console.log("Campaign: ", data[0])
+
         }).catch(function (err) {
-          console.error(err);
+
         });
       }
 
@@ -179,30 +179,29 @@
       var allChannelsLength = allChannels.length;
 
       for (var i = 0; i < allChannelsLength; i++) {
-        console.log('Boucle: ', allChannels[i].channelId)
+
 
         TwitterService.GetChannelByID(allChannels[i].channelId).then(function (data) {
 
           if (data.type == 'twitter') {
             vm.allChannelsInArray.push(data)
-            //console.log('data: ',vm.allChannelsInArray)
+
           }
 
         }).catch(function (err) {
-          console.error(err);
+
         });
 
       }
-      //console.log('All Channels: ',allChannels[0].channelId)
+
       vm.detailCampaign = data[0];
     }).catch(function (err) {
-      console.error(err);
+
     });
     /**
      //Get all chanels end
      */
 
-    console.log('the array ', vm.allChannelsInArray)
     /**
      //Get user data on select change
      */
@@ -213,11 +212,11 @@
 
         var pathArray = data.url.split('/');
         var ScreenName = pathArray[3];
-        console.log('url ', ScreenName)
+
         if (vm.selectChannelValue != 'all') {
           TwitterService.GetUserInfo(ScreenName).then(function (item) {
 
-            console.log(item)
+
 
 
             if (vm.selectChannelValue != 'all') {
@@ -231,17 +230,17 @@
               vm.statuses_count = item.statuses_count;
               vm.profile_banner_url = item.profile_banner_url;
               vm.profile_sidebar_fill_color = '#' + item.profile_sidebar_border_color;
-              console.log(vm.profile_sidebar_fill_color)
+
 
             }
 
 
           }).catch(function (err) {
-            console.error(err);
+
           });
         }
       }).catch(function (err) {
-        console.error(err);
+
       });
       if (vm.selectChannelValue == 'all') {
         SentimentalAttrInitializer()
@@ -268,8 +267,7 @@
     vm.onChange = function () {
 
 
-      console.log("onChange", vm.since);
-      console.log("onChange", vm.until);
+
 
       if (new Date(vm.since) > new Date(vm.until)) {
         Materialize.toast("Until Date Must be greater than since", 3000, "rounded");
@@ -331,20 +329,13 @@
 
 
     function initReputationBySentiment() {
-      console.log("wanted oneeee", filterSentimentalForAll);
       vm.reputationBySentimentMention = [];
       vm.reputationBySentimentReply = [];
-      console.log(vm.selectedChannel)
       vm.reputationBySentimentMention.push(['Type', 'Number'])
       vm.reputationBySentimentReply.push(['Type', 'Number'])
-      //vm.reputationBySentiment.push(['Positive', 70]);
-      //vm.reputationBySentiment.push(['Negative', 20]);
-      //vm.reputationBySentiment.push(['Neutral', 10]);
-      //console.log("heyyyyyyyyyyyyyyyyyyyyyyy", filterSentimentalForReply)
-      //console.log("/////////////////")
+
       TwitterService.GetSentimentalForOneChannelForMention(filterSentimentalForReply).then(function (data) {
         data.forEach(function (obj) {
-          console.log('objdogdof: ', obj);
           vm.reputationBySentimentMention.push(['Positive', obj.positive_score]);
           vm.reputationBySentimentMention.push(['Negative', obj.negative_score]);
           vm.reputationBySentimentMention.push(['Neutral', obj.neutral_score]);
@@ -353,7 +344,6 @@
 
       TwitterService.GetSentimentalForOneChannelForReply(filterSentimentalForMention).then(function (data) {
         data.forEach(function (obj) {
-          //console.log('obj: ', obj);
           vm.reputationBySentimentReply.push(['Positive', obj.positive_score]);
           vm.reputationBySentimentReply.push(['Negative', obj.negative_score]);
           vm.reputationBySentimentReply.push(['Neutral', obj.neutral_score]);
@@ -369,7 +359,6 @@
 
       TwitterService.getTwitterSentimentalForAll(filterSentimentalForAll).then(function (data) {
         data.forEach(function (obj) {
-          console.log('obj for all: ', obj);
           vm.reputationBySentimentAll.push(['Positive', obj.positive_score]);
           vm.reputationBySentimentAll.push(['Negative', obj.negative_score]);
           vm.reputationBySentimentAll.push(['Neutral', obj.neutral_score]);
@@ -423,55 +412,52 @@
       topNegativeAll.since = moment(vm.since).format();//2017-04-02
       topNegativeAll.until = moment(vm.until).format();
       topNegativeAll.pn = vm.pn;
-      //console.log("topNegativeMention", topNegativeMention);
-      //console.log("topNegativeReply", topNegativeReply);
-      //console.log("topPositiveMention", topPositiveMention);
-      //console.log("topPositiveReply", topPositiveReply);
+
 
     }
 
 
     function requestTopTweets(pn) {
+      $(".indeterminate").removeClass("hide");
       TwitterService.GetTopTweet(topPositiveReply).then(function (data) {
-        //console.log("topPositiveReplyData: ", data)
         document.getElementById('topPositiveReply'+pn).innerHTML = "";
         twttr.widgets.createTweet(
           data.id,
           document.getElementById('topPositiveReply'+pn),
           {}
         );
-
+        $(".indeterminate").addClass("hide");
 
       })
 
       TwitterService.GetTopTweet(topPositiveMention).then(function (data) {
-        //console.log("topPositiveMentionData: ", data)
         document.getElementById('topPositiveMention'+pn).innerHTML = "";
         twttr.widgets.createTweet(
           data.id,
           document.getElementById('topPositiveMention'+pn),
           {}
         );
+        $(".indeterminate").addClass("hide");
       })
 
       TwitterService.GetTopTweet(topNegativeReply).then(function (data) {
-        //console.log("topNegativeReplyData: ", data)
         document.getElementById('topNegativeReply'+pn).innerHTML = "";
         twttr.widgets.createTweet(
           data.id,
           document.getElementById('topNegativeReply'+pn),
           {}
         );
+        $(".indeterminate").addClass("hide");
       })
 
       TwitterService.GetTopTweet(topNegativeMention).then(function (data) {
-        //console.log("topNegativeMentionData: ", data)
         document.getElementById('topNegativeMention'+pn).innerHTML = "";
         twttr.widgets.createTweet(
           data.id,
           document.getElementById('topNegativeMention'+pn),
           {}
         );
+        $(".indeterminate").addClass("hide");
       })
 
     }
@@ -480,6 +466,10 @@
       vm.pn = pn;
       initTopTweets(pn);
       requestTopTweets(pn);
+
+      $(".paginationC").removeClass("active");
+
+      $("#p"+pn).addClass('active');
 
     }
 
@@ -501,8 +491,7 @@
       topHashtagsAll.since = moment(vm.since).format();
       topHashtagsAll.until = moment(vm.until).format();
 
-      console.log("topHashtagsReply: ", topHashtagsReply)
-      console.log("topHashtagsMention: ", topHashtagsMention)
+
     }
 
     function requestTopHashtags() {
@@ -510,7 +499,6 @@
 
       if (vm.selectChannelValue != 'all') {
 
-        console.log("alllllllllllllllllllllll")
 
         vm.HashtagsReply = []
         vm.HashtagsMention = []
@@ -527,7 +515,6 @@
             }
           }
 
-          console.log("HashtagsReply: ", vm.HashtagsReply)
 
         })
 
@@ -539,7 +526,6 @@
               vm.HashtagsMention.push(data[i])
             }
           }
-          console.log("HashtagsMention: ", vm.HashtagsMention)
         })
 
       }
@@ -553,7 +539,6 @@
               vm.HashtagsAll.push(data[i])
             }
           }
-          console.log("HashtagsMention: ", vm.HashtagsMention)
         })
 
 
@@ -580,7 +565,6 @@
     /** Scripts Loading first Refresh **/
     angularLoad.loadScript('angular/app/assets/js/charts/ggleloader.js').then(function () {
     }).catch(function () {
-      console.log('err script 1');
     });
     /** END of Scripts Loading first Refresh **/
 
