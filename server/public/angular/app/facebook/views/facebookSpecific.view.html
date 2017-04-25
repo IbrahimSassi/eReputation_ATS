@@ -38,14 +38,14 @@
               </div>
               <div class="collapsible-body green lighten-5">
 
-                <ul id="task-card" class="collection with-header">
-                  <li class="collection-header cyan">
-                    <!--<h4 class="task-card-title"></h4>-->
-                    <p class="task-card-date">{{vm.mostPositiveComment.from.name }} :</p>
-                  </li>
+                <ul id="task-card" class="collection">
+
                   <li class="collection-item dismissable">
-                    <label for="task2">
-                      {{vm.mostPositiveComment.message }} <a href="#" class="secondary-content"><span class="ultra-small">
+                    <span class="task-cat black darken-3 white-text">{{vm.mostPositiveComment.from.name }} :</span>
+
+                    <label>
+                      {{vm.mostPositiveComment.message }} <a href="#" class="secondary-content"><span
+                      class="ultra-small">
                       {{vm.mostPositiveComment.created_time }}
                     </span></a>
                     </label>
@@ -65,14 +65,13 @@
               </div>
               <div class="collapsible-body red lighten-5 lighten-5">
 
-                <ul id="task-card" class="collection with-header">
-                  <li class="collection-header cyan">
-                    <!--<h4 class="task-card-title"></h4>-->
-                    <p class="task-card-date">{{vm.mostNegativeComment.from.name }} :</p>
-                  </li>
+                <ul id="task-card" class="collection">
+
                   <li class="collection-item dismissable">
-                    <label >
-                      {{vm.mostNegativeComment.message }} <a href="#" class="secondary-content"><span class="ultra-small">
+                    <span class="task-cat black darken-3 white-text">{{vm.mostNegativeComment.from.name }} :</span>
+                    <label>
+                      {{vm.mostNegativeComment.message }} <a href="#" class="secondary-content"><span
+                      class="ultra-small">
                       {{vm.mostNegativeComment.created_time }}
                     </span></a>
                     </label>
