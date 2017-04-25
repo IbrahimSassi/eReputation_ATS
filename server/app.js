@@ -32,8 +32,10 @@ var campaign = require('./routes/API/campaign')
 var ejs = require('ejs');
 
 var app = express();
-
-
+//Running Twitter Scrapping Cron
+//var twitterCron = require('./routes/API/twitter/twitterCron');
+//twitterCron.run();
+//End of running Twitter Scrapping Cron
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
@@ -41,15 +43,15 @@ app.engine('html', ejs.renderFile);
 
 //MongoDB Connection
 var mongoose = require('mongoose');
-// mongoose.connect('mongodb://bro:brobro0055@ds157469.mlab.com:57469/ats-digital',{
-//  server: {
-//    socketOptions: {
-//      socketTimeoutMS: 0,
-//      connectTimeoutMS: 0
-//    }
-//  }
-// });
- mongoose.connect('mongodb://localhost:27017/ats-digital-local');
+mongoose.connect('mongodb://bro:brobro0055@ds157469.mlab.com:57469/ats-digital',{
+ server: {
+   socketOptions: {
+     socketTimeoutMS: 0,
+     connectTimeoutMS: 9879978979
+   }
+ }
+});
+ //mongoose.connect('mongodb://localhost:27017/ats-digital-local');
 
 //Adding passport require
 require('./config/passport');
