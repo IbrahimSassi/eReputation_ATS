@@ -67,9 +67,12 @@
       vm.display = true;
       FacebookService.getReputationByPost({url: vm.url}).then(function (data) {
         vm.display = false;
-        console.log("Data", data);
         vm.mostNegativeComment = data.mostNegativeComment;
         vm.mostPositiveComment = data.mostPositiveComment;
+        vm.mostNegativeComment.id = "https://www.facebook.com/"+vm.mostNegativeComment.id;
+        vm.mostPositiveComment.id = "https://www.facebook.com/"+vm.mostPositiveComment.id;
+        vm.mostPositiveComment.created_time = moment(vm.mostPositiveComment.created_time).fromNow();
+        vm.mostNegativeComment.created_time = moment(vm.mostNegativeComment.created_time).fromNow();
       });
     }
 
