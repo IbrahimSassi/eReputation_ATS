@@ -58,9 +58,19 @@
 
 
     vm.pasteUrl = function (event) {
-      console.log(event)
+      console.log(event);
       vm.url = event.originalEvent.clipboardData;
+    };
 
+
+    vm.getReputation = function () {
+      vm.display = true;
+      FacebookService.getReputationByPost({url: vm.url}).then(function (data) {
+        vm.display = false;
+        console.log("Data", data);
+        vm.mostNegativeComment = data.mostNegativeComment;
+        vm.mostPositiveComment = data.mostPositiveComment;
+      });
     }
 
   }

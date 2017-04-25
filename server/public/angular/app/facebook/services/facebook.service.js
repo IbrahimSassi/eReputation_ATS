@@ -41,6 +41,8 @@
     this.getReputationByShares = getReputationBySharesFN;
     this.getReputationByTypes = getReputationByTypesFN;
     this.getTopPosts = getTopPostsFN;
+    this.getReputationByPost = getReputationByPostFN;
+    this.getLongUrl = getLongUrlFN;
 
 
     function statusChangeCallbackFN(response) {
@@ -383,6 +385,16 @@
       LocalFilter.sort = sort;
       return FacebookFactory.reputationBySentimental(LocalFilter).$promise;
     }
+
+
+    function getReputationByPostFN(query) {
+      return FacebookFactory.postReputation(query).$promise;
+    }
+
+    function getLongUrlFN(url) {
+      return FacebookFactory.longUrl({url: url}).$promise;
+    }
+
   }
 
 })();

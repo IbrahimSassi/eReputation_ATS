@@ -47,6 +47,14 @@
           url: '/api/facebook/reputationBySentimental',
           method: 'POST'
           , isArray: true
+        },
+        'postReputation': {
+          url: '/api/facebook/posts/reputation',
+          method: 'POST'
+        },
+        'longUrl': {
+          url: '/api/facebook/posts/url',
+          method: 'POST'
         }
       }
     );

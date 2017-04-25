@@ -12,10 +12,10 @@ var _urls = [];
 
 
 module.exports = {
-  transformPostsData:transformPostsData,
-  transformCommentsData:transformCommentsData,
-  getComments:getComments,
-  extendToken:extendToken
+  transformPostsData: transformPostsData,
+  transformCommentsData: transformCommentsData,
+  getComments: getComments,
+  extendToken: extendToken
 };
 
 function transformPostsData(req, res, next) {
@@ -109,7 +109,7 @@ function transformPostsData(req, res, next) {
 
 };
 
-function transformCommentsData (req, res, next) {
+function transformCommentsData(req, res, next) {
 
   var since = moment(req.body.since).format();
   var until = moment(req.body.until).format();
@@ -232,7 +232,7 @@ function getComments(req, res, next) {
 
 }
 
-function extendToken (req, res, next) {
+function extendToken(req, res, next) {
 
   var node = "oauth/access_token?" +
     "client_id=" + config.APP_ID + "&" +

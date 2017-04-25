@@ -1,6 +1,6 @@
 <div class="col s12">
   <h1>Specific</h1>
-  <div class="row center-align">
+  <div class="row">
 
     <div class="col s12 m8 l8 push-l2 push-m2">
       <div class="card hoverable grey lighten-5">
@@ -11,17 +11,61 @@
         <div class="grey lighten-3">
           <div class="row">
             <div class="col s12 m12 l12 center">
-              <a ng-click="vm.pasteUrl($event)" style=gin-left: 10px" class="waves-effect left "><i
+              <a ng-click="vm.pasteUrl($event)" style="margin-left: 10px" class="waves-effect left "><i
                 style="font-size: medium" class="mdi-content-content-paste black-text"></i></a>
-              <a class="btn-flat waves-effect right-align right">Send</a>
+              <a ng-click="vm.getReputation()" class="btn-flat waves-effect right-align right">Send</a>
             </div>
           </div>
         </div>
 
       </div>
     </div>
-    <div class="col s12 m8 l8 push-l2 push-m2" ng-if="vm.url">
-      <fb app-id="583444071825924" link="{{vm.url}}"></fb>
+    <!--<div class="col s12 m8 l8 push-l2 push-m2" ng-if="vm.url">-->
+    <div class="col card grey lighten-5 s12 m12 l12" ng-if="vm.url">
+      <div class="col s12 m6 l6">
+        <fb app-id="583444071825924" link="{{vm.url}}"></fb>
+      </div>
+      <div>
+        <div ng-if="vm.display" class="col s12 m6 l6">
+          <div class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
+        </div>
+        <div ng-if="!vm.display && vm.mostNegativeComment && vm.mostPositiveComment" class="col s12 m6 l6">
+          <ul class="collapsible collapsible-accordion" data-collapsible="expandable">
+            <li>
+              <div class="collapsible-header green accent-3 white-text"><i class="mdi-image-exposure-plus-1"></i> Most Positive Comment
+              </div>
+              <div class="collapsible-body green lighten-5">
+                <ul class="collection">
+                  <li class="collection-item avatar">
+                    <span class="circle light-blue">M</span>
+                    <span class="email-title">{{vm.mostPositiveComment.from.name }} :</span>
+                    <p class="truncate grey-text ultra-small">{{vm.mostPositiveComment.message }}</p>
+                    <p class="grey-text ultra-small">{{vm.mostPositiveComment.created_time }}</p>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header red white-text"><i class="mdi-image-exposure-minus-1"></i>
+                Most Negative Comment
+              </div>
+              <div class="collapsible-body red lighten-5 lighten-5">
+
+                <ul class="collection">
+                  <li class="collection-item avatar">
+                    <span class="circle light-blue">M</span>
+                    <span class="email-title">{{vm.mostNegativeComment.from.name }} :</span>
+                    <p class="truncate grey-text ultra-small">{{vm.mostNegativeComment.message }}</p>
+                    <p class="grey-text ultra-small">{{vm.mostNegativeComment.created_time }}</p>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+
+      </div>
     </div>
   </div>
 </div>

@@ -2,7 +2,7 @@
  * Created by Ibrahim on 15/04/2017.
  */
 angular.module('ATSApp.facebook')
-  .directive('fb', ['$FB', function ($FB) {
+  .directive('fb', ['$FB', 'FacebookService', function ($FB, FacebookService) {
     return {
       restrict: "E",
       replace: true,
@@ -33,25 +33,39 @@ angular.module('ATSApp.facebook')
         }(document, 'script', 'facebook-jssdk', fbAppId));
 
 
-          // Setup the post-load callback
-          window.fbAsyncInit = function () {
-            $FB._init(fb_params);
+        // Setup the post-load callback
+        window.fbAsyncInit = function () {
+          $FB._init(fb_params);
 
-            if ('fbInit' in iAttrs) {
-              iAttrs.fbInit();
-            }
-          };
-
+          if ('fbInit' in iAttrs) {
+            iAttrs.fbInit();
+          }
+        };
 
 
         init();
         function init() {
 
+          if(scope.link.indexOf("posts")!==-1)
+          {
+             FacebookService.getLongUrl(scope.link).then(function (newUrl) {
+               console.log(newUrl)
+               var preTransformed = newUrl.longUrl;
+               var tab = preTransformed.split("/")
+               preTransformed = tab[3].split("_");
+               var link = "https://www.facebook.com/" + preTransformed[0] + "/posts/" + preTransformed[1];
+               scope.mylink = link;
+             })
+          }
+          else
+          {
             var preTransformed = scope.link;
             var tab = preTransformed.split("/")
             preTransformed = tab[3].split("_");
             var link = "https://www.facebook.com/" + preTransformed[0] + "/posts/" + preTransformed[1];
             scope.mylink = link;
+          }
+
 
         }
 
@@ -60,10 +74,10 @@ angular.module('ATSApp.facebook')
           return $FB.loaded
         }, function () {
           setTimeout(function () {
-            if($FB.loaded)
+            if ($FB.loaded)
               init();
             console.log('$FB.loaded', $FB.loaded);
-          },0)
+          }, 0)
         });
 
 

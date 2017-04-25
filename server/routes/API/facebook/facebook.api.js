@@ -6,17 +6,19 @@ var controller = require('./facebookDataProvider.controller');
 var DataProvider = require('../../../models/dataProvider/dataProvider.model');
 var async = require('async');
 var request = require('request');
+var utils = require('../helpers/utils.helper');
 
 
 module.exports = {
-  getToken : getToken,
+  getToken: getToken,
   getPostsByPage: getPostsByPage,
-  getReactionsByPost : getReactionsByPost,
-  pageInsights : pageInsights
+  getReactionsByPost: getReactionsByPost,
+  pageInsights: pageInsights,
+  longUrl: longUrl
 };
 
 
-function getToken (req, res, next) {
+function getToken(req, res, next) {
   req.ExtendedToken.then(function (value) {
     console.log("token", value);
     res.json({longToken: value});
@@ -24,7 +26,7 @@ function getToken (req, res, next) {
 
 };
 
-function getPostsByPage (req, res, next) {
+function getPostsByPage(req, res, next) {
 
 
   async.eachSeries(req.posts, function iteratee(post, callback) {
@@ -46,7 +48,7 @@ function getPostsByPage (req, res, next) {
 
 };
 
-function getReactionsByPost (req, res, next) {
+function getReactionsByPost(req, res, next) {
 
   var posts_id = req.params.id;
   var node = posts_id;
@@ -71,7 +73,7 @@ function getReactionsByPost (req, res, next) {
 
 };
 
-function pageInsights (req, res, next) {
+function pageInsights(req, res, next) {
 
   var page_id = req.params.id;
   var node = page_id;
@@ -101,4 +103,14 @@ function pageInsights (req, res, next) {
 
 };
 
+function longUrl(req, res, next) {
 
+  utils.getFacebookLongUrl(req.body.url)
+    .then(function (newUrl) {
+      var url = "https://www.facebook.com/" + newUrl
+      res.json({longUrl: url});
+    })
+    .catch(function (err) {
+      res.json(err);
+    });
+}

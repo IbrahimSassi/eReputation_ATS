@@ -33,9 +33,6 @@ function getData(url) {
 };
 
 
-String.prototype.replaceAll = function (str1, str2, ignore) {
-  return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g, "\\$&"), (ignore ? "gi" : "g")), (typeof(str2) == "string") ? str2.replace(/\$/g, "$$$$") : str2);
-};
 
 function cleanText(text) {
 
@@ -186,3 +183,8 @@ function getSentimentalAnalysis(text) {
   })
 
 }
+
+
+String.prototype.replaceAll = function (str1, str2, ignore) {
+  return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g, "\\$&"), (ignore ? "gi" : "g")), (typeof(str2) == "string") ? str2.replace(/\$/g, "$$$$") : str2);
+};
