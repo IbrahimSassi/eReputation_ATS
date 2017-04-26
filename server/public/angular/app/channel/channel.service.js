@@ -23,15 +23,11 @@
 
 
     function addChannelFN(channel) {
-      //channel = new ChannelFactory(channel);
-      // channel.dateCreation = new Date();
-      console.log("channel", channel);
       return ChannelFactory.save(channel).$promise;
     }
 
     function updateChannelFN(channel) {
       return ChannelFactory.update({id: channel._id}, channel).$promise;
-      // console.log("Updated");
     }
 
     function deleteChannelFN(channel) {

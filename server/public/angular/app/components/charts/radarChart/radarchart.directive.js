@@ -32,7 +32,6 @@
 
             setTimeout(function () {
 
-              console.log("before",newValue)
               var Data = JSON.parse(newValue);
 
               var localLabel = Object.keys(Data);

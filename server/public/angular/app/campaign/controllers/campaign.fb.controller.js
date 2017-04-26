@@ -89,7 +89,7 @@
 
     function init() {
 
-      vm.since = moment().subtract(10, 'days');
+      vm.since = moment().subtract(15, 'days');
       vm.until = moment().add(1, 'days');
       vm.min = moment().subtract(15, 'days');
       vm.max = moment().add(1, 'days');

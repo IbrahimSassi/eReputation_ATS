@@ -74,16 +74,10 @@
 
     function activate() {
 
-      // var currentDate = moment();
-      // vm.until = currentDate.format();
-      // // vm.since = currentDate.format();
-      // vm.since = moment(currentDate).subtract(7, 'days').format();
 
       vm.since = moment().subtract(1, 'weeks');
       vm.until = moment();
 
-      // console.log(vm.since);
-      // console.log(vm.until);
       getSelectedCampaign();
 
 
@@ -97,7 +91,6 @@
       if (vm.selectedCampaign !== undefined) {
         CampaignService.getCampaignById(vm.selectedCampaign).then(function (data) {
           data[0].channels.forEach(function (channelPartial) {
-            // console.log(channelPartial.channelId)
             ChannelService.getChannelByID(channelPartial.channelId).then(function (channel) {
               if (channel.type == "facebook" && channel.personal)
                 vm.myChannels.push(channel);
@@ -113,8 +106,7 @@
 
 
     vm.onChange = function () {
-      // console.log("onChange", vm.since);
-      // console.log("onChange", vm.until);
+
 
       if (new Date(vm.since) > new Date(vm.until)) {
         Materialize.toast("Until Date Must be greater than since", 3000, "rounded");
@@ -125,18 +117,23 @@
       }
 
       else {
-        initPageFansInsights();
-        initPageStorytellersByAgeGender();
-        initPageFansOnlinePerDayInsights();
-        initPageActionsPostReactions();
-        initPageViewsTotalInsights();
-        initPositiveFeedbackInsights();
-        initNegativeFeedbackInsights();
-        initPageStoriesByStoryType();
-
+        initChart();
 
       }
     };
+
+    function initChart() {
+      initPageFansInsights();
+      initPageStorytellersByAgeGender();
+      initPageFansOnlinePerDayInsights();
+      initPositiveFeedbackInsights();
+      initPageActionsPostReactions();
+      initPageViewsTotalInsights();
+      initPositiveFeedbackInsights();
+      initNegativeFeedbackInsights();
+      initPageStoriesByStoryType();
+
+    }
 
 
     vm.onSelect = function () {
@@ -144,16 +141,7 @@
         vm.selectedChannel = item;
         vm.labelsPageFans = [];
         vm.dataPageFans = [];
-        initPageFansInsights();
-        initPageStorytellersByAgeGender();
-        initPageFansOnlinePerDayInsights();
-        initPositiveFeedbackInsights();
-        initPageActionsPostReactions();
-        initPageViewsTotalInsights();
-        initPositiveFeedbackInsights();
-        initNegativeFeedbackInsights();
-        initPageStoriesByStoryType();
-
+        initChart();
       });
 
     };
@@ -218,7 +206,7 @@
         }
 
         vm.pageStorytellers = insights1.data[0].values;
-        // console.log("insights1", vm.pageStorytellers);
+
 
       })
     }
@@ -277,12 +265,9 @@
         }
 
         vm.PageFansOnlinePerDayInsights = PageFansOnlinePerDayInsights.data[0].values;
-        // console.log("vm.PageFansOnlinePerDayInsights", vm.PageFansOnlinePerDayInsights)
         vm.PageFansOnlinePerDayInsights.forEach(function (onlineFans) {
           vm.labelsPageFansOnline.push(moment(onlineFans.end_time).format("DD-MM-YYYY"));
           vm.dataPageFansOnline.push(onlineFans.value);
-          // console.log(vm.labelsPageFansOnline)
-          // console.log(vm.dataPageFansOnline)
 
         });
 
@@ -303,7 +288,6 @@
           Materialize.toast("There is no data in this range for positive feedback", 3000, "rounded");
           return;
         }
-        // console.log("positive feedback", insights)
         insights.data.forEach(function (obj) {
           if (obj.period == "days_28")
             vm.PostiveFeedback = obj.values;
@@ -319,7 +303,6 @@
             }
           }
         });
-        // console.log("vm.totalPositiveFeedback", vm.totalPositiveFeedback)
       });
 
     }
@@ -351,7 +334,6 @@
             }
           }
         });
-        console.log("vm.totalNegativeFeedback", vm.totalNegativeFeedback)
       });
 
 
@@ -412,7 +394,6 @@
         //     }
         //   }
         // });
-        // console.log("vm.totalNegativeFeedback",vm.totalNegativeFeedback)
       });
     }
 
@@ -430,7 +411,6 @@
           Materialize.toast("There is no data in this range for page views", 3000, "rounded");
           return;
         }
-        // console.log("initPageViewsTotalInsights", insights)
         insights.data.forEach(function (obj) {
           if (obj.period == "days_28")
             vm.PageViews = obj.values;
@@ -447,38 +427,6 @@
     }
 
 
-    function decimalAdjust(type, value, exp) {
-      // Si l'exposant vaut undefined ou zero...
-      if (typeof exp === 'undefined' || +exp === 0) {
-        return Math[type](value);
-      }
-      value = +value;
-      exp = +exp;
-      // Si value n'est pas un nombre
-      // ou si l'exposant n'est pas entier
-      if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
-        return NaN;
-      }
-      // Décalage
-      value = value.toString().split('e');
-      value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
-      // Re "calage"
-      value = value.toString().split('e');
-      return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
-    }
-
-    var ceil10 = function (value, exp) {
-      return decimalAdjust('ceil', value, exp);
-    };
-
-
-    var round10 = function (value, exp) {
-      return decimalAdjust('round', value, exp);
-    };
-
-    var floor10 = function (value, exp) {
-      return decimalAdjust('floor', value, exp);
-    };
 
 
   }

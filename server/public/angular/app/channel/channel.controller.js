@@ -67,7 +67,6 @@
     vm.myChannels = [];
     vm.connectedUserId = $rootScope.currentUser._id;
     // vm.connectedUserId = "58d3dc815d391346a06f48c3";
-    vm.title = 'Channel List';
 
     init();
 
@@ -75,7 +74,6 @@
     function init() {
       ChannelService.getChannelsByUser(vm.connectedUserId).then(function (data) {
         vm.myChannels = data;
-        console.log(vm.myChannels)
       })
     }
 

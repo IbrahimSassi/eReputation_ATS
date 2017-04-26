@@ -136,10 +136,20 @@ function getSentimentalAnalysis(text) {
 
           /*******here*****/
 
-          var scoreResults = {
-            positivity: positive.toFixed(3),
-            negativity: negative.toFixed(3),
-            neutral: neutral.toFixed(3)
+          var scoreResults;
+          if (positive !== null || negative !== null) {
+            scoreResults = {
+              positivity: positive.toFixed(3),
+              negativity: negative.toFixed(3),
+              neutral: neutral.toFixed(3)
+            }
+          }
+          else {
+            scoreResults = {
+              positivity: positive,
+              negativity: negative,
+              neutral: neutral
+            }
           }
           resolve(scoreResults)
           // console.log('scoreResults: ', scoreResults);
