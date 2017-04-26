@@ -7,7 +7,17 @@
 var Channel = require('../../../models/channel/channel.model');
 
 
-exports.getAllChannels = function (req, res, next) {
+module.exports = {
+  getAllChannels: getAllChannels,
+  getChannelById: getChannelById,
+  allChannelsByOwner: allChannelsByOwner,
+  createChannel: createChannel,
+  updateChannel: updateChannel,
+  deleteChannel: deleteChannel
+};
+
+
+function getAllChannels(req, res, next) {
 
   Channel.getChannelsModel(function (err, docs) {
     if (err) {
@@ -24,7 +34,7 @@ exports.getAllChannels = function (req, res, next) {
 };
 
 
-exports.getChannelById = function (req, res, next) {
+function getChannelById(req, res, next) {
 
   Channel.getChannelByIdModel(req.params.id, function (err, docs) {
     if (err) {
@@ -41,7 +51,7 @@ exports.getChannelById = function (req, res, next) {
 };
 
 
-exports.allChannelsByOwner = function (req, res, next) {
+function allChannelsByOwner(req, res, next) {
 
   Channel.getChannelByOwnerModel(req.params.id, function (err, docs) {
     if (err) return handleError(res, err);
@@ -57,7 +67,7 @@ exports.allChannelsByOwner = function (req, res, next) {
 };
 
 
-exports.createChannel = function (req, res, next) {
+function createChannel(req, res, next) {
 
   Channel.createChannelModel(req.body, function (err, item) {
     if (err) return handleError(res, err);
@@ -72,7 +82,7 @@ exports.createChannel = function (req, res, next) {
 };
 
 
-exports.updateChannel = function (req, res, next) {
+function updateChannel(req, res, next) {
 
   console.log(req.body)
   console.log(req.params.id)
@@ -88,7 +98,7 @@ exports.updateChannel = function (req, res, next) {
 };
 
 
-exports.deleteChannel = function (req, res, next) {
+function deleteChannel(req, res, next) {
   Channel.removeChannelModel(req.params.id, function (err, channel) {
     if (err) return handleError(res, err);
     return res.status(204).send();

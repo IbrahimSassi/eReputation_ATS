@@ -17,9 +17,8 @@
   /* @ngInject */
   function FacebookCommunityControllerFN($scope, FacebookService, ChannelService, $stateParams, CampaignService, $rootScope) {
     var vm = this;
-    vm.title = 'FacebookController';
     vm.connectedUserId = $rootScope.currentUser._id;
-    vm.selectedCampaign = $stateParams.idCampaign; //TODO Change It Dynamic
+    vm.selectedCampaign = $stateParams.idCampaign;
 
     vm.selectedChannel = {};
     vm.myChannels = [];

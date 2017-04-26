@@ -58,7 +58,6 @@
 
 
     vm.pasteUrl = function (event) {
-      console.log(event);
       vm.url = event.originalEvent.clipboardData;
     };
 

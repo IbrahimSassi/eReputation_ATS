@@ -11,14 +11,13 @@ var utils = require('../helpers/utils.helper');
 var config = require('../../../config/facebook.config');
 
 
-
 module.exports = {
-  saveFacebookPosts : saveFacebookPosts,
-  getFacebookDataProvider : getFacebookDataProvider,
-  addFacebookComments : addFacebookComments,
-  getFacebookSentimental : getFacebookSentimental,
-  getSentimentalByPost : getSentimentalByPost,
-  updateFacebookPost : updateFacebookPost
+  saveFacebookPosts: saveFacebookPosts,
+  getFacebookDataProvider: getFacebookDataProvider,
+  addFacebookComments: addFacebookComments,
+  getFacebookSentimental: getFacebookSentimental,
+  getSentimentalByPost: getSentimentalByPost,
+  updateFacebookPost: updateFacebookPost
 };
 
 
@@ -37,7 +36,7 @@ function saveFacebookPosts(req, res, next) {
     }
 
   })
-};
+}
 
 
 function getFacebookDataProvider(req, res, next) {
@@ -107,7 +106,7 @@ function getFacebookDataProvider(req, res, next) {
         .json(docs);
     }
   })
-};
+}
 
 
 function addFacebookComments(req, res, next) {
@@ -138,7 +137,7 @@ function addFacebookComments(req, res, next) {
     res.json(req.comments)
   });
 
-};
+}
 
 
 function getFacebookSentimental(req, res, next) {
@@ -291,27 +290,27 @@ function getFacebookSentimental(req, res, next) {
   }
 
 
-  console.log("typee :", type)
+  console.log("typee :", type);
 
   DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, sortObject, unwindObject).then(function (data) {
     res.json(data);
   }).catch(function (err) {
-    console.log("Error")
-    console.log(err)
+    console.log("Error");
+    console.log(err);
     res.json(err);
   })
 
-};
+}
 
 
-function getSentimentalByPost (req, res, next) {
+function getSentimentalByPost(req, res, next) {
 
-  var _mostPositiveComment ={
+  var _mostPositiveComment = {
     "score": {
       "positivity": 0
     }
   };
-  var _mostNegativeComment ={
+  var _mostNegativeComment = {
     "score": {
       "negativity": 0
     }
@@ -322,14 +321,14 @@ function getSentimentalByPost (req, res, next) {
     utils.getSentimentalAnalysis(comment.message)
       .then(function (result) {
 
-        console.log("result",result)
+        console.log("result", result);
         comment.score = result;
 
-        if(comment.score.positivity>_mostPositiveComment.score.positivity)
-           _mostPositiveComment = comment;
+        if (comment.score.positivity > _mostPositiveComment.score.positivity)
+          _mostPositiveComment = comment;
 
-        if(comment.score.negativity>_mostNegativeComment.score.negativity)
-           _mostNegativeComment = comment;
+        if (comment.score.negativity > _mostNegativeComment.score.negativity)
+          _mostNegativeComment = comment;
 
         callback()
       })
@@ -338,22 +337,19 @@ function getSentimentalByPost (req, res, next) {
 
       })
 
-  },function done() {
-    console.log("DONE")
-    console.log("_mostPositiveComment",_mostPositiveComment)
-    console.log("_mostNegativeComment",_mostNegativeComment)
+  }, function done() {
+    console.log("DONE");
     res.json({
-      mostPositiveComment : _mostPositiveComment,
-      mostNegativeComment : _mostNegativeComment,
+      mostPositiveComment: _mostPositiveComment,
+      mostNegativeComment: _mostNegativeComment,
     });
   })
 
 
+}
 
-};
 
-
-function updateFacebookPost (req, res, next) {
+function updateFacebookPost(req, res, next) {
 
   var _queryCampaign = {
     state: "active",
@@ -367,8 +363,8 @@ function updateFacebookPost (req, res, next) {
     var _posts = [];
     async.eachSeries(campaigns, function iteratee(campaign, callback) {
 
-      var _until = new Date();
-      var _since = new Date(new Date().setDate(_until.getDate() - 1));
+      // var _until = new Date();
+      // var _since = new Date(new Date().setDate(_until.getDate() - 1));
 
 
       var _queryDP = {
@@ -426,7 +422,7 @@ function updateFacebookPost (req, res, next) {
   });
 
 
-};
+}
 
 
 function handleError(res, err) {
