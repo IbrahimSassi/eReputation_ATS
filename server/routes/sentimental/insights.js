@@ -9,7 +9,13 @@ var myRequest = require('request');
 
 
 router.get('/setScore', function (req, res, next) {
+
+
+
   function translateFN() {
+    var positive = null;
+    var negative = null;
+    var neutral = null;
     dataProvider.findNulledScore().then(function (data) {
 
       console.log('this is: ', data.content)
@@ -55,18 +61,28 @@ router.get('/setScore', function (req, res, next) {
 
                 console.log(response.statusCode, body);
                 console.log(JSON.parse(body)[0].sentiment);
+
+                //Clean code
+
+                var resultsLenght = JSON.parse(body).length;
+                console.log('len:', resultsLenght)
+                for (var i = 0; i < resultsLenght; i++) {
+                  positive = positive + ((JSON.parse(body)[i].sentiment.positive) / resultsLenght) * 100;
+                  negative = negative + ((JSON.parse(body)[i].sentiment.negative) / resultsLenght) * 100;
+                  neutral = neutral + ((JSON.parse(body)[i].sentiment.neutral) / resultsLenght) * 100;
+                }
+
+
+                //End clean code
+
+
                 //RESPONSE
                 //  result.json(JSON.parse(body));
 
                 /*******here*****/
-                var cleanResult = JSON.parse(body)[0].sentiment;
 
-                var scoreResults = {
-                  positivity: cleanResult.positive * 100,
-                  negativity: cleanResult.negative * 100,
-                  neutral: cleanResult.neutral * 100
-                }
-
+                var scoreResults = {positivity: positive, negativity: negative, neutral: neutral}
+                console.log('scoreResults: ', scoreResults);
 
                 dataProvider.updateScore(data, scoreResults).then(function (result) {
                   translateFN()
@@ -117,17 +133,28 @@ router.get('/setScore', function (req, res, next) {
 
                 console.log(response.statusCode, body);
                 console.log(JSON.parse(body)[0].sentiment);
+
+                //Clean code
+
+                var resultsLenght = JSON.parse(body).length;
+                console.log('len:', resultsLenght)
+                for (var i = 0; i < resultsLenght; i++) {
+                  positive = positive + ((JSON.parse(body)[i].sentiment.positive) / resultsLenght) * 100;
+                  negative = negative + ((JSON.parse(body)[i].sentiment.negative) / resultsLenght) * 100;
+                  neutral = neutral + ((JSON.parse(body)[i].sentiment.neutral) / resultsLenght) * 100;
+                }
+
+
+                //End clean code
+
+
                 //RESPONSE
                 //  result.json(JSON.parse(body));
 
                 /*******here*****/
-                var cleanResult = JSON.parse(body)[0].sentiment;
 
-                var scoreResults = {
-                  positivity: cleanResult.positive * 100,
-                  negativity: cleanResult.negative * 100,
-                  neutral: cleanResult.neutral * 100
-                }
+                var scoreResults = {positivity: positive, negativity: negative, neutral: neutral}
+                console.log('scoreResults: ', scoreResults);
 
 
                 dataProvider.updateScore(data, scoreResults).then(function (result) {
@@ -173,6 +200,16 @@ router.get('/setScore', function (req, res, next) {
   translateFN();
 
 });
+
+
+
+
+//********************************************************************************************************
+
+
+
+
+
 
 
 router.get('/setScoretest', function (req, res, next) {
