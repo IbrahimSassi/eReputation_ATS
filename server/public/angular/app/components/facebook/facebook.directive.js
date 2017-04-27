@@ -8,7 +8,7 @@ angular.module('ATSApp.facebook')
       replace: true,
       scope: {
         appId: '@appId',
-        link: '@link',
+        link: '@link'
       },
       templateUrl: 'angular/app/components/facebook/facebook.template.html',
       link: function (scope, elem, iAttrs) {
@@ -49,7 +49,6 @@ angular.module('ATSApp.facebook')
           if(scope.link.indexOf("posts")!==-1 || scope.link.indexOf("videos")!==-1 || scope.link.indexOf("photos")!==-1)
           {
              FacebookService.getLongUrl(scope.link).then(function (newUrl) {
-               console.log(newUrl)
                var preTransformed = newUrl.longUrl;
                var tab = preTransformed.split("/")
                preTransformed = tab[3].split("_");
@@ -76,7 +75,7 @@ angular.module('ATSApp.facebook')
           setTimeout(function () {
             if ($FB.loaded)
               init();
-            console.log('$FB.loaded', $FB.loaded);
+            // console.log('$FB.loaded', $FB.loaded);
           }, 0)
         });
 
@@ -108,7 +107,7 @@ angular.module('ATSApp.facebook')
           }
         }
       }
-    }
+    };
 
     return _fb;
   }]);

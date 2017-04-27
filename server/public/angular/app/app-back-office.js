@@ -14,6 +14,7 @@ angular.module('ATSApp', [
   'angularLoad',
   'ui.router',
   'ATSApp.wwsa',
+  'ATSApp.utils',
 
 ])
   .config(['$urlRouterProvider',
