@@ -154,9 +154,10 @@ function getFacebookSentimental(req, res, next) {
         {dateContent: {'$gte': new Date(req.body.since), '$lte': new Date(req.body.until)}},
         {channelId: {'$eq': req.body.channelId}},
         {campaignId: {'$eq': req.body.campaignId}},
+        {source: {'$eq' : "FacebookCommentsProvider"}},
         {$text: {$search: ""}}
-      ],
-      $or: [{source: 'FacebookCommentsProvider'}, {source: 'FacebookPostsProvider'}]
+      ]
+      // $or: [{source: 'FacebookCommentsProvider'}, {source: 'FacebookPostsProvider'}]
     };
 
 
@@ -176,7 +177,9 @@ function getFacebookSentimental(req, res, next) {
         {dateContent: {'$gte': new Date(req.body.since), '$lte': new Date(req.body.until)}},
         {channelId: {'$eq': req.body.channelId}},
         {campaignId: {'$eq': req.body.campaignId}},
-        {source: {'$eq': "FacebookPostsProvider"}}
+        {source: {'$eq': "FacebookPostsProvider"}},
+        {$text: {$search: ""}}
+
       ]
     };
 
@@ -190,7 +193,6 @@ function getFacebookSentimental(req, res, next) {
     };
 
     unwindObject = "$reactions";
-    // sortObject = {dateContent: -1}
 
   }
   else if (type == "shares") {
@@ -199,7 +201,9 @@ function getFacebookSentimental(req, res, next) {
         {dateContent: {'$gte': new Date(req.body.since), '$lte': new Date(req.body.until)}},
         {channelId: {'$eq': req.body.channelId}},
         {campaignId: {'$eq': req.body.campaignId}},
-        {source: {'$eq': "FacebookPostsProvider"}}
+        {source: {'$eq': "FacebookPostsProvider"}},
+        {$text: {$search: ""}}
+
       ]
     };
 
@@ -220,7 +224,8 @@ function getFacebookSentimental(req, res, next) {
         {dateContent: {'$gte': new Date(req.body.since), '$lte': new Date(req.body.until)}},
         {channelId: {'$eq': req.body.channelId}},
         {campaignId: {'$eq': req.body.campaignId}},
-        {source: {'$eq': "FacebookPostsProvider"}}
+        {source: {'$eq': "FacebookPostsProvider"}},
+        {$text: {$search: ""}}
       ]
     };
 
@@ -232,7 +237,7 @@ function getFacebookSentimental(req, res, next) {
 
     };
 
-    sortObject = {dateContent: -1}
+    sortObject = {dateContent: -1};
 
   }
   else if (type == "topPosts") {
@@ -241,7 +246,9 @@ function getFacebookSentimental(req, res, next) {
         {dateContent: {'$gte': new Date(req.body.since), '$lte': new Date(req.body.until)}},
         {channelId: {'$eq': req.body.channelId}},
         {campaignId: {'$eq': req.body.campaignId}},
-        {source: {'$eq': "FacebookPostsProvider"}}
+        {source: {'$eq': "FacebookPostsProvider"}},
+        {$text: {$search: ""}}
+
       ]
     };
 
@@ -270,27 +277,25 @@ function getFacebookSentimental(req, res, next) {
     matchObject.$and[1] = undefined;
   }
 
-  if (type == "sentimental") {
-    if (!req.body.keywords || !req.body.keywords.length) {
-      matchObject.$and[3] = undefined;
-    }
-    else {
-      var keywords = req.body.keywords.join(" ");
-      console.log(keywords)
-      matchObject.$and[3].$text.$search = keywords.toString();
-    }
+  // if (type == "sentimental") {
+  if (!req.body.keywords || !req.body.keywords.length) {
+    matchObject.$and[4] = undefined;
   }
+  else {
+    var keywords = req.body.keywords.join(" ");
+    console.log(keywords)
+    matchObject.$and[4].$text.$search = keywords.toString();
+  }
+  // }
 
 
   for (var i = 0; i < matchObject.$and.length; i++) {
     if (matchObject.$and[i] == undefined) {
       matchObject.$and.splice(i, 1);
-      i = 0;
+      i = -1;
     }
   }
 
-
-  console.log("typee :", type);
 
   DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, sortObject, unwindObject).then(function (data) {
     res.json(data);

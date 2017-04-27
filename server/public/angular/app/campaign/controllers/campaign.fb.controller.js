@@ -88,7 +88,6 @@
 
     }
 
-
     vm.onSelect = function () {
 
       if (vm.selectedChannel._id !== "all") {
@@ -193,14 +192,13 @@
         delete LocalFilter.source;
 
       vm.SentimentalFacebookData = [];
-      LocalFilter.keywords = []
       vm.SentimentalFacebookData.push(
         [ConstantFactory.DATE,
           ConstantFactory.POSITIVITY,
           ConstantFactory.NEGATIVITY,
           ConstantFactory.NEUTRALITY
         ]);
-      LocalFilter.keywords = vm.myKeywords;
+      delete LocalFilter.keywords;
       // console.log("filterSentimental", LocalFilter)
       FacebookService.getReputationBySentimental(LocalFilter).then(function (data) {
         // console.log("Sentimental", data);
@@ -219,6 +217,7 @@
       if (LocalFilter.source)
         delete LocalFilter.source;
 
+      LocalFilter.keywords = vm.myKeywords;
       vm.reputationByReactions = [];
       vm.reputationByReactions.push(['Date', 'Like', 'Love', 'Sad', 'Angry']);
       FacebookService.getReputationByReaction(LocalFilter).then(function (data) {
@@ -239,6 +238,7 @@
       if (LocalFilter.source)
         delete LocalFilter.source;
 
+      LocalFilter.keywords = vm.myKeywords;
       vm.reputationByShares = [];
       vm.reputationByShares.push(['Date', 'Shares']);
       FacebookService.getReputationByShares(LocalFilter).then(function (data) {
@@ -262,6 +262,7 @@
       vm.typesStatus = [];
       vm.typesVideo = [];
       vm.typesPhoto = [];
+      LocalFilter.keywords = vm.myKeywords;
       vm.reputationByTypes.push([ConstantFactory.TYPE, ConstantFactory.NUMBER]);
       vm.typesLink.push([ConstantFactory.NUMBER, ConstantFactory.NUMBER]);
       vm.typesStatus.push([ConstantFactory.SENTIMENTAL, ConstantFactory.NUMBER]);
