@@ -86,6 +86,7 @@ var campaignSchema = new Schema({
       _id: false,
     }
   ],
+  twitterScrapingState: {type: Object}
 });
 
 

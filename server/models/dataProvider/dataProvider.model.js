@@ -168,7 +168,7 @@ module.exports.updateDataProviderModel = function (id, update, callback) {
 
   DataProvider.findById(id, function (err, item) {
     if (!item) {
-      console.log("errorrr",err)
+      console.log("errorrr", err)
       return next(new Error('Could not load item'));
     }
     else {
@@ -176,7 +176,6 @@ module.exports.updateDataProviderModel = function (id, update, callback) {
       item.save(callback);
     }
   });
-
 
 
 };
@@ -533,15 +532,14 @@ module.exports.getDataProviderMatchedAndGrouped = function (matchObject, groupOb
       query[2] = undefined;
 
 
-    console.log("before",query)
+    console.log("before", query)
     for (var i = 0; i < query.length; i++) {
       if (query[i] == undefined) {
         query.splice(i, 1);
         i = 0;
       }
     }
-    console.log("after",query[1].$group)
-
+    console.log("after", query[1].$group)
 
 
     DataProvider.aggregate(
