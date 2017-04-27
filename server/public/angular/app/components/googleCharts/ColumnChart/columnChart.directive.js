@@ -20,9 +20,16 @@
         link: function (scope, elem, attrs) {
           setTimeout(function () {
             google.charts.load('current', {'packages': ['bar']});
-            // google.charts.setOnLoadCallback(drawChart);
-
             var LocalData = JSON.parse(scope.myTable);
+            if (LocalData && LocalData.length > 1) {
+              google.charts.setOnLoadCallback(drawChart);
+
+              scope.$watch('myTable', function (newValue, oldValue) {
+                google.charts.setOnLoadCallback(drawChart);
+              });
+
+            }
+
 
             function drawChart() {
               var data = google.visualization.arrayToDataTable(
@@ -33,30 +40,22 @@
                 chart: {
                   title: scope.title,
                 },
+                bars: 'vertical',
+                hAxis: {
+                  format: 'decimal'
+                },
                 colors: ['#2ecc71', '#e74c3c', '#f1c40f', '#95a5a6'],
-                backgroundColor: {fill: '#e74c3c'}
 
               };
 
               var chart = new google.charts.Bar(document.getElementById('columnChart' + scope.myId));
 
-              chart.draw(data, options);
+              chart.draw(data, google.charts.Bar.convertOptions(options));
 
 
             }
 
-            if (LocalData && LocalData.length > 1) {
-              google.charts.setOnLoadCallback(
-                function () { // Anonymous function that calls drawChart1 and drawChart2
-                  drawChart();
 
-                });
-
-              scope.$watch('myTable', function (newValue, oldValue) {
-                drawChart();
-              });
-
-            }
 
 
           }, 0);

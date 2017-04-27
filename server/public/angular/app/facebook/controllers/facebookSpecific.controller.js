@@ -9,13 +9,13 @@
     .module('ATSApp.facebook')
     .controller('FacebookSpecificController', FacebookSpecificControllerFN);
 
-  FacebookSpecificControllerFN.$inject = ['$scope',
+  FacebookSpecificControllerFN.$inject = [
     'FacebookService', 'ChannelService', '$stateParams', 'CampaignService',
     '$rootScope'];
 
 
   /* @ngInject */
-  function FacebookSpecificControllerFN($scope, FacebookService, ChannelService, $stateParams, CampaignService, $rootScope) {
+  function FacebookSpecificControllerFN(FacebookService, ChannelService, $stateParams, CampaignService, $rootScope) {
     var vm = this;
     vm.connectedUserId = $rootScope.currentUser._id;
     vm.selectedCampaign = $stateParams.idCampaign; //TODO Change It Dynamic

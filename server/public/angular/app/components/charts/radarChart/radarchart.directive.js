@@ -73,7 +73,7 @@
             setTimeout(function () {
 
 
-              var id = "radar-chart-component" + "-" + scope.now;
+              var id = "radar-chart-component";
               // console.log('id', id)
               window.trendingRadarChart = new Chart(document.getElementById(id.toString()).getContext("2d")).Radar(radarChartData, {
 

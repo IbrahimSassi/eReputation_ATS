@@ -15,7 +15,11 @@
   /**Injection**/
 
 
-  CampaignFbCtrl.$inject = ['CampaignService', 'ChannelService', 'FacebookService', 'angularLoad', '$scope', '$rootScope', '$stateParams'];
+  CampaignFbCtrl.$inject = ['CampaignService',
+    'ChannelService', 'FacebookService',
+    'angularLoad',
+    '$stateParams',
+    'ConstantFactory'];
   /**End Of Injection**/
 
 
@@ -24,7 +28,12 @@
   /**End of Route Config**/
 
 
-  function CampaignFbCtrl(CampaignService, ChannelService, FacebookService, angularLoad, $scope, $rootScope, $stateParams) {
+  function CampaignFbCtrl(CampaignService,
+                          ChannelService,
+                          FacebookService,
+                          angularLoad,
+                          $stateParams,
+                          ConstantFactory) {
 
     /**Scope Replace**/
     var vm = this;
@@ -32,20 +41,6 @@
     vm.selectedChannel = {
       _id: "all"
     };
-
-    // vm.selectedCampaign = "58ec64b17b0eab2accff5f34";
-    // vm.selectedCampaign = "58eaaacdff57b30edc92fc4e";
-    // vm.Comments = [];
-    // vm.topSharedPost = new Object();
-    // vm.topLikedPost = new Object();
-    // vm.Posts = [];
-    // vm.reputationByTypes = [];
-    // vm.reputationByShares = [];
-    // vm.typesLink = [];
-    // vm.typesStatus = [];
-    // vm.typesVideo = [];
-    // vm.typesPhoto = [];
-
 
     var filter =
       {
@@ -55,33 +50,6 @@
         "campaignId": vm.selectedCampaign,
         "source": "",
         "keywords": []
-      };
-
-    //
-    // var filterPosts =
-    //   {
-    //     "since": moment(vm.since).format(),
-    //     "until": moment(vm.until).format(),
-    //     "channelId": "all",
-    //     "campaignId": vm.selectedCampaign,
-    //     "source": "FacebookPostsProvider",
-    //     "keywords": []
-    //   };
-    // var filterComments =
-    //   {
-    //     "since": moment(vm.since).format(),
-    //     "until": moment(vm.until).format(),
-    //     "channelId": "all",
-    //     "campaignId": vm.selectedCampaign,
-    //     "source": "FacebookCommentsProvider",
-    //     "keywords": []
-    //   };
-    var filterSentimental =
-      {
-        "since": moment(vm.since).format(),
-        "until": moment(vm.until).format(),
-        "channelId": "all",
-        "campaignId": vm.selectedCampaign
       };
 
 
@@ -95,7 +63,6 @@
       vm.max = moment().add(1, 'days');
 
       selectDate();
-      // console.log("vm.selectedChannel", vm.selectedChannel)
 
       delete filter.channelId;
       getSelectedCampaign().then(function (data) {
@@ -128,8 +95,6 @@
         ChannelService.getChannelByID(vm.selectedChannel._id).then(function (item) {
           vm.selectedChannel = item;
           filter.channelId = item._id;
-          // filterComments.channelId = item._id;
-          // filterSentimental.channelId = item._id;
 
           selectDate();
 
@@ -138,7 +103,7 @@
         });
       }
       else {
-        delete filter.channelId
+        delete filter.channelId;
         selectDate();
 
         initCharts();
@@ -147,8 +112,6 @@
 
 
     vm.onChange = function () {
-      // console.log(moment(vm.since).format())
-      // console.log(moment(vm.until).format())
       selectDate();
 
       initCharts();
@@ -166,11 +129,9 @@
 
             data[0].keywords.forEach(function (keyword) {
               vm.myKeywords.push(keyword.content);
-            })
-            // console.log("vm.myKeywords", vm.myKeywords)
+            });
 
             data[0].channels.forEach(function (channelPartial) {
-              // console.log(channelPartial.channelId)
               ChannelService.getChannelByID(channelPartial.channelId).then(function (channel) {
                 if (channel.type == "facebook")
                   vm.myChannels.push(channel);
@@ -233,8 +194,12 @@
 
       vm.SentimentalFacebookData = [];
       LocalFilter.keywords = []
-      // console.log(vm.selectedChannel)
-      vm.SentimentalFacebookData.push(['Date', 'Postivity', 'Negativity', 'Neutrality']);
+      vm.SentimentalFacebookData.push(
+        [ConstantFactory.DATE,
+          ConstantFactory.POSITIVITY,
+          ConstantFactory.NEGATIVITY,
+          ConstantFactory.NEUTRALITY
+        ]);
       LocalFilter.keywords = vm.myKeywords;
       // console.log("filterSentimental", LocalFilter)
       FacebookService.getReputationBySentimental(LocalFilter).then(function (data) {
@@ -297,34 +262,34 @@
       vm.typesStatus = [];
       vm.typesVideo = [];
       vm.typesPhoto = [];
-      vm.reputationByTypes.push(['Type', 'Number']);
-      vm.typesLink.push(['Sentimental', 'Number']);
-      vm.typesStatus.push(['Sentimental', 'Number']);
-      vm.typesVideo.push(['Sentimental', 'Number']);
-      vm.typesPhoto.push(['Sentimental', 'Number']);
+      vm.reputationByTypes.push([ConstantFactory.TYPE, ConstantFactory.NUMBER]);
+      vm.typesLink.push([ConstantFactory.NUMBER, ConstantFactory.NUMBER]);
+      vm.typesStatus.push([ConstantFactory.SENTIMENTAL, ConstantFactory.NUMBER]);
+      vm.typesVideo.push([ConstantFactory.SENTIMENTAL, ConstantFactory.NUMBER]);
+      vm.typesPhoto.push([ConstantFactory.SENTIMENTAL, ConstantFactory.NUMBER]);
       FacebookService.getReputationByTypes(LocalFilter).then(function (data) {
         data.forEach(function (obj) {
           if (obj._id.type !== null)
             vm.reputationByTypes.push([obj._id.type, obj.nb]);
           if (obj._id.type == "link") {
-            vm.typesLink.push(['Positive', obj.positive_score])
-            vm.typesLink.push(['Negative', obj.negative_score])
-            vm.typesLink.push(['Neutral', obj.neutral_score])
+            vm.typesLink.push([ConstantFactory.POSITIVE, obj.positive_score]);
+            vm.typesLink.push([ConstantFactory.NEGATIVE, obj.negative_score]);
+            vm.typesLink.push([ConstantFactory.NEUTRAL, obj.neutral_score]);
           }
           if (obj._id.type == "video") {
-            vm.typesVideo.push(['Positive', obj.positive_score])
-            vm.typesVideo.push(['Negative', obj.negative_score])
-            vm.typesVideo.push(['Neutral', obj.neutral_score])
+            vm.typesVideo.push([ConstantFactory.POSITIVE, obj.positive_score]);
+            vm.typesVideo.push([ConstantFactory.NEGATIVE, obj.negative_score]);
+            vm.typesVideo.push([ConstantFactory.NEUTRAL, obj.neutral_score]);
           }
           if (obj._id.type == "photo") {
-            vm.typesPhoto.push(['Positive', obj.positive_score])
-            vm.typesPhoto.push(['Negative', obj.negative_score])
-            vm.typesPhoto.push(['Neutral', obj.neutral_score])
+            vm.typesPhoto.push([ConstantFactory.POSITIVE, obj.positive_score]);
+            vm.typesPhoto.push([ConstantFactory.NEGATIVE, obj.negative_score]);
+            vm.typesPhoto.push([ConstantFactory.NEUTRAL, obj.neutral_score]);
           }
           if (obj._id.type == "status") {
-            vm.typesStatus.push(['Positive', obj.positive_score])
-            vm.typesStatus.push(['Negative', obj.negative_score])
-            vm.typesStatus.push(['Neutral', obj.neutral_score])
+            vm.typesStatus.push([ConstantFactory.POSITIVE, obj.positive_score]);
+            vm.typesStatus.push([ConstantFactory.NEGATIVE, obj.negative_score]);
+            vm.typesStatus.push([ConstantFactory.NEUTRAL, obj.neutral_score]);
           }
         });
       })
@@ -367,13 +332,13 @@
 
       FacebookService.getTopPosts(LocalFilter, 'likes').then(function (data) {
         data.sort(function (a, b) {
-          return b.reactions[0].like.summary.total_count -a.reactions[0].like.summary.total_count ;
+          return b.reactions[0].like.summary.total_count - a.reactions[0].like.summary.total_count;
         });
 
         setTimeout(function () {
           vm.topLikedPost = data[0];
 
-        },50)
+        }, 50)
 
 
       });
