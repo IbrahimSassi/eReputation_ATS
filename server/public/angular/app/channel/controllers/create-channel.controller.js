@@ -77,13 +77,13 @@
       }
 
 
-        ChannelService.addChannel(vm.channel)
-          .then(function (result) {
-            $state.go('channels');
-            var $toastContent = $('<span class="green-text">New Channel has just created</span>');
-            var rounded = "rounded"
-            Materialize.toast($toastContent, 3000, rounded);
-          });
+      ChannelService.addChannel(vm.channel)
+        .then(function (result) {
+          $state.go('channels');
+          var $toastContent = $('<span class="green-text">New Channel has just created</span>');
+          var rounded = "rounded"
+          Materialize.toast($toastContent, 3000, rounded);
+        });
 
 
     };
@@ -96,7 +96,7 @@
           FacebookService.getLongLivedToken(token).then(function (newLongToken) {
             vm.channel.accessToken = newLongToken.longToken;
             data.user.accounts.data.forEach(function (page) {
-              vm.myFacebookPages.push({value: page.id, text: page.name})
+              vm.myFacebookPages.push({value: "https://www.facebook.com/" + page.id, text: page.name})
 
               var $toastContent = $('<span class="green-text">Your permission has granted , now pick a page</span>');
               var rounded = "rounded"
@@ -115,12 +115,12 @@
         vm.gettedUrl = vm.channel.url;
         if (vm.channel.url && vm.channel.url.length > 7 && (vm.channel.url.indexOf("http") > -1 || vm.channel.url.indexOf("www") > -1 )) {
           if (extractDomain(vm.channel.url).indexOf("undefined") <= -1 && extractDomain(vm.channel.url) != "http")
-          ChannelService.getSimilarChannels(extractDomain(vm.channel.url)).then(function (data) {
-            if (data.length) {
-              vm.similarChannels = data;
-            }
+            ChannelService.getSimilarChannels(extractDomain(vm.channel.url)).then(function (data) {
+              if (data.length) {
+                vm.similarChannels = data;
+              }
 
-          })
+            })
 
 
         }

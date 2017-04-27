@@ -56,8 +56,8 @@ function transformPostsData(req, res, next) {
       _urls.push(url);
 
       //Getting All Nexr and previous paging _urls
-      promiseNext = handleFbPaging(data, "next");
-      promisePrevious = handleFbPaging(data, "previous");
+      promiseNext = handleFbPaging(data, "next", req.body.channelId);
+      promisePrevious = handleFbPaging(data, "previous", req.body.channelId);
       Promise.all([promisePrevious, promiseNext]).then(function () {
         //Requesting Data for all those urls
         async.eachSeries(_urls, function iteratee(url, callback) {
@@ -294,7 +294,7 @@ function handleFbPaging(data, direction, postId) {
       })
     }
     else {
-      console.log("Resolving Urls for post ", postId);
+      console.log("Resolving Urls for ", postId);
       resolve(_urls)
     }
   })

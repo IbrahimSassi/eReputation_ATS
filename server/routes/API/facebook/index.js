@@ -3,6 +3,7 @@ var router = express.Router();
 var facebookHandler = require('./handlers/facebookHandler.middleware');
 var facebookDataProvider = require('./facebookDataProvider.controller');
 var facebookApi = require('./facebook.api');
+var crond = require('./facebook.cron');
 
 
 router.get('/', function (req, res, next) {
@@ -28,6 +29,9 @@ router.put('/facebookPosts', facebookDataProvider.updateFacebookPost);
 router.post('/facebookDataProvider/get', facebookDataProvider.getFacebookDataProvider);
 router.post('/reputationBySentimental', facebookDataProvider.getFacebookSentimental);
 router.post('/posts/reputation',facebookHandler.getComments, facebookDataProvider.getSentimentalByPost);
+
+
+router.get('/testCrond',crond.facebookLauncher);
 
 
 

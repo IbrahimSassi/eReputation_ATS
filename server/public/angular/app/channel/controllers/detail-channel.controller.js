@@ -73,7 +73,7 @@
           FacebookService.getLongLivedToken(token).then(function (newLongToken) {
             vm.selectedChannel.accessToken = newLongToken.longToken;
             data.user.accounts.data.forEach(function (page) {
-              vm.myFacebookPages.push({value: page.id, text: page.name});
+              vm.myFacebookPages.push({value: "https://www.facebook.com/" + page.id, text: page.name})
 
               var $toastContent = $('<span class="green-text">Your permission has granted , now pick a page</span>');
               var rounded = "rounded";
