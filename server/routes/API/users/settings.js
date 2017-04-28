@@ -94,7 +94,7 @@ router.put('/basicinformationBuss/:activeEmail/:email/:businessName/:businessTyp
 });
 
 router.put('/additionalInformation', function (req, res, next) {
-  //console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+  console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 
  // console.log("Profile: ",req.params.profilePicture);
 
@@ -116,11 +116,11 @@ router.put('/additionalInformation', function (req, res, next) {
     var coverPictureBase64 = coverPicture;
     if (req.body.profilePicture !="" && req.body.coverPicture !="")
     {
-    fs.writeFile(__dirname + "/../../public/uploads/images/"+profilePictureName+".png", profilePictureBase64, 'base64', function(err) {
+    fs.writeFile(__dirname + "/../../../public/uploads/images/"+profilePictureName+".png", profilePictureBase64, 'base64', function(err) {
       if (err) console.log(err);
     });
 
-    fs.writeFile(__dirname + "/../../public/uploads/images/"+coverPictureName+".jpg", coverPictureBase64, 'base64', function(err) {
+    fs.writeFile(__dirname + "/../../../public/uploads/images/"+coverPictureName+".jpg", coverPictureBase64, 'base64', function(err) {
       if (err) console.log(err);
     });
     //*
