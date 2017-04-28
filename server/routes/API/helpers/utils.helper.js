@@ -120,21 +120,13 @@ function getSentimentalAnalysis(text) {
           // console.log(error);
           reject(error)
         } else {
-          // console.log( JSON.parse(body)[0]);
-          //RESPONSE
-
-          //Clean code
 
           var resultsLenght = JSON.parse(body).length;
-          // console.log('len:', resultsLenght)
           for (var i = 0; i < resultsLenght; i++) {
             positive = positive + ((JSON.parse(body)[i].sentiment.positive) / resultsLenght) * 100;
             negative = negative + ((JSON.parse(body)[i].sentiment.negative) / resultsLenght) * 100;
             neutral = neutral + ((JSON.parse(body)[i].sentiment.neutral) / resultsLenght) * 100;
           }
-          //End clean code
-
-          /*******here*****/
 
           var scoreResults;
           if (positive !== null || negative !== null) {
@@ -151,8 +143,7 @@ function getSentimentalAnalysis(text) {
               neutral: neutral
             }
           }
-          resolve(scoreResults)
-          // console.log('scoreResults: ', scoreResults);
+          resolve(scoreResults);
 
 
         }
@@ -169,12 +160,10 @@ function getSentimentalAnalysis(text) {
         body: '{"text": "' + cleanText(text) + '", "level": "sentence"}'
       }, function (error, response, body) {
         if (error || response.statusCode == 400) {
-          // console.log(error);
           reject(error)
 
         } else {
           var resultsLenght = JSON.parse(body).length;
-          // console.log('len:', resultsLenght)
           for (var i = 0; i < resultsLenght; i++) {
             positive = positive + ((JSON.parse(body)[i].sentiment.positive) / resultsLenght) * 100;
             negative = negative + ((JSON.parse(body)[i].sentiment.negative) / resultsLenght) * 100;
@@ -182,14 +171,11 @@ function getSentimentalAnalysis(text) {
           }
 
 
-          /*******here*****/
-
           var scoreResults = {
             positivity: positive.toFixed(3),
             negativity: negative.toFixed(3),
             neutral: neutral.toFixed(3)
-          }
-          // console.log('scoreResults: ', scoreResults);
+          };
           resolve(scoreResults)
 
         }

@@ -20,6 +20,15 @@
             google.charts.load('current', {'packages': ['geochart']});
 
             var LocalData = JSON.parse(scope.myTable);
+            if (LocalData && LocalData.length > 1) {
+              google.charts.setOnLoadCallback(drawChart);
+
+              scope.$watch('myTable', function (newValue, oldValue) {
+                google.charts.setOnLoadCallback(drawChart);
+              });
+            }
+
+
 
             function drawChart() {
               var data = google.visualization.arrayToDataTable(
@@ -39,17 +48,6 @@
 
             }
 
-            if (LocalData && LocalData.length > 1) {
-              google.charts.setOnLoadCallback(
-                function () { // Anonymous function that calls drawChart1 and drawChart2
-                  drawChart();
-
-                });
-
-              scope.$watch('myTable', function (newValue, oldValue) {
-                drawChart();
-              });
-            }
 
 
           }, 0);

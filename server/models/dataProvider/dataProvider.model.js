@@ -168,7 +168,7 @@ module.exports.updateDataProviderModel = function (id, update, callback) {
 
   DataProvider.findById(id, function (err, item) {
     if (!item) {
-      console.log("errorrr",err)
+      console.log("errorrr", err)
       return next(new Error('Could not load item'));
     }
     else {
@@ -176,7 +176,6 @@ module.exports.updateDataProviderModel = function (id, update, callback) {
       item.save(callback);
     }
   });
-
 
 
 };
@@ -513,34 +512,30 @@ module.exports.updateScore = function (dataProviderToUpdate, score) {
 module.exports.getDataProviderMatchedAndGrouped = function (matchObject, groupObject, sortObject, unwindObj) {
   return new Promise(function (resolve, reject) {
 
-    console.log("data model")
-    console.log(unwindObj)
     var query = [
       {$match: matchObject},
-      {$group: groupObject},
-      {$sort: sortObject},
       {$unwind: unwindObj},
+      {$group: groupObject},
+      {$sort: sortObject}
 
     ];
 
     if (matchObject == undefined)
       query[0] = undefined;
     if (groupObject == undefined)
-      query[1] = undefined;
-    if (unwindObj == undefined)
-      query[3] = undefined;
-    if (sortObject == undefined)
       query[2] = undefined;
+    if (unwindObj == undefined)
+      query[1] = undefined;
+    if (sortObject == undefined)
+      query[3] = undefined;
 
 
-    console.log("before",query)
     for (var i = 0; i < query.length; i++) {
       if (query[i] == undefined) {
         query.splice(i, 1);
-        i = 0;
+        i = -1;
       }
     }
-    console.log("after",query[1].$group)
 
 
 

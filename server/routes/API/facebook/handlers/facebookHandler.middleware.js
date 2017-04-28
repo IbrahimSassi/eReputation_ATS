@@ -6,6 +6,7 @@ var config = require('../../../../config/facebook.config');
 var request = require('request');
 var async = require('async');
 var DataProvider = require('../../../../models/dataProvider/dataProvider.model');
+var Compaign = require('../../../../models/campaign.model');
 var moment = require("moment");
 var utils = require('../../helpers/utils.helper');
 var _urls = [];
@@ -114,75 +115,88 @@ function transformCommentsData(req, res, next) {
   var since = moment(req.body.since).format();
   var until = moment(req.body.until).format();
   var _comments = [];
-  DataProvider.getDataProvidersByConditionModel(
-    {
-      source: 'FacebookPostsProvider',
-      channelId: req.body.channelId,
-      campaignId: req.body.campaignId,
-      dateContent: {$gte: since, $lte: until}
-    }, function (err, posts) {
+  var _keyword = "";
 
-      //For Each post we will request its comments
-      async.eachSeries(posts, function iteratee(post, callback) {
 
-        //Tab to store all urls to get comments for one post (Pagination Urls)
-        _urls = [];
+  Compaign.findCampaignById(req.body.campaignId)
+    .then(function (item) {
+      item[0].keywords.forEach(function (key) {
+        _keyword = _keyword + " " + key.content;
+      });
+      // var keywords = item.keywords.join(" ");
+    }).then(function () {
+    DataProvider.getDataProvidersByConditionModel(
+      {
+        source: 'FacebookPostsProvider',
+        channelId: req.body.channelId,
+        campaignId: req.body.campaignId,
+        dateContent: {$gte: since, $lte: until},
+        $text: {$search: _keyword}
+      }, function (err, posts) {
 
-        var post_id = post.id;
-        var fields = "/comments?limit=100";
-        var parameters = "&access_token=" + config.ACCESS_TOKEN;
-        var url = config.base + post_id + fields + parameters;
-        _urls.push(url);
+        //For Each post we will request its comments
+        async.eachSeries(posts, function iteratee(post, callback) {
 
-        //Get Comment For The First Comment
-        getData(url)
-          .then(function (initialComments) {
+          //Tab to store all urls to get comments for one post (Pagination Urls)
+          _urls = [];
 
-            //Start Handling Paging to get all comments urls request
-            handleFbPaging(initialComments, 'next', post.id)
-              .then(function () {
+          var post_id = post.id;
+          var fields = "/comments?limit=100";
+          var parameters = "&access_token=" + config.ACCESS_TOKEN;
+          var url = config.base + post_id + fields + parameters;
+          _urls.push(url);
 
-                //All Urls are here, we will loop through them to get all comments and store them in our _comments
-                console.log("Urls For Posts " + post.id, _urls);
-                async.eachSeries(_urls, function iteratee(u, cb) {
-                  getData(u)
-                    .then(function (comments) {
+          //Get Comment For The First Comment
+          getData(url)
+            .then(function (initialComments) {
 
-                      comments.data.forEach(function (comment) {
-                        _comments.push(transformComments(comment, req.body.channelId, post.id, req.body.campaignId));
-                      });
+              //Start Handling Paging to get all comments urls request
+              handleFbPaging(initialComments, 'next', post.id)
+                .then(function () {
 
-                    })
-                    .then(function () {
-                      cb();
-                    })
-                }, function done() {
-                  callback();
+                  //All Urls are here, we will loop through them to get all comments and store them in our _comments
+                  console.log("Urls For Posts " + post.id, _urls);
+                  async.eachSeries(_urls, function iteratee(u, cb) {
+                    getData(u)
+                      .then(function (comments) {
 
+                        comments.data.forEach(function (comment) {
+                          _comments.push(transformComments(comment, req.body.channelId, post.id, req.body.campaignId));
+                        });
+
+                      })
+                      .then(function () {
+                        cb();
+                      })
+                  }, function done() {
+                    callback();
+
+                  });
+
+                })
+                .catch(function (err) {
+                  console.log("next promise error", err)
                 });
 
-              })
-              .catch(function (err) {
-                console.log("next promise error", err)
-              });
+
+            })
+            .catch(function (err) {
+              console.log("Error When Getting Comments From Post " + post.id, err);
+              // reject(err)
+            });
 
 
-          })
-          .catch(function (err) {
-            console.log("Error When Getting Comments From Post " + post.id, err);
-            // reject(err)
-          });
+        }, function done() {
 
+          setTimeout(function () {
+            req.comments = _comments;
+            next()
+          }, 1100)
 
-      }, function done() {
+        });
+      })
+  })
 
-        setTimeout(function () {
-          req.comments = _comments;
-          next()
-        }, 1100)
-
-      });
-    })
 
 };
 
@@ -259,7 +273,6 @@ function extendToken(req, res, next) {
 
 
 };
-
 
 function handleFbPaging(data, direction, postId) {
   console.log("Gettin Data .. From " + postId, direction);
