@@ -47,3 +47,4 @@ tmp
 
 
 #ignore uploaded images
+/uploads/images
