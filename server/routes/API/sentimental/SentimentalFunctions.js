@@ -18,7 +18,7 @@ function SentimentalForSpecificProvider(providerType) {
     var positive = null;
     var negative = null;
     var neutral = null;
-    dataProvider.findNulledScore(providerType).then(function (data) {
+    dataProvider.findNulledScoreWithDataproviderType(providerType).then(function (data) {
 
       console.log('this is: ', data.content)
 
