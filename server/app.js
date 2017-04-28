@@ -34,7 +34,8 @@ var ejs = require('ejs');
 var app = express();
 //Running Twitter Scrapping Cron
 var twitterCron = require('./routes/API/twitter/twitterCron');
-//twitterCron.run();
+twitterCron.run();
+twitterCron.runSentimentalAnalysis();
 //End of running Twitter Scrapping Cron
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -51,7 +52,7 @@ mongoose.connect('mongodb://bro:brobro0055@ds157469.mlab.com:57469/ats-digital',
     }
   }
 });
-// mongoose.connect('mongodb://localhost:27017/ats-digital-local');
+ //mongoose.connect('mongodb://localhost:27017/ats-digital-local');
 
 //Adding passport require
 require('./config/passport');

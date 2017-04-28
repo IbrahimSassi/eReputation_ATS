@@ -18,6 +18,20 @@ var client = new TwitterStream({
   access_token_secret: config.twitter.access_token_secret
 });
 
+var clientForReplies = new TwitterStream({
+  consumer_key: config.twitterReplies.consumer_key,
+  consumer_secret: config.twitterReplies.consumer_secret,
+  access_token_key: config.twitterReplies.access_token,
+  access_token_secret: config.twitterReplies.access_token_secret
+});
+
+var clientForMentions = new TwitterStream({
+  consumer_key: config.twitterMentions.consumer_key,
+  consumer_secret: config.twitterMentions.consumer_secret,
+  access_token_key: config.twitterMentions.access_token,
+  access_token_secret: config.twitterMentions.access_token_secret
+});
+
 var count1 = 0;
 var count2 = 0;
 var count3 = 0;
@@ -64,7 +78,7 @@ function SaveDatToTwitterProviderForRepliesToUserForChannel(since, until, channe
     // return new Promise(function (resolve, reject) {
 
 
-    client.get('search/tweets', {
+    clientForReplies.get('search/tweets', {
       q: 'to:' + mentionedUser + ' ' + finalKeywords + ' since:' + since + ' until:' + until + 'result_type:popular',
       count: 100,
       max_id: max_id
@@ -116,8 +130,17 @@ function SaveDatToTwitterProviderForRepliesToUserForChannel(since, until, channe
         console.log(max);
         if (max) {
           count1++;
-          console.log('countRep: ', count1)
+          console.log('countRep: ', count1);
+
+
+          if(count1==440)
+          {
+            setTimeout(function(){ scrap(max); count1=0; }, 900000);
+          }
+          else
+          {
           scrap(max);
+          }
         }
         else {
           console.log('ElsecountRep: ', count1)
@@ -168,7 +191,7 @@ function SaveDatToTwitterProviderForMentionedUserForChannel(since, until, channe
     // return new Promise(function (resolve, reject) {
 
 
-    client.get('search/tweets', {
+    clientForMentions.get('search/tweets', {
       q: '@' + mentionedUser + ' ' + finalKeywords + ' since:' + since + ' until:' + until + 'result_type:popular',
       count: 100,
       max_id: max_id
@@ -220,7 +243,14 @@ function SaveDatToTwitterProviderForMentionedUserForChannel(since, until, channe
         if (max) {
           count2++;
           console.log('countMent: ', count2)
-          scrap(max);
+          if(count2==440)
+          {
+            setTimeout(function(){ scrap(max); count2=0;}, 900000);
+          }
+          else
+          {
+            scrap(max);
+          }
         }
         else {
           console.log('ElsecountMent: ', count2)
@@ -316,7 +346,14 @@ function TweetsScrapper(since, until, channelId, campaignId, keywords) {
         if (max) {
           count3++;
           console.log('countAll: ', count3)
-          scrap(max);
+          if(count3==440)
+          {
+            setTimeout(function(){ scrap(max); count3=0;}, 900000);
+          }
+          else
+          {
+            scrap(max);
+          }
         }
         else {
           console.log('ElsecountAll: ', count3)
