@@ -20,8 +20,8 @@ var UserSchema = new Schema({
 
   creationDate: String,
   phoneNumber: String,
-  profilePicture: {type:String,default:"avatar"},
-  coverPicture: {type:String,default:"user-profile-bg"},
+  profilePicture: {type:String,default:"default/avatar"},
+  coverPicture: {type:String,default:"default/user-profile-bg"},
   about: {type: String,minlength: 6},
   birthday: String,
   country: String

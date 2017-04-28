@@ -127,8 +127,8 @@ router.put('/additionalInformation', function (req, res, next) {
 
     User.findOneAndUpdate({email: activeEmail}, {
       $set: {
-        profilePicture: profilePictureName,
-        coverPicture: coverPictureName,
+        profilePicture: 'images/'+profilePictureName,
+        coverPicture: 'images/'+coverPictureName,
         about: about,
         birthday: birthday,
         country: country
