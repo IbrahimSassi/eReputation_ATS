@@ -15,7 +15,7 @@ var yesterday = moment(new Date(new Date().setDate(new Date().getDate() - 1))).f
 
 module.exports.run = function (req, res) {
   //var task = cron.schedule('2 0 0 * * *', function () { //right one
-  var task = cron.schedule('0 1 * * * *', function () {
+  var task = cron.schedule('0 45 22 * * *', function () {
     var campaignResultData = [];
     var campaignQuery = {
       state: "active",
@@ -140,7 +140,7 @@ module.exports.run = function (req, res) {
 
 module.exports.runSentimentalAnalysis = function (req, res) {
   // cron.schedule('2 3 0 * * *', function(){ right one
-  cron.schedule('30 1 * * * *', function () {
+  cron.schedule('0 45 22 * * *', function () {
 
 
     sentimentalFN.SentimentalForSpecificProvider("tweetsProvide");

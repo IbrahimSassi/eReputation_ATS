@@ -46,16 +46,12 @@ module.exports = {
 
 function SaveDatToTwitterProviderForRepliesToUserForChannel(since, until, channelId, campaignId, keywords, mentionedUser) {
 
-  var since = since;
-  var until = until;
-  var mentionedUser = mentionedUser;
-  var keywords = keywords;
+
 
   var keywordsArrayLength = keywords.length;
   var finalKeywords = null;
 
-  var channelId = channelId;
-  var campaignId = campaignId;
+
 
   for (var i = 0; i < keywordsArrayLength; i++) {
     if (finalKeywords == null) {
@@ -79,7 +75,7 @@ function SaveDatToTwitterProviderForRepliesToUserForChannel(since, until, channe
 
 
     clientForReplies.get('search/tweets', {
-      q: 'to:' + mentionedUser + ' ' + finalKeywords + ' since:' + since + ' until:' + until + 'result_type:popular',
+      q: 'to:' + mentionedUser + ' ' + finalKeywords + ' since:' + since + ' until:' + until,
       count: 100,
       max_id: max_id
     }, function (error, tweets, response) {
@@ -159,16 +155,11 @@ function SaveDatToTwitterProviderForRepliesToUserForChannel(since, until, channe
 
 function SaveDatToTwitterProviderForMentionedUserForChannel(since, until, channelId, campaignId, keywords, mentionedUser) {
 
-  var since = since;
-  var until = until;
-  var mentionedUser = mentionedUser;
-  var keywords = keywords;
+
 
   var keywordsArrayLength = keywords.length;
   var finalKeywords = null;
 
-  var channelId = channelId;
-  var campaignId = campaignId;
 
   for (var i = 0; i < keywordsArrayLength; i++) {
     if (finalKeywords == null) {
@@ -192,7 +183,7 @@ function SaveDatToTwitterProviderForMentionedUserForChannel(since, until, channe
 
 
     clientForMentions.get('search/tweets', {
-      q: '@' + mentionedUser + ' ' + finalKeywords + ' since:' + since + ' until:' + until + 'result_type:popular',
+      q: '@' + mentionedUser + ' ' + finalKeywords + ' since:' + since + ' until:' + until,
       count: 100,
       max_id: max_id
     }, function (error, tweets, response) {
@@ -271,15 +262,12 @@ function SaveDatToTwitterProviderForMentionedUserForChannel(since, until, channe
 
 function TweetsScrapper(since, until, channelId, campaignId, keywords) {
 
-  var since = since;
-  var until = until;
-  var keywords = keywords;
+var editableSince=since;
 
   var keywordsArrayLength = keywords.length;
   var finalKeywords = null;
 
-  var channelId = channelId;
-  var campaignId = campaignId;
+
 
   for (var i = 0; i < keywordsArrayLength; i++) {
     if (finalKeywords == null) {
@@ -298,7 +286,7 @@ function TweetsScrapper(since, until, channelId, campaignId, keywords) {
   function scrap(max_id) {
 
     client.get('search/tweets', {
-      q: '' + finalKeywords + ' since:' + since + ' until:' + until + '',
+      q: '' + finalKeywords + ' since:' + editableSince + ' until:' + until + '',
       count: 100, max_id: max_id
     }, function (error, tweets, response) {
       if (error) {
@@ -348,6 +336,7 @@ function TweetsScrapper(since, until, channelId, campaignId, keywords) {
           console.log('countAll: ', count3)
           if(count3==440)
           {
+            editableSince.setDate(editableSince.getDate() + 1);
             setTimeout(function(){ scrap(max); count3=0;}, 900000);
           }
           else
