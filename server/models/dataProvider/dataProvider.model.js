@@ -496,6 +496,16 @@ module.exports.findNulledScore = function (score) {
   });
 }
 
+module.exports.findNulledScoreWithDataproviderType = function (type) {
+  return new Promise(function (resolve, reject) {
+    DataProvider.findOne({contentScore: null,source:type}, function (err, data) {
+      if (err) reject(err);
+      resolve(data);
+    })
+
+  });
+}
+
 
 module.exports.updateScore = function (dataProviderToUpdate, score) {
   return new Promise(function (resolve, reject) {
