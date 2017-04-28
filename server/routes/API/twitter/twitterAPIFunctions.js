@@ -135,7 +135,7 @@ function SaveDatToTwitterProviderForRepliesToUserForChannel(since, until, channe
 
           if(count1==440)
           {
-            setTimeout(function(){ scrap(max); }, 900000);
+            setTimeout(function(){ scrap(max); count1=0; }, 900000);
           }
           else
           {
@@ -245,7 +245,7 @@ function SaveDatToTwitterProviderForMentionedUserForChannel(since, until, channe
           console.log('countMent: ', count2)
           if(count2==440)
           {
-            setTimeout(function(){ scrap(max); }, 900000);
+            setTimeout(function(){ scrap(max); count2=0;}, 900000);
           }
           else
           {
@@ -348,7 +348,7 @@ function TweetsScrapper(since, until, channelId, campaignId, keywords) {
           console.log('countAll: ', count3)
           if(count3==440)
           {
-            setTimeout(function(){ scrap(max); }, 900000);
+            setTimeout(function(){ scrap(max); count3=0;}, 900000);
           }
           else
           {

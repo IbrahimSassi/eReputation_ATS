@@ -8,15 +8,14 @@ var Channel = require('../../../models/channel/channel.model');
 var async = require('async');
 var TwitterAPIFunctions = require('./twitterAPIFunctions');
 var moment = require('moment');
+var sentimentalFN = require('../../sentimental/SentimentalFunctions');
 
-var today = moment(new Date()).format('YYYY-MM-DD')
-
+var today = moment(new Date()).format('YYYY-MM-DD');
 var yesterday = moment(new Date(new Date().setDate(new Date().getDate() - 1))).format('YYYY-MM-DD');
 
-
 module.exports.run = function (req, res) {
-  //var task = cron.schedule('0 0 0 * * *', function () { //right one
-  var task = cron.schedule('30 41 * * * *', function () {
+  //var task = cron.schedule('2 0 0 * * *', function () { //right one
+  var task = cron.schedule('0 1 * * * *', function () {
     var campaignResultData = [];
     var campaignQuery = {
       state: "active",
@@ -137,3 +136,17 @@ module.exports.run = function (req, res) {
 
 
 };
+
+
+
+
+module.exports.runSentimentalAnalysis = function (req, res) {
+ // cron.schedule('2 3 0 * * *', function(){ right one
+  cron.schedule('30 1 * * * *', function(){
+
+
+    sentimentalFN.SentimentalForSpecificProvider("tweetsProvide");
+
+
+  });
+}
