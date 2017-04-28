@@ -57,7 +57,6 @@
           Materialize.toast("There were an error", 3000, "rounded");
           return;
         }
-        console.log(data);
         Materialize.toast("Channel Updated", 3000, "rounded");
         $state.go('channels');
 
@@ -67,14 +66,11 @@
 
 
     vm.getPermissions = function () {
-      console.log("getPermissions");
       FacebookService.initFacebookApi()
         .then(function (data) {
-          console.log("here we are token  + user ,,promise bouh kalb", data);
           var token = data.authResponse.accessToken;
 
           FacebookService.getLongLivedToken(token).then(function (newLongToken) {
-            console.log(newLongToken);
             vm.selectedChannel.accessToken = newLongToken.longToken;
             data.user.accounts.data.forEach(function (page) {
               vm.myFacebookPages.push({value: page.id, text: page.name});

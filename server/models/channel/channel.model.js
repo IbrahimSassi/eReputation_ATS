@@ -40,30 +40,40 @@ var channelSchema = new Schema({
 
 var Channel = module.exports = mongoose.model('Channel', channelSchema);
 
+module.exports = {
+  getChannelsModel:getChannelsModel,
+  getChannelByIdModel:getChannelByIdModel,
+  getChannelByOwnerModel:getChannelByOwnerModel,
+  createChannelModel:createChannelModel,
+  updateChannelModel:updateChannelModel,
+  removeChannelModel:removeChannelModel
+};
+
+
+
 //Get ALL Channels
 
-module.exports.getChannelsModel = function (callback) {
+function getChannelsModel (callback) {
   Channel.find(callback);
 };
 
 //GetChannelBy ID
 
-module.exports.getChannelByIdModel = function (id, callback) {
+function getChannelByIdModel(id, callback) {
   Channel.findById(id, callback);
 
 };
 
 // Get Channel By Owner
 
-module.exports.getChannelByOwnerModel = function (userId, callback) {
+function getChannelByOwnerModel (userId, callback) {
   var query = {userId: userId};
   Channel.find(query, callback);
 };
 
-
 //Add Channel
 
-module.exports.createChannelModel = function (newChannel, callback) {
+function createChannelModel (newChannel, callback) {
   var channel = new Channel();
 
   channel.name = newChannel.name;
@@ -79,7 +89,7 @@ module.exports.createChannelModel = function (newChannel, callback) {
 
 //updateCreation Channel
 
-module.exports.updateChannelModel = function (id, data, callback) {
+function updateChannelModel (id, data, callback) {
   var name = data.name;
   var url = data.url;
   var type = data.type;
@@ -114,7 +124,7 @@ module.exports.updateChannelModel = function (id, data, callback) {
 
 
 //Delete Channel
-module.exports.removeChannelModel = function (id, callback) {
+function removeChannelModel (id, callback) {
 
   Channel.find({_id: id}).remove(callback);
 

@@ -8,6 +8,7 @@ var TwitterStream = require('twitter');
 var dataProvider = require('../../../models/dataProvider/dataProvider.model');
 var async = require('async');
 var translate = require('google-translate-api');
+var utils = require('../helpers/utils.helper');
 
 var client = new TwitterStream({
   consumer_key: config.twitter.consumer_key,
@@ -22,13 +23,10 @@ var count = 0;
 //START TEST*************************************************
 module.exports.SaveDatToTwitterProviderForRepliesToUserForChannelTest = function (req, res, next) {
 
-console.log(req.body.text)
-
-  translate(req.body.text, {to: 'en'}).then(function (result) {
-    res.json(result.text)
+  client.get('statuses/retweets', {id: '855489561614536708'}, function(error, tweets, response) {
+    console.log(tweets);
+    res.json(tweets);
   });
-
-
 
 
 
@@ -558,32 +556,65 @@ module.exports.GetUserInfo = function (req, res, next) {
 
 };
 
+var myRequest = require('request');
+module.exports.analyseLiveTweet = function (req, res, next) {
 
-//with save in the database
+
+  var _mostPositiveComment ={
+    "score": {
+      "positivity": 0
+    }
+  };
+  var _mostNegativeComment ={
+    "score": {
+      "negativity": 0
+    }
+  };
+
+
+  client.get('statuses/retweets', {id: req.body.id}, function(error, tweets, response) {
+
+    res.json(tweets)
+console.log("length: ",tweets.length)
+     //******************************************
+
+
+
 /*
- module.exports.SaveDatToTwitterProviderForRepliesChannel = function (req, res, next) {
-
- var since = req.query.since;
- var until = req.query.until;
- var mentionedUser = req.query.mentionedUser;
-
- console.log(keywords)
- client.get('search/tweets', {q: '@'+mentionedUser+' since:'+since+' until:'+until+'', count: 100}, function(error, tweets, response) {
-
- var newTwitterData = new DataProvider.tweetsProvider(req.body);
-
- dataProvider.createDataProviderModel(newTwitterData, function (err, data) {
- if (err)
- return res.status(400).send(err);
- else {
-
- console.log('Success facebook posts saved saved', item);
- res.status(200).send(data)
- }
- });
- res.json(tweets)
- });
 
 
- };
- */
+    async.eachSeries(tweets, function iteratee(tweet, callback) {
+      utils.getSentimentalAnalysis(tweet.text)
+        .then(function (result) {
+
+          console.log("result",result)
+          comment.score = result;
+
+          if(comment.score.positivity>_mostPositiveComment.score.positivity)
+            _mostPositiveComment = comment;
+
+          if(comment.score.negativity>_mostNegativeComment.score.negativity)
+            _mostNegativeComment = comment;
+
+          callback()
+        })
+        .catch(function (err) {
+          callback()
+
+        })
+
+    },function done() {
+      console.log("DONE")
+      console.log("_mostPositiveComment",_mostPositiveComment)
+      console.log("_mostNegativeComment",_mostNegativeComment)
+      res.json({
+        mostPositiveComment : _mostPositiveComment,
+        mostNegativeComment : _mostNegativeComment,
+      });
+     res.json(tweets)
+    })
+*/
+    //*******************************************
+  });
+
+};

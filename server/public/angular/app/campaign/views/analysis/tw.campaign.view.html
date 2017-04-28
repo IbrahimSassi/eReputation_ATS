@@ -33,13 +33,29 @@
 </div>
 -->
 
+<div class="row margin">
+  <div style="margin-top: 25px;" class="col s12">
+    <ul class="tabs tab-demo-active z-depth-1">
+      <li class="tab col s3"><a class="white-text light-blue darken-1 waves-effect waves-light" ng-click="camp.overviewClicked()"><i class="mdi-action-perm-identity"></i> Overview</a>
+      </li>
+      <li class="tab col s3"><a class="white-text blue darken-1 waves-effect waves-light active" ng-click="camp.liveClicked()"><i class="mdi-action-settings-display"></i> Live</a>
+      </li>
 
+    </ul>
+  </div>
+</div>
+
+
+<!--
+Overview Start Here!
+-->
+<div ng-show="camp.overview">
 <div id="input-select" class="row">
   <div style="margin-top: 25px;" class="col s12 m12 l12">
     <div class="input-field col s12">
       <label>Please select your channel</label>
       <select ng-change="camp.onSelectChannel()" material-select watch ng-model="camp.selectChannelValue">
-        <option value="" disabled selected>Choose your option</option>
+        <option value="" disabled>Choose your option</option>
         <option value="all">Follow All Channels</option>
         <option ng-repeat="allchannels in camp.allChannelsInArray" value="{{allchannels._id}}">{{allchannels.name}}
         </option>
@@ -86,7 +102,6 @@
   </div>
 
 </div>
-
 
 <div id="breadcrumbs-wrapper" ng-if="camp.selectChannelValue!='all'">
   <div class="col s12">
@@ -135,7 +150,7 @@
         <div class="row">
           <div class="col s12 m6 l3">
             <div class="card">
-              <div class="card-content  green white-text">
+              <div class="card-content  light-blue white-text">
                 <p class="card-stats-title"><i class="mdi-social-group-add"></i> Followers</p>
                 <h4 ng-if="camp.followers_count" class="card-stats-number">{{camp.followers_count}}</h4>
                 <h4 ng-if="!camp.followers_count" class="card-stats-number">
@@ -150,8 +165,8 @@
           </div>
           <div class="col s12 m6 l3">
             <div class="card">
-              <div class="card-content pink lighten-1 white-text">
-                <p class="card-stats-title"><i class="material-icons">trending_flat</i> Following</p>
+              <div class="card-content light-blue lighten-1 white-text">
+                <p class="card-stats-title"><i class="fa fa-users" aria-hidden="true"></i> Following</p>
                 <h4 ng-if="camp.friends_count" class="card-stats-number">{{camp.friends_count}}</h4>
                 <h4 ng-if="!camp.friends_count" class="card-stats-number">
                   <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
@@ -167,7 +182,7 @@
           </div>
           <div class="col s12 m6 l3">
             <div class="card">
-              <div class="card-content blue-grey white-text">
+              <div class="card-content light-blue white-text">
                 <p class="card-stats-title"><i class="mdi-action-favorite"></i> Favourites</p>
                 <h4 ng-if="camp.favourites_count" class="card-stats-number">{{camp.favourites_count}}</h4>
                 <h4 ng-if="!camp.favourites_count" class="card-stats-number">
@@ -182,7 +197,7 @@
           </div>
           <div class="col s12 m6 l3">
             <div class="card">
-              <div class="card-content purple white-text">
+              <div class="card-content light-blue white-text">
                 <p class="card-stats-title"><i class="mdi-action-perm-identity"></i>Tweets</p>
                 <h4 ng-if="camp.statuses_count" class="card-stats-number">{{camp.statuses_count}}</h4>
                 <h4 ng-if="!camp.statuses_count" class="card-stats-number">
@@ -205,40 +220,44 @@
 
 </div>
 
-
-
-
-
 <div class="row" ng-if="camp.selectChannelValue=='all'">
-  <div class="col s12 m12 l12">
+  <div ng-if="camp.reputationBySentimentAll.length > 1 " class="col s12 m12 l12">
     <pie-chart height="400" my-id="Replies" my-table="{{camp.reputationBySentimentAll}}"
                title="Tweets Analytics"></pie-chart>
-
+  </div>
+  <div ng-if="camp.reputationBySentimentAll.length <= 1 " class="col s12 m12 l12">
+    <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
   </div>
 </div>
 
-
-
-
-
-
-
 <div class="row" ng-if="camp.selectChannelValue!='all'">
   <div class="col s12 m12 l12">
+
     <div class="col s6 m6 l6">
       <div class="row">
-        <div class="col s12 m12 l12">
+        <div ng-if="camp.reputationBySentimentReply.length > 1 " class="col s12 m12 l12">
           <pie-chart height="400" my-id="Replies" my-table="{{camp.reputationBySentimentReply}}"
                      title="Tweets Replies Analytics"></pie-chart>
+        </div>
+
+        <div style="position: relative;" class="col s12 m12 l12">
+          <div class="progress light-blue">
+            <div class="indeterminate hide red"></div>
+          </div>
+        </div>
+
+
+        <div ng-if="camp.reputationBySentimentReply.length <= 1 " class="col s12 m12 l12">
+          <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
         </div>
         <div class="input-filed col s12s m12 l12">
           <div class="col s6">
           <label>Most Positive Tweet In Replies To Your Tweets</label>
-          <div id="topPositiveReply"></div>
+          <div id="topPositiveReply{{camp.pn}}"></div>
           </div>
           <div class="col s6">
           <label>Most Negative Tweet In Replies To Your Tweets</label>
-            <div id="topNegativeReply"></div>
+            <div id="topNegativeReply{{camp.pn}}"></div>
           </div>
         </div>
       </div>
@@ -246,18 +265,31 @@
 
     <div class="col s6 m6 l6">
       <div class="row">
-        <div class="col s12 m12 l12">
+        <div  ng-if="camp.reputationBySentimentMention.length > 1 " class="col s12 m12 l12">
           <pie-chart height="400" my-id="Mentions" my-table="{{camp.reputationBySentimentMention}}"
                      title="Tweets Mentions Analytics"></pie-chart>
         </div>
+        <div ng-if="camp.reputationBySentimentMention.length <= 1 " class="col s12 m12 l12">
+          <pie-chart height="400" my-id="Mentions" my-table="{{camp.reputationBySentimentMention}}"
+                     title="Tweets Mentions Analytics"></pie-chart>
+        </div>
+
+
+        <div style="position: relative;" class="col s12 m12 l12">
+          <div class="progress light-blue">
+            <div class="indeterminate hide red"></div>
+          </div>
+        </div>
+
+
         <div class="input-filed col s12s m12 l12">
           <div class="col s6">
           <label>Most Positive Tweet In Where You Are Mentioned</label>
-            <div id="topPositiveMention"></div>
+            <div id="topPositiveMention{{camp.pn}}"></div>
           </div>
           <div class="col s6">
           <label>Most Negative Tweet In Where You Are Mentioned</label>
-            <div id="topNegativeMention"></div>
+            <div id="topNegativeMention{{camp.pn}}"></div>
           </div>
         </div>
       </div>
@@ -265,6 +297,20 @@
   </div>
 </div>
 
+
+  <div class="container ">
+    <div class="center">
+  <ul class="pagination">
+    <li class="disabled"><a ><i class="material-icons">chevron_left</i></a></li>
+    <li  class="active paginationC" id="p1"><a ng-click="camp.topPageClicked(1)">1</a></li>
+    <li class="waves-effect paginationC" id="p2"><a ng-click="camp.topPageClicked(2)">2</a></li>
+    <li class="waves-effect paginationC" id="p3"><a ng-click="camp.topPageClicked(3)">3</a></li>
+    <li class="waves-effect paginationC" id="p4"><a ng-click="camp.topPageClicked(4)">4</a></li>
+    <li class="waves-effect paginationC" id="p5"><a ng-click="camp.topPageClicked(5)">5</a></li>
+    <li class="disabled" id="p6"><a ><i class="material-icons">chevron_right</i></a></li>
+  </ul>
+    </div>
+  </div>
 <div class="row" ng-if="camp.selectChannelValue!='all'">
   <div class="col s6 m6 l6">
     <ul id="issues-collection" class="collection">
@@ -322,8 +368,6 @@
   </div>
 </div>
 
-
-
 <div class="row" ng-if="camp.selectChannelValue=='all'">
 
   <div class="col s12 m12 l12">
@@ -354,8 +398,32 @@
     </ul>
   </div>
 </div>
+</div>
 
 
+
+
+
+<!--
+Live Start Here!
+-->
+<div ng-show="camp.live">
+
+  <div class="row">
+    <div class="input-field col offset-s2 s8">
+      <i class="mdi-action-account-circle prefix"></i>
+      <input id="icon_prefix3" type="text" class="validate">
+      <label for="icon_prefix3">Tweet Url</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col offset-s9">
+  <button class="btn waves-effect waves-light " type="submit" name="action">Scan
+    <i class="mdi-content-send right"></i>
+  </button>
+    </div>
+  </div>
+</div>
 
 
 

@@ -40,6 +40,9 @@
     this.getReputationByReaction = getReputationByReactionFN;
     this.getReputationByShares = getReputationBySharesFN;
     this.getReputationByTypes = getReputationByTypesFN;
+    this.getTopPosts = getTopPostsFN;
+    this.getReputationByPost = getReputationByPostFN;
+    this.getLongUrl = getLongUrlFN;
 
 
     function statusChangeCallbackFN(response) {
@@ -352,19 +355,44 @@
     }
 
     function getReputationBySentimentalFN(filter) {
-      return FacebookFactory.reputationBySentimental(filter).$promise;
+      var LocalFilter = $.extend({}, filter);
+      LocalFilter.type = "sentimental";
+      return FacebookFactory.reputationBySentimental(LocalFilter).$promise;
     }
 
     function getReputationByReactionFN(filter) {
-      return FacebookFactory.reputationByReactions(filter).$promise;
+      var LocalFilter = $.extend({}, filter);
+      LocalFilter.type = "reactions";
+      return FacebookFactory.reputationBySentimental(LocalFilter).$promise;
     }
 
     function getReputationBySharesFN(filter) {
-      return FacebookFactory.reputationByShares(filter).$promise;
+      var LocalFilter = $.extend({}, filter);
+      LocalFilter.type = "shares";
+      return FacebookFactory.reputationBySentimental(LocalFilter).$promise;
     }
 
     function getReputationByTypesFN(filter) {
-      return FacebookFactory.reputationByTypes(filter).$promise;
+      var LocalFilter = $.extend({}, filter);
+      LocalFilter.type = "postsType";
+
+      return FacebookFactory.reputationBySentimental(LocalFilter).$promise;
+    }
+
+    function getTopPostsFN(filter, sort) {
+      var LocalFilter = $.extend({}, filter);
+      LocalFilter.type = "topPosts";
+      LocalFilter.sort = sort;
+      return FacebookFactory.reputationBySentimental(LocalFilter).$promise;
+    }
+
+
+    function getReputationByPostFN(query) {
+      return FacebookFactory.postReputation(query).$promise;
+    }
+
+    function getLongUrlFN(url) {
+      return FacebookFactory.longUrl({url: url}).$promise;
     }
 
   }

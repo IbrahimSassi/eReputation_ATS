@@ -3,9 +3,10 @@
  */
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+mongoose.Promise = global.Promise;
+
 
 //Version 1 TODO To Improve
-
 var options = {
   discriminatorKey: 'source'
 };
@@ -114,8 +115,8 @@ var tweetsProvider = new Schema({
     type: String
   },
   place: {
-  type: String
-},
+    type: String
+  },
   counts: {
     type: Object
   }
@@ -163,8 +164,21 @@ module.exports.getDataProvidersByConditionSortedModel = function (query, options
     .exec(callback);
 };
 
-module.exports.updateDataProviderModel = function (id, update, options, callback) {
-  DataProvider.findByIdAndUpdate(id, update, options, callback)
+module.exports.updateDataProviderModel = function (id, update, callback) {
+
+  DataProvider.findById(id, function (err, item) {
+    if (!item) {
+      console.log("errorrr",err)
+      return next(new Error('Could not load item'));
+    }
+    else {
+      item = update;
+      item.save(callback);
+    }
+  });
+
+
+
 };
 
 /**** start donut chart ****/
@@ -174,6 +188,7 @@ module.exports.avgPositivitybyCompaign = function (id) {
     DataProvider.aggregate([
       {
         $match: {
+
           campaignId: {'$eq': id}
         }
       },
@@ -191,12 +206,13 @@ module.exports.avgPositivitybyCompaign = function (id) {
 module.exports.avgNegativitybyCompaign = function (id) {
   return new Promise(function (resolve, reject) {
     DataProvider.aggregate([
-        {
-          $match: {
-            campaignId: {'$eq': id}
-          }
-        },
-      { $group: { _id: "campaignId", negative_score: { $avg: "$contentScore.negativity" } } }], function (err, docs) {
+      {
+        $match: {
+
+          campaignId: {'$eq': id}
+        }
+      },
+      {$group: {_id: "campaignId", negative_score: {$avg: "$contentScore.negativity"}}}], function (err, docs) {
       if (err) {
         reject(err);
       }
@@ -209,6 +225,7 @@ module.exports.avgNeutralitybyCompaign = function (id) {
     DataProvider.aggregate([
       {
         $match: {
+
           campaignId: {'$eq': id}
         }
       },
@@ -225,131 +242,241 @@ module.exports.avgNeutralitybyCompaign = function (id) {
 /****start stacked bar *****/
 
 module.exports.SentimentalAnalysisByCompaignForToday = function (id) {
-    return new Promise(function (resolve, reject) {
-        DataProvider.aggregate([
-            {
-                $match: {$and: [{dateContent: {'$gte':new Date(new Date().setDate(new Date().getDate()-1)), '$lt': new Date()}},{channelId:{'$eq':id}}]}
-            },
-            { $group: { _id: "$channelId", neutral_score: { $avg: "$contentScore.neutral"},negative_score: { $avg: "$contentScore.negativity"},positive_score: { $avg: "$contentScore.positivity"}} }], function (err, docs) {
-            if (err) {
-                reject(err);
+  return new Promise(function (resolve, reject) {
+    DataProvider.aggregate([
+      {
+        $match: {
+          $and: [{
+            dateContent: {
+              '$gte': new Date(new Date().setDate(new Date().getDate() - 1)),
+              '$lt': new Date()
             }
-            resolve(docs);
-        });
+          }, {channelId: {'$eq': id}}]
+        }
+      },
+      {
+        $group: {
+          _id: "$channelId",
+          neutral_score: {$avg: "$contentScore.neutral"},
+          negative_score: {$avg: "$contentScore.negativity"},
+          positive_score: {$avg: "$contentScore.positivity"}
+        }
+      }], function (err, docs) {
+      if (err) {
+        reject(err);
+      }
+      resolve(docs);
     });
+  });
 };
 
 module.exports.SentimentalAnalysisByCompaignForYesterday = function (id) {
-    return new Promise(function (resolve, reject) {
-        DataProvider.aggregate([
-            {
-                $match: {$and: [{dateContent: {'$gte':new Date(new Date().setDate(new Date().getDate()-2)), '$lt': new Date(new Date().setDate(new Date().getDate()-1))}},{channelId:{'$eq':id}}]}
-            },
-            { $group: { _id: "$channelId", neutral_score: { $avg: "$contentScore.neutral"},negative_score: { $avg: "$contentScore.negativity"},positive_score: { $avg: "$contentScore.positivity"}} }], function (err, docs) {
-            if (err) {
-                reject(err);
+  return new Promise(function (resolve, reject) {
+    DataProvider.aggregate([
+      {
+        $match: {
+          $and: [{
+            dateContent: {
+              '$gte': new Date(new Date().setDate(new Date().getDate() - 2)),
+              '$lt': new Date(new Date().setDate(new Date().getDate() - 1))
             }
-            resolve(docs);
-        });
+          }, {channelId: {'$eq': id}}]
+        }
+      },
+      {
+        $group: {
+          _id: "$channelId",
+          neutral_score: {$avg: "$contentScore.neutral"},
+          negative_score: {$avg: "$contentScore.negativity"},
+          positive_score: {$avg: "$contentScore.positivity"}
+        }
+      }], function (err, docs) {
+      if (err) {
+        reject(err);
+      }
+      resolve(docs);
     });
+  });
 };
 
 module.exports.SentimentalAnalysisByCompaignFortwodaysago = function (id) {
-    return new Promise(function (resolve, reject) {
-        DataProvider.aggregate([
-            {
-                $match: {$and: [{dateContent: {'$gte':new Date(new Date().setDate(new Date().getDate()-3)), '$lt': new Date(new Date().setDate(new Date().getDate()-2))}},{channelId:{'$eq':id}}]}
-            },
-            { $group: { _id: "$channelId", neutral_score: { $avg: "$contentScore.neutral"},negative_score: { $avg: "$contentScore.negativity"},positive_score: { $avg: "$contentScore.positivity"}} }], function (err, docs) {
-            if (err) {
-                reject(err);
+  return new Promise(function (resolve, reject) {
+    DataProvider.aggregate([
+      {
+        $match: {
+          $and: [{
+            dateContent: {
+              '$gte': new Date(new Date().setDate(new Date().getDate() - 3)),
+              '$lt': new Date(new Date().setDate(new Date().getDate() - 2))
             }
-            resolve(docs);
-        });
+          }, {channelId: {'$eq': id}}]
+        }
+      },
+      {
+        $group: {
+          _id: "$channelId",
+          neutral_score: {$avg: "$contentScore.neutral"},
+          negative_score: {$avg: "$contentScore.negativity"},
+          positive_score: {$avg: "$contentScore.positivity"}
+        }
+      }], function (err, docs) {
+      if (err) {
+        reject(err);
+      }
+      resolve(docs);
     });
+  });
 };
 /****end stacked bar *****/
 
 /****start comboChart****/
-module.exports.SentimentalAnalysisByCompaignandChannelFortoday = function (idcam,idch) {
-    return new Promise(function (resolve, reject) {
-        DataProvider.aggregate([
-            {
-                $match: {$and: [{dateContent: {'$gte':new Date(new Date().setDate(new Date().getDate()-1)), '$lt': new Date(new Date().setDate(new Date().getDate()+1))}},{campaignId:{'$eq':idcam}},{channelId:{'$eq':idch}}]}
-            },
-            { $group: { _id: "$channelId", neutral_score: { $avg: "$contentScore.neutral"},negative_score: { $avg: "$contentScore.negativity"},positive_score: { $avg: "$contentScore.positivity"}} }], function (err, docs) {
-            if (err) {
-                reject(err);
+module.exports.SentimentalAnalysisByCompaignandChannelFortoday = function (idcam, idch) {
+  return new Promise(function (resolve, reject) {
+    DataProvider.aggregate([
+      {
+        $match: {
+          $and: [{
+            dateContent: {
+              '$gte': new Date(new Date().setDate(new Date().getDate() - 1)),
+              '$lt': new Date(new Date().setDate(new Date().getDate() + 1))
             }
-            resolve(docs);
-        });
+          }, {campaignId: {'$eq': idcam}}, {channelId: {'$eq': idch}}]
+        }
+      },
+      {
+        $group: {
+          _id: "$channelId",
+          neutral_score: {$avg: "$contentScore.neutral"},
+          negative_score: {$avg: "$contentScore.negativity"},
+          positive_score: {$avg: "$contentScore.positivity"}
+        }
+      }], function (err, docs) {
+      if (err) {
+        reject(err);
+      }
+      resolve(docs);
     });
+  });
 };
 
-module.exports.SentimentalAnalysisByCompaignandChannelForyesday = function (idcam,idch) {
-    return new Promise(function (resolve, reject) {
-        DataProvider.aggregate([
-            {
-                $match: {$and: [{dateContent: {'$gte':new Date(new Date().setDate(new Date().getDate()-2)), '$lt': new Date()}},{campaignId:{'$eq':idcam}},{channelId:{'$eq':idch}}]}
-            },
-            { $group: { _id: "$channelId", neutral_score: { $avg: "$contentScore.neutral"},negative_score: { $avg: "$contentScore.negativity"},positive_score: { $avg: "$contentScore.positivity"}} }], function (err, docs) {
-            if (err) {
-                reject(err);
+module.exports.SentimentalAnalysisByCompaignandChannelForyesday = function (idcam, idch) {
+  return new Promise(function (resolve, reject) {
+    DataProvider.aggregate([
+      {
+        $match: {
+          $and: [{
+            dateContent: {
+              '$gte': new Date(new Date().setDate(new Date().getDate() - 2)),
+              '$lt': new Date()
             }
-            resolve(docs);
-        });
+          }, {campaignId: {'$eq': idcam}}, {channelId: {'$eq': idch}}]
+        }
+      },
+      {
+        $group: {
+          _id: "$channelId",
+          neutral_score: {$avg: "$contentScore.neutral"},
+          negative_score: {$avg: "$contentScore.negativity"},
+          positive_score: {$avg: "$contentScore.positivity"}
+        }
+      }], function (err, docs) {
+      if (err) {
+        reject(err);
+      }
+      resolve(docs);
     });
-};
-
-
-
-module.exports.SentimentalAnalysisByCompaignandChannelForoldday = function (idcam,idch) {
-    return new Promise(function (resolve, reject) {
-        DataProvider.aggregate([
-            {
-                $match: {$and: [{dateContent: {'$gte':new Date(new Date().setDate(new Date().getDate()-3)), '$lt': new Date(new Date().setDate(new Date().getDate()-1))}},{campaignId:{'$eq':idcam}},{channelId:{'$eq':idch}}]}
-            },
-            { $group: { _id: "$channelId", neutral_score: { $avg: "$contentScore.neutral"},negative_score: { $avg: "$contentScore.negativity"},positive_score: { $avg: "$contentScore.positivity"}} }], function (err, docs) {
-            if (err) {
-                reject(err);
-            }
-            resolve(docs);
-        });
-    });
-};
-
-
-module.exports.SentimentalAnalysisByCompaignandChannelForooldday = function (idcam,idch) {
-    return new Promise(function (resolve, reject) {
-        DataProvider.aggregate([
-            {
-                $match: {$and: [{dateContent: {'$gte':new Date(new Date().setDate(new Date().getDate()-4)), '$lt': new Date(new Date().setDate(new Date().getDate()-2))}},{campaignId:{'$eq':idcam}},{channelId:{'$eq':idch}}]}
-            },
-            { $group: { _id: "$channelId", neutral_score: { $avg: "$contentScore.neutral"},negative_score: { $avg: "$contentScore.negativity"},positive_score: { $avg: "$contentScore.positivity"}} }], function (err, docs) {
-            if (err) {
-                reject(err);
-            }
-            resolve(docs);
-        });
-    });
+  });
 };
 
 
-module.exports.SentimentalAnalysisByCompaignandChannelForoooldday = function (idcam,idch) {
-    return new Promise(function (resolve, reject) {
-        DataProvider.aggregate([
-            {
-                $match: {$and: [{dateContent: {'$gte':new Date(new Date().setDate(new Date().getDate()-5)), '$lt': new Date(new Date().setDate(new Date().getDate()-3))}},{campaignId:{'$eq':idcam}},{channelId:{'$eq':idch}}]}
-            },
-            { $group: { _id: "$channelId", neutral_score: { $avg: "$contentScore.neutral"},negative_score: { $avg: "$contentScore.negativity"},positive_score: { $avg: "$contentScore.positivity"}} }], function (err, docs) {
-            if (err) {
-                reject(err);
+module.exports.SentimentalAnalysisByCompaignandChannelForoldday = function (idcam, idch) {
+  return new Promise(function (resolve, reject) {
+    DataProvider.aggregate([
+      {
+        $match: {
+          $and: [{
+            dateContent: {
+              '$gte': new Date(new Date().setDate(new Date().getDate() - 3)),
+              '$lt': new Date(new Date().setDate(new Date().getDate() - 1))
             }
-            resolve(docs);
-        });
+          }, {campaignId: {'$eq': idcam}}, {channelId: {'$eq': idch}}]
+        }
+      },
+      {
+        $group: {
+          _id: "$channelId",
+          neutral_score: {$avg: "$contentScore.neutral"},
+          negative_score: {$avg: "$contentScore.negativity"},
+          positive_score: {$avg: "$contentScore.positivity"}
+        }
+      }], function (err, docs) {
+      if (err) {
+        reject(err);
+      }
+      resolve(docs);
     });
+  });
 };
 
+
+module.exports.SentimentalAnalysisByCompaignandChannelForooldday = function (idcam, idch) {
+  return new Promise(function (resolve, reject) {
+    DataProvider.aggregate([
+      {
+        $match: {
+          $and: [{
+            dateContent: {
+              '$gte': new Date(new Date().setDate(new Date().getDate() - 4)),
+              '$lt': new Date(new Date().setDate(new Date().getDate() - 2))
+            }
+          }, {campaignId: {'$eq': idcam}}, {channelId: {'$eq': idch}}]
+        }
+      },
+      {
+        $group: {
+          _id: "$channelId",
+          neutral_score: {$avg: "$contentScore.neutral"},
+          negative_score: {$avg: "$contentScore.negativity"},
+          positive_score: {$avg: "$contentScore.positivity"}
+        }
+      }], function (err, docs) {
+      if (err) {
+        reject(err);
+      }
+      resolve(docs);
+    });
+  });
+};
+
+
+module.exports.SentimentalAnalysisByCompaignandChannelForoooldday = function (idcam, idch) {
+  return new Promise(function (resolve, reject) {
+    DataProvider.aggregate([
+      {
+        $match: {
+          $and: [{
+            dateContent: {
+              '$gte': new Date(new Date().setDate(new Date().getDate() - 5)),
+              '$lt': new Date(new Date().setDate(new Date().getDate() - 3))
+            }
+          }, {campaignId: {'$eq': idcam}}, {channelId: {'$eq': idch}}]
+        }
+      },
+      {
+        $group: {
+          _id: "$channelId",
+          neutral_score: {$avg: "$contentScore.neutral"},
+          negative_score: {$avg: "$contentScore.negativity"},
+          positive_score: {$avg: "$contentScore.positivity"}
+        }
+      }], function (err, docs) {
+      if (err) {
+        reject(err);
+      }
+      resolve(docs);
+    });
+  });
+};
 
 
 /****end comboChart****/
@@ -386,37 +513,41 @@ module.exports.updateScore = function (dataProviderToUpdate, score) {
 module.exports.getDataProviderMatchedAndGrouped = function (matchObject, groupObject, sortObject, unwindObj) {
   return new Promise(function (resolve, reject) {
 
+    console.log("data model")
+    console.log(unwindObj)
     var query = [
       {$match: matchObject},
-      {$unwind: unwindObj},
       {$group: groupObject},
-      {$sort: sortObject}
+      {$sort: sortObject},
+      {$unwind: unwindObj},
+
     ];
 
-
-    if (matchObject === undefined)
-      query[0].$match = undefined
-    if (unwindObj === undefined)
-      query[1].$unwind = undefined
-    if (groupObject === undefined)
-      query[2].$group = undefined
-    if (sortObject === undefined)
-      query[3].$sort = undefined
-
-
-    query.forEach(function (obj, index) {
-      if (Object.values(obj)[0] == undefined)
-        query.splice(index, 1)
-    });
+    if (matchObject == undefined)
+      query[0] = undefined;
+    if (groupObject == undefined)
+      query[1] = undefined;
+    if (unwindObj == undefined)
+      query[3] = undefined;
+    if (sortObject == undefined)
+      query[2] = undefined;
 
 
-    console.log(query)
+    console.log("before",query)
+    for (var i = 0; i < query.length; i++) {
+      if (query[i] == undefined) {
+        query.splice(i, 1);
+        i = 0;
+      }
+    }
+    console.log("after",query[1].$group)
+
+
 
     DataProvider.aggregate(
       query
       , function (err, docs) {
         if (err) {
-          // console.log(err)
           reject(err);
         }
         resolve(docs);
@@ -424,7 +555,6 @@ module.exports.getDataProviderMatchedAndGrouped = function (matchObject, groupOb
   });
 
 };
-
 
 
 

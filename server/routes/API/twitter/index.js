@@ -9,6 +9,8 @@ var dataProvider = require('../../../models/dataProvider/dataProvider.model');
 var TwitterAPIQueries = require('./twitterAPIQuries');
 var TwitterStatsGenerator = require('./twitterStatsGenerator');
 
+var authenticate = require('../../users/middleware/authenticate').authenticate
+
 
 var client = new TwitterStream({
   consumer_key: config.twitter.consumer_key,
@@ -17,6 +19,12 @@ var client = new TwitterStream({
   access_token_secret: config.twitter.access_token_secret
 });
 
+
+router.get('/testget',authenticate,function (req,res) {
+
+  res.json({"a":1})
+
+});
 
 
 router.post('/test',function (req,res) {
@@ -45,6 +53,8 @@ router.post('/getTopHashtags',TwitterStatsGenerator.getTopHashtags);
 
 
 router.post('/getTwitterSentimentalForAll',TwitterStatsGenerator.getTwitterSentimentalForAll);
+
+router.post('/analyseLiveTweet',TwitterAPIQueries.analyseLiveTweet);
 
 //Test
 router.post('/UserRepForChannelTest',TwitterAPIQueries.SaveDatToTwitterProviderForRepliesToUserForChannelTest);

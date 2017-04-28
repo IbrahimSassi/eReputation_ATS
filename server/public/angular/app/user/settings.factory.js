@@ -8,10 +8,10 @@
     .module('ATSApp.profile')
     .factory('SettingsFactory', SettingsFactory);
 
-  SettingsFactory.$inject = ['$resource'];
+  SettingsFactory.$inject = ['$resource','$window'];
 
   /* @ngInject */
-  function SettingsFactory($resource) {
+  function SettingsFactory($resource,$window) {
 
     /** Change The Link To your Rest URL From the JAVA EE APP*/
     return $resource('/users/settings',
@@ -22,7 +22,10 @@
         'update': {method: 'PUT'},
         'basicinformationIndiv': {
           url: '/users/settings/basicinformationIndiv',
-          method: 'POST',
+          method: 'PUT',
+          headers: {
+            Authorization: 'Bearer ' + $window.localStorage['mean-token']
+          },
           params: {
             activeEmail: '@activeEmail',
             email: '@email',
@@ -34,7 +37,7 @@
         },
         'basicinformationBuss': {
           url: '/users/settings/basicinformationBuss/:activeEmail/:email/:businessName/:businessType/:employeesNumber/:phoneNumber',
-          method: 'POST',
+          method: 'PUT',
           params: {
             activeEmail: '@activeEmail',
             email: '@email',
@@ -46,22 +49,14 @@
           }
         },
         'additionalInformation': {
-          url: '/users/settings/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:about/:birthday/:country',
-          method: 'POST',
-          params: {
-            activeEmail: '@activeEmail',
-            profilePicture: '@profilePicture',
-            coverPicture: '@coverPicture',
-            about: '@about',
-            birthday: '@birthday',
-            country: '@country',
+          url: '/users/settings/additionalInformation',
+          method: 'PUT',
 
-          },
 
         },
         'changepaswword': {
           url: '/users/settings/changepassword/:activeEmail/:oldpassword/:newpassword',
-          method: 'POST',
+          method: 'PUT',
           params: {
             activeEmail: '@activeEmail',
             oldpassword: '@oldpassword',

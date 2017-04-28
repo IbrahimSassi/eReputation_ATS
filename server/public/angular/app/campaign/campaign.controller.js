@@ -17,55 +17,69 @@
   /**End My Module Init**/
 
   /**Injection**/
-  config.$inject = ['$stateProvider', '$qProvider','$urlRouterProvider'];
+  config.$inject = ['$stateProvider', '$qProvider', '$urlRouterProvider'];
 
-  CampaignCtrl.$inject = ['CampaignService', 'ChannelService', 'FacebookService', 'angularLoad', '$scope', '$rootScope', '$stateParams'];
+  CampaignCtrl.$inject = ['CampaignService', 'ChannelService', 'FacebookService', 'angularLoad', '$scope', '$rootScope', '$stateParams', '$state'];
   /**End Of Injection**/
 
 
   /** Route Config **/
-  function config($stateProvider, $qProvider,$urlRouterProvider) {
+  function config($stateProvider, $qProvider, $urlRouterProvider) {
 
     $stateProvider
       .state('campaignCreate', {
         url: '/campaign/create',
-        templateUrl: 'angular/app/campaign/views/edit.campaign.view.html',
-        controller: 'CampaignCtrl as camp'
+        templateUrl: 'angular/app/campaign/views/create.campaign.view.html',
+        controller: 'CampaignCtrl as camp',
+        authenticate: true,
       })
       .state('campaignEdit', {
         url: '/campaign/edit/:idCampaign',
-        templateUrl: 'angular/app/campaign/views/create.campaign.view.html',
-        controller: 'CampaignCtrl as camp'
+        templateUrl: 'angular/app/campaign/views/edit.campaign.view.html',
+        controller: 'CampaignCtrl as camp',
+        authenticate: true,
       })
       .state('campaignList', {
         url: '/campaign/list',
         templateUrl: 'angular/app/campaign/views/list.campaign.view.html',
-        controller: 'CampaignCtrl as camp'
+        controller: 'CampaignCtrl as camp',
+        authenticate: true,
       })
       .state('campaignDetail', {
         url: '/campaign/detail/:idCampaign',
         templateUrl: 'angular/app/campaign/views/detail.campaign.view.html',
-        controller: 'CampaignCtrl as camp'
+        controller: 'CampaignCtrl as camp',
+        authenticate: true,
       })
       .state('campaignDetail.campaignSentimentAnalysis', {
         url: '/sentiment',
         templateUrl: 'angular/app/campaign/views/analysis/sentiment.campaign.view.html',
         controller: 'CampaignSentimentCtrl as camp',
+        authenticate: true,
       })
       .state('campaignDetail.campaignFbAnalysis', {
         url: '/facebook',
+        templateUrl: 'angular/app/campaign/views/analysis/fb.campaign.global.view.html',
+        controller: 'CampaignFbCtrl as vm',
+        authenticate: true,
+      })
+      .state('campaignDetail.campaignFbAnalysis.overview', {
+        url: '/overview',
         templateUrl: 'angular/app/campaign/views/analysis/fb.campaign.view.html',
         controller: 'CampaignFbCtrl as vm',
+        authenticate: true,
       })
       .state('campaignDetail.campaignTwitterAnalysis', {
         url: '/twitter',
         templateUrl: 'angular/app/campaign/views/analysis/tw.campaign.view.html',
         controller: 'CampaignTwCtrl as camp',
+        authenticate: true,
       })
       .state('campaignDetail.campaignWebAnalysis', {
         url: '/web',
         templateUrl: 'angular/app/campaign/views/analysis/web.campaign.view.html',
         controller: 'CampaignWebCtrl as camp',
+        authenticate: true,
       })
     ;
 
@@ -78,37 +92,37 @@
   /**End of Route Config**/
 
 
-  function CampaignCtrl(CampaignService, ChannelService, FacebookService, angularLoad, $scope, $rootScope, $stateParams) {
+  function CampaignCtrl(CampaignService, ChannelService, FacebookService, angularLoad, $scope, $rootScope, $stateParams, $state) {
 
     /**Scope Replace**/
     var vm = this;
     vm.idCampaign = $stateParams.idCampaign;
-    $scope.allChannelTodisplay = [];
-
+    $scope.allChannelTodisplay=[];
+    $scope.allChannelEditTodisplay=[];
     /**
      * View Detail Methods
      */
 
 
 
-    vm.displayEdit=function (id) {
+    vm.displayEdit = function (id) {
       CampaignService.getCampaignById(id).then(function (data) {
-        console.info("cammpaign : ",data[0]);
+
+        console.info("cammpaign : ", data[0]);
         $scope.campaignToEdit = data[0];
-        // data[0].channels.forEach(function (channelPartial) {
-        //   ChannelService.getChannelByID(channelPartial.channelId).then(function (channel) {
-        //     $scope.allChannelTodisplay.push(channel);
-        //   });
-        // });
+        data[0].channels.forEach(function (channelPartial) {
+          ChannelService.getChannelByID(channelPartial.channelId).then(function (channel) {
+            $scope.allChannelEditTodisplay.push(channel);
+          });
+        });
       }).catch(function (err) {
         console.error(err);
       });
 
     };
 
-    if(vm.idCampaign)
-    {
-      vm.displayEdit(vm.idCampaign);
+    if (vm.idCampaign && $state.includes('campaignEdit')) {
+       vm.displayEdit(vm.idCampaign);
     }
 
     vm.getCampaignDetail = function (id) {
@@ -136,15 +150,36 @@
 
     vm.getAllCampaigns = function () {
       CampaignService.getAllCampaigns().then(function (data) {
-        vm.campaigns = data;
+        vm.campaigns = [];
+        data.forEach(function (campaign) {
+          if ($rootScope.currentUser._id === campaign.userId) {
+            vm.campaigns.push(campaign);
+          }
+
+        })
+
         //$scope.myId='58d5810511260618b0196d4e';
-        console.log(vm.campaigns);
+        // console.log(vm.campaigns);
       });
     };
 
     vm.deleteCampaign = function (campaign) {
-      CampaignService.deleteCampaign(campaign);
-      vm.getAllCampaigns();
+
+      swal({
+          title: "Are you sure?",
+          text: "You will not be able to recover this Campaign !",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Yes, delete it!",
+          closeOnConfirm: false
+        },
+        function () {
+          CampaignService.deleteCampaign(campaign);
+          vm.getAllCampaigns();
+          swal("Deleted!", "Your Campaign has been deleted.", "success");
+        });
+
 
     };
 
@@ -197,6 +232,11 @@
       console.info($scope.keywords);
     };
 
+    vm.removeChannelsFromAdd = function (index) {
+      $scope.channelsId.splice(index, 1);
+      console.info($scope.channelsId);
+    };
+
 
     /**
      * addCampaign
@@ -226,7 +266,23 @@
 
       CampaignService.addCampaign(campaign).then(function (data) {
         console.log("Campaign Added");
+        swal({
+            title: "Good job!",
+            text: "Campaign Created !",
+            type: "success",
+          },
+          function () {
+            $state.go("campaignList");
+          });
         console.log(data);
+      }).catch(function (err) {
+
+        swal({
+          title: "Problem !",
+          text: "Campaign NOT Created ! \n  please verify entries ...",
+          type: "warning",
+        });
+
       });
 
 
@@ -308,11 +364,11 @@
 
     /** Scripts Loading first Refresh **/
     // angularLoad.loadScript('angular/app/assets/js/charts/ggleloader.js').then(function () {
-    //   angularLoad.loadScript('angular/app/assets/js/charts/chartTest.js').then(function () {
-    //
-    //   }).catch(function () {
-    //     console.log('err script 1');
-    //   });
+    //   // angularLoad.loadScript('angular/app/assets/js/charts/chartTest.js').then(function () {
+    //   //
+    //   // }).catch(function () {
+    //   //   console.log('err script 1');
+    //   // });
     // }).catch(function () {
     //   console.log('err script 1');
     // });

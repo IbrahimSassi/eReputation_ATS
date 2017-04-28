@@ -9,11 +9,13 @@ var crypto = require('crypto');
 var randomstring = require("randomstring");
 var fs = require('fs');
 
+var authenticate = require('../users/middleware/authenticate').authenticate
+
 router.get('/a', function (req, res, next) {
   res.json({"a": 1})
 });
 
-router.post('/basicinformationIndiv', function (req, res, next) {
+router.put('/basicinformationIndiv',authenticate, function (req, res, next) {
 
   if (req.query.activeEmail && req.query.email && req.query.firstName && req.query.lastName && req.query.username && req.query.phoneNumber) {
     var activeEmail = req.query.activeEmail;
@@ -56,7 +58,7 @@ router.post('/basicinformationIndiv', function (req, res, next) {
 
 });
 
-router.post('/basicinformationBuss/:activeEmail/:email/:businessName/:businessType/:employeesNumber/:phoneNumber', function (req, res, next) {
+router.put('/basicinformationBuss/:activeEmail/:email/:businessName/:businessType/:employeesNumber/:phoneNumber', function (req, res, next) {
   if (req.params.activeEmail && req.params.email && req.params.businessName && req.params.businessType && req.params.employeesNumber && req.params.phoneNumber) {
     var activeEmail = req.params.activeEmail;
     var email = req.params.email;
@@ -91,26 +93,40 @@ router.post('/basicinformationBuss/:activeEmail/:email/:businessName/:businessTy
   }
 });
 
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
+
+router.post('/profile', upload.single('avatar'), function (req, res, next) {
+  console.log("dkhal haha")
+
+  console.log("dkhal haha",req.file )
+
+  // req.body will hold the text fields, if there were any
+})
+
+router.put('/additionalInformation', function (req, res, next) {
+  //console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+
+ // console.log("Profile: ",req.params.profilePicture);
 
 
-router.post('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:about/:birthday/:country', function (req, res, next) {
-  console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 
-  console.log("Profile: ",req.params.profilePicture);
 
-  if (req.params.activeEmail && req.params.profilePicture && req.params.coverPicture && req.params.about && req.params.birthday && req.params.country) {
-    var activeEmail = req.params.activeEmail;
-    var profilePicture = req.params.profilePicture;
-    var coverPicture = req.params.coverPicture;
-    var about = req.params.about;
-    var birthday = req.params.birthday;
-    var country = req.params.country;
+  if (req.body.activeEmail && req.body.about && req.body.birthday && req.body.country) {
+
+    var activeEmail = req.body.activeEmail;
+    var profilePicture = req.body.profilePicture;
+    var coverPicture = req.body.coverPicture;
+    var about = req.body.about;
+    var birthday = req.body.birthday;
+    var country = req.body.country;
     var profilePictureName = randomstring.generate(12);
     var coverPictureName = randomstring.generate(12);
     //*
     var profilePictureBase64 = profilePicture;
     var coverPictureBase64 = coverPicture;
-
+    if (req.body.profilePicture !="" && req.body.coverPicture !="")
+    {
     fs.writeFile(__dirname + "/../../public/uploads/images/"+profilePictureName+".png", profilePictureBase64, 'base64', function(err) {
       if (err) console.log(err);
     });
@@ -118,7 +134,6 @@ router.post('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:
     fs.writeFile(__dirname + "/../../public/uploads/images/"+coverPictureName+".jpg", coverPictureBase64, 'base64', function(err) {
       if (err) console.log(err);
     });
-
     //*
 
     User.findOneAndUpdate({email: activeEmail}, {
@@ -137,11 +152,37 @@ router.post('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:
 
         var token;
         token = userFound.generateJwt();
-        console.log('token: ' + userFound);
+        //console.log('token: ' + userFound);
         res.status(200).json({"token": token});
       });
     });
     res.status(200)
+    }
+else
+    {
+
+      User.findOneAndUpdate({email: activeEmail}, {
+        $set: {
+          about: about,
+          birthday: birthday,
+          country: country
+        }
+      }, function (err, user) {
+        if (err) return res.status(401);
+
+        User.findOne({ email: user.email, username:user.username }, function (err, userFound) {
+          if (err) return res.status(401);
+
+          var token;
+          token = userFound.generateJwt();
+          //console.log('token: ' + userFound);
+          res.status(200).json({"token": token});
+        });
+      });
+      res.status(200)
+
+
+    }
   }
   else {
     res.status(400).json({"error": "All field are required!"})
@@ -149,23 +190,23 @@ router.post('/additionalInformation/:activeEmail/:profilePicture/:coverPicture/:
 });
 
 
-router.post('/changepassword/:activeEmail/:oldpassword/:newpassword', function (req, res, next) {
+router.put('/changepassword/:activeEmail/:oldpassword/:newpassword', function (req, res, next) {
   if (req.params.activeEmail && req.params.oldpassword && req.params.newpassword) {
     var activeEmail = req.params.activeEmail;
     var oldpassword = req.params.oldpassword;
     var newpassword = req.params.newpassword;
-    console.log("Passed: ", activeEmail, oldpassword, newpassword)
+    //console.log("Passed: ", activeEmail, oldpassword, newpassword)
 
     User.findOne({email: activeEmail}, function (err, user) {
 
       if (err) {
-        console.log('err ', err);
+       // console.log('err ', err);
         return res.status(500).json(err);
       }
 
       // Return if password is wrong
       if (!user.validPassword(oldpassword)) {
-        console.log('notvalid ');
+        //console.log('notvalid ');
         return res.status(401).json({"err": "Password is wrong"});
       }
 

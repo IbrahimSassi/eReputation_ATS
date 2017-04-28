@@ -45,14 +45,13 @@
     vm.echec = false;
 
     var token = $stateParams.token
-    console.log(token)
     EmailConfirmService.CheckToken(token).then(successCallback, errorCallback);
 
     function successCallback(response) {
-      console.log("succ", response)
       vm.success = true;
       UserService.saveToken(response.token);
-      $window.location.href = '/admin';
+      setTimeout(function(){ $window.location.href = '/admin'; }, 1000);
+
 
     }
 

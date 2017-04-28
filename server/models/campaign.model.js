@@ -15,6 +15,10 @@ var campaignSchema = new Schema({
     type: String,
     required: true
   },
+  dateCreation: {
+    type: Date,
+    default: new Date()
+  },
   url: {
     type: String,
     required: true
@@ -64,10 +68,10 @@ var campaignSchema = new Schema({
         type: Date,
         default: Date.now
       },
-      state:{
+      state: {
         type: String,
-        enum:['active','inactive'],
-        default:'active'
+        enum: ['active', 'inactive'],
+        default: 'active'
       }
     }
   ],
@@ -92,6 +96,35 @@ var myCampaign = module.exports = mongoose.model('campaigns', campaignSchema);
 module.exports.findAllCampaigns = function () {
   return new Promise(function (resolve, reject) {
     myCampaign.find({}, function (err, docs) {
+      if (err) {
+        reject(err);
+      }
+      resolve(docs);
+    });
+  });
+};
+
+//Find all new created campaigns (last day)
+module.exports.findAllNewCreatedCampaigns = function () {
+  var today = new Date(new Date().setDate(new Date().getDate() - 1));
+  today.setHours(23);
+  today.setMinutes(59);
+  today.setSeconds(59);
+  today.setMilliseconds(999)
+
+  var yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+  yesterday.setHours(00);
+  yesterday.setMinutes(00);
+  yesterday.setSeconds(00);
+  yesterday.setMilliseconds(000)
+  console.log("yesterday: ", yesterday, "today: ", today)
+  return new Promise(function (resolve, reject) {
+    myCampaign.find({
+      dateCreation: {
+        $lt: today,
+        $gte: yesterday
+      }
+    }, function (err, docs) {
       if (err) {
         reject(err);
       }
@@ -245,3 +278,16 @@ module.exports.updateKeywordsByIdFromCampaign = function (campaignId, keywordId,
 
   });
 };
+
+
+// Added By Ibrahim
+module.exports.getCampaignsByQuery = function (query) {
+  return new Promise(function (resolve, reject) {
+    myCampaign.find(query, function (err, docs) {
+      if (err) {
+        reject(err);
+      }
+      resolve(docs);
+    })
+  })
+}

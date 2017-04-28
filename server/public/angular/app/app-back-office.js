@@ -18,14 +18,53 @@ angular.module('ATSApp', [
 ])
   .config(['$urlRouterProvider',
     function ($urlRouterProvider) {
-      $urlRouterProvider.otherwise('/campaign/list');
+      $urlRouterProvider.otherwise('/profile');
 
 
     }])
-  .run(function ($rootScope, $state,$location, ProfileService,$window) {
+  .run(function ($rootScope, $state,$location, ProfileService,CampaignService,$window) {
+
     $rootScope.currentUser = ProfileService.currentUser();
 
+    $rootScope.disabled = $rootScope.currentUser.state =='INACTIVE' ? true:false;
+    /***
+     *
+     */
+
+    CampaignService.getAllCampaigns().then(function (data) {
+      var allMainCampaigns=[];
+      data.forEach(function (campaign,index) {
+        if($rootScope.currentUser._id===campaign.userId)
+        {
+          allMainCampaigns.push(campaign);
+        }
+
+        if(index==data.length-1)
+        {
+          $rootScope.currentUser.numberOfCampaigns =allMainCampaigns.length;
+          $rootScope.currentUser.lastOneCreated =  allMainCampaigns[allMainCampaigns.length-1].dateCreation;
+        }
+
+      })
+
+    });
+
+
+    /**
+     *
+     *
+     */
+
+
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+
+     if ($window.location.href == '/' && !ProfileService.isLoggedIn())
+
+      {
+        $window.location.href = '/';
+
+      }
+
 
       if (toState.authenticate && !ProfileService.isLoggedIn()){
         // User isn’t authenticated
@@ -45,25 +84,13 @@ angular.module('ATSApp', [
 
 
 
-
-
-
-
     $rootScope.logOut = function()
     {
       ProfileService.logout();
       $window.location.href = '/#!/login';
     }
 
-    $rootScope.goToProfile  = function()
-    {
-      $state.go('profile')
-    }
 
-    $rootScope.goToSettings  = function()
-    {
-      $state.go('settings')
-    }
 
 
     if (ProfileService.isLoggedIn()) {

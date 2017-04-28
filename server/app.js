@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
+var compression = require('compression');
 
 var admin = require('./routes/admin');
 var index = require('./routes/index');
@@ -31,30 +32,37 @@ var campaign = require('./routes/API/campaign')
 var ejs = require('ejs');
 
 var app = express();
-
-
+//Running Twitter Scrapping Cron
+//var twitterCron = require('./routes/API/twitter/twitterCron');
+//twitterCron.run();
+//End of running Twitter Scrapping Cron
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
 app.engine('html', ejs.renderFile);
 
 //MongoDB Connection
-var mongoose   = require('mongoose');
-mongoose.connect('mongodb://bro:brobro0055@ds157469.mlab.com:57469/ats-digital',{
-  server: { socketOptions: { connectTimeoutMS: 9879978979 }}
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://bro:brobro0055@ds157469.mlab.com:57469/ats-digital', {
+  server: {
+    socketOptions: {
+      socketTimeoutMS: 0,
+      connectTimeoutMS: 9879978979
+    }
+  }
 });
-// mongoose.connect('mongodb://localhost:27017/ats-digital-local');
+ // mongoose.connect('mongodb://localhost:27017/ats-digital-local');
 
 //Adding passport require
 require('./config/passport');
 app.use(passport.initialize());
-
-
+app.use(bodyParser.json({limit: '100mb'}));
+app.use(compression());
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

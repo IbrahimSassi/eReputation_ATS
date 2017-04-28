@@ -91,7 +91,37 @@ router.post('/topic', function (req, result, next) {
     });
 
   }).catch(function (err) {
-    console.error(err);
+    myRequest({
+      url: 'http://apidemo.theysay.io/api/v1/topic',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: '{"text": "' + req.body.text + '", "level": "sentence"}'
+    }, function (error, response, body) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(response.statusCode, body);
+
+        console.log( JSON.parse(body));
+
+
+        var x =JSON.parse(body)[0].scores.length ;
+        //RESPONSE
+        for (var i =0 ; i< x ; i++)
+        {
+          console.log(i)
+          tab.push({
+            topic : (JSON.parse(body)[0].scores[i].label),
+            confidence : (JSON.parse(body)[0].scores[i].confidence)
+          });
+          console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh/n", JSON.parse(body)[0].scores[i].label);
+        }
+        result.json(tab);
+
+      }
+    });
   });
 
 

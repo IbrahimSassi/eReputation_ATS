@@ -5,39 +5,40 @@
 var config = require('../../../../config/facebook.config');
 var request = require('request');
 var async = require('async');
-var urls = [];
 var DataProvider = require('../../../../models/dataProvider/dataProvider.model');
 var moment = require("moment");
+var utils = require('../../helpers/utils.helper');
+var _urls = [];
 
 
-module.exports.transformPostsData = function (req, res, next) {
-  urls = [];
+module.exports = {
+  transformPostsData: transformPostsData,
+  transformCommentsData: transformCommentsData,
+  getComments: getComments,
+  extendToken: extendToken
+};
 
-  var channelPromise = new Promise(function (resolve, reject) {
-    request(config.host + "/api/channels/" + req.body.channelId, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        var channel = JSON.parse(body);
-        console.log()
-        resolve(channel.url.split("/"));
-      }
-      else {
-        reject(error);
-      }
-    })
-  });
+function transformPostsData(req, res, next) {
+  _urls = [];
+
+  var channelPromise = getChannelSelected(req.body.channelId);
 
   channelPromise.then(function (channel) {
 
-    console.log("channel[3]",channel[3])
-    var page_id = channel[3];
+
+    var since = moment(req.body.since).format("DD-MM-YYYY");
+    var until = moment(req.body.until).format("DD-MM-YYYY");
+    console.log("Channel Selected :", channel);
+    var page_id = channel;
     var node = page_id + "/posts";
     var fields = "?fields=message,link,created_time,type,name,id" +
-      // ",comments" +
       ",shares" +
       ",reactions" +
       ".limit(0).summary(true)" +
       "&since=" + encodeURIComponent(req.body.since) +
       "&until=" + encodeURIComponent(req.body.until) +
+      // "&since=" + new Date(req.body.since).getTime() /1000 + //Unix timestamps
+      // "&until=" + new Date(req.body.until).getTime() /1000 +
       "&limit=100";
 
     var parameters = "&access_token=" + config.ACCESS_TOKEN;
@@ -47,70 +48,72 @@ module.exports.transformPostsData = function (req, res, next) {
     var posts;
     var promiseNext;
     var promisePrevious;
-    var promiseReactions;
     var AllPosts = [];
     //Getting First Page
-    request(url, function (error, response, body) {
+    getData(url).then(function (data) {
 
-      if (!error && response.statusCode == 200) {
+      _urls.push(url);
 
-        posts = JSON.parse(body);
+      //Getting All Nexr and previous paging _urls
+      promiseNext = handleFbPaging(data, "next");
+      promisePrevious = handleFbPaging(data, "previous");
+      Promise.all([promisePrevious, promiseNext]).then(function () {
+        //Requesting Data for all those urls
+        async.eachSeries(_urls, function iteratee(url, callback) {
+          getData(url).then(function (posts) {
+            async.eachSeries(posts.data, function iteratee(story, callback) {
 
-        console.log(url)
-        urls.push(url);
-        //Getting All Nexr and previous paging urls
-        promiseNext = handleData(posts, "next");
-        promisePrevious = handleData(posts, "previous");
-        Promise.all([promisePrevious, promiseNext]).then(function (tab) {
-
-          //Requesting Data for all those urls
-          async.eachSeries(tab[0], function iteratee(listItem, callback) {
-            request(listItem, function (error, response, body) {
-              var localData = JSON.parse(body).data;
-              localData.forEach(function (story) {
-
-                // Getting Reactions For each story
-                promiseReactions = new Promise(function (resolveReaction, reject) {
-                  request(config.host + '/api/facebook/posts/' + story.id + '/reactions', function (reactionError, reactionResponse, reactionBody) {
-                    if (!reactionError && reactionResponse.statusCode == 200) {
-                      var reactions = JSON.parse(reactionBody);
-                      resolveReaction(reactions);
-                    }
-                  });
-                });
-
-                //Transform Data to match with our DB
-                story = transformPosts(story, req.body.channelId, req.body.campaignId);
-                promiseReactions.then(function (data) {
+              // Getting Reactions For each story
+              var reactionsUrl = config.host + '/api/facebook/posts/' + story.id + '/reactions';
+              getData(reactionsUrl)
+                .then(function (reactions) {
+                  return reactions;
+                })
+                .then(function (reaction) {
+                  //Transform Data to match with our DB
+                  story = transformPosts(story, req.body.channelId, req.body.campaignId);
                   story.reactions = [];
                   data.date = new Date();
-                  story.reactions.push(data);
+                  story.reactions.push(reaction);
                   AllPosts.push(story);
+                  return true;
+
+                })
+                .then(function () {
+                  callback()
+                })
+                .catch(function (err) {
+                  console.log(err)
                 });
-              });
-              callback(error, body);
+
+
+            }, function done() {
+              callback();
             });
-          }, function done() {
+
+
+          });
+
+        }, function done() {
+          setTimeout(function () {
             req.posts = AllPosts;
             next();
-          });
+          }, 1000)
         });
-      }
-    });
+      });
 
+    });
 
 
   });
 
 };
 
-
-module.exports.transformCommentsData = function (req, res, next) {
+function transformCommentsData(req, res, next) {
 
   var since = moment(req.body.since).format();
   var until = moment(req.body.until).format();
-  var comments = [];
-  urls = [];
+  var _comments = [];
   DataProvider.getDataProvidersByConditionModel(
     {
       source: 'FacebookPostsProvider',
@@ -119,114 +122,188 @@ module.exports.transformCommentsData = function (req, res, next) {
       dateContent: {$gte: since, $lte: until}
     }, function (err, posts) {
 
+      //For Each post we will request its comments
       async.eachSeries(posts, function iteratee(post, callback) {
-        // var newFacebookPost = new DataProvider.FacebookPostsProvider(post);
 
-        var url = config.host + "/api/facebook/posts/" + post.id + "/comments";
-        var promise = new Promise(function (resolve, reject) {
-          request(url, function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-              var initialComments = JSON.parse(body);
-              if (initialComments.paging && initialComments.paging.next) {
-                // console.log("initialComments.data", initialComments.data)
-                urls.push(url)
-                var nextPromise = handleData(initialComments, 'next');
+        //Tab to store all urls to get comments for one post (Pagination Urls)
+        _urls = [];
 
-                nextPromise.then(function (data) {
-                  resolve(urls)
+        var post_id = post.id;
+        var fields = "/comments?limit=100";
+        var parameters = "&access_token=" + config.ACCESS_TOKEN;
+        var url = config.base + post_id + fields + parameters;
+        _urls.push(url);
+
+        //Get Comment For The First Comment
+        getData(url)
+          .then(function (initialComments) {
+
+            //Start Handling Paging to get all comments urls request
+            handleFbPaging(initialComments, 'next', post.id)
+              .then(function () {
+
+                //All Urls are here, we will loop through them to get all comments and store them in our _comments
+                console.log("Urls For Posts " + post.id, _urls);
+                async.eachSeries(_urls, function iteratee(u, cb) {
+                  getData(u)
+                    .then(function (comments) {
+
+                      comments.data.forEach(function (comment) {
+                        _comments.push(transformComments(comment, req.body.channelId, post.id, req.body.campaignId));
+                      });
+
+                    })
+                    .then(function () {
+                      cb();
+                    })
+                }, function done() {
+                  callback();
+
                 });
 
-              }
-              else {
-                for (var i = 0; i < initialComments.data.length; i++)
-                  comments.push(transformComments(initialComments.data[i], req.body.channelId, post.id, req.body.campaignId))
-                resolve(body)
+              })
+              .catch(function (err) {
+                console.log("next promise error", err)
+              });
 
-              }
-            }
-            else {
-              reject(error)
-            }
+
+          })
+          .catch(function (err) {
+            console.log("Error When Getting Comments From Post " + post.id, err);
+            // reject(err)
           });
-
-        });
-
-        promise.then(function () {
-          callback();
-        })
 
 
       }, function done() {
-        console.log("urls", urls)
 
-        var getRestOfComments = new Promise(function (resolve, reject) {
-          urls.forEach(function (u) {
-            var postId = getPostId(u);
-            request(u, function (error, response, body) {
-              if (!error && response.statusCode == 200) {
-                var LocalBody = JSON.parse(body);
-                for (var i = 0; i < LocalBody.data.length; i++) {
-                  comments.push(transformComments(LocalBody.data[i], req.body.channelId, postId, req.body.campaignId));
-                }
-              }
-              else {
-                reject(error)
-              }
-            });
-          });
-          resolve(comments);
-
-        });
-        getRestOfComments.then(function (data) {
-          setTimeout(function () {
-            req.comments = comments;
-            next()
-          }, 1100)
-
-        });
-
-        // async.eachSeries(urls, function iteratee(u, callback) {
-        //   request(u, function (error, response, body) {
-        //     if (!error && response.statusCode == 200) {
-        //       var LocalBody = JSON.parse(body);
-        //       for (var i = 0; i < LocalBody.data.length; i++)
-        //         comments.push(LocalBody.data[i])
-        //     }
-        //   });
-        //   callback()
-        //
-        // }, function done() {
-        //   setTimeout(function () {
-        //     console.log(comments.length)
-        //     res.json(comments);
-        //   }, 1100)
-        // });
+        setTimeout(function () {
+          req.comments = _comments;
+          next()
+        }, 1100)
 
       });
     })
 
+};
+
+function getComments(req, res, next) {
+
+  utils.getFacebookLongUrl(req.body.url)
+    .then(function (post_id) {
+      console.log(post_id)
+      var fields = "/comments?limit=100";
+      var parameters = "&access_token=" + config.ACCESS_TOKEN;
+      var url = config.base + post_id + fields + parameters;
+
+      var _comments = [];
+      _urls = [];
+      _urls.push(url);
+      utils.getData(url)
+        .then(function (initialComments) {
+          handleFbPaging(initialComments, 'next', post_id)
+            .then(function () {
+
+              async.eachSeries(_urls, function iteratee(u, callback) {
+
+                getData(u)
+                  .then(function (comments) {
+
+                    comments.data.forEach(function (comment) {
+                      _comments.push(comment);
+                    });
+                    callback();
+
+                  })
+
+              }, function done() {
+                req.comments = _comments;
+                next()
+              })
+
+
+            })
+
+        })
+    })
+    .catch(function (err) {
+      console.log("error", err);
+      res.json(err);
+    });
+
 }
 
+function extendToken(req, res, next) {
 
-function handleData(data, direction) {
-  console.log("direction", direction)
-  return new Promise(function (resolve) {
+  var node = "oauth/access_token?" +
+    "client_id=" + config.APP_ID + "&" +
+    "client_secret=" + config.APP_SECRET + "&" +
+    "grant_type=fb_exchange_token&" +
+    "fb_exchange_token=" + req.params.token;
+
+  var url = config.base + node;
+
+  console.log("before **", req.params.token);
+
+  var promise = new Promise(function (resolve, reject) {
+    getData(url).then(function (data) {
+
+      var ExtendedToken = data.access_token;
+      resolve(ExtendedToken);
+      console.log("after **", ExtendedToken);
+
+    });
+  });
+
+  req.ExtendedToken = promise;
+  next();
+
+
+};
+
+
+function handleFbPaging(data, direction, postId) {
+  console.log("Gettin Data .. From " + postId, direction);
+  return new Promise(function (resolve, reject) {
     if (data.paging && data.paging[direction]) {
-      urls.push(data.paging[direction]);
-      getData(data.paging[direction]).then(function (newData) {
-        handleData(newData, direction).then(function (data) {
-          resolve(urls)
-        })
+      _urls.push(data.paging[direction]);
+      getData(data.paging[direction])
+        .then(function (newData) {
+          handleFbPaging(newData, direction, postId)
+            .then(function () {
+              resolve(_urls)
+            }).catch(function () {
+            reject({error: 'error handling next paging'})
+
+          })
+        }).catch(function () {
+        reject({error: 'error handling next paging'})
+
       })
     }
     else {
-      resolve(urls)
+      console.log("Resolving Urls for post ", postId);
+      resolve(_urls)
     }
   })
 }
 
+function getChannelSelected(channelId) {
+  return new Promise(function (resolve, reject) {
+    request(config.host + "/api/channels/" + channelId, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        var channel = JSON.parse(body);
+        // console.log()
+        resolve(channel.url.split("/")[3]);
+      }
+      else {
+        reject(error);
+      }
+    })
+  });
+}
 
 function getData(url) {
+
   return new Promise(function (resolve, reject) {
     request(url, function (error, response, body) {
       if (!error && response.statusCode == 200) {
@@ -241,15 +318,17 @@ function getData(url) {
   })
 }
 
-
 function transformPosts(post, author, campaignId) {
+
   return {
     id: post.id,
-    content: post.message,
+    content: !post.message ? "" : utils.cleanText(post.message),
+    // content: !post.message ? "" : post.message.replace(/(\r\n|\n|\r)/gm, ""),
     dateContent: post.created_time,
     type: post.type,
     sourceLink: "https://www.facebook.com/" + post.id,
-    name: post.name,
+    name: !post.name ? "" : utils.cleanText(post.name),
+    // name: !post.name ? "" : post.name.replace(/(\r\n|\n|\r)/gm, ""),
     link: post.link,
     author: {
       name: author
@@ -264,8 +343,10 @@ function transformPosts(post, author, campaignId) {
 
 function transformComments(comment, channel, parent, campaign) {
   return {
+
     id: comment.id,
-    content: comment.message,
+    content: !comment.message ? "" : utils.cleanText(comment.message),
+    // content: !comment.message ? "" : comment.message.replace(/(\r\n|\n|\r)/gm, ""),
     dateContent: comment.created_time,
     author: {
       name: comment.from.name,
@@ -277,11 +358,11 @@ function transformComments(comment, channel, parent, campaign) {
   }
 
 }
-
-function getPostId(url) {
-  var parts = url.split('/');
-  if (url.indexOf('localhost') !== -1)
-    return parts[6];
-  else
-    return parts[4]
-}
+//
+// function getPostId(url) {
+//   var parts = url.split('/');
+//   if (url.indexOf('localhost') !== -1)
+//     return parts[6];
+//   else
+//     return parts[4]
+// }

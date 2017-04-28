@@ -5,22 +5,28 @@ var config = require('../../../config/facebook.config');
 var controller = require('./facebookDataProvider.controller');
 var DataProvider = require('../../../models/dataProvider/dataProvider.model');
 var async = require('async');
-
 var request = require('request');
+var utils = require('../helpers/utils.helper');
 
-module.exports.getToken = function (req, res, next) {
+
+module.exports = {
+  getToken: getToken,
+  getPostsByPage: getPostsByPage,
+  getReactionsByPost: getReactionsByPost,
+  pageInsights: pageInsights,
+  longUrl: longUrl
+};
+
+
+function getToken(req, res, next) {
   req.ExtendedToken.then(function (value) {
-    console.log("toooken", value);
+    console.log("token", value);
     res.json({longToken: value});
   })
 
 };
 
-
-module.exports.getPostsByPage = function (req, res, next) {
-
-  // var page_id = "mosaiquefm";
-  console.log("req.posts.length", req.posts.length)
+function getPostsByPage(req, res, next) {
 
 
   async.eachSeries(req.posts, function iteratee(post, callback) {
@@ -30,7 +36,7 @@ module.exports.getPostsByPage = function (req, res, next) {
       if (err)
         return res.status(500).send(err);
       else {
-        console.log('Success facebook posts saved saved', item.id);
+        console.log('Success facebook post saved', item.id);
       }
 
     });
@@ -42,25 +48,7 @@ module.exports.getPostsByPage = function (req, res, next) {
 
 };
 
-
-module.exports.getCommentsByPost = function (req, res, next) {
-
-  // var page_id = "mosaiquefm";
-  var page_id = req.params.id;
-  // var node =  "posts/";
-  var fields = "/comments?limit=100";
-  var parameters = "&access_token=" + config.ACCESS_TOKEN;
-  var url = config.base + page_id + fields + parameters;
-  // console.log(url);
-  request(url, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      res.json(JSON.parse(body));
-    }
-  })
-
-};
-
-module.exports.getReactionsByPost = function (req, res, next) {
+function getReactionsByPost(req, res, next) {
 
   var posts_id = req.params.id;
   var node = posts_id;
@@ -72,18 +60,20 @@ module.exports.getReactionsByPost = function (req, res, next) {
     "reactions.type(ANGRY).limit(0).summary(total_count).as(angry)";
   var parameters = "&access_token=" + config.ACCESS_TOKEN;
   var url = config.base + node + fields + parameters;
-  console.log(url);
+  // console.log(url);
   request(url, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       res.json(JSON.parse(body));
     }
-  })
+    else {
+      res.json(JSON.parse(error));
+    }
 
+  })
 
 };
 
-
-module.exports.pageInsights = function (req, res, next) {
+function pageInsights(req, res, next) {
 
   var page_id = req.params.id;
   var node = page_id;
@@ -104,10 +94,23 @@ module.exports.pageInsights = function (req, res, next) {
       // console.log(JSON.parse(body))
       res.json(JSON.parse(body));
     }
+    else {
+      res.json(error);
+    }
+
   });
 
-  // return req.pipe(request(url)).pipe(res);
 
 };
 
+function longUrl(req, res, next) {
 
+  utils.getFacebookLongUrl(req.body.url)
+    .then(function (newUrl) {
+      var url = "https://www.facebook.com/" + newUrl
+      res.json({longUrl: url});
+    })
+    .catch(function (err) {
+      res.json(err);
+    });
+}

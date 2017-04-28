@@ -18,6 +18,12 @@
         media="screen,projection">
 
   <link href="angular/app/assets/css/spinner.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <style>
+    a.disabled {
+      pointer-events: none;
+      cursor: default;
+    }
+  </style>
 </head>
 <body>
 <!-- Start Page Loading -->
@@ -36,7 +42,7 @@
       <div class="nav-wrapper">
         <ul class="left">
           <li>
-            <h1 class="logo-wrapper"><a href="admin.html" class="brand-logo darken-1"><img
+            <h1 class="logo-wrapper"><a ui-sref="campaignList" class="brand-logo darken-1"><img
               src="angular/app/assets/images/logo.png" alt="materialize logo"></a> <span
               class="logo-text">Materialize</span></h1>
           </li>
@@ -128,14 +134,14 @@
         <li class="user-details cyan darken-2">
           <div class="row">
             <div class="col col s4 m4 l4">
-              <img src="uploads/images/{{currentUser.profilePicture}}.png" alt=""
+              <img ng-src="uploads/images/{{currentUser.profilePicture}}.png" alt=""
                    class="circle responsive-img valign profile-image">
             </div>
             <div class="col col s8 m8 l8">
               <ul id="profile-dropdown" class="dropdown-content">
-                <li><a href="#" ng-click="goToProfile()"><i class="mdi-action-face-unlock"></i> Profile</a>
+                <li><a href="#" ui-sref="profile"><i class="mdi-action-face-unlock"></i> Profile</a>
                 </li>
-                <li><a href="#" ng-click="goToSettings()"><i class="mdi-action-settings"></i> Settings</a>
+                <li><a href="#" ui-sref="settings"><i class="mdi-action-settings"></i> Settings</a>
                 </li>
                 <li class="divider"></li>
                 </li>
@@ -157,64 +163,44 @@
             </div>
           </div>
         </li>
-        <li ui-sref-active="active" class="bold"><a ui-sref="dashboard" class="waves-effect waves-cyan"><i
+      <!--  <li ui-sref-active="active" class="bold"><a ui-sref="dashboard" class="waves-effect waves-cyan"><i
           class="mdi-action-dashboard"></i> Dashboard</a>
-        </li>
+        </li> -->
         <li class="no-padding">
           <ul class="collapsible collapsible-accordion">
-            <ul class="collapsible collapsible-accordion">
-              <li class="bold">
-                <a class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-track-changes"></i> Manage
-                  Campaign</a>
-                <div class="collapsible-body">
-                  <ul>
-                    <li ui-sref-active="active"><a ui-sref="campaignCreate">Create Campaign</a>
-                    </li>
-                    <li ui-sref-active="active"><a ui-sref="campaignList">Show Campaigns</a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-            </ul>
-
+            <li class="bold active">
+              <a class="collapsible-header waves-effect waves-cyan active"><i class="mdi-action-track-changes"></i>
+                Manage
+                Campaign</a>
+              <div class="collapsible-body">
+                <ul>
+                  <li ui-sref-active="active"><a ng-class="disabled?'disabled':''" ui-sref="campaignCreate">Create Campaign</a>
+                  </li>
+                  <li ui-sref-active="active"><a ng-class="disabled?'disabled':''" ui-sref="campaignList">Show Campaigns</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
           </ul>
         </li>
 
         <li class="no-padding">
           <ul class="collapsible collapsible-accordion">
-            <ul class="collapsible collapsible-accordion">
-              <li class="bold">
-                <a class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-track-changes"></i> Manage
-                  Channels</a>
-                <div class="collapsible-body">
-                  <ul>
-                    <li ui-sref-active="active"><a ui-sref="newChannel">Create Channel</a>
-                    </li>
-                    <li ui-sref-active="active"><a ui-sref="channels">Show Channels</a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-            </ul>
-
+            <li class="bold active">
+              <a class="collapsible-header waves-effect waves-cyan active"><i class="mdi-action-track-changes"></i>
+                Manage
+                Channels</a>
+              <div class="collapsible-body">
+                <ul>
+                  <li ui-sref-active="active"><a ng-class="disabled?'disabled':''" ui-sref="newChannel">Create Channel</a>
+                  </li>
+                  <li ui-sref-active="active"><a ng-class="disabled?'disabled':''" ui-sref="channels">Show Channels</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
           </ul>
-        </li>
 
-        <li class="no-padding">
-          <ul class="collapsible collapsible-accordion">
-            <ul class="collapsible collapsible-accordion">
-              <li class="bold">
-                <a class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-track-changes"></i> Facebook
-                </a>
-                <div class="collapsible-body">
-                  <ul>
-                    <li ui-sref-active="active"><a ui-sref="facebookOverview">Overview</a>
-                  </ul>
-                </div>
-              </li>
-            </ul>
-
-          </ul>
         </li>
 
 
@@ -483,13 +469,13 @@
 <script type="text/javascript" src="angular/app/assets/js/plugins/jquery-1.11.2.min.js"></script>
 <!--Best Script Loader Ever * -->
 <script src="angular/app/assets/js/scriptLoader.js"></script>
+<!--<script src="angular/app/assets/js/charts/ggleloader.js"></script>-->
 
 <script src="angular/app/bower_components/angular/angular.min.js"></script>
 <script src="angular/app/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="angular/app/bower_components/angular-resource/angular-resource.min.js"></script>
 <script src="angular/app/bower_components/angular-load/angular-load.min.js"></script>
 <script src="angular/app/bower_components/moment/min/moment.min.js"></script>
-<script src="angular/app/bower_components/alasql/dist/alasql.min.js"></script>
 <script type="text/javascript" src="angular/app/assets/js/plugins/sweetalert/sweetalert.min.js"></script>
 
 <!--<script src="angular/app/bower_components/angular-material/angular-material.min.js"></script>-->
@@ -546,8 +532,10 @@
 <!--Facebook Service-->
 <script src="angular/app/facebook/facebook.controller.js"></script>
 <script src="angular/app/facebook/controllers/facebookCommunity.controller.js"></script>
+<script src="angular/app/facebook/controllers/facebookSpecific.controller.js"></script>
 <script src="angular/app/facebook/facebook.factory.js"></script>
 <script src="angular/app/facebook/services/facebook.service.js"></script>
+<script src="angular/app/components/facebook/facebook.directive.js"></script>
 
 <!--Chart Component-->
 <script src="angular/app/components/charts/lineChartCurved/linechartCurved.directive.js"></script>
@@ -557,8 +545,6 @@
 <script src="angular/app/components/charts/lineChart/lineCharts.directive.js"></script>
 
 <script src="angular/app/components/colorPicker.service.js"></script>
-
-<script src="angular/app/assets/js/charts/ggleloader.js"></script>
 
 <!--User Profile-->
 <script src="angular/app/user/controllers/profile.controller.js"></script>
@@ -599,6 +585,7 @@
         src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 <!--custom-script.js - Add your own theme custom JS-->
 <script type="text/javascript" src="angular/app/assets/js/custom-script.js"></script>
+
 
 </body>
 </html>

@@ -10,23 +10,29 @@
     .config(config)
     .controller('FacebookController', FacebookControllerFN);
 
-  FacebookControllerFN.$inject = ['$scope', 'FacebookService', 'ChannelService', '$filter', '$rootScope'];
+  FacebookControllerFN.$inject = ['$scope', 'FacebookService', 'ChannelService', 'CampaignService', '$rootScope', '$stateParams'];
   config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 
   /* @ngInject */
   function config($stateProvider, $urlRouterProvider) {
     $stateProvider
-      .state('facebookOverview', {
-        url: '/facebook/overview',
+      .state('campaignDetail.campaignFbAnalysis.facebookOverview', {
+        url: '/myPages',
         templateUrl: 'angular/app/facebook/views/overview.view.html',
         controller: 'FacebookController as vm',
         cache: false
       })
-      .state('facebookCommunity', {
-        url: '/facebook/community',
+      .state('campaignDetail.campaignFbAnalysis.facebookCommunity', {
+        url: '/community',
         templateUrl: 'angular/app/facebook/views/facebookCommunity.view.html',
         controller: 'FacebookCommunityController as vm',
+        cache: false
+      })
+      .state('campaignDetail.campaignFbAnalysis.facebookSpecific', {
+        url: '/specific',
+        templateUrl: 'angular/app/facebook/views/facebookSpecific.view.html',
+        controller: 'FacebookSpecificController as vm',
         cache: false
       })
     // .state('page_stories_by_story_type', {
@@ -41,10 +47,12 @@
 
 
   /* @ngInject */
-  function FacebookControllerFN($scope, FacebookService, ChannelService, $filter, $rootScope) {
+  function FacebookControllerFN($scope, FacebookService, ChannelService, CampaignService, $rootScope, $stateParams) {
     var vm = this;
     vm.title = 'FacebookController';
     // vm.connectedUserId = "58d3dc815d391346a06f48c3";
+
+    vm.selectedCampaign = $stateParams.idCampaign; //TODO Change It Dynamic
     vm.connectedUserId = $rootScope.currentUser._id;
     vm.selectedChannel = {};
     vm.myChannels = [];
@@ -59,32 +67,18 @@
     vm.dataPageFansOnline = [];
     vm.labelsPageViews = [];
     vm.dataPageViews = [];
-
-    // vm.labels = ["January", "February", "March", "April", "May", "June", "July"];
-    // vm.data = [65, 59, 80, 81, 56, 55, 40];
+    vm.TotalStories = {};
     activate();
 
     ////////////////
 
     function activate() {
 
-      // var currentDate = moment();
-      // vm.until = currentDate.format();
-      // // vm.since = currentDate.format();
-      // vm.since = moment(currentDate).subtract(7, 'days').format();
 
       vm.since = moment().subtract(1, 'weeks');
       vm.until = moment();
 
-      // console.log(vm.since);
-      // console.log(vm.until);
-
-      ChannelService.getChannelsByUser(vm.connectedUserId).then(function (myChannels) {
-        vm.myChannels = $filter('filter')(myChannels, {type: 'facebook', personal: true});
-        console.log(vm.myChannels);
-        // vm.selectedChannel = vm.myChannels[0];
-
-      });
+      getSelectedCampaign();
 
 
       // initPageFansInsights();
@@ -92,10 +86,27 @@
 
     }
 
+    function getSelectedCampaign() {
+      vm.myChannels = [];
+      if (vm.selectedCampaign !== undefined) {
+        CampaignService.getCampaignById(vm.selectedCampaign).then(function (data) {
+          data[0].channels.forEach(function (channelPartial) {
+            ChannelService.getChannelByID(channelPartial.channelId).then(function (channel) {
+              if (channel.type == "facebook" && channel.personal)
+                vm.myChannels.push(channel);
+            })
+          });
+        })
+          .catch(function (err) {
+            console.error(err);
+          });
+      }
+
+    }
+
 
     vm.onChange = function () {
-      console.log("onChange", vm.since);
-      console.log("onChange", vm.until);
+
 
       if (new Date(vm.since) > new Date(vm.until)) {
         Materialize.toast("Until Date Must be greater than since", 3000, "rounded");
@@ -106,20 +117,23 @@
       }
 
       else {
-        initPageFansInsights();
-        initPageStorytellersByAgeGender();
-        initPageFansOnlinePerDayInsights();
-        initPositiveFeedbackInsights();
-        initNegativeFeedbackInsights();
-        initPageActionsPostReactions();
-        initPageViewsTotalInsights();
-        initPositiveFeedbackInsights();
-        initNegativeFeedbackInsights();
-        initPageStoriesByStoryType();
-
+        initChart();
 
       }
     };
+
+    function initChart() {
+      initPageFansInsights();
+      initPageStorytellersByAgeGender();
+      initPageFansOnlinePerDayInsights();
+      initPositiveFeedbackInsights();
+      initPageActionsPostReactions();
+      initPageViewsTotalInsights();
+      initPositiveFeedbackInsights();
+      initNegativeFeedbackInsights();
+      initPageStoriesByStoryType();
+
+    }
 
 
     vm.onSelect = function () {
@@ -127,23 +141,16 @@
         vm.selectedChannel = item;
         vm.labelsPageFans = [];
         vm.dataPageFans = [];
-        initPageFansInsights();
-        initPageStorytellersByAgeGender();
-        initPageFansOnlinePerDayInsights();
-        initPositiveFeedbackInsights();
-        initNegativeFeedbackInsights();
-        initPageActionsPostReactions();
-        initPageViewsTotalInsights();
-        initPositiveFeedbackInsights();
-        initNegativeFeedbackInsights();
-        initPageStoriesByStoryType();
-
+        initChart();
       });
 
     };
 
 
     function initPageStoriesByStoryType() {
+
+      vm.range = "Between " + moment(new Date(vm.since)).format("DD-MM-YYYY") + " and "
+        + moment(new Date(vm.until)).add(1, 'days').format("DD-MM-YYYY");
 
       vm.pageStories = []
       FacebookService.getPageStoriesByStoryType(
@@ -152,11 +159,33 @@
         moment(new Date(vm.since)).format("DD-MM-YYYY"),
         moment(new Date(vm.until)).add(1, 'days').format("DD-MM-YYYY")
       ).then(function (stories, err) {
-        vm.pageStories = stories.data[2].values;
+          vm.pageStories = stories.data[2].values;
 
-        console.log("vm.pageStories", vm.pageStories)
 
-      })
+          vm.TotalStories = {
+            "page_post": 0,
+            "other": 0,
+            "fan": 0,
+            "user_post": 0,
+            "checkin": 0,
+            "question": 0,
+            "coupon": 0,
+            "event": 0,
+            "mention": 0
+          };
+
+          for (var type in vm.TotalStories) {
+            vm.pageStories.forEach(function (story) {
+              for (var i in story.value) {
+                if (i == type)
+                  vm.TotalStories[type] += story.value[i]
+              }
+            })
+          }
+
+
+        }
+      )
 
 
     }
@@ -177,7 +206,7 @@
         }
 
         vm.pageStorytellers = insights1.data[0].values;
-        // console.log("insights1", vm.pageStorytellers);
+
 
       })
     }
@@ -185,7 +214,8 @@
 
     function initPageFansInsights() {
 
-
+      vm.dataPage = [];
+      vm.dataPage.push(['Date', 'Number Of Fans'])
       vm.labelsPageFans = [];
       vm.dataPageFans = [];
 
@@ -199,10 +229,18 @@
           Materialize.toast("There is no data in this range for Page Fans", 3000, "rounded");
           return;
         }
+        vm.totalFans = insights.data[0].values[insights.data[0].values.length - 1].value;
+        vm.totalFansPercent =
+          (( insights.data[0].values[insights.data[0].values.length - 1].value -
+          insights.data[0].values[insights.data[0].values.length - 2].value ) /
+          insights.data[0].values[insights.data[0].values.length - 2].value ) * 100;
+        vm.totalFansPercent = vm.totalFansPercent.toFixed(4);
+
 
         insights.data[0].values.forEach(function (fans) {
           vm.labelsPageFans.push(moment(fans.end_time).format("DD-MM-YYYY"));
           vm.dataPageFans.push(fans.value);
+          vm.dataPage.push([moment(fans.end_time).format("DD-MM-YYYY"), fans.value])
 
         });
 
@@ -210,6 +248,7 @@
       });
 
     }
+
 
     function initPageFansOnlinePerDayInsights() {
       vm.labelsPageFansOnline = [];
@@ -226,12 +265,9 @@
         }
 
         vm.PageFansOnlinePerDayInsights = PageFansOnlinePerDayInsights.data[0].values;
-        // console.log("vm.PageFansOnlinePerDayInsights", vm.PageFansOnlinePerDayInsights)
         vm.PageFansOnlinePerDayInsights.forEach(function (onlineFans) {
           vm.labelsPageFansOnline.push(moment(onlineFans.end_time).format("DD-MM-YYYY"));
           vm.dataPageFansOnline.push(onlineFans.value);
-          // console.log(vm.labelsPageFansOnline)
-          // console.log(vm.dataPageFansOnline)
 
         });
 
@@ -252,7 +288,6 @@
           Materialize.toast("There is no data in this range for positive feedback", 3000, "rounded");
           return;
         }
-        // console.log("positive feedback", insights)
         insights.data.forEach(function (obj) {
           if (obj.period == "days_28")
             vm.PostiveFeedback = obj.values;
@@ -268,7 +303,6 @@
             }
           }
         });
-        console.log("vm.totalPositiveFeedback", vm.totalPositiveFeedback)
       });
 
     }
@@ -300,8 +334,8 @@
             }
           }
         });
-        console.log("vm.totalNegativeFeedback", vm.totalNegativeFeedback)
       });
+
 
     }
 
@@ -360,7 +394,6 @@
         //     }
         //   }
         // });
-        // console.log("vm.totalNegativeFeedback",vm.totalNegativeFeedback)
       });
     }
 
@@ -378,7 +411,6 @@
           Materialize.toast("There is no data in this range for page views", 3000, "rounded");
           return;
         }
-        // console.log("initPageViewsTotalInsights", insights)
         insights.data.forEach(function (obj) {
           if (obj.period == "days_28")
             vm.PageViews = obj.values;
@@ -395,7 +427,10 @@
     }
 
 
+
+
   }
 
-})();
+})
+();
 

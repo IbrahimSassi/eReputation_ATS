@@ -80,8 +80,8 @@
     }
     vm.additionalInformation = {
       activeEmail: $rootScope.currentUser.email,
-      profilePicture: $rootScope.currentUser.profilePicture,
-      coverPicture:$rootScope.currentUser.coverPicture,
+      profilePicture: "",
+      coverPicture:"",
       birthday: "",
       about: $rootScope.currentUser.about,
       country: $rootScope.currentUser.country
@@ -92,9 +92,8 @@
       newpassword: "",
       newpasswordagain: ""
     }
-    vm.birthday = moment($rootScope.currentUser.birthday, 'DD-MM-YYYY')._i;
+    vm.birthday = moment($rootScope.currentUser.birthday).format('DD-MM-YYYY');
     //vm.birthdayInd = moment($rootScope.currentUser.birthday, 'DD-MM-YYYY')._i;
-    console.log(vm.birthday)
     vm.EditBasicInformationIndividual = function () {
       SettingsService
         .EditBasicInformationIndividual(vm.basicInformationIndiv)
@@ -102,7 +101,6 @@
 
 
       function successCallback(response) {
-        console.log("Succhhhh");
         swal("Profile Updated!", "Your settings was updating successfully!", "success");
         ProfileService.saveToken(response.token);
 
@@ -110,7 +108,6 @@
       }
 
       function errorCallback(error) {
-        console.log("Err");
         if (error.status == 400) {
           vm.basicIndiv = true;
         }
@@ -127,14 +124,12 @@
 
 
       function successCallback(response) {
-        console.log("Succ");
         vm.basicBuss = false;
         swal("Profile Updated!", "Your settings was updating successfully!", "success");
         ProfileService.saveToken(response.token);
       }
 
       function errorCallback(error) {
-        console.log("Err");
         if (error.status == 400) {
           vm.basicBuss = true;
 
@@ -145,14 +140,12 @@
     };
 //*************************************
     vm.EditAdditionalInformation = function () {
-      vm.additionalInformation.birthday = moment(vm.birthday, 'DD-MM-YYYY')._i;
+      vm.additionalInformation.birthday = moment(vm.birthday).format('DD-MM-YYYY');
       SettingsService
         .EditAdditionalInformation(vm.additionalInformation)
         .then(successCallback, errorCallback);
-console.log(vm.additionalInformation.profilePicture)
 
       function successCallback(response) {
-        console.log("Succ");
         vm.additBuss = false;
         vm.additIndiv = false;
         swal("Profile Updated!", "Your settings was updating successfully!", "success");
@@ -160,7 +153,6 @@ console.log(vm.additionalInformation.profilePicture)
       }
 
       function errorCallback(error) {
-        console.log("Err");
         vm.additBuss = true;
         vm.additIndiv = true;
         if (error.status == 400) {
@@ -174,7 +166,6 @@ console.log(vm.additionalInformation.profilePicture)
 
     vm.changePassword = function () {
 
-      console.log(vm.changePasswordAtt);
 
       SettingsService
         .changePassword(vm.changePasswordAtt)
@@ -188,7 +179,6 @@ console.log(vm.additionalInformation.profilePicture)
       }
 
       function errorCallback(error) {
-        console.log("Err");
         vm.passwordBuss = true;
         vm.passwordIndiv = true;
         if (error.status == 400) {
@@ -212,7 +202,6 @@ console.log(vm.additionalInformation.profilePicture)
 
         reader.onload = function(readerEvt) {
           var binaryString = readerEvt.target.result;
-          console.log('heyyyyy: ',btoa(binaryString))
           vm.additionalInformation.profilePicture = btoa(binaryString);
         };
 
@@ -230,7 +219,6 @@ console.log(vm.additionalInformation.profilePicture)
 
         reader.onload = function(readerEvt) {
           var binaryString = readerEvt.target.result;
-          console.log('heyyyyy: ',btoa(binaryString))
           vm.additionalInformation.coverPicture = btoa(binaryString);
         };
 
@@ -248,7 +236,6 @@ console.log(vm.additionalInformation.profilePicture)
 
         reader.onload = function(readerEvt) {
           var binaryString = readerEvt.target.result;
-          console.log('heyyyyy: ',btoa(binaryString))
           vm.additionalInformation.profilePicture = btoa(binaryString);
         };
 
@@ -265,7 +252,6 @@ console.log(vm.additionalInformation.profilePicture)
 
         reader.onload = function(readerEvt) {
           var binaryString = readerEvt.target.result;
-          console.log('heyyyyy: ',btoa(binaryString))
           vm.additionalInformation.coverPicture = btoa(binaryString);
         };
 

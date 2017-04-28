@@ -1,0 +1,96 @@
+<div class="col s12">
+  <h1>Specific</h1>
+  <div class="row">
+
+    <div class="col s12 m8 l8 push-l2 push-m2">
+      <div class="card hoverable grey lighten-5">
+        <div class="input-field col s12 m12 l12">
+          <input ng-model="vm.url" id="post_url" type="url" class="validate">
+          <label for="post_url">Paste your post url </label>
+        </div>
+        <div class="grey lighten-3">
+          <div class="row">
+            <div class="col s12 m12 l12 center">
+              <a ng-click="vm.pasteUrl($event)" style="margin-left: 10px" class="waves-effect left "><i
+                style="font-size: medium" class="mdi-content-content-paste black-text"></i></a>
+              <a ng-click="vm.getReputation()" class="btn-flat waves-effect right-align right">Send</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!--<div class="col s12 m8 l8 push-l2 push-m2" ng-if="vm.url">-->
+    <div class="col card grey lighten-5 s12 m12 l12" ng-if="vm.url">
+      <div class="col s12 m6 l6">
+        <fb app-id="583444071825924" link="{{vm.url}}"></fb>
+      </div>
+      <div>
+        <div ng-if="vm.display" class="col s12 m6 l6 center-align">
+          <div class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
+          This may take few seconds
+        </div>
+        <div ng-if="!vm.display && vm.mostNegativeComment && vm.mostPositiveComment" class="col s12 m6 l6">
+          <ul class="collapsible collapsible-accordion" data-collapsible="expandable">
+            <li>
+              <div class="collapsible-header green accent-3 white-text"><i class="mdi-image-exposure-plus-1"></i> Most
+                Positive Comment
+              </div>
+              <div class="collapsible-body green lighten-5">
+
+                <ul id="task-card" class="collection">
+
+                  <li class="collection-item dismissable">
+                    <span class="task-cat black darken-3 white-text">{{vm.mostPositiveComment.from.name }} :</span>
+
+                    <label>
+                      {{vm.mostPositiveComment.message }} <a href="#" class="secondary-content"><span
+                      class="ultra-small">
+                      {{vm.mostPositiveComment.created_time }}
+                    </span></a>
+                    </label>
+                    <br>
+                    <span class="task-cat red darken-3">{{vm.mostPositiveComment.score.negativity }}</span>
+                    <span class="task-cat green accent-3">{{vm.mostPositiveComment.score.positivity }}</span>
+                    <span class="task-cat yellow accent-2">{{vm.mostPositiveComment.score.neutral }}</span>
+                  </li>
+                </ul>
+
+
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header red white-text"><i class="mdi-image-exposure-minus-1"></i>
+                Most Negative Comment
+              </div>
+              <div class="collapsible-body red lighten-5 lighten-5">
+
+                <ul id="task-card" class="collection">
+
+                  <li class="collection-item dismissable">
+                    <span class="task-cat black darken-3 white-text">{{vm.mostNegativeComment.from.name }} :</span>
+                    <label>
+                      {{vm.mostNegativeComment.message }} <a href="#" class="secondary-content"><span
+                      class="ultra-small">
+                      {{vm.mostNegativeComment.created_time }}
+                    </span></a>
+                    </label>
+                    <br>
+                    <span class="task-cat red darken-3">{{vm.mostNegativeComment.score.negativity }}</span>
+                    <span class="task-cat green accent-3">{{vm.mostNegativeComment.score.positivity }}</span>
+                    <span class="task-cat yellow accent-2">{{vm.mostNegativeComment.score.neutral }}</span>
+                  </li>
+                </ul>
+
+
+              </div>
+            </li>
+          </ul>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+

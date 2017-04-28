@@ -1,17 +1,27 @@
 /**
  * Created by HP on 10/04/2017.
  */
+
+/**
+ * Imports
+ */
 var express = require('express');
 var router = express.Router();
 var DataProvider = require('../../../models/dataProvider/dataProvider.model');
 var CampaignModel = require('../../../models/campaign.model');
 var Channel = require('../../../models/channel/channel.model');
 var google = require('google');
-var myRequest = require('request');
-var scraper = require('../webScraping/scraper');
+var scraper = require('./scraper');
 var async = require('async');
 var alexaData = require('alexa-traffic-rank');
 
+/**
+ * end Imports
+ */
+
+/**
+ * Search For WebsitesProvider with chanelId & campaignId
+ */
 router.post('/', function (req, res, next) {
 
   var matchObject = {
@@ -25,7 +35,7 @@ router.post('/', function (req, res, next) {
 
 
   var groupObject = {
-     _id: { dateContent: {$substr: ["$dateContent", 0, 10]}},
+    _id: {dateContent: {$substr: ["$dateContent", 0, 10]}},
     neutral_score: {$avg: "$contentScore.neutral"},
     positive_score: {$avg: "$contentScore.positivity"},
     negative_score: {$avg: "$contentScore.negativity"}
@@ -36,7 +46,7 @@ router.post('/', function (req, res, next) {
     // delete groupObject._id.channelId;
   }
 
-  var sortObject = {$sort: {dateContent: -1}};
+  // var sortObject = {$sort: {dateContent: -1}};
   DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, undefined, undefined).then(function (data) {
     res.json(data);
   }).catch(function (err) {
@@ -45,11 +55,16 @@ router.post('/', function (req, res, next) {
 
 });
 
+/**
+ * END Search For WebsitesProvider with chanelId & campaignId
+ */
 
 
-
+/**
+ * Get All WebsitesProvider
+ */
 router.get('/', function (req, res, next) {
-  DataProvider.getDataProvidersByConditionModel({"source":"websitesProvider"},function (err, docs) {
+  DataProvider.getDataProvidersByConditionModel({"source": "websitesProvider"}, function (err, docs) {
     if (err) {
       return handleError(res, err);
     }
@@ -63,13 +78,24 @@ router.get('/', function (req, res, next) {
   });
 });
 
+/**
+ * END Get All WebsitesProvider
+ */
+
+/**
+ * Return ALEXA analysis
+ */
+
 router.get('/getAnalysis/:url', function (req, res, next) {
-  alexaData.AlexaWebData(req.params.url, function(error, result) {
-    result.websiteName=req.params.url;
+  alexaData.AlexaWebData(req.params.url, function (error, result) {
+    result.websiteName = req.params.url;
     res.json(result);
-  })
+  });
 });
 
+/**
+ * END Return ALEXA analysis
+ */
 router.get('/getData', function (req, result, next) {
   var websitesAndKeywords = [];
   CampaignModel.findAllCampaigns().then(function (campaigns) {
@@ -79,11 +105,9 @@ router.get('/getData', function (req, result, next) {
         channelPromise = new Promise(function (resolve, reject) {
           Channel.getChannelByIdModel(campaignChannel.channelId, function (err, channelById) {
             if (!channelById) {
-              console.log("nooo");
               resolve(channelById);
             }
             else {
-              console.log("heyy");
               if (channelById.type === "website") {
                 websitesAndKeywords.push({
                   "campaignId": campaign._id,
@@ -91,7 +115,6 @@ router.get('/getData', function (req, result, next) {
                   "url": channelById.url,
                   "keywords": campaign.keywords
                 });
-                console.log(websitesAndKeywords);
               }
               resolve(channelById);
             }
@@ -200,7 +223,7 @@ router.get('/getData', function (req, result, next) {
                   result.json(data);
                 });
               } else {
-               // result.json(allResult);
+                // result.json(allResult);
                 allResult.forEach(function (data) {
                   data.description = data.description.replace(/(\r\n|\n|\r)/gm, "");
                   var dataToSaveWebsites = {

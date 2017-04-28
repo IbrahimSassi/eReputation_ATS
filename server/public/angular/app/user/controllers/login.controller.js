@@ -57,22 +57,18 @@
     };
 
     vm.onSubmitLogin = function () {
-      console.log("clicked")
       UserService
         .login(vm.credentialsLogin)
         .then(successCallback, errorCallback);
 
 
       function successCallback(response) {
-        console.log("succ", response)
         vm.errorInvalid = false;
         UserService.saveToken(response.token);
         $window.location.href = '/admin';
       }
 
       function errorCallback(error) {
-        //alert(error.status)
-        console.log("error", error)
         if (error.status == 400) {
           vm.errorInactive = true;
         }

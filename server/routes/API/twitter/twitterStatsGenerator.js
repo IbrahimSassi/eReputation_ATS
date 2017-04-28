@@ -128,14 +128,14 @@ module.exports.getTwitterSentimentalForAll = function (req, res, next) {
 
 
 module.exports.getTopTweet = function (req, res, next) {
-
+console.log("PN: ",req.body.pn);
   var tweetType = req.body.tweetType;
   var score = req.body.score;
   var campaignId = req.body.campaignId;
   var channelId = req.body.channelId;
   var since = req.body.since;
   var until = req.body.until;
-
+  var resultNumber = req.body.pn;
   if (req.body.channelId == "all") {
     DataProvider.findOne({
        campaignId: campaignId, dateContent: {
@@ -149,14 +149,17 @@ module.exports.getTopTweet = function (req, res, next) {
   }
 
   if (score == "positive") {
-    console.log("ahaha")
     DataProvider.findOne({
       tweetType: tweetType, channelId: channelId, campaignId: campaignId, dateContent: {
         $gte: new Date(since),
         $lt: new Date(until)
       }
-    }).sort({'contentScore.positivity': -1}).then(function (doc, err) {
+    }).sort({'contentScore.positivity': -1}).skip(resultNumber-1).then(function (doc, err) {
       if (err) res.send(err)
+      console.log("*****************pos")
+      console.log(doc)
+      console.log("*****************endpos")
+
       res.json(doc)
     })
 
@@ -170,7 +173,7 @@ module.exports.getTopTweet = function (req, res, next) {
         $gte: new Date(since),
         $lt: new Date(until)
       }
-    }).sort({'contentScore.negativity': -1}).then(function (doc, err) {
+    }).sort({'contentScore.negativity': -1}).skip(resultNumber-1).then(function (doc, err) {
       if (err) res.send(err)
       res.json(doc)
     })
