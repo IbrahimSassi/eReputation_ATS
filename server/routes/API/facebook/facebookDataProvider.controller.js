@@ -8,7 +8,7 @@ var Campaign = require('../../../models/campaign.model');
 var moment = require('moment');
 var async = require('async');
 var utils = require('../helpers/utils.helper');
-var config = require('../../../config/facebook.config');
+var config = require('../../../config/config');
 
 
 module.exports = {

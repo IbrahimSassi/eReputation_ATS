@@ -3,6 +3,7 @@
  */
 
 var config = require('../../../../config/facebook.config');
+var configHost = require('../../../../config/config');
 var request = require('request');
 var async = require('async');
 var DataProvider = require('../../../../models/dataProvider/dataProvider.model');
@@ -65,7 +66,7 @@ function transformPostsData(req, res, next) {
             async.eachSeries(posts.data, function iteratee(story, callback) {
 
               // Getting Reactions For each story
-              var reactionsUrl = config.host + '/api/facebook/posts/' + story.id + '/reactions';
+              var reactionsUrl = configHost.host + '/api/facebook/posts/' + story.id + '/reactions';
               getData(reactionsUrl)
                 .then(function (reactions) {
                   return reactions;
@@ -302,7 +303,7 @@ function handleFbPaging(data, direction, postId) {
 
 function getChannelSelected(channelId) {
   return new Promise(function (resolve, reject) {
-    request(config.host + "/api/channels/" + channelId, function (error, response, body) {
+    request(configHost.host + "/api/channels/" + channelId, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         var channel = JSON.parse(body);
         // console.log()

@@ -2,7 +2,7 @@
  * Created by ninou on 4/27/2017.
  */
 
-var dataProvider = require('../../models/dataProvider/dataProvider.model');
+var dataProvider = require('../../../models/dataProvider/dataProvider.model');
 var translate = require('google-translate-api');
 var myRequest = require('request');
 

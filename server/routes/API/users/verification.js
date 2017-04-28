@@ -4,10 +4,13 @@
 var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
-var User = require('../../models/users');
+var User = require('../../../models/users.model');
 var mailsender = require('mailsender');
 var fs = require('fs')
 var Styliner = require('styliner');
+var configEmail = require('../../../config/email.config');
+var config = require('../../../config/config');
+
 
 router.post('/generate/:email', function (req, res, next) {
 
@@ -17,14 +20,17 @@ router.post('/generate/:email', function (req, res, next) {
   }, 'emailverification');
 
 
-  fs.readFile('server/views/email.html', function (err, data) {
+  fs.readFile('server/public/resources/email.html', function (err, data) {
     if (err) {
       console.log(err);
     }
     else {
-      data = data + '<a style="color:cadetblue;" href="http://localhost:3000/#!/emailconfirmation/' + token + '">Verification Link</a>';
+      data = data + '' +
+        '<a style="color:cadetblue;" href="' + config.host +
+        '/#!/emailconfirmation/' + token +
+        '">Verification Link ' +
+        '</a>';
       sendmail(data, req.params.email)
-
 
     }
 
@@ -32,9 +38,9 @@ router.post('/generate/:email', function (req, res, next) {
 
   function sendmail(body, to) {
     mailsender
-      .from('mohamedfiras.ouertani@esprit.tn', 'MFO11889162')
+      .from(configEmail.from, configEmail.pwd)
       .to(to)
-      .body('Digital Reputation Registration Confirmation', body, true)
+      .body(configEmail.subject, body, true)
       .send();
   }
 
@@ -51,11 +57,11 @@ router.get('/validate/:token', function (req, res, next) {
       res.status(401).json({"Error": 'Token Expired or incorrect'});
     }
     else {
-      console.log("email: ",decoded.email)
+      console.log("email: ", decoded.email)
       User.findOneAndUpdate({email: decoded.email}, {$set: {state: 'Activated'}}, function (err, user) {
         if (err) return res.status(401);
 
-        User.findOne({ email: user.email }, function (err, userFound) {
+        User.findOne({email: user.email}, function (err, userFound) {
           if (err) return res.status(401);
 
           var token;
@@ -63,8 +69,6 @@ router.get('/validate/:token', function (req, res, next) {
           console.log('token: ' + userFound);
           res.status(200).json({"token": token});
         });
-
-
 
 
       });

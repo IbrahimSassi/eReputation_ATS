@@ -3,7 +3,7 @@
  */
 var express = require('express');
 var router = express.Router();
-var dataProvider = require('../../models/dataProvider/dataProvider.model');
+var dataProvider = require('../../../models/dataProvider/dataProvider.model');
 var translate = require('google-translate-api');
 var myRequest = require('request');
 

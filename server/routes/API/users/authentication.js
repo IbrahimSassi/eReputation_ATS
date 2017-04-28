@@ -3,7 +3,7 @@
  */
 var passport = require('passport');
 var mongoose = require('mongoose');
-var User = require('../../models/users');
+var User = require('../../../models/users.model');
 var addingUser = false;
 //*************************************************************
 

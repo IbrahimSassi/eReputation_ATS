@@ -4,7 +4,7 @@
 
 var moment = require('moment');
 
-var config = require('../twitter/config');
+var config = require('../../../config/twitter.config');
 var TwitterStream = require('twitter');
 var dataProvider = require('../../../models/dataProvider/dataProvider.model');
 var async = require('async');

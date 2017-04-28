@@ -9,8 +9,8 @@ var auth = jwt({
   userProperty: 'payload'
 });
 
-var ctrlProfile = require('../users/profile');
-var ctrlAuth = require('../users/authentication');
+var ctrlProfile = require('./profile');
+var ctrlAuth = require('./authentication');
 
 // profile
 router.get('/profile', auth, ctrlProfile.profileRead);

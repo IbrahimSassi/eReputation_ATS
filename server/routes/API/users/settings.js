@@ -4,12 +4,12 @@
 
 var express = require('express');
 var router = express.Router();
-var User = require('../../models/users');
+var User = require('../../../models/users.model');
 var crypto = require('crypto');
 var randomstring = require("randomstring");
 var fs = require('fs');
 
-var authenticate = require('../users/middleware/authenticate').authenticate
+var authenticate = require('./middleware/authenticate').authenticate
 
 router.get('/a', function (req, res, next) {
   res.json({"a": 1})
@@ -92,17 +92,6 @@ router.put('/basicinformationBuss/:activeEmail/:email/:businessName/:businessTyp
     res.status(400).json({"error": "All field are required!"})
   }
 });
-
-var multer  = require('multer')
-var upload = multer({ dest: 'uploads/' })
-
-router.post('/profile', upload.single('avatar'), function (req, res, next) {
-  console.log("dkhal haha")
-
-  console.log("dkhal haha",req.file )
-
-  // req.body will hold the text fields, if there were any
-})
 
 router.put('/additionalInformation', function (req, res, next) {
   //console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
@@ -233,18 +222,6 @@ router.put('/changepassword/:activeEmail/:oldpassword/:newpassword', function (r
 });
 
 
-//***************************
-var multer  = require('multer')
-var upload = multer({ dest: 'uploads/' })
-router.post('/profile', upload.any(), function (req, res, next) {
-  // req.file is the `avatar` file
-  // req.body will hold the text fields, if there were any
-  console.log(req.file)
-  res.status(200)
-})
-
-
-//****************************
 
 
 

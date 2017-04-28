@@ -3,16 +3,19 @@
  */
 
 var utils = require('../helpers/utils.helper');
-var config = require('../../../config/facebook.config');
-var moment = require('moment');
+var config = require('../../../config/config');
 var Campaign = require('../../../models/campaign.model');
 var Channel = require('../../../models/channel/channel.model');
-var DataProvider = require('../../../models/dataProvider/dataProvider.model');
 var async = require('async');
-module.exports.facebookLauncher = function (req, res) {
+
+
+module.exports = {
+  facebookLauncher: facebookLauncher
+};
+
+function facebookLauncher(req, res) {
 
   var _since = new Date(new Date().setDate(new Date().getDate() - 1));
-  // var _since = new Date(moment.subtract(1, 'days'));
   var _until = new Date();
   var _targets = [];
 
@@ -45,7 +48,6 @@ module.exports.facebookLauncher = function (req, res) {
               }
             });
           });
-
           channelPromise
             .then(function () {
               callback()
@@ -54,7 +56,6 @@ module.exports.facebookLauncher = function (req, res) {
               res.json(err);
             })
 
-
         }, function done() {
           callback()
         });
@@ -62,14 +63,11 @@ module.exports.facebookLauncher = function (req, res) {
 
       }, function done() {
 
-
-        console.log("Start Getting Posts .....")
+        console.log("Start Getting Posts .....");
         async.eachSeries(_targets, function iteratee(target, callback) {
           console.log("Target with Channel Id ..", target.name);
-          console.log(_since);
-          console.log(_until);
 
-          var url = {
+          var _url = {
             url: config.host + "/api/facebook/facebookPosts",
             method: 'POST',
             headers: {
@@ -80,16 +78,40 @@ module.exports.facebookLauncher = function (req, res) {
             '", "channelId": "' + target.channelId.toString() +
             '", "campaignId": "' + target.campaignId.toString() + '"}'
 
-          };
-          utils.getData(url)
+          }
+          utils.getData(_url)
             .then(function () {
-              callback();
+
+              console.log("Start Getting Comments .....");
+              var _url = {
+                url: config.host + "/api/facebook/facebookComments",
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: '{"since": "' + _since.toISOString() +
+                '", "until": " ' + _until.toISOString() +
+                '", "channelId": "' + target.channelId.toString() +
+                '", "campaignId": "' + target.campaignId.toString() + '"}'
+
+              };
+
+              utils.getData(_url)
+                .then(function () {
+                  callback();
+                })
+                .catch(function (err) {
+                  res.json(err);
+
+                });
+
             })
             .catch(function (err) {
               res.json(err);
             })
 
         }, function done() {
+
           res.json(_targets);
         })
 
@@ -103,4 +125,4 @@ module.exports.facebookLauncher = function (req, res) {
     });
   // })
 
-};
+}

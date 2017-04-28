@@ -9,23 +9,22 @@ var compression = require('compression');
 
 var admin = require('./routes/admin');
 var index = require('./routes/index');
-var users = require('./routes/users/index');
-var usersVerification = require('./routes/users/verification');
-var settings = require('./routes/users/settings');
+var users = require('./routes/API/users/index');
+var usersVerification = require('./routes/API/users/verification');
+var settings = require('./routes/API/users/settings');
 
 
 /** APIS*/
-var webScraping = require('./routes/API/webScraping/index');
-var twitterScraping = require('./routes/API/twitterScraping/twitterScraping');
 var facebook = require('./routes/API/facebook');
 var twitter = require('./routes/API/twitter/index');
 var websites = require('./routes/API/websites/index');
 var wwsa = require('./routes/API/wwsa/index');
 
-var dataProviderScore = require('./routes/sentimental/insights');
+var dataProviderScore = require('./routes/API/sentimental/insights');
 //Real Work Starts
 var channel = require('./routes/API/channel');
-var campaign = require('./routes/API/campaign')
+var campaign = require('./routes/API/campaign');
+var configDB = require('./config/database.config');
 
 /**End APIS*/
 
@@ -44,7 +43,7 @@ app.engine('html', ejs.renderFile);
 
 //MongoDB Connection
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://bro:brobro0055@ds157469.mlab.com:57469/ats-digital', {
+mongoose.connect(configDB.uri, {
   server: {
     socketOptions: {
       socketTimeoutMS: 0,
@@ -55,7 +54,7 @@ mongoose.connect('mongodb://bro:brobro0055@ds157469.mlab.com:57469/ats-digital',
  //mongoose.connect('mongodb://localhost:27017/ats-digital-local');
 
 //Adding passport require
-require('./config/passport');
+require('./config/passport.config');
 app.use(passport.initialize());
 app.use(bodyParser.json({limit: '100mb'}));
 app.use(compression());
@@ -71,8 +70,6 @@ app.use('/admin', admin);
 app.use('/', index);
 app.use('/users', users);
 app.use('/api/facebook', facebook);
-app.use('/api/webScraping', webScraping);
-app.use('/api/twitterScraping', twitterScraping);
 app.use('/api/wwsa', wwsa);
 app.use('/api/channels', channel);
 app.use('/api/campaigns', campaign);

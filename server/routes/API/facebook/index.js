@@ -6,11 +6,6 @@ var facebookApi = require('./facebook.api');
 var crond = require('./facebook.cron');
 
 
-router.get('/', function (req, res, next) {
-  res.render('TestFacebookScraping', {});
-});
-
-
 //Directly From Facebook API
 router.get('/token/:token', facebookHandler.extendToken, facebookApi.getToken);
 router.get('/posts/:id/reactions', facebookApi.getReactionsByPost);
