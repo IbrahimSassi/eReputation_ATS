@@ -18,15 +18,15 @@ module.exports = {
 };
 
 
-function getToken(req, res, next) {
+function getToken(req, res) {
   req.ExtendedToken.then(function (value) {
     console.log("token", value);
     res.json({longToken: value});
   })
 
-};
+}
 
-function getPostsByPage(req, res, next) {
+function getPostsByPage(req, res) {
 
 
   async.eachSeries(req.posts, function iteratee(post, callback) {
@@ -46,12 +46,11 @@ function getPostsByPage(req, res, next) {
   });
 
 
-};
+}
 
-function getReactionsByPost(req, res, next) {
+function getReactionsByPost(req, res) {
 
   var posts_id = req.params.id;
-  var node = posts_id;
   var fields = "/?fields=reactions.type(LIKE).limit(0).summary(total_count).as(like)," +
     "reactions.type(LOVE).limit(0).summary(total_count).as(love)," +
     "reactions.type(WOW).limit(0).summary(total_count).as(wow)," +
@@ -59,7 +58,7 @@ function getReactionsByPost(req, res, next) {
     "reactions.type(SAD).limit(0).summary(total_count).as(sad)," +
     "reactions.type(ANGRY).limit(0).summary(total_count).as(angry)";
   var parameters = "&access_token=" + config.ACCESS_TOKEN;
-  var url = config.base + node + fields + parameters;
+  var url = config.base + posts_id + fields + parameters;
   // console.log(url);
   request(url, function (error, response, body) {
     if (!error && response.statusCode == 200) {
@@ -71,13 +70,11 @@ function getReactionsByPost(req, res, next) {
 
   })
 
-};
+}
 
-function pageInsights(req, res, next) {
+function pageInsights(req, res) {
 
   var page_id = req.params.id;
-  var node = page_id;
-
   var fields = "/insights?metric=['" + req.params.metric + "']" +
     "&limit=100&since=" + req.params.since + "&until=" + req.params.until;
 
@@ -87,7 +84,7 @@ function pageInsights(req, res, next) {
   else
     parameters = "&access_token=" + config.ACCESS_TOKEN;
 
-  var url = config.base + node + fields + parameters;
+  var url = config.base + page_id + fields + parameters;
   request(url, function (error, response, body) {
 
     if (!error && response.statusCode == 200) {
@@ -101,13 +98,13 @@ function pageInsights(req, res, next) {
   });
 
 
-};
+}
 
-function longUrl(req, res, next) {
+function longUrl(req, res) {
 
   utils.getFacebookLongUrl(req.body.url)
     .then(function (newUrl) {
-      var url = "https://www.facebook.com/" + newUrl
+      var url = "https://www.facebook.com/" + newUrl;
       res.json({longUrl: url});
     })
     .catch(function (err) {

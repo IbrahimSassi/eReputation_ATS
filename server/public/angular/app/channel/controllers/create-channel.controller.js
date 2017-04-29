@@ -48,9 +48,13 @@
     init();
 
     function init() {
-      ChannelService.getChannelsByUser(vm.connectedUserId).then(function (data) {
-        vm.myChannels = data;
-      })
+
+      // FacebookService.initFacebookApi().then(function () {
+        ChannelService.getChannelsByUser(vm.connectedUserId).then(function (data) {
+          vm.myChannels = data;
+        });
+      // });
+
 
     }
 

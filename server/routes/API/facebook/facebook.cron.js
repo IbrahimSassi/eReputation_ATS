@@ -10,14 +10,15 @@ var async = require('async');
 
 
 module.exports = {
-  facebookLauncher: facebookLauncher
+  facebookLauncher: facebookCronLauncher
 };
 
-function facebookLauncher(req, res) {
+function facebookCronLauncher(req, res) {
 
   var _since = new Date(new Date().setDate(new Date().getDate() - 1));
   var _until = new Date();
   var _targets = [];
+  var channelPromise;
 
   var _query = {
     state: "active",
@@ -27,7 +28,6 @@ function facebookLauncher(req, res) {
   // return new Promise(function (resolve, reject) {
   Campaign.getCampaignsByQuery(_query)
     .then(function (campaigns) {
-      var channelPromise;
       async.eachSeries(campaigns, function iteratee(campaign, callback) {
         async.eachSeries(campaign.channels, function iteratee(selectedChannel, callback) {
           channelPromise = new Promise(function (resolve, reject) {
@@ -63,41 +63,30 @@ function facebookLauncher(req, res) {
 
       }, function done() {
 
-        console.log("Start Getting Posts .....");
         async.eachSeries(_targets, function iteratee(target, callback) {
-          console.log("Target with Channel Id ..", target.name);
+          console.log("Target with Channel ..", target.name);
 
-          var _url = {
-            url: config.host + "/api/facebook/facebookPosts",
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: '{"since": "' + _since.toISOString() +
-            '", "until": " ' + _until.toISOString() +
-            '", "channelId": "' + target.channelId.toString() +
-            '", "campaignId": "' + target.campaignId.toString() + '"}'
+          var _url = getRequestBody(
+            "/api/facebook/facebookPosts",
+            _since.toISOString(),
+            _until.toISOString(),
+            target.channelId.toString(),
+            target.campaignId.toString());
 
-          }
+          console.log("Start Getting Posts .....");
           utils.getData(_url)
             .then(function () {
+              var _url = getRequestBody(
+                "/api/facebook/facebookComments",
+                _since.toISOString(),
+                _until.toISOString(),
+                target.channelId.toString(),
+                target.campaignId.toString());
 
               console.log("Start Getting Comments .....");
-              var _url = {
-                url: config.host + "/api/facebook/facebookComments",
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: '{"since": "' + _since.toISOString() +
-                '", "until": " ' + _until.toISOString() +
-                '", "channelId": "' + target.channelId.toString() +
-                '", "campaignId": "' + target.campaignId.toString() + '"}'
-
-              };
-
               utils.getData(_url)
                 .then(function () {
+                  //Calling next target
                   callback();
                 })
                 .catch(function (err) {
@@ -107,22 +96,40 @@ function facebookLauncher(req, res) {
 
             })
             .catch(function (err) {
+              // reject(err);
               res.json(err);
             })
 
         }, function done() {
-
+          // resolve(_targets);
           res.json(_targets);
         })
-
 
       });
 
 
     })
     .catch(function (err) {
+      // reject(err);
       res.json(err);
     });
   // })
+
+}
+
+
+function getRequestBody(host ,since, until, channelId, campaignId) {
+  return {
+    url: config.host + host ,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: '{"since": "' + since +
+    '", "until": " ' + until +
+    '", "channelId": "' + channelId +
+    '", "campaignId": "' + campaignId + '"}'
+
+  };
 
 }

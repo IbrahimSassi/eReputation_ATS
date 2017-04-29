@@ -30,8 +30,7 @@ function getData(url) {
     });
 
   })
-};
-
+}
 
 function cleanText(text) {
 
@@ -55,7 +54,7 @@ function getFacebookUrl(url) {
   preTransformed = tab[3].split("_");
   var link = "https://www.facebook.com/" + preTransformed[0] + "/posts/" + preTransformed[1];
   return link;
-};
+}
 
 
 // when we Want somethink like that : 5281959998_10151150035389999
@@ -65,7 +64,7 @@ function getFacebookPostId(url) {
   preTransformed = tab[3].split("_");
   var link = preTransformed[0] + "_" + preTransformed[1];
   return link;
-};
+}
 
 //When User gives us something like that :
 // https://www.facebook.com/nytimes/posts/10151150035389999
