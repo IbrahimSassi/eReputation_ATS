@@ -29,8 +29,7 @@
         templateUrl: 'angular/app/user/views/settings.view.html',
         controller: 'SettingsCtrl as settings',
         register: true,
-        authenticate: true,
-        shouldConfirmed: true
+        authenticate: true
       })
 
     ;
