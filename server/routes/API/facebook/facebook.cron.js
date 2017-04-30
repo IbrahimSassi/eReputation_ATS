@@ -14,8 +14,9 @@ module.exports = {
   facebookLauncher: facebookCronLauncher
 };
 
+
 function facebookCronLauncher() {
-  cron.schedule('*/20 * * * *', function(){
+  cron.schedule('* * * * *', function(){
     // return new Promise(function (resolve, reject) {
 
     console.log("get called");

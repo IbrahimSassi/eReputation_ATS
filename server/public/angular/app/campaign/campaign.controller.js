@@ -342,14 +342,13 @@
       console.log("getPermissions");
       FacebookService.initFacebookApi()
         .then(function (data) {
-          console.log("here we are token  + user ,,promise bouh kalb", data);
           var token = data.authResponse.accessToken;
 
           FacebookService.getLongLivedToken(token).then(function (newLongToken) {
             console.log("new long" + newLongToken);
             $scope.myChannelAaccessToken = newLongToken.longToken;
             data.user.accounts.data.forEach(function (page) {
-              $scope.myFacebookPages.push({value: page.id, text: page.name})
+              $scope.myFacebookPages.push({value: "https://www.facebook.com/" + page.id, text: page.name})
               console.log("666" + $scope.myFacebookPages);
               var $toastContent = $('<span class="green-text">Your permission has granted , now pick a page</span>');
               var rounded = "rounded"

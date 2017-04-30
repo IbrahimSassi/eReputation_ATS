@@ -104,10 +104,16 @@ function transformPostsData(req, res, next) {
         });
       });
 
+    })
+      .catch(function (err) {
+        next()
+      });
+
+
+  })
+    .catch(function (err) {
+      next()
     });
-
-
-  });
 
 };
 
