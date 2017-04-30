@@ -26,7 +26,7 @@ router.post('/reputationBySentimental', facebookDataProvider.getFacebookSentimen
 router.post('/posts/reputation', facebookHandler.getComments, facebookDataProvider.getSentimentalByPost);
 
 
-router.get('/testCrond', crond.facebookLauncher);
+// router.get('/testCrond', crond.facebookLauncher);
 
 
 module.exports = router;

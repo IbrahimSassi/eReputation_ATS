@@ -15,7 +15,7 @@ module.exports = {
 };
 
 function facebookCronLauncher() {
-  cron.schedule('1,2,4,5 * * * *', function(){
+  cron.schedule('1 * * * *', function(){
 
     console.log("get called");
 
@@ -29,7 +29,7 @@ function facebookCronLauncher() {
       dateStart: {'$lte': new Date()},
       dateEnd: {'$gte': new Date()}
     };
-    // return new Promise(function (resolve, reject) {
+    return new Promise(function (resolve, reject) {
     Campaign.getCampaignsByQuery(_query)
       .then(function (campaigns) {
         async.eachSeries(campaigns, function iteratee(campaign, callback) {
@@ -57,7 +57,7 @@ function facebookCronLauncher() {
                 callback()
               })
               .catch(function (err) {
-                res.json(err);
+                reject(err);
               })
 
           }, function done() {
@@ -94,24 +94,23 @@ function facebookCronLauncher() {
                     callback();
                   })
                   .catch(function (err) {
-                    res.json(err);
+                    reject(err);
 
                   });
 
               })
               .catch(function (err) {
-                // reject(err);
-                res.json(err);
+                reject(err);
+                // res.json(err);
               })
 
           }, function done() {
 
 
-            utils.getData(config.host + "/attributeScore/setScore");
-            //   .then(function () {
-            //   res.json(_targets);
-            // });
-            // resolve(_targets);
+            utils.getData(config.host + "/attributeScore/setScore")
+              .then(function () {
+              resolve();
+            });
           })
 
         });
@@ -119,10 +118,9 @@ function facebookCronLauncher() {
 
       })
       .catch(function (err) {
-        // reject(err);
-        res.json(err);
+        reject(err);
       });
-    // })
+    })
   });
 
 }
