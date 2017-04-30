@@ -32,7 +32,7 @@ var UserSchema = new Schema({
 var individualSchema = new Schema({
   username:  {
   type: String,
-    unique: true,
+
     required: true,
     minlength: 6
 },
