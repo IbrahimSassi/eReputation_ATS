@@ -101,7 +101,7 @@
      For forget password
      */
 vm.forgotPasswordRequestBtn = function () {
-  swal("An Email Was Sent To Your Address!");
+
 
   UserService
     .requestNewPassword(vm.requestedEmail)
@@ -109,16 +109,26 @@ vm.forgotPasswordRequestBtn = function () {
 
 
   function successCallback(response) {
-
+    swal("Success!", "An Email Was Sent To You!", "success");
   }
 
   function errorCallback(error) {
-
+    swal("Error! Please verify your Email");
   }
 }
 
     vm.changePasswordBtn = function () {
-      swal("Password Changed!");
+  if(vm.passwordChange == vm.passwordChangeAgain)
+  {
+    ChangePass();
+  }
+  else {
+    swal("Error! Please Verify Your Password");
+  }
+    }
+
+    function ChangePass() {
+
 
       vm.change = {
         token : $stateParams.token,
@@ -131,15 +141,14 @@ vm.forgotPasswordRequestBtn = function () {
 
 
       function successCallback(response) {
-
+        swal("Success!", "Password Changed!", "success")
       }
 
       function errorCallback(error) {
-
+        swal("Error In Changing Password!")
       }
     }
 
-    var token = $stateParams.token;
     /*
      End for forget password
      */

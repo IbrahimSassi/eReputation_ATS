@@ -86,6 +86,7 @@ router.post('/requestNewPassword/:email', function (req, res, next) {
 
   sendmail("Please click this <a href='" +config.host+'/#!/changePassword/'+token+
     "'>link</a> to change your password!", req.params.email)
+
   function sendmail(body, to) {
     mailsender
       .from(configEmail.from, configEmail.pwd)
@@ -93,6 +94,7 @@ router.post('/requestNewPassword/:email', function (req, res, next) {
       .body(configEmail.subject, body, true)
       .send();
   }
+  res.status(200).json("Success");
 });
 
 
