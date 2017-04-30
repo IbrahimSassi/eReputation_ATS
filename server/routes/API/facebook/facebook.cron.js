@@ -16,7 +16,7 @@ module.exports = {
 
 
 function facebookCronLauncher() {
-  cron.schedule('*/20 * * * *', function(){
+  cron.schedule('*/30 * * * *', function(){
     // return new Promise(function (resolve, reject) {
 
     console.log("get called");
@@ -58,6 +58,8 @@ function facebookCronLauncher() {
                 callback()
               })
               .catch(function (err) {
+                console.log("err 1")
+                console.log(err)
                 // reject(err);
               })
 
@@ -96,25 +98,35 @@ function facebookCronLauncher() {
                   })
                   .catch(function (err) {
                     // reject(err);
+                    console.log("err 2")
                     console.log(err)
 
                   });
 
               })
               .catch(function (err) {
-                console.log(err);
+                console.log("err 3")
+                console.log(err)
                 // reject(err);
                 // res.json(err);
               })
 
           }, function done() {
 
+            console.log("DONE GETTING Data");
+            console.log("Start sentimental analysis ...");
 
-            utils.getData(config.host + "/attributeScore/setScore")
+            var url = config.host + "/attributeScore/setScore";
+            utils.getData(url)
               .then(function () {
                 console.log("DONE");
-              // resolve();
-            });
+                // resolve();
+            })
+              .catch(function (err) {
+                console.log("err 4")
+                console.log(err)
+
+              });
           })
 
         });
@@ -122,6 +134,7 @@ function facebookCronLauncher() {
 
       })
       .catch(function (err) {
+        console.log("err 5")
         console.log(err)
         // reject(err);
       });
