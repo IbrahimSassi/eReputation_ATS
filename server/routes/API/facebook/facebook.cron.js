@@ -16,7 +16,7 @@ module.exports = {
 
 
 function facebookCronLauncher() {
-  cron.schedule('* * * * *', function(){
+  cron.schedule('*/20 * * * *', function(){
     // return new Promise(function (resolve, reject) {
 
     console.log("get called");
@@ -102,7 +102,7 @@ function facebookCronLauncher() {
 
               })
               .catch(function (err) {
-                console.log(err)
+                console.log(err);
                 // reject(err);
                 // res.json(err);
               })
@@ -112,7 +112,7 @@ function facebookCronLauncher() {
 
             utils.getData(config.host + "/attributeScore/setScore")
               .then(function () {
-                console.log("DONE")
+                console.log("DONE");
               // resolve();
             });
           })
