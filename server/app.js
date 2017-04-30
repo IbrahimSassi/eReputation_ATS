@@ -34,8 +34,13 @@ var app = express();
 //Running Twitter Scrapping Cron
 var twitterCron = require('./routes/API/twitter/twitterCron');
 //twitterCron.run();
-twitterCron.runSentimentalAnalysis();
+// twitterCron.runSentimentalAnalysis();
 //End of running Twitter Scrapping Cron
+
+
+var facebookCron = require('./routes/API/facebook/facebook.cron');
+facebookCron.facebookLauncher();
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
