@@ -163,7 +163,7 @@ function SentimentalForSpecificProvider(providerType) {
                   if(count==400)
                   {
                     setTimeout(function(){ translateFN();
-                      count=0}, 300000);
+                      count=0}, 120000);
                   }
                   else
                   {
@@ -197,7 +197,7 @@ function SentimentalForSpecificProvider(providerType) {
                   if(count==400)
                   {
                     setTimeout(function(){ translateFN();
-                    count=0}, 300000);
+                    count=0}, 120000);
                   }
                   else
                   {
@@ -227,7 +227,7 @@ function SentimentalForSpecificProvider(providerType) {
           if(count==400)
           {
             setTimeout(function(){ translateFN();
-              count=0}, 300000);
+              count=0}, 120000);
           }
           else
           {

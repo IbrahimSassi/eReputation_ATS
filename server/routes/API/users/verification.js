@@ -26,11 +26,7 @@ router.post('/generate/:email', function (req, res, next) {
       console.log(err);
     }
     else {
-      data = data + '' +
-        '<a style="color:cadetblue;" href="' + config.host +
-        '/#!/emailconfirmation/' + token +
-        '">Verification Link ' +
-        '</a>';
+      data = data+ '<a style="color:cadetblue;" href="' + config.host + '/#!/emailconfirmation/' + token + '">Verification Link ' + '</a>';
       sendmail(data, req.params.email)
 
     }
