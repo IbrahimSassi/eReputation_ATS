@@ -140,7 +140,7 @@ module.exports.run = function (req, res) {
 
 module.exports.runSentimentalAnalysis = function (req, res) {
   // cron.schedule('2 3 0 * * *', function(){ right one
-  cron.schedule('30 48 0 * * *', function () {
+  cron.schedule('25 23 * * * *', function () {
 
 
     sentimentalFN.SentimentalForSpecificProvider("tweetsProvider");
