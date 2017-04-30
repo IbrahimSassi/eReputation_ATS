@@ -72,6 +72,30 @@
     var SendVerificationEmail = function (email) {
       return UserFactory.SendVerificationEmail({email: email}).$promise;
     };
+
+
+
+
+
+    /*
+     For forget password
+     */
+
+    var requestNewPassword = function (email) {
+      return UserFactory.requestNewPassword({email:email}).$promise;
+    };
+    var changePassword = function (data) {
+      return UserFactory.changePassword(data).$promise;
+    };
+
+    /*
+     End for forget password
+     */
+
+
+
+
+
     return {
       currentUser: currentUser,
       saveToken: saveToken,
@@ -80,7 +104,9 @@
       register: register,
       login: login,
       logout: logout,
-      SendVerificationEmail: SendVerificationEmail
+      SendVerificationEmail: SendVerificationEmail,
+      requestNewPassword :requestNewPassword,
+      changePassword : changePassword
     };
 
 

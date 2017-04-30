@@ -29,9 +29,9 @@
         templateUrl: 'angular/app/user/views/settings.view.html',
         controller: 'SettingsCtrl as settings',
         register: true,
-        authenticate: true,
-        shouldConfirmed: true
+        authenticate: true
       })
+
     ;
     $qProvider.errorOnUnhandledRejections(false);
 
@@ -69,7 +69,7 @@
       email: $rootScope.currentUser.email,
       employeesNumber: $rootScope.currentUser.employeesNumber,
       phoneNumber: parseInt($rootScope.currentUser.phoneNumber)
-    }
+    };
     vm.basicInformationIndiv = {
       activeEmail: $rootScope.currentUser.email,
       firstName: $rootScope.currentUser.firstName,
@@ -77,7 +77,7 @@
       username: $rootScope.currentUser.username,
       email: $rootScope.currentUser.email,
       phoneNumber: parseInt($rootScope.currentUser.phoneNumber)
-    }
+    };
     vm.additionalInformation = {
       activeEmail: $rootScope.currentUser.email,
       profilePicture: "",
@@ -85,13 +85,15 @@
       birthday: "",
       about: $rootScope.currentUser.about,
       country: $rootScope.currentUser.country
-    }
+    };
+
     vm.changePasswordAtt = {
       activeEmail: $rootScope.currentUser.email,
       oldpassword: "",
       newpassword: "",
       newpasswordagain: ""
-    }
+    };
+
     vm.birthday = moment($rootScope.currentUser.birthday).format('DD-MM-YYYY');
     //vm.birthdayInd = moment($rootScope.currentUser.birthday, 'DD-MM-YYYY')._i;
     vm.EditBasicInformationIndividual = function () {
@@ -267,6 +269,8 @@
     } else {
       alert('The File APIs are not fully supported in this browser.');
     }
+
+
   };
 
 })();

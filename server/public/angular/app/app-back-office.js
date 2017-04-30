@@ -17,6 +17,7 @@ angular.module('ATSApp', [
   'ATSApp.utils',
 
 ])
+
   .config(['$urlRouterProvider',
     function ($urlRouterProvider) {
       $urlRouterProvider.otherwise('/profile');

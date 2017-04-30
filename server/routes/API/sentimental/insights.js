@@ -204,15 +204,15 @@ router.get('/setScore', function (req, res, next) {
 //********************************************************************************************************
 
 
-router.get('/setScoretest', function (req, res, next) {
+router.post('/setScoretest', function (req, res, next) {
 
   var positive = null;
   var negative = null;
   var neutral = null;
 
-  dataProvider.findNulledScore().then(function (data) {
+  //dataProvider.findNulledScore().then(function (data) {
 
-    if (data.content) {
+   // if (data.content) {
 
       // console.log(res.text);
       // console.log(res.from.language.iso);
@@ -222,7 +222,7 @@ router.get('/setScoretest', function (req, res, next) {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: '{"text": "' + data.content + '", "level": "sentence"}'
+        body: '{"text": "' + req.body.text + '", "level": "sentence"}'
       }, function (error, response, body) {
         if (error) {
           console.log(error);
@@ -253,23 +253,19 @@ router.get('/setScoretest', function (req, res, next) {
           var scoreResults = {positivity: positive, negativity: negative, neutral: neutral}
           console.log('scoreResults: ', scoreResults);
 
-          dataProvider.updateScore(data, scoreResults).then(function (result) {
-            res.status(200).json({"updatedData": result});
-          }).catch(function (err) {
-            res.status(400).json({"Error": body})
-          });
+
 
         }
       });
 
 
-    }
+  //  }
 
-  }).catch(function (err) {
+ /* }).catch(function (err) {
     res.status(400).json({"Error": "Error in Find Nulled Score"})
 
 
-  });
+  });*/
 });
 
 

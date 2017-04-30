@@ -20,10 +20,26 @@ function SentimentalForSpecificProvider(providerType) {
     var neutral = null;
     dataProvider.findNulledScoreWithDataproviderType(providerType).then(function (data) {
 
-      console.log('this is: ', data.content)
+
 
       if (data.content) {
-        translate(data.content.replace('@', ''), {to: 'en'}).then(function (result) {
+
+        var textToAnalyse = data.content;
+        console.log('First Text State: ', textToAnalyse)
+        textToAnalyse = textToAnalyse.replaceAll("\"", " ");
+        textToAnalyse = textToAnalyse.replace(/(\r\n|\n|\r)/gm, " ")
+        textToAnalyse = textToAnalyse.replaceAll("'", " ");
+        textToAnalyse = textToAnalyse.replaceAll(",", " ");
+        textToAnalyse = textToAnalyse.replaceAll("@", " ");
+        textToAnalyse = textToAnalyse.replaceAll(".", " ");
+        textToAnalyse = textToAnalyse.replaceAll("  ", " ");
+        textToAnalyse = textToAnalyse.replaceAll("   ", " ");
+        textToAnalyse = textToAnalyse.replaceAll("“", " ");
+        textToAnalyse = textToAnalyse.replaceAll("”", " ");
+        textToAnalyse = textToAnalyse.replaceAll("’", " ");
+        console.log('Final Text State: ', textToAnalyse);
+
+        translate(textToAnalyse, {to: 'en'}).then(function (result) {
           console.log(result.text);
           myRequest({
             url: 'http://apidemo.theysay.io/api/v1/sentiment',
@@ -53,7 +69,7 @@ function SentimentalForSpecificProvider(providerType) {
                   if(count==400)
                   {
                     setTimeout(function(){ translateFN();
-                      count=0}, 300000);
+                      count=0}, 300);
                   }
                   else
                   {
@@ -86,7 +102,7 @@ function SentimentalForSpecificProvider(providerType) {
                   if(count==400)
                   {
                     setTimeout(function(){ translateFN();
-                      count=0}, 300000);
+                      count=0}, 300);
                   }
                   else
                   {
@@ -100,13 +116,32 @@ function SentimentalForSpecificProvider(providerType) {
 
         }).catch(function (err) {
 
+
+          var textToAnalyse = data.content;
+          console.log('First Text State: ', textToAnalyse)
+          textToAnalyse = textToAnalyse.replaceAll("\"", " ");
+          textToAnalyse = textToAnalyse.replace(/(\r\n|\n|\r)/gm, " ")
+          textToAnalyse = textToAnalyse.replaceAll("'", " ");
+          textToAnalyse = textToAnalyse.replaceAll(",", " ");
+          textToAnalyse = textToAnalyse.replaceAll("@", " ");
+          textToAnalyse = textToAnalyse.replaceAll(".", " ");
+          textToAnalyse = textToAnalyse.replaceAll("  ", " ");
+          textToAnalyse = textToAnalyse.replaceAll("   ", " ");
+          textToAnalyse = textToAnalyse.replaceAll("“", " ");
+          textToAnalyse = textToAnalyse.replaceAll("”", " ");
+          textToAnalyse = textToAnalyse.replaceAll("’", " ");
+          console.log('Final Text State: ', textToAnalyse);
+
+
+
+
           myRequest({
             url: 'http://apidemo.theysay.io/api/v1/sentiment',
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: '{"text": "' + data.content.replace('@', '') + '", "level": "sentence"}'
+            body: '{"text": "' + textToAnalyse + '", "level": "sentence"}'
           }, function (error, response, body) {
             if (error) {
               console.log(error);
@@ -128,7 +163,7 @@ function SentimentalForSpecificProvider(providerType) {
                   if(count==400)
                   {
                     setTimeout(function(){ translateFN();
-                      count=0}, 300000);
+                      count=0}, 120000);
                   }
                   else
                   {
@@ -162,7 +197,7 @@ function SentimentalForSpecificProvider(providerType) {
                   if(count==400)
                   {
                     setTimeout(function(){ translateFN();
-                    count=0}, 300000);
+                    count=0}, 120000);
                   }
                   else
                   {
@@ -192,7 +227,7 @@ function SentimentalForSpecificProvider(providerType) {
           if(count==400)
           {
             setTimeout(function(){ translateFN();
-              count=0}, 300000);
+              count=0}, 120000);
           }
           else
           {
