@@ -15,7 +15,7 @@ module.exports = {
 };
 
 function facebookCronLauncher() {
-  cron.schedule('1 * * * * *', function(){
+  cron.schedule('15 * * * *', function(){
     // return new Promise(function (resolve, reject) {
 
     console.log("get called");
