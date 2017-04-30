@@ -54,7 +54,7 @@
       .state("otherwise", {url: '/channels/all'})
     ;
 
-  };
+  }
 
   /* @ngInject */
   function ChannelCtrl(ChannelService,

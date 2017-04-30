@@ -17,7 +17,7 @@ module.exports = {
 };
 
 
-function getAllChannels(req, res, next) {
+function getAllChannels(req, res) {
 
   Channel.getChannelsModel(function (err, docs) {
     if (err) {
@@ -26,15 +26,14 @@ function getAllChannels(req, res, next) {
     if (!docs) {
       return res.status(404).send();
     }
-    // console.log(docs);
     res.status(200)
       .json(docs);
 
   });
-};
+}
 
 
-function getChannelById(req, res, next) {
+function getChannelById(req, res) {
 
   Channel.getChannelByIdModel(req.params.id, function (err, docs) {
     if (err) {
@@ -48,10 +47,10 @@ function getChannelById(req, res, next) {
       .json(docs);
   });
 
-};
+}
 
 
-function allChannelsByOwner(req, res, next) {
+function allChannelsByOwner(req, res) {
 
   Channel.getChannelByOwnerModel(req.params.id, function (err, docs) {
     if (err) return handleError(res, err);
@@ -64,10 +63,10 @@ function allChannelsByOwner(req, res, next) {
       .json(docs);
   });
 
-};
+}
 
 
-function createChannel(req, res, next) {
+function createChannel(req, res) {
 
   Channel.createChannelModel(req.body, function (err, item) {
     if (err) return handleError(res, err);
@@ -79,13 +78,13 @@ function createChannel(req, res, next) {
     }
 
   })
-};
+}
 
 
-function updateChannel(req, res, next) {
+function updateChannel(req, res) {
 
-  console.log(req.body)
-  console.log(req.params.id)
+  // console.log(req.body);
+  // console.log(req.params.id);
   Channel.updateChannelModel(req.params.id, req.body, function (err, item) {
     if (err) return handleError(res, err);
     else {
@@ -95,15 +94,15 @@ function updateChannel(req, res, next) {
         .json(item);
     }
   })
-};
+}
 
 
-function deleteChannel(req, res, next) {
+function deleteChannel(req, res) {
   Channel.removeChannelModel(req.params.id, function (err, channel) {
     if (err) return handleError(res, err);
     return res.status(204).send();
   });
-};
+}
 
 
 function handleError(res, err) {

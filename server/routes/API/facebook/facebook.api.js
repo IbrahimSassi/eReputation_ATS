@@ -11,7 +11,6 @@ var utils = require('../helpers/utils.helper');
 
 module.exports = {
   getToken: getToken,
-  getPostsByPage: getPostsByPage,
   getReactionsByPost: getReactionsByPost,
   pageInsights: pageInsights,
   longUrl: longUrl
@@ -23,28 +22,6 @@ function getToken(req, res) {
     console.log("token", value);
     res.json({longToken: value});
   })
-
-}
-
-function getPostsByPage(req, res) {
-
-
-  async.eachSeries(req.posts, function iteratee(post, callback) {
-    var newFacebookPost = new DataProvider.FacebookPostsProvider(post);
-
-    DataProvider.createDataProviderModel(newFacebookPost, function (err, item) {
-      if (err)
-        return res.status(500).send(err);
-      else {
-        console.log('Success facebook post saved', item.id);
-      }
-
-    });
-    callback();
-  }, function done() {
-    res.json(req.posts)
-  });
-
 
 }
 
