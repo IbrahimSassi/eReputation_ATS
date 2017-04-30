@@ -15,8 +15,9 @@ module.exports = {
 };
 
 function facebookCronLauncher() {
+  cron.schedule('1,2,4,5 * * * *', function(){
 
-  var task = cron.schedule('2 0 0 * * *', function () { //right one
+    console.log("get called");
 
     var _since = new Date(new Date().setDate(new Date().getDate() - 1));
     var _until = new Date();
@@ -124,7 +125,6 @@ function facebookCronLauncher() {
     // })
   });
 
-  task.start();
 }
 
 
