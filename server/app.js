@@ -38,7 +38,7 @@ var twitterCron = require('./routes/API/twitter/twitterCron');
 //End of running Twitter Scrapping Cron
 
 var facebookCron = require('./routes/API/facebook/facebook.cron');
-facebookCron.facebookLauncher();
+// facebookCron.facebookLauncher();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -55,7 +55,7 @@ mongoose.connect(configDB.uri, {
     }
   }
 });
- //mongoose.connect('mongodb://localhost:27017/ats-digital-local');
+ // mongoose.connect('mongodb://localhost:27017/ats-digital-local');
 
 //Adding passport require
 require('./config/passport.config');

@@ -16,8 +16,7 @@ module.exports = {
 
 
 function facebookCronLauncher() {
-  cron.schedule('*/30 * * * *', function(){
-    // return new Promise(function (resolve, reject) {
+  return new Promise(function (resolve, reject) {
 
     console.log("get called");
 
@@ -97,9 +96,9 @@ function facebookCronLauncher() {
                     callback();
                   })
                   .catch(function (err) {
-                    // reject(err);
                     console.log("err 2")
                     console.log(err)
+                    callback();
 
                   });
 
@@ -107,26 +106,26 @@ function facebookCronLauncher() {
               .catch(function (err) {
                 console.log("err 3")
                 console.log(err)
-                // reject(err);
-                // res.json(err);
+                reject(err);
               })
 
           }, function done() {
 
             console.log("DONE GETTING Data");
-            console.log("Start sentimental analysis ...");
+            // console.log("Start sentimental analysis ...");
 
-            var url = config.host + "/attributeScore/setScore";
-            utils.getData(url)
-              .then(function () {
-                console.log("DONE");
-                // resolve();
-            })
-              .catch(function (err) {
-                console.log("err 4")
-                console.log(err)
-
-              });
+            resolve(_targets);
+            // var url = config.host + "/attributeScore/setScore";
+            // utils.getData(url)
+            //   .then(function () {
+            //     console.log("DONE");
+            //     // resolve();
+            // })
+            //   .catch(function (err) {
+            //     console.log("err 4")
+            //     console.log(err)
+            //
+            //   });
           })
 
         });
@@ -134,19 +133,18 @@ function facebookCronLauncher() {
 
       })
       .catch(function (err) {
-        console.log("err 5")
-        console.log(err)
-        // reject(err);
+        console.log("err 5");
+        console.log(err);
+        reject(err);
       });
-    // })
-  });
+  })
 
 }
 
 
-function getRequestBody(host ,since, until, channelId, campaignId) {
+function getRequestBody(host, since, until, channelId, campaignId) {
   return {
-    url: config.host + host ,
+    url: config.host + host,
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

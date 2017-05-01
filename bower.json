@@ -9,14 +9,13 @@
     "angular": "~1.5.0",
     "angular-route": "~1.5.0",
     "angular-loader": "~1.5.0",
-    "angular-mocks": "~1.5.0",
+    "angular-mocks": "^1.6.4",
     "html5-boilerplate": "^5.3.0",
     "angular-ui-router": "ui-router#^0.3.2",
     "angular-resource": "^1.6.0",
     "angular-load": "^0.4.1",
     "oclazyload": "^1.0.9",
     "moment": "^2.18.1",
-    "fusioncharts": "^3.12.0",
     "angular-qr": "^0.2.0"
   }
 }
