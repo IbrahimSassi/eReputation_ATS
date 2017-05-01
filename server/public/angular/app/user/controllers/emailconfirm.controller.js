@@ -23,7 +23,6 @@
         url: '/emailconfirmation/:token',
         templateUrl: 'angular/app/user/views/emailconfirm.view.html',
         controller: 'EmailConfirmCtrl as EmailConfirmCtrl',
-        login: true
       })
 
     ;
