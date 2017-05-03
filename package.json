@@ -47,6 +47,7 @@
     "randomstring": "^1.1.5",
     "request": "^2.79.0",
     "sendmail": "^1.1.1",
+    "senti": "0.0.2",
     "sentiment": "^3.0.1",
     "serve-favicon": "~2.3.2",
     "styliner": "^1.0.3",
