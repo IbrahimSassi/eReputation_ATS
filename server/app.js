@@ -71,7 +71,7 @@ app.engine('html', ejs.renderFile);
 
 //MongoDB Connection
 var mongoose = require('mongoose');
-mongoose.connect(configDB.uri, {
+mongoose.connect(configDB.localUri, {
   server: {
     socketOptions: {
       socketTimeoutMS: 0,
