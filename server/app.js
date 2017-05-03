@@ -38,8 +38,32 @@ var twitterCron = require('./routes/API/twitter/twitterCron');
 //End of running Twitter Scrapping Cron
 
 var facebookCron = require('./routes/API/facebook/facebook.cron');
-// facebookCron.facebookLauncher();
+var websitesCron = require('./routes/API/websites/websites.cron');
+var sentimentalCron = require('./routes/API/sentimental/SentimentalFunctions');
+/*
+// Facebook CRON
+facebookCron.facebookLauncher().then(function () {
+  // Facebook Sentiment analysis
+  sentimentalCron.SentimentalForSpecificProvider("FacebookPostsProvider");
+  sentimentalCron.SentimentalForSpecificProvider("FacebookCommentsProvider");
+  // end Facebook Sentiment analysis
 
+  // Websites CRON
+  websitesCron.websitesLauncher().then(function () {
+    //Websites Sentiment Analysis
+    sentimentalCron.SentimentalForSpecificProvider("websitesProvider");
+    console.log("\n\n\n TADDAAA ... \n\n\n");
+  });
+}).catch(function () {
+  // Websites CRON
+  websitesCron.websitesLauncher().then(function () {
+    //Websites Sentiment Analysis
+    sentimentalCron.SentimentalForSpecificProvider("websitesProvider");
+    console.log("\n\n\n TADDAAA ... \n\n\n");
+  });
+
+});
+*/
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
@@ -47,7 +71,7 @@ app.engine('html', ejs.renderFile);
 
 //MongoDB Connection
 var mongoose = require('mongoose');
-mongoose.connect(configDB.uri, {
+mongoose.connect(configDB.localUri, {
   server: {
     socketOptions: {
       socketTimeoutMS: 0,
