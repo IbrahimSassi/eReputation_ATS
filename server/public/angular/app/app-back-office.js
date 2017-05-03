@@ -17,6 +17,7 @@ angular.module('ATSApp', [
   'ATSApp.utils',
 
 ])
+
   .config(['$urlRouterProvider',
     function ($urlRouterProvider) {
       $urlRouterProvider.otherwise('/profile');
@@ -26,8 +27,10 @@ angular.module('ATSApp', [
   .run(function ($rootScope, $state,$location, ProfileService,CampaignService,$window) {
 
     $rootScope.currentUser = ProfileService.currentUser();
-
+if (ProfileService.isLoggedIn())
+{
     $rootScope.disabled = $rootScope.currentUser.state =='INACTIVE' ? true:false;
+}
     /***
      *
      */

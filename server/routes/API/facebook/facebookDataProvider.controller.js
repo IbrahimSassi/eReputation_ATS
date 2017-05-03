@@ -8,35 +8,41 @@ var Campaign = require('../../../models/campaign.model');
 var moment = require('moment');
 var async = require('async');
 var utils = require('../helpers/utils.helper');
-var config = require('../../../config/facebook.config');
+var config = require('../../../config/config');
 
 
 module.exports = {
-  saveFacebookPosts: saveFacebookPosts,
+  getPostsByPage: getPostsByPage,
+  getCommentsByPage: addFacebookComments,
   getFacebookDataProvider: getFacebookDataProvider,
-  addFacebookComments: addFacebookComments,
   getFacebookSentimental: getFacebookSentimental,
   getSentimentalByPost: getSentimentalByPost,
   updateFacebookPost: updateFacebookPost
 };
 
 
-function saveFacebookPosts(req, res, next) {
+function getPostsByPage(req, res) {
 
-  // console.log(req.body);
-  var newFacebookPost = new DataProvider.FacebookPostsProvider(req.body);
 
-  DataProvider.createDataProviderModel(newFacebookPost, function (err, item) {
-    if (err) return handleError(res, err);
-    else {
-      console.log('Success facebook posts saved saved');
-      console.log(item);
-      res.status(201)
-        .json(item);
-    }
+  async.eachSeries(req.posts, function iteratee(post, callback) {
+    var newFacebookPost = new DataProvider.FacebookPostsProvider(post);
 
-  })
+    DataProvider.createDataProviderModel(newFacebookPost, function (err, item) {
+      if (err)
+        return res.status(500).send(err);
+      else {
+        console.log('Success facebook post saved', item.id);
+      }
+
+    });
+    callback();
+  }, function done() {
+    res.json(req.posts)
+  });
+
+
 }
+
 
 
 function getFacebookDataProvider(req, res, next) {
@@ -123,7 +129,7 @@ function addFacebookComments(req, res, next) {
         }
         else {
           resolve(item);
-          console.log('Success facebook comments saved saved', item._id);
+          console.log('Success facebook comments saved .. ', item._id);
         }
 
       });
@@ -367,9 +373,6 @@ function updateFacebookPost(req, res, next) {
 
     var _posts = [];
     async.eachSeries(campaigns, function iteratee(campaign, callback) {
-
-      // var _until = new Date();
-      // var _since = new Date(new Date().setDate(_until.getDate() - 1));
 
 
       var _queryDP = {

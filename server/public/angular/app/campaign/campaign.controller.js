@@ -32,54 +32,63 @@
         templateUrl: 'angular/app/campaign/views/create.campaign.view.html',
         controller: 'CampaignCtrl as camp',
         authenticate: true,
+        shouldConfirmed : true
       })
       .state('campaignEdit', {
         url: '/campaign/edit/:idCampaign',
         templateUrl: 'angular/app/campaign/views/edit.campaign.view.html',
         controller: 'CampaignCtrl as camp',
         authenticate: true,
+        shouldConfirmed : true
       })
       .state('campaignList', {
         url: '/campaign/list',
         templateUrl: 'angular/app/campaign/views/list.campaign.view.html',
         controller: 'CampaignCtrl as camp',
         authenticate: true,
+        shouldConfirmed : true
       })
       .state('campaignDetail', {
         url: '/campaign/detail/:idCampaign',
         templateUrl: 'angular/app/campaign/views/detail.campaign.view.html',
         controller: 'CampaignCtrl as camp',
         authenticate: true,
+        shouldConfirmed : true
       })
       .state('campaignDetail.campaignSentimentAnalysis', {
         url: '/sentiment',
         templateUrl: 'angular/app/campaign/views/analysis/sentiment.campaign.view.html',
         controller: 'CampaignSentimentCtrl as camp',
         authenticate: true,
+        shouldConfirmed : true
       })
       .state('campaignDetail.campaignFbAnalysis', {
         url: '/facebook',
         templateUrl: 'angular/app/campaign/views/analysis/fb.campaign.global.view.html',
         controller: 'CampaignFbCtrl as vm',
         authenticate: true,
+        shouldConfirmed : true
       })
       .state('campaignDetail.campaignFbAnalysis.overview', {
         url: '/overview',
         templateUrl: 'angular/app/campaign/views/analysis/fb.campaign.view.html',
         controller: 'CampaignFbCtrl as vm',
         authenticate: true,
+        shouldConfirmed : true
       })
       .state('campaignDetail.campaignTwitterAnalysis', {
         url: '/twitter',
         templateUrl: 'angular/app/campaign/views/analysis/tw.campaign.view.html',
         controller: 'CampaignTwCtrl as camp',
         authenticate: true,
+        shouldConfirmed : true
       })
       .state('campaignDetail.campaignWebAnalysis', {
         url: '/web',
         templateUrl: 'angular/app/campaign/views/analysis/web.campaign.view.html',
         controller: 'CampaignWebCtrl as camp',
         authenticate: true,
+        shouldConfirmed : true
       })
     ;
 
@@ -198,6 +207,7 @@
       }
       else {
         channel.url = vm.extractDomain(channel.url);
+        channel.userId=$rootScope.currentUser._id;
       }
       //end
       $scope.myChannelAaccessToken === undefined ? '' : channel.accessToken = $scope.myChannelAaccessToken;
@@ -342,14 +352,13 @@
       console.log("getPermissions");
       FacebookService.initFacebookApi()
         .then(function (data) {
-          console.log("here we are token  + user ,,promise bouh kalb", data);
           var token = data.authResponse.accessToken;
 
           FacebookService.getLongLivedToken(token).then(function (newLongToken) {
             console.log("new long" + newLongToken);
             $scope.myChannelAaccessToken = newLongToken.longToken;
             data.user.accounts.data.forEach(function (page) {
-              $scope.myFacebookPages.push({value: page.id, text: page.name})
+              $scope.myFacebookPages.push({value: "https://www.facebook.com/" + page.id, text: page.name})
               console.log("666" + $scope.myFacebookPages);
               var $toastContent = $('<span class="green-text">Your permission has granted , now pick a page</span>');
               var rounded = "rounded"

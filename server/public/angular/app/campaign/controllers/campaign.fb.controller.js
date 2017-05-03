@@ -155,8 +155,10 @@
       var LocalFilter = $.extend({}, filter);
       LocalFilter.source = "FacebookCommentsProvider";
 
+      if (LocalFilter.keywords)
+        delete LocalFilter.keywords;
+
       vm.Comments = [];
-      LocalFilter.keywords = vm.myKeywords;
       FacebookService.getFacebookPosts(LocalFilter).then(function (data) {
         vm.Comments = data;
       });
@@ -323,6 +325,8 @@
       var LocalFilter = $.extend({}, filter);
       if (LocalFilter.source)
         delete LocalFilter.source;
+
+      LocalFilter.keywords = vm.myKeywords;
 
       vm.topSharedPost = {};
       vm.topLikedPost = {};

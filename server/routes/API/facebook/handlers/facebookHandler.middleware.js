@@ -3,6 +3,7 @@
  */
 
 var config = require('../../../../config/facebook.config');
+var configHost = require('../../../../config/config');
 var request = require('request');
 var async = require('async');
 var DataProvider = require('../../../../models/dataProvider/dataProvider.model');
@@ -56,8 +57,8 @@ function transformPostsData(req, res, next) {
       _urls.push(url);
 
       //Getting All Nexr and previous paging _urls
-      promiseNext = handleFbPaging(data, "next");
-      promisePrevious = handleFbPaging(data, "previous");
+      promiseNext = handleFbPaging(data, "next", req.body.channelId);
+      promisePrevious = handleFbPaging(data, "previous", req.body.channelId);
       Promise.all([promisePrevious, promiseNext]).then(function () {
         //Requesting Data for all those urls
         async.eachSeries(_urls, function iteratee(url, callback) {
@@ -65,7 +66,7 @@ function transformPostsData(req, res, next) {
             async.eachSeries(posts.data, function iteratee(story, callback) {
 
               // Getting Reactions For each story
-              var reactionsUrl = config.host + '/api/facebook/posts/' + story.id + '/reactions';
+              var reactionsUrl = configHost.host + '/api/facebook/posts/' + story.id + '/reactions';
               getData(reactionsUrl)
                 .then(function (reactions) {
                   return reactions;
@@ -103,10 +104,16 @@ function transformPostsData(req, res, next) {
         });
       });
 
+    })
+      .catch(function (err) {
+        next()
+      });
+
+
+  })
+    .catch(function (err) {
+      next()
     });
-
-
-  });
 
 };
 
@@ -294,7 +301,7 @@ function handleFbPaging(data, direction, postId) {
       })
     }
     else {
-      console.log("Resolving Urls for post ", postId);
+      console.log("Resolving Urls for ", postId);
       resolve(_urls)
     }
   })
@@ -302,7 +309,7 @@ function handleFbPaging(data, direction, postId) {
 
 function getChannelSelected(channelId) {
   return new Promise(function (resolve, reject) {
-    request(config.host + "/api/channels/" + channelId, function (error, response, body) {
+    request(configHost.host + "/api/channels/" + channelId, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         var channel = JSON.parse(body);
         // console.log()

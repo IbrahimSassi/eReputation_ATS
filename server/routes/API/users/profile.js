@@ -2,7 +2,7 @@
  * Created by MrFirases on 3/20/2017.
  */
 var mongoose = require('mongoose');
-var User = require('../../models/users');
+var User = require('../../../models/users.model');
 
 module.exports.profileRead = function (req, res) {
 

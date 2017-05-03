@@ -16,7 +16,8 @@
     '$stateParams',
     '$rootScope',
     'FacebookService',
-    '$filter'
+    '$filter',
+    'UtilsService'
   ];
 
 
@@ -26,7 +27,8 @@
                            $stateParams,
                            $rootScope,
                            FacebookService,
-                           $filter) {
+                           $filter,
+                           UtilsService) {
     //On Init Start
     var vm = this;
 
@@ -48,9 +50,13 @@
     init();
 
     function init() {
+
+      // FacebookService.initFacebookApi().then(function () {
       ChannelService.getChannelsByUser(vm.connectedUserId).then(function (data) {
         vm.myChannels = data;
-      })
+      });
+      // });
+
 
     }
 
@@ -61,29 +67,33 @@
       var itemByUrl = $filter('filter')(vm.myChannels, {url: vm.channel.url})[0];
 
       if (!form.$valid) {
-        Materialize.toast("Fill all fields", 3000, "rounded");
+        UtilsService.AlertToast("Fill all fields", "rounded", 3000);
         return;
       }
 
       if (itemByName && itemByName.name == vm.channel.name) {
-
-        Materialize.toast("This name exists", 3000, "rounded");
+        UtilsService.AlertToast("This name exists", "rounded", 3000);
         return;
       }
 
       if (itemByUrl && itemByUrl.url == vm.channel.url) {
-        Materialize.toast("This url exists", 3000, "rounded");
+        UtilsService.AlertToast("This url exists", "rounded", 3000);
         return;
       }
 
 
-        ChannelService.addChannel(vm.channel)
-          .then(function (result) {
-            $state.go('channels');
-            var $toastContent = $('<span class="green-text">New Channel has just created</span>');
-            var rounded = "rounded"
-            Materialize.toast($toastContent, 3000, rounded);
-          });
+      ChannelService.addChannel(vm.channel)
+        .then(function (result) {
+          $state.go('channels');
+
+          UtilsService.AlertToast(
+            $('<span class="green-text">New Channel has just created</span>'), "rounded", 3000);
+
+        })
+        .catch(function () {
+          UtilsService.AlertToast(
+            $('<span class="red-text">There Was an error , please try again</span>'), "rounded", 3000);
+        });
 
 
     };
@@ -96,14 +106,19 @@
           FacebookService.getLongLivedToken(token).then(function (newLongToken) {
             vm.channel.accessToken = newLongToken.longToken;
             data.user.accounts.data.forEach(function (page) {
-              vm.myFacebookPages.push({value: page.id, text: page.name})
+              vm.myFacebookPages.push({value: "https://www.facebook.com/" + page.id, text: page.name});
 
-              var $toastContent = $('<span class="green-text">Your permission has granted , now pick a page</span>');
-              var rounded = "rounded"
-              Materialize.toast($toastContent, 3000, rounded);
+              UtilsService.AlertToast(
+                $("<span class='red-text'>There Was an error , please try again</span>"), "rounded", 3000)
+              ;
 
             });
           })
+            .catch(function () {
+              UtilsService.AlertToast(
+                $('<span class="red-text">There Was an error , please try again</span>'), "rounded", 3000);
+            });
+
 
         });
     };
@@ -115,12 +130,14 @@
         vm.gettedUrl = vm.channel.url;
         if (vm.channel.url && vm.channel.url.length > 7 && (vm.channel.url.indexOf("http") > -1 || vm.channel.url.indexOf("www") > -1 )) {
           if (extractDomain(vm.channel.url).indexOf("undefined") <= -1 && extractDomain(vm.channel.url) != "http")
-          ChannelService.getSimilarChannels(extractDomain(vm.channel.url)).then(function (data) {
-            if (data.length) {
-              vm.similarChannels = data;
-            }
-
-          })
+            ChannelService.getSimilarChannels(extractDomain(vm.channel.url))
+              .then(function (data) {
+                if (data.length) {
+                  vm.similarChannels = data;
+                }
+              })
+              .catch(function () {
+              });
 
 
         }

@@ -1,7 +1,6 @@
 /**
  * Created by HP on 10/04/2017.
  */
-
 /**
  * Imports
  */
@@ -9,9 +8,8 @@ var express = require('express');
 var router = express.Router();
 var DataProvider = require('../../../models/dataProvider/dataProvider.model');
 var CampaignModel = require('../../../models/campaign.model');
-var Channel = require('../../../models/channel/channel.model');
 var google = require('google');
-var scraper = require('./scraper');
+var scraper = require('./websites.controller');
 var async = require('async');
 var alexaData = require('alexa-traffic-rank');
 
@@ -20,25 +18,43 @@ var alexaData = require('alexa-traffic-rank');
  */
 
 /**
- * Search For WebsitesProvider with chanelId & campaignId
+ * Search For WebsitesProvider with campaignId
  */
 router.post('/', function (req, res, next) {
 
   var matchObject = {
     $and: [
       // {dateContent: {'$gte': new Date(req.body.since), '$lte': new Date(req.body.until)}},
-      {channelId: {'$eq': req.body.channelId}},
-      {campaignId: {'$eq': req.body.campaignId}},
-      {source: {'$eq': "websitesProvider"}}
+      // {channelId: {'$eq': req.body.channelId}},
+      {
+        campaignId: {
+          '$eq': req.body.campaignId
+        }
+      },
+      {
+        source: {
+          '$eq': "websitesProvider"
+        }
+      }
     ]
   };
 
 
   var groupObject = {
-    _id: {dateContent: {$substr: ["$dateContent", 0, 10]}},
-    neutral_score: {$avg: "$contentScore.neutral"},
-    positive_score: {$avg: "$contentScore.positivity"},
-    negative_score: {$avg: "$contentScore.negativity"}
+    _id: {
+      dateContent: {
+        $substr: ["$dateContent", 0, 10]
+      }
+    },
+    neutral_score: {
+      $avg: "$contentScore.neutral"
+    },
+    positive_score: {
+      $avg: "$contentScore.positivity"
+    },
+    negative_score: {
+      $avg: "$contentScore.negativity"
+    }
   };
 
   if (req.body.channelId == "all") {
@@ -64,7 +80,9 @@ router.post('/', function (req, res, next) {
  * Get All WebsitesProvider
  */
 router.get('/', function (req, res, next) {
-  DataProvider.getDataProvidersByConditionModel({"source": "websitesProvider"}, function (err, docs) {
+  DataProvider.getDataProvidersByConditionModel({
+    "source": "websitesProvider"
+  }, function (err, docs) {
     if (err) {
       return handleError(res, err);
     }
@@ -96,179 +114,63 @@ router.get('/getAnalysis/:url', function (req, res, next) {
 /**
  * END Return ALEXA analysis
  */
-router.get('/getData', function (req, result, next) {
-  var websitesAndKeywords = [];
+router.get('/getData', function (req, res, next) {
+  var tableOfPromise = [];
   CampaignModel.findAllCampaigns().then(function (campaigns) {
-    var channelPromise;
-    async.eachSeries(campaigns, function iteratee(campaign, callback) {
-      campaign.channels.forEach(function (campaignChannel) {
-        channelPromise = new Promise(function (resolve, reject) {
-          Channel.getChannelByIdModel(campaignChannel.channelId, function (err, channelById) {
-            if (!channelById) {
-              resolve(channelById);
+    campaigns.forEach(function (campaign, index) {
+
+      var singlePromise = new Promise(function (resolve) {
+        scraper.getWebsitesArticles(campaign.keywords, campaign._id).then(function (data) {
+          resolve(data);
+        });
+      });
+      tableOfPromise.push(singlePromise);
+    });
+    Promise.all(tableOfPromise).then(function (data) {
+      //res.json(data);
+      async.eachSeries(data, function iteratee(keys, callbackData) {
+        async.eachSeries(keys, function iteratee(news, callbackKeys) {
+          async.eachSeries(news, function iteratee(item, callbackNews) {
+            if (item !== null && item.description && item.description !== "") {
+
+              var dataToSaveWebsites = {
+                "name": item.title ? item.title : null,
+                "sourceLink": item.url ? item.url : null,
+                "content": item.description ? item.description : null,
+                "dateContent": item.postDate ? item.postDate : new Date(),
+                "contentScore": {},
+                "contentTopics": [],
+                "contentEmotions": [],
+                "contentLanguage": item.lang ? item.lang : null,
+                "author": item.author ? item.author : null,
+                "dateOfScraping": new Date(),
+                "campaignId": item.campaignId ? item.campaignId : null,
+              };
+              var newWebsitesArticle = new DataProvider.websitesProvider(dataToSaveWebsites);
+              DataProvider.createDataProviderModel(newWebsitesArticle, function (err, item) {
+                if (err) return handleError(res, err);
+                else {
+                  callbackNews();
+                  console.log('Success websites article saved');
+                }
+              });
             }
             else {
-              if (channelById.type === "website") {
-                websitesAndKeywords.push({
-                  "campaignId": campaign._id,
-                  "channelId": channelById._id,
-                  "url": channelById.url,
-                  "keywords": campaign.keywords
-                });
-              }
-              resolve(channelById);
+              callbackNews();
             }
+          }, function done() {
+            callbackKeys();
           });
-        })
-      });
-      channelPromise.then(function (data) {
-        callback()
-      })
-    }, function done() {
-      //res.json(websitesAndKeywords);
-      //  HEY HERE DATA DONE
-      var allChannels = [];
-      /**Vars Definition*/
-      var allResult = [];
-      var allKeywords = [];
-      var myChannelPromise;
-      async.eachSeries(websitesAndKeywords, function iteratee(data, callback) {
-        // websitesAndKeywords.forEach(function (data) {
-        allChannels.push(
-          {
-            "url": data.url,
-            "channelId": data.channelId,
-            "campaignId": data.campaignId
-          }
-        );
-        myChannelPromise = new Promise(function (resolve, reject) {
-          data.keywords.forEach(function (key) {
-            allKeywords.push(
-              {
-                "w": key.content,
-                "inTitle": true,
-                "inText": true,
-                "state": "active"
-              }
-            )
-            resolve(key);
-          });
+        }, function done() {
+          callbackData();
         });
-        channelPromise.then(function (data) {
-          callback();
-        })
       }, function done() {
-        var postBodyVerif = false;
-        google.resultsPerPage = 3;
-        /**End of Vars Definition*/
-        /**Queries Definition*/
-
-        var promesses = [];
-        allChannels.forEach(function (channel, idx) {
-          var searchQueryChannles = "";
-
-
-          if (idx === allChannels.length - 1) {
-            searchQueryChannles += "site:" + channel.url
-          } else {
-            searchQueryChannles += "site:" + channel.url;
-          }
-          var searchQueryKeywords = "";
-          allKeywords.forEach(function (keyword, idx) {
-
-            if (keyword.state === "active") {
-              if (idx === allKeywords.length - 1) {
-                searchQueryKeywords += (keyword.inTitle === true ? "intitle:" + keyword.w : "");
-                searchQueryKeywords += (keyword.inText === true ? "intext:" + keyword.w : "");
-              } else {
-                searchQueryKeywords += (keyword.inTitle === true ? "intitle:" + keyword.w + " OR " : "");
-                searchQueryKeywords += (keyword.inText === true ? "intext:" + keyword.w + " OR " : "");
-              }
-            }
-          });
-          var searchQuery = "";
-          console.log("\n Search Query Channles : " + searchQueryChannles + " \n");
-          console.log("\n Search Query Keywords : " + searchQueryKeywords + " \n");
-          searchQuery = searchQueryChannles + ' ' + searchQueryKeywords;
-          console.log("\n Search Query  : " + searchQuery + " \n");
-          /**End of Queries Definition*/
-          /**Begin Search crawl*/
-          google(searchQuery, function (err, res) {
-            if (err) console.error(err);
-            if (res.links.length > 0) {
-              for (var i = 0; i < res.links.length; ++i) {
-                var link = res.links[i];
-                link = {
-                  "title": link.title,
-                  "link": link.link,
-                  "description": link.description
-                }
-                var url = link.link;
-                console.log("url : " + url);
-                /**Get Post Full Body*/
-                if (postBodyVerif === true) {
-                  var myPromise = scraper.scrapeArticle(url, allResult, link).then(function (content) {
-                    //console.log(content);
-                    return content;
-                  });
-                  promesses.push(myPromise);
-                }
-                /**End Get Post Full Body*/
-                else {
-                  allResult.push(link);
-                }
-              }
-              if (postBodyVerif === true) {
-                Promise.all(promesses).then(function (data) {
-                  result.json(data);
-                });
-              } else {
-                // result.json(allResult);
-                allResult.forEach(function (data) {
-                  data.description = data.description.replace(/(\r\n|\n|\r)/gm, "");
-                  var dataToSaveWebsites = {
-                    "name": data.title,
-                    "sourceLink": data.link,
-                    "channelId": channel.channelId,
-                    "content": data.description,
-                    "dateContent": new Date(),
-                    "contentScore": {},
-                    "contentTopics": [],
-                    "contentEmotions": [],
-                    "contentLanguage": "",
-                    "typeContent": "text",
-                    "author": "Hakim Mliki",
-                    "dateOfScraping": new Date(),
-                    "campaignId": channel.campaignId,
-                    "numberOfViews": 52,
-
-                  };
-
-                  var newWebsitesArticle = new DataProvider.websitesProvider(dataToSaveWebsites);
-                  DataProvider.createDataProviderModel(newWebsitesArticle, function (err, item) {
-                    if (err) return handleError(res, err);
-                    else {
-                      console.log('Success websites article saved');
-                      // console.log(item);
-                      // res.status(201)
-                      //   .json(item);
-                    }
-                  });
-                });
-
-              }
-            } else {
-              result.json(allResult);
-            }
-          });
-        });
+        res.json({"End": "ok"});
       });
-
-      // END HEY HERE DATA
 
     });
-  }).catch(function (err) {
   });
+
 });
 
 

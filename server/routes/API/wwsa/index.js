@@ -3,8 +3,7 @@ var router = express.Router();
 var myRequest = require('request');
 var translate = require('google-translate-api');
 var dataProviderModel = require('../../../models/dataProvider/dataProvider.model');
-var sentimentalController = require('../../sentimental/sentiment_analysis.controller')
-
+var sentimentalController = require('../sentimental/sentimentAnalysis.controller.js');
 /* POST TEXT SEARCH . */
 //POST BODY EXEMPLE
 // {
@@ -195,7 +194,6 @@ router.get('/NegativityByCompaign/:id', function (req, res, next) {
   });
 
 });
-
 
 router.get('/NeutralByCompaign/:id', function (req, res, next) {
 

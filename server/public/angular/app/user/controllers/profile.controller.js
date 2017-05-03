@@ -34,7 +34,6 @@
         url: '/profile',
         templateUrl: 'angular/app/user/views/profile.view.html',
         controller: 'ProfileCtrl as profile',
-        register: true,
         authenticate: true
 
       })

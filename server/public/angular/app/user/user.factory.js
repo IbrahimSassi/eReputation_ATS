@@ -33,6 +33,18 @@
           params: {
             email: '@email',
           },
+
+        },
+        'requestNewPassword': {
+          url: '/users/verification/requestNewPassword/:email',
+          method: 'POST',
+          params: {
+            email: '@email',
+          }
+        },
+        'changePassword': {
+          url: '/users/verification/changePassword',
+          method: 'POST'
         }
       }
     );

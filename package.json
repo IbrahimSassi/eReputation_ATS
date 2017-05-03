@@ -19,7 +19,6 @@
     "activator": "^3.0.1",
     "alexa-traffic-rank": "^1.0.1",
     "body-parser": "~1.16.0",
-    "cheerio": "^0.22.0",
     "compression": "^1.6.2",
     "cookie-parser": "~1.4.3",
     "crawler": "^1.0.3",
@@ -30,19 +29,18 @@
     "express": "~4.14.1",
     "express-jwt": "^5.1.0",
     "google": "^2.1.0",
-    "google-translate": "^2.0.4",
     "google-translate-api": "^2.2.2",
     "gridfs-stream": "^1.1.1",
     "jade": "~1.11.0",
     "jsonwebtoken": "^7.3.0",
+    "languagedetect": "^1.1.1",
     "lodash": "^4.17.4",
     "mailsender": "^1.1.2",
     "moment": "^2.18.1",
     "mongoose": "^4.8.6",
     "morgan": "~1.7.0",
-    "multer": "^1.3.0",
+    "my-google-news": "^3.0.0",
     "node-cron": "^1.1.3",
-    "node-google-translate-skidz": "^1.1.0",
     "nodemon": "^1.11.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
@@ -53,6 +51,7 @@
     "serve-favicon": "~2.3.2",
     "styliner": "^1.0.3",
     "twit": "^2.2.5",
-    "twitter": "^1.7.0"
+    "twitter": "^1.7.0",
+    "x-ray": "^2.3.2"
   }
 }

@@ -31,7 +31,6 @@
     }
 
     function deleteChannelFN(channel) {
-      // channel = new ChannelFactory(channel);
       return channel.$delete({id: channel._id});
 
     }
@@ -42,7 +41,6 @@
 
 
     function getChannelsByUserFN(userId) {
-
       return ChannelFactory.getChannelsByUser({userId: userId}).$promise;
     }
 

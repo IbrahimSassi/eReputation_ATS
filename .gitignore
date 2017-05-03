@@ -45,4 +45,6 @@ bower_components/
 tmp
 .idea
 
-/uploads
+
+#ignore uploaded images
+/uploads/images

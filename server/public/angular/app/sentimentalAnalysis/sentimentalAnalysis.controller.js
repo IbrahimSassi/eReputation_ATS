@@ -31,7 +31,7 @@
     $stateProvider
       .state('sentimental', {
         url: '/Wwsa',
-        templateUrl: '../angular/app/sentimental_analysis/views/sentimental_analysis.view.html',
+        templateUrl: '../angular/app/sentimentalAnalysis/views/sentimentalAnalysis.view.html',
         controller: 'WwsaCtrl as sentimental'
       })
 

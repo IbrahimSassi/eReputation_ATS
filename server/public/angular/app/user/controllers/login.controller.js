@@ -18,7 +18,7 @@
   /**Injection**/
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$qProvider'];
 
-  LoginCtrl.$inject = ['UserService', '$state', '$rootScope', 'angularLoad', '$location', '$window'];
+  LoginCtrl.$inject = ['UserService', '$state', '$rootScope', 'angularLoad', '$location', '$window','$stateParams'];
   /**End Of Injection**/
 
 
@@ -33,6 +33,20 @@
         login: true
       })
 
+      .state('forgotPasswordRequest', {
+        url: '/recover',
+        templateUrl: 'angular/app/user/views/forgotPasswordRequest.view.html',
+        controller: 'LoginCtrl as recover',
+        login: true
+      })
+
+      .state('changePassword', {
+        url: '/changePassword/:token',
+        templateUrl: 'angular/app/user/views/changePassword.view.html',
+        controller: 'LoginCtrl as recover',
+        login: true
+      })
+
     ;
     $qProvider.errorOnUnhandledRejections(false);
 
@@ -42,7 +56,7 @@
 
   /** Controller UseCtrl FUNCTION
    */
-  function LoginCtrl(UserService, $state, $rootScope, angularLoad, $location, $window) {
+  function LoginCtrl(UserService, $state, $rootScope, angularLoad, $location, $window,$stateParams) {
 
     /**Scope Replace**/
     var vm = this;
@@ -79,6 +93,69 @@
     vm.goToRegister = function () {
       $location.path('register');
     };
+
+
+
+
+    /*
+     For forget password
+     */
+vm.forgotPasswordRequestBtn = function () {
+
+
+  UserService
+    .requestNewPassword(vm.requestedEmail)
+    .then(successCallback, errorCallback);
+
+
+  function successCallback(response) {
+    swal("Success!", "An Email Was Sent To You!", "success");
+  }
+
+  function errorCallback(error) {
+    swal("Error! Please verify your Email");
+  }
+}
+
+    vm.changePasswordBtn = function () {
+  if(vm.passwordChange == vm.passwordChangeAgain)
+  {
+    ChangePass();
+  }
+  else {
+    swal("Error! Please Verify Your Password");
+  }
+    }
+
+    function ChangePass() {
+
+
+      vm.change = {
+        token : $stateParams.token,
+        password: vm.passwordChange
+      };
+
+      UserService
+        .changePassword(vm.change)
+        .then(successCallback, errorCallback);
+
+
+      function successCallback(response) {
+        swal("Success!", "Password Changed!", "success")
+      }
+
+      function errorCallback(error) {
+        swal("Error In Changing Password!")
+      }
+    }
+
+    /*
+     End for forget password
+     */
+
+
+
+
 
   };
   /**End UserCtrl Function**/

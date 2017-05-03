@@ -23,7 +23,6 @@
         url: '/emailconfirmation/:token',
         templateUrl: 'angular/app/user/views/emailconfirm.view.html',
         controller: 'EmailConfirmCtrl as EmailConfirmCtrl',
-        login: true
       })
 
     ;
@@ -44,7 +43,7 @@
     vm.success = false;
     vm.echec = false;
 
-    var token = $stateParams.token
+    var token = $stateParams.token;
     EmailConfirmService.CheckToken(token).then(successCallback, errorCallback);
 
     function successCallback(response) {

@@ -3,7 +3,7 @@
  */
 
 
-var DataProvider = require('../../models/dataProvider/dataProvider.model');
+var DataProvider = require('../../../models/dataProvider/dataProvider.model');
 var moment = require('moment');
 var MongoClient = require('mongodb').MongoClient;
  var async = require('async');

@@ -3,13 +3,13 @@
  */
 var express = require('express');
 var router = express.Router();
-var config = require('../twitter/config');
+var config = require('../../../config/twitter.config');
 var TwitterStream = require('twitter');
 var dataProvider = require('../../../models/dataProvider/dataProvider.model');
 var TwitterAPIQueries = require('./twitterAPIQuries');
 var TwitterStatsGenerator = require('./twitterStatsGenerator');
 
-var authenticate = require('../../users/middleware/authenticate').authenticate
+var authenticate = require('../users/middleware/authenticate').authenticate
 
 
 var client = new TwitterStream({

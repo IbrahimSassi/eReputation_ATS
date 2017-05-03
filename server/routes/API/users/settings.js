@@ -4,12 +4,12 @@
 
 var express = require('express');
 var router = express.Router();
-var User = require('../../models/users');
+var User = require('../../../models/users.model');
 var crypto = require('crypto');
 var randomstring = require("randomstring");
 var fs = require('fs');
 
-var authenticate = require('../users/middleware/authenticate').authenticate
+var authenticate = require('./middleware/authenticate').authenticate
 
 router.get('/a', function (req, res, next) {
   res.json({"a": 1})
@@ -93,19 +93,8 @@ router.put('/basicinformationBuss/:activeEmail/:email/:businessName/:businessTyp
   }
 });
 
-var multer  = require('multer')
-var upload = multer({ dest: 'uploads/' })
-
-router.post('/profile', upload.single('avatar'), function (req, res, next) {
-  console.log("dkhal haha")
-
-  console.log("dkhal haha",req.file )
-
-  // req.body will hold the text fields, if there were any
-})
-
 router.put('/additionalInformation', function (req, res, next) {
-  //console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+  console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 
  // console.log("Profile: ",req.params.profilePicture);
 
@@ -127,19 +116,19 @@ router.put('/additionalInformation', function (req, res, next) {
     var coverPictureBase64 = coverPicture;
     if (req.body.profilePicture !="" && req.body.coverPicture !="")
     {
-    fs.writeFile(__dirname + "/../../public/uploads/images/"+profilePictureName+".png", profilePictureBase64, 'base64', function(err) {
+    fs.writeFile(__dirname + "/../../../public/uploads/images/"+profilePictureName+".png", profilePictureBase64, 'base64', function(err) {
       if (err) console.log(err);
     });
 
-    fs.writeFile(__dirname + "/../../public/uploads/images/"+coverPictureName+".jpg", coverPictureBase64, 'base64', function(err) {
+    fs.writeFile(__dirname + "/../../../public/uploads/images/"+coverPictureName+".jpg", coverPictureBase64, 'base64', function(err) {
       if (err) console.log(err);
     });
     //*
 
     User.findOneAndUpdate({email: activeEmail}, {
       $set: {
-        profilePicture: profilePictureName,
-        coverPicture: coverPictureName,
+        profilePicture: 'images/'+profilePictureName,
+        coverPicture: 'images/'+coverPictureName,
         about: about,
         birthday: birthday,
         country: country
@@ -233,18 +222,6 @@ router.put('/changepassword/:activeEmail/:oldpassword/:newpassword', function (r
 });
 
 
-//***************************
-var multer  = require('multer')
-var upload = multer({ dest: 'uploads/' })
-router.post('/profile', upload.any(), function (req, res, next) {
-  // req.file is the `avatar` file
-  // req.body will hold the text fields, if there were any
-  console.log(req.file)
-  res.status(200)
-})
-
-
-//****************************
 
 
 

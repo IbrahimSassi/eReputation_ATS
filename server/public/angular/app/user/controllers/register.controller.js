@@ -69,6 +69,7 @@
     vm.setBusiness = function () {
       vm.credentialsRegister.accountType = "business"
     };
+
     vm.credentialsRegister = {
       username: "",
       email: "",
@@ -86,7 +87,23 @@
 
     vm.onSubmitRegister = function () {
 
+if ((vm.credentialsRegister.username.length <5 && vm.credentialsRegister.businessName.length <5) || vm.credentialsRegister.password.length <5  || (vm.credentialsRegister.password != vm.credentialsRegister.passwordAgain)
+)
+{
+}
 
+
+
+
+else
+{
+  register();
+}
+
+    };
+
+
+    function register() {
       UserService
         .register(vm.credentialsRegister)
         .then(successCallback, errorCallback);
@@ -110,7 +127,7 @@
         else
           vm.AllFieldsRequired = true;
       }
-    };
+    }
 
     vm.goToLogin = function () {
       $location.path('login');

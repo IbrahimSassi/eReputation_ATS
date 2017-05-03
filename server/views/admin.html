@@ -134,7 +134,7 @@
         <li class="user-details cyan darken-2">
           <div class="row">
             <div class="col col s4 m4 l4">
-              <img ng-src="uploads/images/{{currentUser.profilePicture}}.png" alt=""
+              <img ng-src="uploads/{{currentUser.profilePicture}}.png" alt=""
                    class="circle responsive-img valign profile-image">
             </div>
             <div class="col col s8 m8 l8">
@@ -479,15 +479,6 @@
 <script src="angular/app/bower_components/moment/min/moment.min.js"></script>
 <script type="text/javascript" src="angular/app/assets/js/plugins/sweetalert/sweetalert.min.js"></script>
 
-<!--<script src="angular/app/bower_components/angular-material/angular-material.min.js"></script>-->
-
-
-<!--Fusion Chart Script-->
-<!--<script src="angular/app/bower_components/fusioncharts/fusioncharts.js"></script>-->
-<!--<script src="angular/app/bower_components/fusioncharts/fusioncharts.charts.js"></script>-->
-<!--<script src="angular/app/bower_components/fusioncharts/angular-fusioncharts.min.js"></script>-->
-
-
 <!--Delete OClazyLoad after your correct your code-->
 <script src="angular/app/bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
 <script src="angular/app/app-back-office.js"></script>
@@ -541,6 +532,7 @@
 
 
 <script src="angular/app/components/colorPicker.service.js"></script>
+<script src="angular/app/components/utils.service.js"></script>
 
 <!--User Profile-->
 <script src="angular/app/user/controllers/profile.controller.js"></script>
@@ -558,9 +550,9 @@
 <!--Ibrahim Modules ends-->
 
 <!-- sentimental analysis start -->
-<script src="angular/app/sentimental_analysis/sentimental_analysis.controller.js"></script>
-<script src="angular/app/sentimental_analysis/sentimental_analysis.factory.js"></script>
-<script src="angular/app/sentimental_analysis/sentimental_analysis.service.js"></script>
+<script src="angular/app/sentimentalAnalysis/sentimentalAnalysis.controller.js"></script>
+<script src="angular/app/sentimentalAnalysis/sentimentalAnalysis.factory.js"></script>
+<script src="angular/app/sentimentalAnalysis/sentimentalAnalysis.service.js"></script>
 <!-- sentimental analysis end -->
 
 <!--materialize js-->
