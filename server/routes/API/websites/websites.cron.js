@@ -1,7 +1,6 @@
 /**
  * Created by HP on 03/05/2017.
  */
-var scraper = require('./websites.controller');
 var DataProvider = require('../../../models/dataProvider/dataProvider.model');
 var CampaignModel = require('../../../models/campaign.model');
 var scraper = require('./websites.controller');
