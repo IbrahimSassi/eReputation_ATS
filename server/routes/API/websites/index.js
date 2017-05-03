@@ -8,7 +8,6 @@ var express = require('express');
 var router = express.Router();
 var DataProvider = require('../../../models/dataProvider/dataProvider.model');
 var CampaignModel = require('../../../models/campaign.model');
-var Channel = require('../../../models/channel/channel.model');
 var google = require('google');
 var scraper = require('./websites.controller');
 var async = require('async');

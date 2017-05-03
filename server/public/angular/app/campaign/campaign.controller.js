@@ -207,6 +207,7 @@
       }
       else {
         channel.url = vm.extractDomain(channel.url);
+        channel.userId=$rootScope.currentUser._id;
       }
       //end
       $scope.myChannelAaccessToken === undefined ? '' : channel.accessToken = $scope.myChannelAaccessToken;
