@@ -57,8 +57,9 @@ function facebookCronLauncher() {
                 callback()
               })
               .catch(function (err) {
-                console.log("err 1")
-                console.log(err)
+                console.log("err 1");
+                console.log(err);
+                callback()
                 // reject(err);
               })
 
@@ -96,36 +97,23 @@ function facebookCronLauncher() {
                     callback();
                   })
                   .catch(function (err) {
-                    console.log("err 2")
-                    console.log(err)
+                    console.log("err 2");
+                    console.log(err);
                     callback();
 
                   });
 
               })
               .catch(function (err) {
-                console.log("err 3")
-                console.log(err)
+                console.log("err 3");
+                console.log(err);
                 reject(err);
               })
 
           }, function done() {
 
             console.log("DONE GETTING Data");
-            // console.log("Start sentimental analysis ...");
-
             resolve(_targets);
-            // var url = config.host + "/attributeScore/setScore";
-            // utils.getData(url)
-            //   .then(function () {
-            //     console.log("DONE");
-            //     // resolve();
-            // })
-            //   .catch(function (err) {
-            //     console.log("err 4")
-            //     console.log(err)
-            //
-            //   });
           })
 
         });
