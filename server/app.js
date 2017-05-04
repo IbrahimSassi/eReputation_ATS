@@ -49,6 +49,7 @@ var sentimentalCron = require('./routes/API/sentimental/SentimentalFunctions');
  sentimentalCron.SentimentalForSpecificProvider("FacebookCommentsProvider");
  // end Facebook Sentiment analysis
 
+
  // Websites CRON
  websitesCron.websitesLauncher().then(function () {
    //Websites Sentiment Analysis
@@ -65,8 +66,8 @@ var sentimentalCron = require('./routes/API/sentimental/SentimentalFunctions');
  // });
 
  });
- */
 
+*/
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

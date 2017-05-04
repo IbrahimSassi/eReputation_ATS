@@ -37,6 +37,10 @@
       return CampaignFactory.save(campaign).$promise;
     }
 
+    this.editCampaign = function (campaign) {
+      return CampaignFactory.update({id: campaign._id}, campaign).$promise;
+    }
+
     this.getCampaignById = function (idCampaign) {
       return CampaignFactory.getCampaignById({id: idCampaign}).$promise;
     }

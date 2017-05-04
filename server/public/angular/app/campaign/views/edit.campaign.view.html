@@ -196,7 +196,7 @@
                             </button>
                           </div>
                         </div>
-                        <div ng-if="campaignToEdit.channel.personal===false" class="row">
+                        <div  ng-if="!campaignToEdit.channel.personal" class="row">
                           <div class="input-field col s12">
                             <i class="mdi-image-edit prefix"></i>
                             <input ng-model="campaignToEdit.channel.url" id="ch_url" type="url">
@@ -244,6 +244,7 @@
                                          err-src
                                          alt="logo">
                                     {{channel.name}}
+                                    <i ng-click="camp.removeChannelsFromAdd($index)" class="material-icons mdi-navigation-close"></i>
                                  </div>
                               </span>
                       <br/><br/><br/>
@@ -303,11 +304,11 @@
                   </div>
                   <div class="input-field col s12">
                     <br/><br/><br/>
-                    <span ng-repeat="k in campaignToEdit.keywords">
+                    <span ng-repeat="k in keywordsToEdit">
                                  <div class="chip white-text teal">
                                     {{k.content}}
 
-                                     <i ng-click="camp.removeKeywordsFromAdd($index)" class="material-icons mdi-navigation-close"></i>
+                                     <i ng-click="camp.removeKeywordsFromAdd($index,true)" class="material-icons mdi-navigation-close"></i>
                                  </div>
                               </span>
                     <br/><br/><br/>
@@ -316,7 +317,7 @@
 
                 <div class="row">
                   <div class="input-field col s12">
-                    <button ng-click="camp.addKeywords(camp.keyword)"
+                    <button ng-click="camp.addKeywords(camp.keyword,true)"
                             class="col s4 offset-s4 btn grey darken-3 waves-effect waves-light center " name="action">
                       Add Keyword To this Campaign
                       <i class="mdi-action-note-add right"></i>
@@ -331,10 +332,10 @@
                     </button>
                   </div>
                   <div class="input-field col s6">
-                    <button ng-click="camp.addCampaign(campaignToEdit)"
-                            class="btn grey darken-3 waves-effect waves-light right" type="submit" name="action">Add
+                    <button ng-click="camp.editCampaign(campaignToEdit)"
+                            class="btn grey darken-3 waves-effect waves-light right" type="submit" name="action">Edit
                       Campaign
-                      <i class="mdi-content-add-circle right"></i>
+                      <i class="mdi-editor-border-color right"></i>
                     </button>
                   </div>
                 </div>
