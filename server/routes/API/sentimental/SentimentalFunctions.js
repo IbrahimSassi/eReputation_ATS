@@ -5,12 +5,12 @@
 var dataProvider = require('../../../models/dataProvider/dataProvider.model');
 var translate = require('google-translate-api');
 var myRequest = require('request');
+var senti = require('senti');
 
 var count = 0;
 
 
 function SentimentalForSpecificProvider(providerType) {
-
 
 
   function translateFN() {
@@ -19,7 +19,6 @@ function SentimentalForSpecificProvider(providerType) {
     var negative = null;
     var neutral = null;
     dataProvider.findNulledScoreWithDataproviderType(providerType).then(function (data) {
-
 
 
       if (data.content) {
@@ -66,13 +65,13 @@ function SentimentalForSpecificProvider(providerType) {
                 console.log("errrr", scoreResults)
 
                 dataProvider.updateScore(data, scoreResults).then(function (result) {
-                  if(count==400)
-                  {
-                    setTimeout(function(){ translateFN();
-                      count=0}, 300);
+                  if (count == 400) {
+                    setTimeout(function () {
+                      translateFN();
+                      count = 0
+                    }, 300);
                   }
-                  else
-                  {
+                  else {
                     translateFN();
                   }
                 }).catch(function (err) {
@@ -80,36 +79,54 @@ function SentimentalForSpecificProvider(providerType) {
               }
 
               else {
-
-                console.log(response.statusCode, body);
-                console.log(JSON.parse(body)[0].sentiment);
+                if (JSON.parse(body)[0] !== undefined) {
 
 
-                var resultsLenght = JSON.parse(body).length;
-                console.log('len:', resultsLenght)
-                for (var i = 0; i < resultsLenght; i++) {
-                  positive = positive + ((JSON.parse(body)[i].sentiment.positive) / resultsLenght) * 100;
-                  negative = negative + ((JSON.parse(body)[i].sentiment.negative) / resultsLenght) * 100;
-                  neutral = neutral + ((JSON.parse(body)[i].sentiment.neutral) / resultsLenght) * 100;
+                  console.log(response.statusCode, body);
+                  console.log(JSON.parse(body)[0].sentiment);
+
+
+                  var resultsLenght = JSON.parse(body).length;
+                  console.log('len:', resultsLenght)
+                  for (var i = 0; i < resultsLenght; i++) {
+                    positive = positive + ((JSON.parse(body)[i].sentiment.positive) / resultsLenght) * 100;
+                    negative = negative + ((JSON.parse(body)[i].sentiment.negative) / resultsLenght) * 100;
+                    neutral = neutral + ((JSON.parse(body)[i].sentiment.neutral) / resultsLenght) * 100;
+                  }
+
+
+                  var scoreResults = {positivity: positive, negativity: negative, neutral: neutral}
+                  console.log('scoreResults: ', scoreResults);
+
+                  dataProvider.updateScore(data, scoreResults).then(function (result) {
+                    if (count == 400) {
+                      setTimeout(function () {
+                        translateFN();
+                        count = 0
+                      }, 300);
+                    }
+                    else {
+                      translateFN();
+                    }
+                  }).catch(function (err) {
+                  });
                 }
+                else {
+                  senti(data.content.replace('@', ''), function (item) {
+                    positive = positive + item.probability.pos * 100;
+                    negative = negative + item.probability.neg * 100;
+                    neutral = neutral + item.probability.neutral * 100;
+                    var scoreResults = {positivity: positive, negativity: negative, neutral: neutral};
+                    console.log('scoreResults: ', scoreResults);
 
-
-
-                var scoreResults = {positivity: positive, negativity: negative, neutral: neutral}
-                console.log('scoreResults: ', scoreResults);
-
-                dataProvider.updateScore(data, scoreResults).then(function (result) {
-                  if(count==400)
-                  {
-                    setTimeout(function(){ translateFN();
-                      count=0}, 300);
-                  }
-                  else
-                  {
-                    translateFN();
-                  }
-                }).catch(function (err) {
-                });
+                    dataProvider.updateScore(data, scoreResults).then(function (result) {
+                      translateFN()
+                      // res.status(200).json({"updatedData": result});
+                    }).catch(function (err) {
+                      //   res.status(400).json({"Error": "Error in update"})
+                    });
+                  }, true);
+                }
               }
             }
           });
@@ -131,8 +148,6 @@ function SentimentalForSpecificProvider(providerType) {
           textToAnalyse = textToAnalyse.replaceAll("”", " ");
           textToAnalyse = textToAnalyse.replaceAll("’", " ");
           console.log('Final Text State: ', textToAnalyse);
-
-
 
 
           myRequest({
@@ -160,52 +175,69 @@ function SentimentalForSpecificProvider(providerType) {
                 console.log("errrr", scoreResults)
 
                 dataProvider.updateScore(data, scoreResults).then(function (result) {
-                  if(count==400)
-                  {
-                    setTimeout(function(){ translateFN();
-                      count=0}, 120000);
+                  if (count == 400) {
+                    setTimeout(function () {
+                      translateFN();
+                      count = 0
+                    }, 120000);
                   }
-                  else
-                  {
+                  else {
                     translateFN();
                   }
                 }).catch(function (err) {
                 });
               }
               else {
+                if (JSON.parse(body)[0] !== undefined) {
+                  console.log(response.statusCode, body);
+                  console.log(JSON.parse(body)[0].sentiment);
 
-                console.log(response.statusCode, body);
-                console.log(JSON.parse(body)[0].sentiment);
+
+                  var resultsLenght = JSON.parse(body).length;
+                  console.log('len:', resultsLenght)
+                  for (var i = 0; i < resultsLenght; i++) {
+                    positive = positive + ((JSON.parse(body)[i].sentiment.positive) / resultsLenght) * 100;
+                    negative = negative + ((JSON.parse(body)[i].sentiment.negative) / resultsLenght) * 100;
+                    neutral = neutral + ((JSON.parse(body)[i].sentiment.neutral) / resultsLenght) * 100;
+                  }
 
 
-                var resultsLenght = JSON.parse(body).length;
-                console.log('len:', resultsLenght)
-                for (var i = 0; i < resultsLenght; i++) {
-                  positive = positive + ((JSON.parse(body)[i].sentiment.positive) / resultsLenght) * 100;
-                  negative = negative + ((JSON.parse(body)[i].sentiment.negative) / resultsLenght) * 100;
-                  neutral = neutral + ((JSON.parse(body)[i].sentiment.neutral) / resultsLenght) * 100;
+                  var scoreResults = {positivity: positive, negativity: negative, neutral: neutral}
+                  console.log('scoreResults: ', scoreResults);
+
+
+                  dataProvider.updateScore(data, scoreResults).then(function (result) {
+
+
+                    if (count == 400) {
+                      setTimeout(function () {
+                        translateFN();
+                        count = 0
+                      }, 120000);
+                    }
+                    else {
+                      translateFN();
+                    }
+
+                  }).catch(function (err) {
+                  });
                 }
+                else {
+                  senti(data.content.replace('@', ''), function (item) {
+                    positive = positive + item.probability.pos * 100;
+                    negative = negative + item.probability.neg * 100;
+                    neutral = neutral + item.probability.neutral * 100;
+                    var scoreResults = {positivity: positive, negativity: negative, neutral: neutral};
+                    console.log('scoreResults: ', scoreResults);
 
-
-                var scoreResults = {positivity: positive, negativity: negative, neutral: neutral}
-                console.log('scoreResults: ', scoreResults);
-
-
-                dataProvider.updateScore(data, scoreResults).then(function (result) {
-
-
-                  if(count==400)
-                  {
-                    setTimeout(function(){ translateFN();
-                    count=0}, 120000);
-                  }
-                  else
-                  {
-                    translateFN();
-                  }
-
-                }).catch(function (err) {
-                });
+                    dataProvider.updateScore(data, scoreResults).then(function (result) {
+                      translateFN()
+                      // res.status(200).json({"updatedData": result});
+                    }).catch(function (err) {
+                      //   res.status(400).json({"Error": "Error in update"})
+                    });
+                  }, true);
+                }
               }
             }
           });
@@ -224,13 +256,13 @@ function SentimentalForSpecificProvider(providerType) {
         console.log("errrr", scoreResults)
 
         dataProvider.updateScore(data, scoreResults).then(function (result) {
-          if(count==400)
-          {
-            setTimeout(function(){ translateFN();
-              count=0}, 120000);
+          if (count == 400) {
+            setTimeout(function () {
+              translateFN();
+              count = 0
+            }, 120000);
           }
-          else
-          {
+          else {
             translateFN();
           }
         }).catch(function (err) {
@@ -244,6 +276,7 @@ function SentimentalForSpecificProvider(providerType) {
 
     });
   }
+
   translateFN();
 
 }

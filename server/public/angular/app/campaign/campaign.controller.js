@@ -32,63 +32,63 @@
         templateUrl: 'angular/app/campaign/views/create.campaign.view.html',
         controller: 'CampaignCtrl as camp',
         authenticate: true,
-        shouldConfirmed : true
+        shouldConfirmed: true
       })
       .state('campaignEdit', {
         url: '/campaign/edit/:idCampaign',
         templateUrl: 'angular/app/campaign/views/edit.campaign.view.html',
         controller: 'CampaignCtrl as camp',
         authenticate: true,
-        shouldConfirmed : true
+        shouldConfirmed: true
       })
       .state('campaignList', {
         url: '/campaign/list',
         templateUrl: 'angular/app/campaign/views/list.campaign.view.html',
         controller: 'CampaignCtrl as camp',
         authenticate: true,
-        shouldConfirmed : true
+        shouldConfirmed: true
       })
       .state('campaignDetail', {
         url: '/campaign/detail/:idCampaign',
         templateUrl: 'angular/app/campaign/views/detail.campaign.view.html',
         controller: 'CampaignCtrl as camp',
         authenticate: true,
-        shouldConfirmed : true
+        shouldConfirmed: true
       })
       .state('campaignDetail.campaignSentimentAnalysis', {
         url: '/sentiment',
         templateUrl: 'angular/app/campaign/views/analysis/sentiment.campaign.view.html',
         controller: 'CampaignSentimentCtrl as camp',
         authenticate: true,
-        shouldConfirmed : true
+        shouldConfirmed: true
       })
       .state('campaignDetail.campaignFbAnalysis', {
         url: '/facebook',
         templateUrl: 'angular/app/campaign/views/analysis/fb.campaign.global.view.html',
         controller: 'CampaignFbCtrl as vm',
         authenticate: true,
-        shouldConfirmed : true
+        shouldConfirmed: true
       })
       .state('campaignDetail.campaignFbAnalysis.overview', {
         url: '/overview',
         templateUrl: 'angular/app/campaign/views/analysis/fb.campaign.view.html',
         controller: 'CampaignFbCtrl as vm',
         authenticate: true,
-        shouldConfirmed : true
+        shouldConfirmed: true
       })
       .state('campaignDetail.campaignTwitterAnalysis', {
         url: '/twitter',
         templateUrl: 'angular/app/campaign/views/analysis/tw.campaign.view.html',
         controller: 'CampaignTwCtrl as camp',
         authenticate: true,
-        shouldConfirmed : true
+        shouldConfirmed: true
       })
       .state('campaignDetail.campaignWebAnalysis', {
         url: '/web',
         templateUrl: 'angular/app/campaign/views/analysis/web.campaign.view.html',
         controller: 'CampaignWebCtrl as camp',
         authenticate: true,
-        shouldConfirmed : true
+        shouldConfirmed: true
       })
     ;
 
@@ -106,8 +106,13 @@
     /**Scope Replace**/
     var vm = this;
     vm.idCampaign = $stateParams.idCampaign;
-    $scope.allChannelTodisplay=[];
-    $scope.allChannelEditTodisplay=[];
+    $scope.allChannelTodisplay = [];
+    $scope.allChannelEditTodisplay = [];
+    $scope.allChannelEditTodisplayId=[];
+    $scope.channels = [];
+    $scope.channelsId = [];
+    $scope.keywords = [];
+    $scope.keywordsToEdit=[];
     /**
      * View Detail Methods
      */
@@ -116,12 +121,13 @@
 
     vm.displayEdit = function (id) {
       CampaignService.getCampaignById(id).then(function (data) {
-
+        $scope.keywordsToEdit=data[0].keywords;
         console.info("cammpaign : ", data[0]);
         $scope.campaignToEdit = data[0];
         data[0].channels.forEach(function (channelPartial) {
           ChannelService.getChannelByID(channelPartial.channelId).then(function (channel) {
             $scope.allChannelEditTodisplay.push(channel);
+            $scope.allChannelEditTodisplayId.push({'channelId': channel._id});
           });
         });
       }).catch(function (err) {
@@ -131,7 +137,7 @@
     };
 
     if (vm.idCampaign && $state.includes('campaignEdit')) {
-       vm.displayEdit(vm.idCampaign);
+      vm.displayEdit(vm.idCampaign);
     }
 
     vm.getCampaignDetail = function (id) {
@@ -196,9 +202,7 @@
     // $rootScope.currentUser._id='58dcdfb7007df41d241782f7';
 
 
-    $scope.channels = [];
-    $scope.channelsId = [];
-    $scope.keywords = [];
+
 
     vm.addChannels = function (channel) {
       //add only domain name exemple www.ifm.tn
@@ -207,7 +211,10 @@
       }
       else {
         channel.url = vm.extractDomain(channel.url);
-        channel.userId=$rootScope.currentUser._id;
+      }
+      channel.userId = $rootScope.currentUser._id;
+      if (channel.personal === undefined) {
+        channel.personal = false;
       }
       //end
       $scope.myChannelAaccessToken === undefined ? '' : channel.accessToken = $scope.myChannelAaccessToken;
@@ -223,28 +230,58 @@
 
     vm.pushChannelId = function (idChannel) {
       $scope.channelsId.push({'channelId': idChannel});
+      $scope.allChannelEditTodisplayId.push({'channelId': idChannel});
       ChannelService.getChannelByID(idChannel).then(function (dataChannel) {
         $scope.channels.push(dataChannel);
+        $scope.allChannelEditTodisplay.push(dataChannel);
       });
-
     };
-
-    vm.addKeywords = function (keyword) {
-      $scope.keywords.push(
-        {
-          "content": keyword.content,
-          "importance": keyword.importance
-        }
-      );
-    };
-    vm.removeKeywordsFromAdd = function (index) {
-      $scope.keywords.splice(index, 1);
-      console.info($scope.keywords);
-    };
-
     vm.removeChannelsFromAdd = function (index) {
-      $scope.channelsId.splice(index, 1);
-      console.info($scope.channelsId);
+      var idChannelToDelete = $scope.channelsId[index] !== undefined
+        ? $scope.channelsId[index].channelId
+        : $scope.allChannelEditTodisplay[index]._id;
+      ChannelService.getChannelByID(idChannelToDelete).then(function (dataChannel) {
+        ChannelService.deleteChannel(dataChannel).then(function () {
+          $scope.channelsId.splice(index, 1);
+          $scope.allChannelEditTodisplayId.splice(index, 1);
+          console.info($scope.channelsId);
+        });
+      });
+    };
+
+
+    vm.addKeywords = function (keyword,edit) {
+      if(edit===true)
+      {
+        $scope.keywordsToEdit.push(
+          {
+            "content": keyword.content,
+            "importance": keyword.importance
+          }
+        );
+      }
+      else {
+        $scope.keywords.push(
+          {
+            "content": keyword.content,
+            "importance": keyword.importance
+          }
+        );
+      }
+
+
+    };
+    vm.removeKeywordsFromAdd = function (index,edit) {
+      if(edit===true)
+      {
+        $scope.keywordsToEdit.splice(index, 1);
+        console.info($scope.keywords);
+      }
+      else {
+        $scope.keywords.splice(index, 1);
+        console.info($scope.keywords);
+      }
+
     };
 
 
@@ -254,26 +291,14 @@
      */
     vm.addCampaign = function (campaign) {
       // init vars
-      campaign.channel.userId = $rootScope.currentUser._id;
       campaign.userId = $rootScope.currentUser._id;
       campaign.channel.personal === undefined ? false : campaign.channel.personal;
       campaign.channels = $scope.channelsId;
       campaign.dateStart = moment(campaign.dateStart, 'DD/MM/YYYY');
       campaign.dateEnd = moment(campaign.dateEnd, 'DD/MM/YYYY');
-
       campaign.keywords = $scope.keywords;
 
-      campaign.location = [
-        {
-          "latitude": 123.123,
-          "longitude": 55.55
-        }
-      ];
-
-
       // end init vars
-
-
       CampaignService.addCampaign(campaign).then(function (data) {
         console.log("Campaign Added");
         swal({
@@ -292,11 +317,33 @@
           text: "Campaign NOT Created ! \n  please verify entries ...",
           type: "warning",
         });
-
       });
-
-
     };
+
+
+    vm.editCampaign = function (campaignToEdit) {
+      campaignToEdit.channels = $scope.allChannelEditTodisplayId;
+      CampaignService.editCampaign(campaignToEdit).then(function (data) {
+        console.log("Campaign Edited");
+        swal({
+            title: "Good job!",
+            text: "Campaign Edited !",
+            type: "success",
+          },
+          function () {
+            $state.go("campaignList");
+          });
+        console.log(data);
+      }).catch(function (err) {
+
+        swal({
+          title: "Problem !",
+          text: "Campaign NOT Edited ! \n  please verify entries ...",
+          type: "warning",
+        });
+      });
+    };
+
 
     /**
      * getAllMyChannels

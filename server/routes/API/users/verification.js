@@ -79,22 +79,37 @@ router.get('/validate/:token', function (req, res, next) {
 
 router.post('/requestNewPassword/:email', function (req, res, next) {
 
-  var token = jwt.sign({
-    exp: Math.floor(Date.now() / 1000) + (60 * 60),
-    email: req.params.email
-  }, 'changePassword');
 
-  sendmail("Please click this <a href='" +config.host+'/#!/changePassword/'+token+
-    "'>link</a> to change your password!", req.params.email)
 
-  function sendmail(body, to) {
-    mailsender
-      .from(configEmail.from, configEmail.pwd)
-      .to(to)
-      .body(configEmail.subject, body, true)
-      .send();
-  }
-  res.status(200).json("Success");
+  User.findOne({email: req.params.email}, function (err, findUser) {
+    if (!findUser) {
+      res.status(400).json("Failed");
+    }
+    else
+    {
+
+      var token = jwt.sign({
+        exp: Math.floor(Date.now() / 1000) + (60 * 60),
+        email: req.params.email
+      }, 'changePassword');
+
+      sendmail("Please click this <a href='" +config.host+'/#!/changePassword/'+token+
+        "'>link</a> to change your password!", req.params.email)
+
+      function sendmail(body, to) {
+        mailsender
+          .from(configEmail.from, configEmail.pwd)
+          .to(to)
+          .body(configEmail.subject, body, true)
+          .send();
+      }
+      res.status(200).json("Success");
+    }
+
+
+  });
+
+
 });
 
 

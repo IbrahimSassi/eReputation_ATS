@@ -115,7 +115,7 @@ function transformPostsData(req, res, next) {
       next()
     });
 
-};
+}
 
 function transformCommentsData(req, res, next) {
 
@@ -205,7 +205,7 @@ function transformCommentsData(req, res, next) {
   })
 
 
-};
+}
 
 function getComments(req, res, next) {
 
@@ -293,7 +293,6 @@ function handleFbPaging(data, direction, postId) {
               resolve(_urls)
             }).catch(function () {
             reject({error: 'error handling next paging'})
-
           })
         }).catch(function () {
         reject({error: 'error handling next paging'})
