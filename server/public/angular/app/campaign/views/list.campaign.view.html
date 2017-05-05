@@ -8,8 +8,8 @@
 <script type="text/javascript" src="angular/app/assets/js/plugins/ionRangeSlider/js/ion.rangeSlider.js"></script>
 <script type="text/javascript" src="angular/app/assets/js/plugins/sweetalert/sweetalert.min.js"></script>
 <div class="row">
-   <span ng-if="!camp.campaigns">
-      <div style="" class="spinner red-text icon-spinner-5 col s12 m4 offset-m4" aria-hidden="true"></div>
+   <span class="col s12 m4 offset-m4" ng-if="!camp.campaigns">
+      <div style="" class="spinner red-text icon-spinner-5" aria-hidden="true"></div>
    </span>
   <span ng-if="camp.campaigns.length==0">
      <div class="col s12 m4 offset-m4">

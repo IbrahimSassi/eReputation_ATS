@@ -16,7 +16,6 @@
         media="screen,projection">
   <link href="angular/app/assets/js/plugins/sweetalert/sweetalert.css" type="text/css" rel="stylesheet"
         media="screen,projection">
-
   <link href="angular/app/assets/css/spinner.css" type="text/css" rel="stylesheet" media="screen,projection">
   <style>
     a.disabled {
@@ -48,26 +47,24 @@
           </li>
         </ul>
         <!--<div class="header-search-wrapper hide-on-med-and-down">-->
-          <!--<i class="mdi-action-search"></i>-->
-          <!--<input type="text" name="Search" class="header-search-input z-depth-2"-->
-                 <!--placeholder="Search ..."/>-->
+        <!--<i class="mdi-action-search"></i>-->
+        <!--<input type="text" name="Search" class="header-search-input z-depth-2"-->
+        <!--placeholder="Search ..."/>-->
         <!--</div>-->
         <ul class="right hide-on-med-and-down">
           <!--<li><a href="javascript:void(0);" class="waves-effect waves-block waves-light translation-button"-->
-                 <!--data-activates="translation-dropdown"><img src="angular/app/assets/images/flag-icons/United-States.png"-->
-                                                            <!--alt="USA"/></a>-->
+          <!--data-activates="translation-dropdown"><img src="angular/app/assets/images/flag-icons/United-States.png"-->
+          <!--alt="USA"/></a>-->
           <!--</li>-->
           <li><a href="javascript:void(0);" class="waves-effect waves-block waves-light toggle-fullscreen"><i
             class="mdi-action-settings-overscan"></i></a>
           </li>
-
           <li><a href="#" data-activates="chat-out"
                  class="waves-effect waves-block waves-light chat-collapse"><i
             class="mdi-action-help"></i></a>
           </li>
         </ul>
         <!-- translation-button -->
-
         <!-- notifications-dropdown -->
         <ul id="notifications-dropdown" class="dropdown-content">
           <li>
@@ -110,8 +107,6 @@
                 <li><a href="#" ng-click="logOut()"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
                 </li>
               </ul>
-
-
               <a ng-if="currentUser.kind=='Individual'"
                  class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#"
                  data-activates="profile-dropdown">{{currentUser.firstName}}<i
@@ -120,14 +115,13 @@
                  class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#"
                  data-activates="profile-dropdown"
               >{{currentUser.businessName}}<i class="mdi-navigation-arrow-drop-down right"></i></a>
-
               <p class="user-roal">{{currentUser.kind}}</p>
             </div>
           </div>
         </li>
         <!--  <li ui-sref-active="active" class="bold"><a ui-sref="dashboard" class="waves-effect waves-cyan"><i
-            class="mdi-action-dashboard"></i> Dashboard</a>
-          </li> -->
+           class="mdi-action-dashboard"></i> Dashboard</a>
+           </li> -->
         <li class="no-padding">
           <ul class="collapsible collapsible-accordion">
             <li class="bold active">
@@ -147,7 +141,6 @@
             </li>
           </ul>
         </li>
-
         <li class="no-padding">
           <ul class="collapsible collapsible-accordion">
             <li class="bold active">
@@ -165,10 +158,7 @@
               </div>
             </li>
           </ul>
-
         </li>
-
-
         <a href="#" data-activates="slide-out"
            class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only cyan"><i
           class="mdi-navigation-menu"></i></a>
@@ -176,7 +166,6 @@
       <a href="#" data-activates="slide-out"
          class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only grey darken-1"><i
         class="mdi-navigation-menu"></i></a>
-
     </aside>
     <!-- END LEFT SIDEBAR NAV-->
     <!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -186,31 +175,26 @@
       <div id="breadcrumbs-wrapper">
         <!-- Search for small screen -->
         <!--<div class="header-search-wrapper grey hide-on-large-only">-->
-          <!--<i class="mdi-action-search active"></i>-->
-          <!--<input type="text" name="Search" class="header-search-input z-depth-2"-->
-                 <!--placeholder="Explore Materialize">-->
+        <!--<i class="mdi-action-search active"></i>-->
+        <!--<input type="text" name="Search" class="header-search-input z-depth-2"-->
+        <!--placeholder="Explore Materialize">-->
         <!--</div>-->
-
         <!--TODO - This Must Be Deplaced to the view and be dynamic -->
-
       </div>
       <!--breadcrumbs end-->
       <!--start container-->
       <div class="container">
         <div class="section">
-
-
           <div ng-show="currentUser.state=='INACTIVE'" id="card-alert" class="card red">
             <div class="card-content white-text">
               <p><i class="mdi-alert-error"></i> Account Not Verified : Please confirm your account with the link sent
-                to your email</p>
+                to your email
+              </p>
             </div>
             <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
-
-
           <!-- UI VIEW -->
           <!-- //////////////////////////////////////////////////////////////////////////// -->
           <!-- START HEADER -->
@@ -264,7 +248,6 @@
                     <p>Every campaign is analyzed at 12:00 AM.</p>
                   </div>
                 </div>
-
               </div>
             </li>
             <li>
@@ -281,7 +264,6 @@
                     <p>We Need Your facebook token if you need to analyze private pages.</p>
                   </div>
                 </div>
-
               </div>
             </li>
             <li>
@@ -298,10 +280,8 @@
                     <p>Your images must be less than 100mb </p>
                   </div>
                 </div>
-
               </div>
             </li>
-
           </ul>
         </li>
       </ul>
@@ -317,26 +297,26 @@
   html {
     overflow-x: hidden;
   }
-
   body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
   }
-
   #main {
     flex: 1 0 auto;
   }
-
 </style>
 <footer class="page-footer">
   <div class="footer-copyright">
     <div class="container">
                <span>Copyright © 2017 <a class="grey-text text-lighten-4"
                                          href="#"
-                                         target="_blank"></a> All rights reserved.</span>
-      <span class="right"> Designed and Developed by <a class="grey-text text-lighten-4"
-                                                        href="">Brogrammers</a></span>
+                                         target="_blank"></a> All rights reserved.
+               </span>
+      <span class="right"> Designed and Developed with <img src="
+                  http://icons.iconarchive.com/icons/designbolts/free-valentine-heart/16/Heart-icon.png"
+                                                            alt="love">
+               by <a class="grey-text text-lighten-4" href="">Brogrammers</a></span>
     </div>
   </div>
 </footer>
@@ -350,14 +330,12 @@
 <script src="angular/app/assets/js/scriptLoader.js"></script>
 <!--<script src="angular/app/assets/js/charts/ggleloader.js"></script>-->
 <!--<script type="text/javascript" src="https://www.google.com/jsapi"></script>-->
-
 <script src="angular/app/bower_components/angular/angular.min.js"></script>
 <script src="angular/app/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="angular/app/bower_components/angular-resource/angular-resource.min.js"></script>
 <script src="angular/app/bower_components/angular-load/angular-load.min.js"></script>
 <script src="angular/app/bower_components/moment/min/moment.min.js"></script>
 <script type="text/javascript" src="angular/app/assets/js/plugins/sweetalert/sweetalert.min.js"></script>
-
 <!--Delete OClazyLoad after your correct your code-->
 <script src="angular/app/bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
 <script src="angular/app/app-back-office.js"></script>
@@ -366,7 +344,6 @@
 <script src="angular/app/dashboard/dashboard.factory.js"></script>
 <script src="angular/app/dashboard/dashboard.service.js"></script>
 <!--/*End of User Module Scripts*/-->
-
 <!--Hakim Campaign Modules starts-->
 <script src="angular/app/campaign/campaign.controller.js"></script>
 <script src="angular/app/campaign/campaign.factory.js"></script>
@@ -389,18 +366,14 @@
 <script src="angular/app/components/googleCharts/ColumnChart/columnChart.directive.js"></script>
 <script src="angular/app/components/googleCharts/PieChart/pieChart.directive.js"></script>
 <script src="angular/app/components/googleCharts/GeoChart/geoChart.directive.js"></script>
-
 <!--Hakim Campaign Modules ends-->
-
 <script src="angular/app/components/prevent-default.directive.js"></script>
 <script src="angular/app/constants/labels.constant.js"></script>
-
 <script src="angular/app/channel/channel.controller.js"></script>
 <script src="angular/app/channel/controllers/detail-channel.controller.js"></script>
 <script src="angular/app/channel/controllers/create-channel.controller.js"></script>
 <script src="angular/app/channel/channel.service.js"></script>
 <script src="angular/app/channel/channel.factory.js"></script>
-
 <!--Facebook Service-->
 <script src="angular/app/facebook/facebook.controller.js"></script>
 <script src="angular/app/facebook/controllers/facebookCommunity.controller.js"></script>
@@ -408,60 +381,45 @@
 <script src="angular/app/facebook/facebook.factory.js"></script>
 <script src="angular/app/facebook/services/facebook.service.js"></script>
 <script src="angular/app/components/facebook/facebook.directive.js"></script>
-
-
 <script src="angular/app/components/colorPicker.service.js"></script>
 <script src="angular/app/components/utils.service.js"></script>
-
 <!--User Profile-->
 <script src="angular/app/user/controllers/profile.controller.js"></script>
 <script src="angular/app/user/profile.service.js"></script>
-
 <script src="angular/app/user/controllers/settings.controller.js"></script>
 <script src="angular/app/user/settings.factory.js"></script>
 <script src="angular/app/user/settings.service.js"></script>
-
 <!--Twitter-->
 <script src="angular/app/twitter/twitter.factory.js"></script>
 <script src="angular/app/twitter/twitter.service.js"></script>
 <!--End User Profile-->
-
 <!--Ibrahim Modules ends-->
-
 <!-- sentimental analysis start -->
 <script src="angular/app/sentimentalAnalysis/sentimentalAnalysis.controller.js"></script>
 <script src="angular/app/sentimentalAnalysis/sentimentalAnalysis.factory.js"></script>
 <script src="angular/app/sentimentalAnalysis/sentimentalAnalysis.service.js"></script>
 <!-- sentimental analysis end -->
-
 <!--materialize js-->
 <script type="text/javascript" src="angular/app/assets/js/materialize.min.js"></script>
 <script type="text/javascript" src="angular/app/assets/js/plugins/angular-materialize.js"></script>
 <script src="angular/app/bower_components/moment/min/moment.min.js"></script>
 <!--<script src="angular/app/bower_components/smDateTimeRangePicker/src/picker.js"></script>-->
-
-
 <!--Chart Component-->
 <script src="angular/app/components/charts/lineChartCurved/linechartCurved.directive.js"></script>
 <script src="angular/app/components/charts/radarChart/radarchart.directive.js"></script>
 <script src="angular/app/components/charts/doughnutChart/doughnutChart.directive.js"></script>
 <script src="angular/app/components/charts/barChart/barChart.directive.js"></script>
 <script src="angular/app/components/charts/lineChart/lineCharts.directive.js"></script>
-
-
 <!--scrollbar-->
 <script type="text/javascript" src="angular/app/assets/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <!--plugins.js - Some Specific JS codes for Plugin Settings-->
 <script type="text/javascript" src="angular/app/assets/js/plugins.min.js"></script>
 <script type="text/javascript" src="angular/app/assets/js/plugins/formatter/jquery.formatter.min.js"></script>
 <script type="text/javascript" src="angular/app/assets/js/plugins/dropify/js/dropify.js"></script>
-
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script type="text/javascript"
         src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 <!--custom-script.js - Add your own theme custom JS-->
 <script type="text/javascript" src="angular/app/assets/js/custom-script.js"></script>
-
-
 </body>
 </html>
