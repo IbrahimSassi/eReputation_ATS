@@ -238,7 +238,6 @@ router.get('/setScore', function (req, res, next) {
 
 });
 
-
 //********************************************************************************************************
 
 
@@ -248,12 +247,8 @@ router.post('/setScoretest', function (req, res, next) {
   var negative = null;
   var neutral = null;
 
-  //dataProvider.findNulledScore().then(function (data) {
 
-  // if (data.content) {
 
-  // console.log(res.text);
-  // console.log(res.from.language.iso);
   myRequest({
     url: 'http://apidemo.theysay.io/api/v1/sentiment',
     method: 'POST',
@@ -289,7 +284,7 @@ router.post('/setScoretest', function (req, res, next) {
       /*******here*****/
 
       var scoreResults = {positivity: positive, negativity: negative, neutral: neutral}
-      console.log('scoreResults: ', scoreResults);
+
 
 
     }
