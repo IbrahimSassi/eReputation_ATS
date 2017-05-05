@@ -47,74 +47,36 @@
               class="logo-text">Materialize</span></h1>
           </li>
         </ul>
-        <div class="header-search-wrapper hide-on-med-and-down">
-          <i class="mdi-action-search"></i>
-          <input type="text" name="Search" class="header-search-input z-depth-2"
-                 placeholder="Search ..."/>
-        </div>
+        <!--<div class="header-search-wrapper hide-on-med-and-down">-->
+          <!--<i class="mdi-action-search"></i>-->
+          <!--<input type="text" name="Search" class="header-search-input z-depth-2"-->
+                 <!--placeholder="Search ..."/>-->
+        <!--</div>-->
         <ul class="right hide-on-med-and-down">
-          <li><a href="javascript:void(0);" class="waves-effect waves-block waves-light translation-button"
-                 data-activates="translation-dropdown"><img src="angular/app/assets/images/flag-icons/United-States.png"
-                                                            alt="USA"/></a>
-          </li>
+          <!--<li><a href="javascript:void(0);" class="waves-effect waves-block waves-light translation-button"-->
+                 <!--data-activates="translation-dropdown"><img src="angular/app/assets/images/flag-icons/United-States.png"-->
+                                                            <!--alt="USA"/></a>-->
+          <!--</li>-->
           <li><a href="javascript:void(0);" class="waves-effect waves-block waves-light toggle-fullscreen"><i
             class="mdi-action-settings-overscan"></i></a>
           </li>
-          <li><a href="javascript:void(0);" class="waves-effect waves-block waves-light notification-button"
-                 data-activates="notifications-dropdown"><i class="mdi-social-notifications">
-            <small class="notification-badge">5</small>
-          </i>
-          </a>
-          </li>
+
           <li><a href="#" data-activates="chat-out"
                  class="waves-effect waves-block waves-light chat-collapse"><i
-            class="mdi-communication-chat"></i></a>
+            class="mdi-action-help"></i></a>
           </li>
         </ul>
         <!-- translation-button -->
-        <ul id="translation-dropdown" class="dropdown-content">
-          <li>
-            <a href="#!"><img src="angular/app/assets/images/flag-icons/United-States.png" alt="English"/> <span
-              class="language-select">English</span></a>
-          </li>
-          <li>
-            <a href="#!"><img src="angular/app/assets/images/flag-icons/France.png" alt="French"/> <span
-              class="language-select">French</span></a>
-          </li>
-          <li>
-            <a href="#!"><img src="angular/app/assets/images/flag-icons/China.png" alt="Chinese"/> <span
-              class="language-select">Chinese</span></a>
-          </li>
-          <li>
-            <a href="#!"><img src="angular/app/assets/images/flag-icons/Germany.png" alt="German"/> <span
-              class="language-select">German</span></a>
-          </li>
-        </ul>
+
         <!-- notifications-dropdown -->
         <ul id="notifications-dropdown" class="dropdown-content">
           <li>
-            <h5>NOTIFICATIONS <span class="new badge">5</span></h5>
+            <h5>NOTIFICATIONS <span class="new badge">0</span></h5>
           </li>
           <li class="divider"></li>
           <li>
-            <a href="#!"><i class="mdi-action-add-shopping-cart"></i> A new order has been placed!</a>
+            <a href="#!"><i class="mdi-action-find-replace"></i> Campaign is Analyzed Successfully !</a>
             <time class="media-meta" datetime="2015-06-12T20:50:48+08:00">2 hours ago</time>
-          </li>
-          <li>
-            <a href="#!"><i class="mdi-action-stars"></i> Completed the task</a>
-            <time class="media-meta" datetime="2015-06-12T20:50:48+08:00">3 days ago</time>
-          </li>
-          <li>
-            <a href="#!"><i class="mdi-action-settings"></i> Settings updated</a>
-            <time class="media-meta" datetime="2015-06-12T20:50:48+08:00">4 days ago</time>
-          </li>
-          <li>
-            <a href="#!"><i class="mdi-editor-insert-invitation"></i> Director meeting started</a>
-            <time class="media-meta" datetime="2015-06-12T20:50:48+08:00">6 days ago</time>
-          </li>
-          <li>
-            <a href="#!"><i class="mdi-action-trending-up"></i> Generate monthly report</a>
-            <time class="media-meta" datetime="2015-06-12T20:50:48+08:00">1 week ago</time>
           </li>
         </ul>
       </div>
@@ -163,20 +125,22 @@
             </div>
           </div>
         </li>
-      <!--  <li ui-sref-active="active" class="bold"><a ui-sref="dashboard" class="waves-effect waves-cyan"><i
-          class="mdi-action-dashboard"></i> Dashboard</a>
-        </li> -->
+        <!--  <li ui-sref-active="active" class="bold"><a ui-sref="dashboard" class="waves-effect waves-cyan"><i
+            class="mdi-action-dashboard"></i> Dashboard</a>
+          </li> -->
         <li class="no-padding">
           <ul class="collapsible collapsible-accordion">
             <li class="bold active">
-              <a class="collapsible-header waves-effect waves-cyan active"><i class="mdi-action-track-changes"></i>
+              <a class="collapsible-header waves-effect waves-cyan active"><i class="mdi-action-loyalty"></i>
                 Manage
                 Campaign</a>
               <div class="collapsible-body">
                 <ul>
-                  <li ui-sref-active="active"><a ng-class="disabled?'disabled':''" ui-sref="campaignCreate">Create Campaign</a>
+                  <li ui-sref-active="active"><a ng-class="disabled?'disabled':''" ui-sref="campaignCreate">Create
+                    Campaign</a>
                   </li>
-                  <li ui-sref-active="active"><a ng-class="disabled?'disabled':''" ui-sref="campaignList">Show Campaigns</a>
+                  <li ui-sref-active="active"><a ng-class="disabled?'disabled':''" ui-sref="campaignList">Show
+                    Campaigns</a>
                   </li>
                 </ul>
               </div>
@@ -187,12 +151,13 @@
         <li class="no-padding">
           <ul class="collapsible collapsible-accordion">
             <li class="bold active">
-              <a class="collapsible-header waves-effect waves-cyan active"><i class="mdi-action-track-changes"></i>
+              <a class="collapsible-header waves-effect waves-cyan active"><i class="mdi-action-find-in-page"></i>
                 Manage
                 Channels</a>
               <div class="collapsible-body">
                 <ul>
-                  <li ui-sref-active="active"><a ng-class="disabled?'disabled':''" ui-sref="newChannel">Create Channel</a>
+                  <li ui-sref-active="active"><a ng-class="disabled?'disabled':''" ui-sref="newChannel">Create
+                    Channel</a>
                   </li>
                   <li ui-sref-active="active"><a ng-class="disabled?'disabled':''" ui-sref="channels">Show Channels</a>
                   </li>
@@ -281,148 +246,62 @@
         <li class="li-hover">
           <a href="#" data-activates="chat-out" class="chat-close-collapse right"><i
             class="mdi-navigation-close"></i></a>
-          <div id="right-search" class="row">
-            <form class="col s12">
-              <div class="input-field">
-                <i class="mdi-action-search prefix"></i>
-                <input id="icon_prefix" type="text" class="validate">
-                <label for="icon_prefix">Search</label>
-              </div>
-            </form>
-          </div>
+          <br/> <br/>
         </li>
         <li class="li-hover">
           <ul class="chat-collapsible" data-collapsible="expandable">
             <li>
-              <div class="collapsible-header teal white-text active"><i class="mdi-social-whatshot"></i>Recent
-                Activity
+              <div class="collapsible-header cyan white-text active">About Campaign
               </div>
+              <!---->
               <div class="collapsible-body recent-activity">
                 <div class="recent-activity-list chat-out-list row">
                   <div class="col s3 recent-activity-list-icon"><i
-                    class="mdi-action-add-shopping-cart"></i>
+                    class="mdi-action-history"></i>
                   </div>
                   <div class="col s9 recent-activity-list-text">
-                    <a href="#">just now</a>
-                    <p>Jim Doe Purchased new equipments for zonal office.</p>
+                    <a href="#">Campaign Analysis</a>
+                    <p>Every campaign is analyzed at 12:00 AM.</p>
                   </div>
                 </div>
-                <div class="recent-activity-list chat-out-list row">
-                  <div class="col s3 recent-activity-list-icon"><i
-                    class="mdi-device-airplanemode-on"></i>
-                  </div>
-                  <div class="col s9 recent-activity-list-text">
-                    <a href="#">Yesterday</a>
-                    <p>Your Next flight for USA will be on 15th August 2015.</p>
-                  </div>
-                </div>
-                <div class="recent-activity-list chat-out-list row">
-                  <div class="col s3 recent-activity-list-icon"><i
-                    class="mdi-action-settings-voice"></i>
-                  </div>
-                  <div class="col s9 recent-activity-list-text">
-                    <a href="#">5 Days Ago</a>
-                    <p>Natalya Parker Send you a voice mail for next conference.</p>
-                  </div>
-                </div>
-                <div class="recent-activity-list chat-out-list row">
-                  <div class="col s3 recent-activity-list-icon"><i class="mdi-action-store"></i>
-                  </div>
-                  <div class="col s9 recent-activity-list-text">
-                    <a href="#">Last Week</a>
-                    <p>Jessy Jay open a new store at S.G Road.</p>
-                  </div>
-                </div>
-                <div class="recent-activity-list chat-out-list row">
-                  <div class="col s3 recent-activity-list-icon"><i
-                    class="mdi-action-settings-voice"></i>
-                  </div>
-                  <div class="col s9 recent-activity-list-text">
-                    <a href="#">5 Days Ago</a>
-                    <p>Natalya Parker Send you a voice mail for next conference.</p>
-                  </div>
-                </div>
+
               </div>
             </li>
             <li>
-              <div class="collapsible-header light-blue white-text active"><i
-                class="mdi-editor-attach-money"></i>Sales Repoart
+              <div class="collapsible-header cyan white-text active">About Channels
               </div>
-              <div class="collapsible-body sales-repoart">
-                <div class="sales-repoart-list  chat-out-list row">
-                  <div class="col s8">Target Salse</div>
-                  <div class="col s4"><span id="sales-line-1"></span>
+              <!---->
+              <div class="collapsible-body recent-activity">
+                <div class="recent-activity-list chat-out-list row">
+                  <div class="col s3 recent-activity-list-icon"><i
+                    class="mdi-communication-vpn-key"></i>
+                  </div>
+                  <div class="col s9 recent-activity-list-text">
+                    <a href="#">Private Token</a>
+                    <p>We Need Your facebook token if you need to analyze private pages.</p>
                   </div>
                 </div>
-                <div class="sales-repoart-list chat-out-list row">
-                  <div class="col s8">Payment Due</div>
-                  <div class="col s4"><span id="sales-bar-1"></span>
-                  </div>
-                </div>
-                <div class="sales-repoart-list chat-out-list row">
-                  <div class="col s8">Total Delivery</div>
-                  <div class="col s4"><span id="sales-line-2"></span>
-                  </div>
-                </div>
-                <div class="sales-repoart-list chat-out-list row">
-                  <div class="col s8">Total Progress</div>
-                  <div class="col s4"><span id="sales-bar-2"></span>
-                  </div>
-                </div>
+
               </div>
             </li>
             <li>
-              <div class="collapsible-header red white-text"><i class="mdi-action-stars"></i>Favorite
-                Associates
+              <div class="collapsible-header cyan white-text active">About Account
               </div>
-              <div class="collapsible-body favorite-associates">
-                <div class="favorite-associate-list chat-out-list row">
-                  <div class="col s4"><img src="angular/app/assets/images/avatar.jpg" alt=""
-                                           class="circle responsive-img online-user valign profile-image">
+              <!---->
+              <div class="collapsible-body recent-activity">
+                <div class="recent-activity-list chat-out-list row">
+                  <div class="col s3 recent-activity-list-icon"><i
+                    class="mdi-action-backup"></i>
                   </div>
-                  <div class="col s8">
-                    <p>Eileen Sideways</p>
-                    <p class="place">Los Angeles, CA</p>
-                  </div>
-                </div>
-                <div class="favorite-associate-list chat-out-list row">
-                  <div class="col s4"><img src="angular/app/assets/images/avatar.jpg" alt=""
-                                           class="circle responsive-img online-user valign profile-image">
-                  </div>
-                  <div class="col s8">
-                    <p>Zaham Sindil</p>
-                    <p class="place">San Francisco, CA</p>
+                  <div class="col s9 recent-activity-list-text">
+                    <a href="#">Images Sizes</a>
+                    <p>Your images must be less than 100mb </p>
                   </div>
                 </div>
-                <div class="favorite-associate-list chat-out-list row">
-                  <div class="col s4"><img src="angular/app/assets/images/avatar.jpg" alt=""
-                                           class="circle responsive-img offline-user valign profile-image">
-                  </div>
-                  <div class="col s8">
-                    <p>Renov Leongal</p>
-                    <p class="place">Cebu City, Philippines</p>
-                  </div>
-                </div>
-                <div class="favorite-associate-list chat-out-list row">
-                  <div class="col s4"><img src="angular/app/assets/images/avatar.jpg" alt=""
-                                           class="circle responsive-img online-user valign profile-image">
-                  </div>
-                  <div class="col s8">
-                    <p>Weno Carasbong</p>
-                    <p>Tokyo, Japan</p>
-                  </div>
-                </div>
-                <div class="favorite-associate-list chat-out-list row">
-                  <div class="col s4"><img src="angular/app/assets/images/avatar.jpg" alt=""
-                                           class="circle responsive-img offline-user valign profile-image">
-                  </div>
-                  <div class="col s8">
-                    <p>Nusja Nawancali</p>
-                    <p class="place">Bangkok, Thailand</p>
-                  </div>
-                </div>
+
               </div>
             </li>
+
           </ul>
         </li>
       </ul>
@@ -568,7 +447,6 @@
 <script src="angular/app/components/charts/doughnutChart/doughnutChart.directive.js"></script>
 <script src="angular/app/components/charts/barChart/barChart.directive.js"></script>
 <script src="angular/app/components/charts/lineChart/lineCharts.directive.js"></script>
-
 
 
 <!--scrollbar-->
