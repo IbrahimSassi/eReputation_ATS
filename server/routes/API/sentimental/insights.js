@@ -134,7 +134,7 @@ router.get('/setScore', function (req, res, next) {
 
               //If a character make an error
               if (response.statusCode == 400) {
-                console.log("fama erreurrrrrrr");
+
                 var scoreResults = {
                   positivity: null,
                   negativity: null,
@@ -173,7 +173,7 @@ router.get('/setScore', function (req, res, next) {
                   /*******here*****/
 
                   var scoreResults = {positivity: positive, negativity: negative, neutral: neutral}
-                  console.log('scoreResults: ', scoreResults);
+
 
 
                   dataProvider.updateScore(data, scoreResults).then(function (result) {
@@ -189,7 +189,7 @@ router.get('/setScore', function (req, res, next) {
                     negative = negative + item.probability.neg * 100;
                     neutral = neutral + item.probability.neutral * 100;
                     var scoreResults = {positivity: positive, negativity: negative, neutral: neutral};
-                    console.log('scoreResults: ', scoreResults);
+
 
                     dataProvider.updateScore(data, scoreResults).then(function (result) {
                       translateFN()
@@ -217,7 +217,7 @@ router.get('/setScore', function (req, res, next) {
           negativity: null,
           neutral: null
         }
-        console.log("errrr", scoreResults)
+
 
         dataProvider.updateScore(data, scoreResults).then(function (result) {
           translateFN()
@@ -261,8 +261,7 @@ router.post('/setScoretest', function (req, res, next) {
       console.log(error);
       res.status(400).json({"Error": "Error in The sentiment API"})
     } else {
-      console.log(response.statusCode, body);
-      console.log(JSON.parse(body)[0].sentiment);
+
 
       //Clean code
 
@@ -291,13 +290,7 @@ router.post('/setScoretest', function (req, res, next) {
   });
 
 
-  //  }
 
-  /* }).catch(function (err) {
-   res.status(400).json({"Error": "Error in Find Nulled Score"})
-
-
-   });*/
 });
 
 
