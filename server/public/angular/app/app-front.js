@@ -18,6 +18,7 @@ angular.module('ATSApp-front', [
 
 
 
+
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
      // console.log("location: ")
      /* if (UserService.isLoggedIn() && ($location.path('/login').$$path == 'login' || $location.path('/register').$$path == 'register')) {
