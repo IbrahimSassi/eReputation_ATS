@@ -44,6 +44,7 @@ var individualSchema = new Schema({
   },
 }, options);
 
+
 var businessSchema = new Schema({
   businessName: {
     type: String,
