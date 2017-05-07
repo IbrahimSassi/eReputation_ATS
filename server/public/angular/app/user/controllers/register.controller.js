@@ -87,7 +87,7 @@
 
     vm.onSubmitRegister = function () {
 
-if ((vm.credentialsRegister.username.length <5 && vm.credentialsRegister.businessName.length <5) || vm.credentialsRegister.password.length <5  || (vm.credentialsRegister.password != vm.credentialsRegister.passwordAgain)
+if ((vm.credentialsRegister.username.length <5 && vm.credentialsRegister.businessName.length <5) || vm.credentialsRegister.password.length <6  || (vm.credentialsRegister.password != vm.credentialsRegister.passwordAgain)
 )
 {
 }
