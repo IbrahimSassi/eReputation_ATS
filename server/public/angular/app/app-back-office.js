@@ -75,12 +75,12 @@ if (ProfileService.isLoggedIn())
         //$state.transitionTo("login");
         //event.preventDefault();
         $window.location.href = '/';
-        console.log("Access denied!")
+       // console.log("Access denied!")
       }
 
       if (toState.shouldConfirmed && $rootScope.currentUser.state=='INACTIVE')
       {
-        console.log('blocked')
+       // console.log('blocked')
         $window.location.href = '/admin';
       }
 
@@ -100,7 +100,7 @@ if (ProfileService.isLoggedIn())
     if (ProfileService.isLoggedIn()) {
 
 
-      console.log("Hey Brogrammers! This is the connected user: ",$rootScope.currentUser);
+    //  console.log("Hey Brogrammers! This is the connected user: ",$rootScope.currentUser);
     }
 
 

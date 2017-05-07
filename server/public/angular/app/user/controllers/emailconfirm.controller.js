@@ -51,11 +51,13 @@
       UserService.saveToken(response.token);
       setTimeout(function(){ $window.location.href = '/admin'; }, 1000);
 
-
+if (response.status==401)
+  vm.echec = true;
     }
 
     function errorCallback(error) {
       vm.echec = true;
+
     }
 
   };
