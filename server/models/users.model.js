@@ -34,7 +34,7 @@ var individualSchema = new Schema({
   type: String,
 
     required: true,
-    minlength: 4
+    minlength: 3
 },
   firstName: {
     type: String,
@@ -50,7 +50,7 @@ var businessSchema = new Schema({
   businessName: {
     type: String,
     required: true,
-    minlength: 4
+    minlength: 3
   },
   employeesNumber: {
     type: String,
