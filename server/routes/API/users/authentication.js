@@ -40,7 +40,7 @@ module.exports.register = function (req, res) {
 
   User.findOne({$or: [{'email': req.body.email}, {'username': req.body.username}, {'businessName': req.body.businessName}]}, function (err, findUser) {
     if (!findUser) {
-      console.log('Adding User...');
+      console.log('Adding User! ');
       if (req.body.accountType == 'individual') {
         var user = new User.Individual();
         user.username = req.body.username;
