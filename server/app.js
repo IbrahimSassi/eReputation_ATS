@@ -40,9 +40,9 @@ var twitterCron = require('./routes/API/twitter/twitterCron');
 var facebookCron = require('./routes/API/facebook/facebook.cron');
 var websitesCron = require('./routes/API/websites/websites.cron');
 var sentimentalCron = require('./routes/API/sentimental/SentimentalFunctions');
-
-// Facebook CRON
 /*
+// Facebook CRON
+
  facebookCron.facebookLauncher().then(function () {
  // Facebook Sentiment analysis
  sentimentalCron.SentimentalForSpecificProvider("FacebookPostsProvider");

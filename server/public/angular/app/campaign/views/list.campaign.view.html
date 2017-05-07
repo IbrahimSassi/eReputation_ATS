@@ -7,26 +7,32 @@
       media="screen,projection">
 <script type="text/javascript" src="angular/app/assets/js/plugins/ionRangeSlider/js/ion.rangeSlider.js"></script>
 <script type="text/javascript" src="angular/app/assets/js/plugins/sweetalert/sweetalert.min.js"></script>
-
 <div class="row">
-<span ng-if="!camp.campaigns">
-  <div style="" class="spinner red-text icon-spinner-5" aria-hidden="true"></div>
-</span>
+   <span class="col s12 m4 offset-m4" ng-if="!camp.campaigns">
+      <div style="" class="spinner red-text icon-spinner-5" aria-hidden="true"></div>
+   </span>
+  <span ng-if="camp.campaigns.length==0">
+     <div class="col s12 m4 offset-m4">
+      <h6 class="grey-text">You need to add a campaign first <a ui-sref="campaignCreate"> <i class="mdi-content-add-circle"></i> Create Campaign  </a></h6>
+     </div>
+  </span>
+
   <span ng-repeat="c in camp.campaigns">
       <div class="col s12 m4 4">
          <div class="card ">
             <div class="card-content darken-4-text">
-              <!--<input id="campaign_id" type="hidden">-->
-               <span class="card-title"><h5>{{c.name | limitTo: 10}}  {{c.name.length>10 ?'[...]':''}}</h5></span>
+               <!--<input id="campaign_id" type="hidden">-->
+               <span class="card-title">
+                  <h5>{{c.name | limitTo: 10}}  {{c.name.length>10 ?'[...]':''}}</h5>
+               </span>
                <blockquote style="border-left: 5px solid #757575;">{{c.description | limitTo: 25 }}
-                 {{c.description.length>25 ?'[...]':''}}</blockquote>
+                  {{c.description.length>25 ?'[...]':''}}
+               </blockquote>
                <p style="margin: 15px;">
-                 <date-display ng-if="c.dateStart" date-on="{{c.dateStart | date :'dd/MM/yyyy' }}"
-                               date-end="{{c.dateEnd | date :'dd/MM/yyyy'}}" my-id="{{c._id}}"></date-display>
+                  <date-display ng-if="c.dateStart" date-on="{{c.dateStart | date :'dd/MM/yyyy' }}"
+                                date-end="{{c.dateEnd | date :'dd/MM/yyyy'}}" my-id="{{c._id}}"></date-display>
                </p>
-
             </div>
-
             <div class="card-action right">
                <a ui-sref="campaignDetail({idCampaign:'{{c._id}}'})" style="margin: 5px"
                   class="btn-floating waves-effect grey darken-1 waves-light"><i
@@ -37,22 +43,13 @@
                <a ng-click="camp.deleteCampaign(c)" style="margin: 5px"
                   class="btn-floating waves-effect red darken-1 waves-light"><i
                  class="mdi-action-delete"></i></a>
-
             </div>
          </div>
       </div>
-
-
    </span>
 </div>
-
 <script>
   //  $(document).ready(function(){
   //    $('.tooltipped').tooltip({delay: 50});
   //  });
 </script>
-
-
-
-
-

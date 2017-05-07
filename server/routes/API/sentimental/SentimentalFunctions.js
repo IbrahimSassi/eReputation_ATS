@@ -96,7 +96,7 @@ function SentimentalForSpecificProvider(providerType) {
 
 
                   var scoreResults = {positivity: positive, negativity: negative, neutral: neutral}
-                  console.log('scoreResults: ', scoreResults);
+
 
                   dataProvider.updateScore(data, scoreResults).then(function (result) {
                     if (count == 400) {
@@ -117,7 +117,7 @@ function SentimentalForSpecificProvider(providerType) {
                     negative = negative + item.probability.neg * 100;
                     neutral = neutral + item.probability.neutral * 100;
                     var scoreResults = {positivity: positive, negativity: negative, neutral: neutral};
-                    console.log('scoreResults: ', scoreResults);
+
 
                     dataProvider.updateScore(data, scoreResults).then(function (result) {
                       translateFN()
@@ -166,7 +166,7 @@ function SentimentalForSpecificProvider(providerType) {
             } else {
 
               if (response.statusCode == 400) {
-                console.log("fama erreurrrrrrr");
+
                 var scoreResults = {
                   positivity: null,
                   negativity: null,
@@ -253,7 +253,7 @@ function SentimentalForSpecificProvider(providerType) {
           negativity: null,
           neutral: null
         }
-        console.log("errrr", scoreResults)
+
 
         dataProvider.updateScore(data, scoreResults).then(function (result) {
           if (count == 400) {

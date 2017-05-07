@@ -16,7 +16,6 @@
         media="screen,projection">
   <link href="angular/app/assets/js/plugins/sweetalert/sweetalert.css" type="text/css" rel="stylesheet"
         media="screen,projection">
-
   <link href="angular/app/assets/css/spinner.css" type="text/css" rel="stylesheet" media="screen,projection">
   <style>
     a.disabled {
@@ -47,74 +46,34 @@
               class="logo-text">Materialize</span></h1>
           </li>
         </ul>
-        <div class="header-search-wrapper hide-on-med-and-down">
-          <i class="mdi-action-search"></i>
-          <input type="text" name="Search" class="header-search-input z-depth-2"
-                 placeholder="Search ..."/>
-        </div>
+        <!--<div class="header-search-wrapper hide-on-med-and-down">-->
+        <!--<i class="mdi-action-search"></i>-->
+        <!--<input type="text" name="Search" class="header-search-input z-depth-2"-->
+        <!--placeholder="Search ..."/>-->
+        <!--</div>-->
         <ul class="right hide-on-med-and-down">
-          <li><a href="javascript:void(0);" class="waves-effect waves-block waves-light translation-button"
-                 data-activates="translation-dropdown"><img src="angular/app/assets/images/flag-icons/United-States.png"
-                                                            alt="USA"/></a>
-          </li>
+          <!--<li><a href="javascript:void(0);" class="waves-effect waves-block waves-light translation-button"-->
+          <!--data-activates="translation-dropdown"><img src="angular/app/assets/images/flag-icons/United-States.png"-->
+          <!--alt="USA"/></a>-->
+          <!--</li>-->
           <li><a href="javascript:void(0);" class="waves-effect waves-block waves-light toggle-fullscreen"><i
             class="mdi-action-settings-overscan"></i></a>
           </li>
-          <li><a href="javascript:void(0);" class="waves-effect waves-block waves-light notification-button"
-                 data-activates="notifications-dropdown"><i class="mdi-social-notifications">
-            <small class="notification-badge">5</small>
-          </i>
-          </a>
-          </li>
           <li><a href="#" data-activates="chat-out"
                  class="waves-effect waves-block waves-light chat-collapse"><i
-            class="mdi-communication-chat"></i></a>
+            class="mdi-action-help"></i></a>
           </li>
         </ul>
         <!-- translation-button -->
-        <ul id="translation-dropdown" class="dropdown-content">
-          <li>
-            <a href="#!"><img src="angular/app/assets/images/flag-icons/United-States.png" alt="English"/> <span
-              class="language-select">English</span></a>
-          </li>
-          <li>
-            <a href="#!"><img src="angular/app/assets/images/flag-icons/France.png" alt="French"/> <span
-              class="language-select">French</span></a>
-          </li>
-          <li>
-            <a href="#!"><img src="angular/app/assets/images/flag-icons/China.png" alt="Chinese"/> <span
-              class="language-select">Chinese</span></a>
-          </li>
-          <li>
-            <a href="#!"><img src="angular/app/assets/images/flag-icons/Germany.png" alt="German"/> <span
-              class="language-select">German</span></a>
-          </li>
-        </ul>
         <!-- notifications-dropdown -->
         <ul id="notifications-dropdown" class="dropdown-content">
           <li>
-            <h5>NOTIFICATIONS <span class="new badge">5</span></h5>
+            <h5>NOTIFICATIONS <span class="new badge">0</span></h5>
           </li>
           <li class="divider"></li>
           <li>
-            <a href="#!"><i class="mdi-action-add-shopping-cart"></i> A new order has been placed!</a>
+            <a href="#!"><i class="mdi-action-find-replace"></i> Campaign is Analyzed Successfully !</a>
             <time class="media-meta" datetime="2015-06-12T20:50:48+08:00">2 hours ago</time>
-          </li>
-          <li>
-            <a href="#!"><i class="mdi-action-stars"></i> Completed the task</a>
-            <time class="media-meta" datetime="2015-06-12T20:50:48+08:00">3 days ago</time>
-          </li>
-          <li>
-            <a href="#!"><i class="mdi-action-settings"></i> Settings updated</a>
-            <time class="media-meta" datetime="2015-06-12T20:50:48+08:00">4 days ago</time>
-          </li>
-          <li>
-            <a href="#!"><i class="mdi-editor-insert-invitation"></i> Director meeting started</a>
-            <time class="media-meta" datetime="2015-06-12T20:50:48+08:00">6 days ago</time>
-          </li>
-          <li>
-            <a href="#!"><i class="mdi-action-trending-up"></i> Generate monthly report</a>
-            <time class="media-meta" datetime="2015-06-12T20:50:48+08:00">1 week ago</time>
           </li>
         </ul>
       </div>
@@ -148,8 +107,6 @@
                 <li><a href="#" ng-click="logOut()"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
                 </li>
               </ul>
-
-
               <a ng-if="currentUser.kind=='Individual'"
                  class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#"
                  data-activates="profile-dropdown">{{currentUser.firstName}}<i
@@ -158,41 +115,42 @@
                  class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#"
                  data-activates="profile-dropdown"
               >{{currentUser.businessName}}<i class="mdi-navigation-arrow-drop-down right"></i></a>
-
               <p class="user-roal">{{currentUser.kind}}</p>
             </div>
           </div>
         </li>
-      <!--  <li ui-sref-active="active" class="bold"><a ui-sref="dashboard" class="waves-effect waves-cyan"><i
-          class="mdi-action-dashboard"></i> Dashboard</a>
-        </li> -->
+        <!--  <li ui-sref-active="active" class="bold"><a ui-sref="dashboard" class="waves-effect waves-cyan"><i
+           class="mdi-action-dashboard"></i> Dashboard</a>
+           </li> -->
         <li class="no-padding">
           <ul class="collapsible collapsible-accordion">
             <li class="bold active">
-              <a class="collapsible-header waves-effect waves-cyan active"><i class="mdi-action-track-changes"></i>
+              <a class="collapsible-header waves-effect waves-cyan active"><i class="mdi-action-loyalty"></i>
                 Manage
                 Campaign</a>
               <div class="collapsible-body">
                 <ul>
-                  <li ui-sref-active="active"><a ng-class="disabled?'disabled':''" ui-sref="campaignCreate">Create Campaign</a>
+                  <li ui-sref-active="active"><a ng-class="disabled?'disabled':''" ui-sref="campaignCreate">Create
+                    Campaign</a>
                   </li>
-                  <li ui-sref-active="active"><a ng-class="disabled?'disabled':''" ui-sref="campaignList">Show Campaigns</a>
+                  <li ui-sref-active="active"><a ng-class="disabled?'disabled':''" ui-sref="campaignList">Show
+                    Campaigns</a>
                   </li>
                 </ul>
               </div>
             </li>
           </ul>
         </li>
-
         <li class="no-padding">
           <ul class="collapsible collapsible-accordion">
             <li class="bold active">
-              <a class="collapsible-header waves-effect waves-cyan active"><i class="mdi-action-track-changes"></i>
+              <a class="collapsible-header waves-effect waves-cyan active"><i class="mdi-action-find-in-page"></i>
                 Manage
                 Channels</a>
               <div class="collapsible-body">
                 <ul>
-                  <li ui-sref-active="active"><a ng-class="disabled?'disabled':''" ui-sref="newChannel">Create Channel</a>
+                  <li ui-sref-active="active"><a ng-class="disabled?'disabled':''" ui-sref="newChannel">Create
+                    Channel</a>
                   </li>
                   <li ui-sref-active="active"><a ng-class="disabled?'disabled':''" ui-sref="channels">Show Channels</a>
                   </li>
@@ -200,10 +158,7 @@
               </div>
             </li>
           </ul>
-
         </li>
-
-
         <a href="#" data-activates="slide-out"
            class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only cyan"><i
           class="mdi-navigation-menu"></i></a>
@@ -211,7 +166,6 @@
       <a href="#" data-activates="slide-out"
          class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only grey darken-1"><i
         class="mdi-navigation-menu"></i></a>
-
     </aside>
     <!-- END LEFT SIDEBAR NAV-->
     <!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -220,32 +174,27 @@
       <!--breadcrumbs start-->
       <div id="breadcrumbs-wrapper">
         <!-- Search for small screen -->
-        <div class="header-search-wrapper grey hide-on-large-only">
-          <i class="mdi-action-search active"></i>
-          <input type="text" name="Search" class="header-search-input z-depth-2"
-                 placeholder="Explore Materialize">
-        </div>
-
+        <!--<div class="header-search-wrapper grey hide-on-large-only">-->
+        <!--<i class="mdi-action-search active"></i>-->
+        <!--<input type="text" name="Search" class="header-search-input z-depth-2"-->
+        <!--placeholder="Explore Materialize">-->
+        <!--</div>-->
         <!--TODO - This Must Be Deplaced to the view and be dynamic -->
-
       </div>
       <!--breadcrumbs end-->
       <!--start container-->
       <div class="container">
         <div class="section">
-
-
           <div ng-show="currentUser.state=='INACTIVE'" id="card-alert" class="card red">
             <div class="card-content white-text">
               <p><i class="mdi-alert-error"></i> Account Not Verified : Please confirm your account with the link sent
-                to your email</p>
+                to your email
+              </p>
             </div>
             <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
-
-
           <!-- UI VIEW -->
           <!-- //////////////////////////////////////////////////////////////////////////// -->
           <!-- START HEADER -->
@@ -281,144 +230,54 @@
         <li class="li-hover">
           <a href="#" data-activates="chat-out" class="chat-close-collapse right"><i
             class="mdi-navigation-close"></i></a>
-          <div id="right-search" class="row">
-            <form class="col s12">
-              <div class="input-field">
-                <i class="mdi-action-search prefix"></i>
-                <input id="icon_prefix" type="text" class="validate">
-                <label for="icon_prefix">Search</label>
-              </div>
-            </form>
-          </div>
+          <br/> <br/>
         </li>
         <li class="li-hover">
           <ul class="chat-collapsible" data-collapsible="expandable">
             <li>
-              <div class="collapsible-header teal white-text active"><i class="mdi-social-whatshot"></i>Recent
-                Activity
+              <div class="collapsible-header cyan white-text active">About Campaign
               </div>
+              <!---->
               <div class="collapsible-body recent-activity">
                 <div class="recent-activity-list chat-out-list row">
                   <div class="col s3 recent-activity-list-icon"><i
-                    class="mdi-action-add-shopping-cart"></i>
+                    class="mdi-action-history"></i>
                   </div>
                   <div class="col s9 recent-activity-list-text">
-                    <a href="#">just now</a>
-                    <p>Jim Doe Purchased new equipments for zonal office.</p>
-                  </div>
-                </div>
-                <div class="recent-activity-list chat-out-list row">
-                  <div class="col s3 recent-activity-list-icon"><i
-                    class="mdi-device-airplanemode-on"></i>
-                  </div>
-                  <div class="col s9 recent-activity-list-text">
-                    <a href="#">Yesterday</a>
-                    <p>Your Next flight for USA will be on 15th August 2015.</p>
-                  </div>
-                </div>
-                <div class="recent-activity-list chat-out-list row">
-                  <div class="col s3 recent-activity-list-icon"><i
-                    class="mdi-action-settings-voice"></i>
-                  </div>
-                  <div class="col s9 recent-activity-list-text">
-                    <a href="#">5 Days Ago</a>
-                    <p>Natalya Parker Send you a voice mail for next conference.</p>
-                  </div>
-                </div>
-                <div class="recent-activity-list chat-out-list row">
-                  <div class="col s3 recent-activity-list-icon"><i class="mdi-action-store"></i>
-                  </div>
-                  <div class="col s9 recent-activity-list-text">
-                    <a href="#">Last Week</a>
-                    <p>Jessy Jay open a new store at S.G Road.</p>
-                  </div>
-                </div>
-                <div class="recent-activity-list chat-out-list row">
-                  <div class="col s3 recent-activity-list-icon"><i
-                    class="mdi-action-settings-voice"></i>
-                  </div>
-                  <div class="col s9 recent-activity-list-text">
-                    <a href="#">5 Days Ago</a>
-                    <p>Natalya Parker Send you a voice mail for next conference.</p>
+                    <a href="#">Campaign Analysis</a>
+                    <p>Every campaign is analyzed at 12:00 AM.</p>
                   </div>
                 </div>
               </div>
             </li>
             <li>
-              <div class="collapsible-header light-blue white-text active"><i
-                class="mdi-editor-attach-money"></i>Sales Repoart
+              <div class="collapsible-header cyan white-text active">About Channels
               </div>
-              <div class="collapsible-body sales-repoart">
-                <div class="sales-repoart-list  chat-out-list row">
-                  <div class="col s8">Target Salse</div>
-                  <div class="col s4"><span id="sales-line-1"></span>
+              <!---->
+              <div class="collapsible-body recent-activity">
+                <div class="recent-activity-list chat-out-list row">
+                  <div class="col s3 recent-activity-list-icon"><i
+                    class="mdi-communication-vpn-key"></i>
                   </div>
-                </div>
-                <div class="sales-repoart-list chat-out-list row">
-                  <div class="col s8">Payment Due</div>
-                  <div class="col s4"><span id="sales-bar-1"></span>
-                  </div>
-                </div>
-                <div class="sales-repoart-list chat-out-list row">
-                  <div class="col s8">Total Delivery</div>
-                  <div class="col s4"><span id="sales-line-2"></span>
-                  </div>
-                </div>
-                <div class="sales-repoart-list chat-out-list row">
-                  <div class="col s8">Total Progress</div>
-                  <div class="col s4"><span id="sales-bar-2"></span>
+                  <div class="col s9 recent-activity-list-text">
+                    <a href="#">Private Token</a>
+                    <p>We Need Your facebook token if you need to analyze private pages.</p>
                   </div>
                 </div>
               </div>
             </li>
             <li>
-              <div class="collapsible-header red white-text"><i class="mdi-action-stars"></i>Favorite
-                Associates
+              <div class="collapsible-header cyan white-text active">About Account
               </div>
-              <div class="collapsible-body favorite-associates">
-                <div class="favorite-associate-list chat-out-list row">
-                  <div class="col s4"><img src="angular/app/assets/images/avatar.jpg" alt=""
-                                           class="circle responsive-img online-user valign profile-image">
+              <!---->
+              <div class="collapsible-body recent-activity">
+                <div class="recent-activity-list chat-out-list row">
+                  <div class="col s3 recent-activity-list-icon"><i
+                    class="mdi-action-backup"></i>
                   </div>
-                  <div class="col s8">
-                    <p>Eileen Sideways</p>
-                    <p class="place">Los Angeles, CA</p>
-                  </div>
-                </div>
-                <div class="favorite-associate-list chat-out-list row">
-                  <div class="col s4"><img src="angular/app/assets/images/avatar.jpg" alt=""
-                                           class="circle responsive-img online-user valign profile-image">
-                  </div>
-                  <div class="col s8">
-                    <p>Zaham Sindil</p>
-                    <p class="place">San Francisco, CA</p>
-                  </div>
-                </div>
-                <div class="favorite-associate-list chat-out-list row">
-                  <div class="col s4"><img src="angular/app/assets/images/avatar.jpg" alt=""
-                                           class="circle responsive-img offline-user valign profile-image">
-                  </div>
-                  <div class="col s8">
-                    <p>Renov Leongal</p>
-                    <p class="place">Cebu City, Philippines</p>
-                  </div>
-                </div>
-                <div class="favorite-associate-list chat-out-list row">
-                  <div class="col s4"><img src="angular/app/assets/images/avatar.jpg" alt=""
-                                           class="circle responsive-img online-user valign profile-image">
-                  </div>
-                  <div class="col s8">
-                    <p>Weno Carasbong</p>
-                    <p>Tokyo, Japan</p>
-                  </div>
-                </div>
-                <div class="favorite-associate-list chat-out-list row">
-                  <div class="col s4"><img src="angular/app/assets/images/avatar.jpg" alt=""
-                                           class="circle responsive-img offline-user valign profile-image">
-                  </div>
-                  <div class="col s8">
-                    <p>Nusja Nawancali</p>
-                    <p class="place">Bangkok, Thailand</p>
+                  <div class="col s9 recent-activity-list-text">
+                    <a href="#">Images Sizes</a>
+                    <p>Your images must be less than 100mb </p>
                   </div>
                 </div>
               </div>
@@ -438,26 +297,26 @@
   html {
     overflow-x: hidden;
   }
-
   body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
   }
-
   #main {
     flex: 1 0 auto;
   }
-
 </style>
 <footer class="page-footer">
   <div class="footer-copyright">
     <div class="container">
                <span>Copyright © 2017 <a class="grey-text text-lighten-4"
                                          href="#"
-                                         target="_blank"></a> All rights reserved.</span>
-      <span class="right"> Designed and Developed by <a class="grey-text text-lighten-4"
-                                                        href="">Brogrammers</a></span>
+                                         target="_blank"></a> All rights reserved.
+               </span>
+      <span class="right"> Designed and Developed with <img src="
+                  http://icons.iconarchive.com/icons/designbolts/free-valentine-heart/16/Heart-icon.png"
+                                                            alt="love">
+               by <a class="grey-text text-lighten-4" href="">Brogrammers</a></span>
     </div>
   </div>
 </footer>
@@ -471,14 +330,12 @@
 <script src="angular/app/assets/js/scriptLoader.js"></script>
 <!--<script src="angular/app/assets/js/charts/ggleloader.js"></script>-->
 <!--<script type="text/javascript" src="https://www.google.com/jsapi"></script>-->
-
 <script src="angular/app/bower_components/angular/angular.min.js"></script>
 <script src="angular/app/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="angular/app/bower_components/angular-resource/angular-resource.min.js"></script>
 <script src="angular/app/bower_components/angular-load/angular-load.min.js"></script>
 <script src="angular/app/bower_components/moment/min/moment.min.js"></script>
 <script type="text/javascript" src="angular/app/assets/js/plugins/sweetalert/sweetalert.min.js"></script>
-
 <!--Delete OClazyLoad after your correct your code-->
 <script src="angular/app/bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
 <script src="angular/app/app-back-office.js"></script>
@@ -487,7 +344,6 @@
 <script src="angular/app/dashboard/dashboard.factory.js"></script>
 <script src="angular/app/dashboard/dashboard.service.js"></script>
 <!--/*End of User Module Scripts*/-->
-
 <!--Hakim Campaign Modules starts-->
 <script src="angular/app/campaign/campaign.controller.js"></script>
 <script src="angular/app/campaign/campaign.factory.js"></script>
@@ -510,18 +366,14 @@
 <script src="angular/app/components/googleCharts/ColumnChart/columnChart.directive.js"></script>
 <script src="angular/app/components/googleCharts/PieChart/pieChart.directive.js"></script>
 <script src="angular/app/components/googleCharts/GeoChart/geoChart.directive.js"></script>
-
 <!--Hakim Campaign Modules ends-->
-
 <script src="angular/app/components/prevent-default.directive.js"></script>
 <script src="angular/app/constants/labels.constant.js"></script>
-
 <script src="angular/app/channel/channel.controller.js"></script>
 <script src="angular/app/channel/controllers/detail-channel.controller.js"></script>
 <script src="angular/app/channel/controllers/create-channel.controller.js"></script>
 <script src="angular/app/channel/channel.service.js"></script>
 <script src="angular/app/channel/channel.factory.js"></script>
-
 <!--Facebook Service-->
 <script src="angular/app/facebook/facebook.controller.js"></script>
 <script src="angular/app/facebook/controllers/facebookCommunity.controller.js"></script>
@@ -529,61 +381,45 @@
 <script src="angular/app/facebook/facebook.factory.js"></script>
 <script src="angular/app/facebook/services/facebook.service.js"></script>
 <script src="angular/app/components/facebook/facebook.directive.js"></script>
-
-
 <script src="angular/app/components/colorPicker.service.js"></script>
 <script src="angular/app/components/utils.service.js"></script>
-
 <!--User Profile-->
 <script src="angular/app/user/controllers/profile.controller.js"></script>
 <script src="angular/app/user/profile.service.js"></script>
-
 <script src="angular/app/user/controllers/settings.controller.js"></script>
 <script src="angular/app/user/settings.factory.js"></script>
 <script src="angular/app/user/settings.service.js"></script>
-
 <!--Twitter-->
 <script src="angular/app/twitter/twitter.factory.js"></script>
 <script src="angular/app/twitter/twitter.service.js"></script>
 <!--End User Profile-->
-
 <!--Ibrahim Modules ends-->
-
 <!-- sentimental analysis start -->
 <script src="angular/app/sentimentalAnalysis/sentimentalAnalysis.controller.js"></script>
 <script src="angular/app/sentimentalAnalysis/sentimentalAnalysis.factory.js"></script>
 <script src="angular/app/sentimentalAnalysis/sentimentalAnalysis.service.js"></script>
 <!-- sentimental analysis end -->
-
 <!--materialize js-->
 <script type="text/javascript" src="angular/app/assets/js/materialize.min.js"></script>
 <script type="text/javascript" src="angular/app/assets/js/plugins/angular-materialize.js"></script>
 <script src="angular/app/bower_components/moment/min/moment.min.js"></script>
 <!--<script src="angular/app/bower_components/smDateTimeRangePicker/src/picker.js"></script>-->
-
-
 <!--Chart Component-->
 <script src="angular/app/components/charts/lineChartCurved/linechartCurved.directive.js"></script>
 <script src="angular/app/components/charts/radarChart/radarchart.directive.js"></script>
 <script src="angular/app/components/charts/doughnutChart/doughnutChart.directive.js"></script>
 <script src="angular/app/components/charts/barChart/barChart.directive.js"></script>
 <script src="angular/app/components/charts/lineChart/lineCharts.directive.js"></script>
-
-
-
 <!--scrollbar-->
 <script type="text/javascript" src="angular/app/assets/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <!--plugins.js - Some Specific JS codes for Plugin Settings-->
 <script type="text/javascript" src="angular/app/assets/js/plugins.min.js"></script>
 <script type="text/javascript" src="angular/app/assets/js/plugins/formatter/jquery.formatter.min.js"></script>
 <script type="text/javascript" src="angular/app/assets/js/plugins/dropify/js/dropify.js"></script>
-
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script type="text/javascript"
         src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 <!--custom-script.js - Add your own theme custom JS-->
 <script type="text/javascript" src="angular/app/assets/js/custom-script.js"></script>
-
-
 </body>
 </html>
