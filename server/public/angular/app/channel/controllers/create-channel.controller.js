@@ -106,9 +106,9 @@
             data.user.accounts.data.forEach(function (page) {
               vm.myFacebookPages.push({value: "https://www.facebook.com/" + page.id, text: page.name});
 
-              UtilsService.AlertToast(
-                $("<span class='red-text'>There Was an error , please refresh the page</span>"), "rounded", 3000)
-              ;
+              // UtilsService.AlertToast(
+              //   $("<span class='red-text'>There Was an error , please refresh the page</span>"), "rounded", 3000)
+              // ;
 
             });
           })
