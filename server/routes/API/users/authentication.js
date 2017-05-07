@@ -38,7 +38,7 @@ module.exports.register = function (req, res) {
     return;
   }
 
-  User.findOne({email: req.body.email}, function (err, findUser) {
+  User.findOne({$or: [{'email': req.body.email}, {'username': req.body.username}, {'businessName': req.body.businessName}]}, function (err, findUser) {
     if (!findUser) {
       console.log('Adding User...');
       if (req.body.accountType == 'individual') {
@@ -51,6 +51,7 @@ module.exports.register = function (req, res) {
         user.state = "INACTIVE";
       }
       else if (req.body.accountType == 'business') {
+        console.log(req.body.accountType)
         var user = new User.Business();
         user.email = req.body.email;
         user.businessName = req.body.businessName;
@@ -65,6 +66,9 @@ module.exports.register = function (req, res) {
       user.save(function (err,usersaved,num) {
         //if (num==0) { res.status(403)}
         //else {
+        if (err)
+        {console.log("error adding user: ",err)}
+        else {
         var token;
         token = user.generateJwt();
         res.status(200);
@@ -73,6 +77,7 @@ module.exports.register = function (req, res) {
         res.json({
           "token": token
         });
+        }
        // }
       });
 

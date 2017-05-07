@@ -20,9 +20,9 @@ var UserSchema = new Schema({
 
   creationDate: String,
   phoneNumber: String,
-  profilePicture: {type:String,default:"default/avatar"},
-  coverPicture: {type:String,default:"default/user-profile-bg"},
-  about: {type: String,minlength: 6},
+  profilePicture: {type: String, default: "default/avatar"},
+  coverPicture: {type: String, default: "default/user-profile-bg"},
+  about: {type: String, minlength: 6},
   birthday: String,
   country: String
 
@@ -30,12 +30,10 @@ var UserSchema = new Schema({
 
 
 var individualSchema = new Schema({
-  username:  {
-  type: String,
-
-    required: true,
+  username: {
+    type: String,
     minlength: 3
-},
+  },
   firstName: {
     type: String,
     required: true
@@ -49,7 +47,6 @@ var individualSchema = new Schema({
 var businessSchema = new Schema({
   businessName: {
     type: String,
-    required: true,
     minlength: 3
   },
   employeesNumber: {
@@ -60,7 +57,6 @@ var businessSchema = new Schema({
     type: String,
     required: true
   },
-
 
 
 }, options);
