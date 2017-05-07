@@ -74,10 +74,10 @@
           </div>
 
 
-          <div class="row" ng-if="!vm.channel.personal">
+          <div class="row" ng-if="!vm.channel.personal || vm.channel.type!=='facebook'">
             <div class="input-field col s12">
               <i class="fa fa-link prefix"></i>
-              <input ng-model="vm.channel.url" id="url" type="url">
+              <input placeholder="https://www.facebook.com/nytimes/" ng-model="vm.channel.url" id="url" type="url">
               <!--ng-blur="vm.getSimalarChannels()"-->
               <label for="url">Url</label>
             </div>

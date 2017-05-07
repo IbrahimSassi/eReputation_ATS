@@ -51,11 +51,9 @@
 
     function init() {
 
-      // FacebookService.initFacebookApi().then(function () {
       ChannelService.getChannelsByUser(vm.connectedUserId).then(function (data) {
         vm.myChannels = data;
       });
-      // });
 
 
     }
@@ -109,14 +107,15 @@
               vm.myFacebookPages.push({value: "https://www.facebook.com/" + page.id, text: page.name});
 
               UtilsService.AlertToast(
-                $("<span class='red-text'>There Was an error , please try again</span>"), "rounded", 3000)
+                $("<span class='red-text'>There Was an error , please refresh the page</span>"), "rounded", 3000)
               ;
 
             });
           })
-            .catch(function () {
+            .catch(function (err) {
+              console.log(err);
               UtilsService.AlertToast(
-                $('<span class="red-text">There Was an error , please try again</span>'), "rounded", 3000);
+                $('<span class="red-text">There Was an error , please refresh the page</span>'), "rounded", 3000);
             });
 
 

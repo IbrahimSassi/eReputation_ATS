@@ -78,7 +78,6 @@
       initReputationByReaction();
       initReputationByShares();
       initReputationByTypes();
-      initReputationByStorytellersByCountry();
       initTopPosts();
     }
 
@@ -96,6 +95,8 @@
           filter.channelId = item._id;
 
           selectDate();
+          console.log("vm.selectedChannel",vm.selectedChannel)
+          initReputationByStorytellersByCountry();
 
           initCharts();
 

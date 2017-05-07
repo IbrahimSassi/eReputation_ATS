@@ -21,19 +21,27 @@
         url: '/myPages',
         templateUrl: 'angular/app/facebook/views/overview.view.html',
         controller: 'FacebookController as vm',
-        cache: false
+        cache: false,
+        authenticate: true,
+        shouldConfirmed: true
+
       })
       .state('campaignDetail.campaignFbAnalysis.facebookCommunity', {
         url: '/community',
         templateUrl: 'angular/app/facebook/views/facebookCommunity.view.html',
         controller: 'FacebookCommunityController as vm',
-        cache: false
+        cache: false,
+        authenticate: true,
+        shouldConfirmed: true
+
       })
       .state('campaignDetail.campaignFbAnalysis.facebookSpecific', {
         url: '/specific',
         templateUrl: 'angular/app/facebook/views/facebookSpecific.view.html',
         controller: 'FacebookSpecificController as vm',
-        cache: false
+        cache: false,
+        authenticate: true,
+        shouldConfirmed: true
       })
     // .state('page_stories_by_story_type', {
     //   url: '/facebook/pageFans',
