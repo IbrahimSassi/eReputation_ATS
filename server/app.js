@@ -44,6 +44,7 @@ var sentimentalCron = require('./routes/API/sentimental/SentimentalFunctions');
 // Facebook CRON
  var taskRunner = cron.schedule('2 0 0 * * *', function () {
 
+
    facebookCron.facebookLauncher().then(function () {
      // Facebook Sentiment analysis
      sentimentalCron.SentimentalForSpecificProvider("FacebookCommentsProvider");
@@ -81,7 +82,7 @@ app.engine('html', ejs.renderFile);
 
 //MongoDB Connection
 var mongoose = require('mongoose');
-mongoose.connect(configDB.localUri, {
+mongoose.connect(configDB.uri, {
   server: {
     socketOptions: {
       socketTimeoutMS: 0,
