@@ -6,12 +6,15 @@
 
   angular
     .module('ATSApp.facebook')
-    .service('FacebookService', FacebookServiceFN);
+    .service('FacebookService', FacebookServiceFN)
+    .factory('$FB', FacebookLoaderFactoryFN);
 
-  FacebookServiceFN.$inject = ['FacebookFactory', '$http'];
+  FacebookServiceFN.$inject = ['FacebookFactory', '$http', '$FB'];
+  FacebookLoaderFactoryFN.$inject = ['$rootScope'];
+
 
   /* @ngInject */
-  function FacebookServiceFN(FacebookFactory, $http) {
+  function FacebookServiceFN(FacebookFactory, $http,$FB) {
 
 
     var self = this;
@@ -43,7 +46,8 @@
     this.getTopPosts = getTopPostsFN;
     this.getReputationByPost = getReputationByPostFN;
     this.getLongUrl = getLongUrlFN;
-
+    this.loadSDK = loadSDK;
+    var loaded = false;
 
     function statusChangeCallbackFN(response) {
       return new Promise(function (resolve, reject) {
@@ -94,37 +98,47 @@
       });
     }
 
+    function loadSDK() {
+      // Load the SDK asynchronously
+      (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+
+    }
+
 
     function initFacebookApiFN() {
       return new Promise(function (resolve, reject) {
 
-        window.fbAsyncInit = function () {
-          FB.init({
+
+        if(!$FB.loader)
+        {
+          $FB._init({
             appId: '583444071825924',
             cookie: false,  // enable cookies to allow the server to access
             // the session
             xfbml: false,  // parse social plugins on this page
             version: 'v2.8' // use graph api version 2.8
+          })
+        }
+
+        window.FB.getLoginStatus(function (response) {
+          self.statusChangeCallback(response).then(function (data) {
+            resolve(data);
           });
+        });
 
-          FB.getLoginStatus(function (response) {
-            self.statusChangeCallback(response).then(function (data) {
-              resolve(data);
-            });
-          });
+        // window.fbAsyncInit = function () {
+        //
+        // };
+        //
+        // loadSDK();
 
-
-        };
-
-        // Load the SDK asynchronously
-        (function (d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id)) return;
-          js = d.createElement(s);
-          js.id = id;
-          js.src = "//connect.facebook.net/en_US/sdk.js";
-          fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
       });
 
     }
@@ -394,6 +408,36 @@
     function getLongUrlFN(url) {
       return FacebookFactory.longUrl({url: url}).$promise;
     }
+
+  }
+
+
+  function FacebookLoaderFactoryFN() {
+
+    var fbLoaded = false;
+
+    // Our own customisations
+    var _fb = {
+      loaded: fbLoaded,
+      _init: function (params) {
+        if (window.FB) {
+          angular.extend(window.FB, _fb);
+          angular.extend(_fb, window.FB);
+
+          // Set the flag
+          _fb.loaded = true;
+
+          // Initialise FB SDK
+          window.FB.init(params);
+
+          if (!$rootScope.$$phase) {
+            $rootScope.$apply();
+          }
+        }
+      }
+    };
+
+    return _fb;
 
   }
 

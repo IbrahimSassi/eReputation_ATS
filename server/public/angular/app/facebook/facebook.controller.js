@@ -147,6 +147,7 @@
     vm.onSelect = function () {
       ChannelService.getChannelByID(vm.selectedChannel._id).then(function (item) {
         vm.selectedChannel = item;
+        console.log(item)
         vm.labelsPageFans = [];
         vm.dataPageFans = [];
         initChart();
@@ -166,7 +167,7 @@
         vm.selectedChannel.accessToken,
         moment(new Date(vm.since)).format("DD-MM-YYYY"),
         moment(new Date(vm.until)).add(1, 'days').format("DD-MM-YYYY")
-      ).then(function (stories, err) {
+      ).then(function (stories) {
           vm.pageStories = stories.data[2].values;
 
 

@@ -11,11 +11,11 @@
 
   FacebookCommunityControllerFN.$inject = [
     'FacebookService', 'ChannelService', '$stateParams', 'CampaignService',
-    '$rootScope'];
+    '$rootScope', 'UtilsService'];
 
 
   /* @ngInject */
-  function FacebookCommunityControllerFN(FacebookService, ChannelService, $stateParams, CampaignService, $rootScope) {
+  function FacebookCommunityControllerFN(FacebookService, ChannelService, $stateParams, CampaignService, $rootScope, UtilsService) {
     var vm = this;
     vm.connectedUserId = $rootScope.currentUser._id;
     vm.selectedCampaign = $stateParams.idCampaign;
@@ -42,11 +42,11 @@
     }
 
 
-
     function getSelectedCampaign() {
       vm.myChannels = [];
       if (vm.selectedCampaign !== undefined) {
-        CampaignService.getCampaignById(vm.selectedCampaign).then(function (data) {
+        CampaignService.getCampaignById(vm.selectedCampaign)
+          .then(function (data) {
           data[0].channels.forEach(function (channelPartial) {
             ChannelService.getChannelByID(channelPartial.channelId).then(function (channel) {
               if (channel.type == "facebook" && channel.personal)
@@ -85,7 +85,7 @@
     vm.onSelect = function () {
       ChannelService.getChannelByID(vm.selectedChannel._id).then(function (item) {
         vm.selectedChannel = item;
-        // console.log(vm.selectedChannel);
+        console.log(vm.selectedChannel);
         initPageStorytellersByAgeGender()
         initPageEngagedUsersInsights();
       });
@@ -131,7 +131,12 @@
         });
 
 
-      });
+      })
+        .catch(function () {
+          UtilsService.AlertToast(
+            $('<span class="red-text">There Was an error on getting these insights</span>'), "rounded", 3000);
+        });
+      ;
     }
 
 
@@ -151,7 +156,12 @@
 
         });
 
-      });
+      })
+        .catch(function () {
+          UtilsService.AlertToast(
+            $('<span class="red-text">There Was an error on getting these insights</span>'), "rounded", 3000);
+        });
+      ;
 
     }
 
