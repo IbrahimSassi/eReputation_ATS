@@ -51,6 +51,7 @@
 
     function init() {
 
+      FacebookService.loadSDK();
       ChannelService.getChannelsByUser(vm.connectedUserId).then(function (data) {
         vm.myChannels = data;
       });
@@ -101,25 +102,30 @@
         .then(function (data) {
           var token = data.authResponse.accessToken;
 
-          FacebookService.getLongLivedToken(token).then(function (newLongToken) {
-            vm.channel.accessToken = newLongToken.longToken;
-            data.user.accounts.data.forEach(function (page) {
-              vm.myFacebookPages.push({value: "https://www.facebook.com/" + page.id, text: page.name});
+          FacebookService.getLongLivedToken(token)
+            .then(function (newLongToken) {
+              vm.channel.accessToken = newLongToken.longToken;
+              data.user.accounts.data.forEach(function (page) {
+                vm.myFacebookPages.push({value: "https://www.facebook.com/" + page.id, text: page.name});
 
-              // UtilsService.AlertToast(
-              //   $("<span class='red-text'>There Was an error , please refresh the page</span>"), "rounded", 3000)
-              // ;
-
-            });
-          })
+              });
+            })
             .catch(function (err) {
+              console.log("111");
               console.log(err);
               UtilsService.AlertToast(
                 $('<span class="red-text">There Was an error , please refresh the page</span>'), "rounded", 3000);
             });
 
 
+        })
+        .catch(function (err) {
+          console.log("222111");
+          console.log(err);
+          UtilsService.AlertToast(
+            $('<span class="red-text">There Was an error , please refresh the page</span>'), "rounded", 3000);
         });
+
     };
 
 
