@@ -45,7 +45,6 @@ var sentimentalCron = require('./routes/API/sentimental/SentimentalFunctions');
 
  facebookCron.facebookLauncher().then(function () {
  // Facebook Sentiment analysis
- sentimentalCron.SentimentalForSpecificProvider("FacebookPostsProvider");
  sentimentalCron.SentimentalForSpecificProvider("FacebookCommentsProvider");
  // end Facebook Sentiment analysis
 

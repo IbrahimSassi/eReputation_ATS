@@ -1,3 +1,44 @@
+<style type="text/css">
+  .input-field div.error {
+    position: relative;
+    top: -1rem;
+    left: 3rem;
+    font-size: 0.8rem;
+    color: firebrick;
+    -webkit-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+    transform: translateY(0%);
+  }
+
+  .left-alert input[type=text] + label:after,
+  .left-alert input[type=password] + label:after,
+  .left-alert input[type=email] + label:after,
+  .left-alert input[type=url] + label:after,
+  .left-alert input[type=time] + label:after,
+  .left-alert input[type=date] + label:after,
+  .left-alert input[type=datetime-local] + label:after,
+  .left-alert input[type=tel] + label:after,
+  .left-alert input[type=number] + label:after,
+  .left-alert input[type=search] + label:after,
+  .left-alert textarea.materialize-textarea + label:after {
+    left: 0px;
+  }
+
+  .right-alert input[type=text] + label:after,
+  .right-alert input[type=password] + label:after,
+  .right-alert input[type=email] + label:after,
+  .right-alert input[type=url] + label:after,
+  .right-alert input[type=time] + label:after,
+  .right-alert input[type=date] + label:after,
+  .right-alert input[type=datetime-local] + label:after,
+  .right-alert input[type=tel] + label:after,
+  .right-alert input[type=number] + label:after,
+  .right-alert input[type=search] + label:after,
+  .right-alert textarea.materialize-textarea + label:after {
+    right: 70px;
+  }
+</style>
 <div class="col s12 m8 l9">
   <ul class="collapsible popout collapsible-accordion" data-collapsible="accordion">
     <li>
@@ -8,19 +49,22 @@
           <div class="card-panel">
             <!--<h4 class="header2">Form with icon prefixes</h4>-->
             <div class="row">
-              <form id="info-campaign-form" class="col s12">
+              <form name="form" id="info-campaign-form" class="col s12">
                 <div class="row">
                   <div class="input-field col s12">
                     <i class="mdi-image-edit prefix"></i>
-                    <input ng-model="camp.campaignToAdd.name" required id="c_n" type="text">
-                    <label for="c_n">Campaign Name</label>
+                    <input data-error=".errorC_n" ng-model="camp.campaignToAdd.name" name="c_n" id="c_n" type="text">
+                    <div class="errorC_n"></div>
+                    <label for="c_n">Campaign Name *</label>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s12">
                     <i class="mdi-editor-insert-link prefix"></i>
-                    <input ng-model="camp.campaignToAdd.url" required id="c_url" type="url">
-                    <label for="c_url">Main Website</label>
+                    <input ata-error=".errorUrl" ng-model="camp.campaignToAdd.url" name="c_url" required id="c_url"
+                           type="url">
+                    <div class="errorUrl"></div>
+                    <label for="c_url">Main Website *</label>
                   </div>
                 </div>
                 <div class="row">
@@ -29,9 +73,10 @@
                     <!--<input ng-model="camp.campaignToAdd.dateStart" required id="datestart" type="date" >-->
                     <input input-date
                            type="text"
-                           name="created"
+                           name="inputCreated"
                            id="inputCreated"
                            ng-model="camp.campaignToAdd.dateStart"
+                           ng-change="toStartDate=camp.campaignToAdd.dateStart;"
                            container="body"
                            format="dd/mm/yyyy"
                            months-full="{{ month }}"
@@ -40,7 +85,7 @@
                            weekdays-short="{{ weekdaysShort }}"
                            weekdays-letter="{{ weekdaysLetter }}"
                            disable="disable"
-                           min="{{ minDate }}"
+                           min="{{ dateMin }}"
                            max="{{ maxDate }}"
                            today="today"
                            clear="clear"
@@ -52,15 +97,16 @@
                            on-close="onClose()"
                            on-set="onSet()"
                            on-stop="onStop()"/>
-                    <label for="inputCreated">Date start</label>
+                    <input type="hidden" ng-model="toStartDate" />
+                    <label for="inputCreated">Date start *</label>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s12">
                     <i class="mdi-image-timer-off prefix"></i>
-                    <input input-date
+                    <input input-date ng-disabled="!form.inputCreated.$dirty"
                            type="text"
-                           name="created"
+                           name="inputEnd"
                            id="inputEnd"
                            ng-model="camp.campaignToAdd.dateEnd"
                            container="body"
@@ -71,7 +117,7 @@
                            weekdays-short="{{ weekdaysShort }}"
                            weekdays-letter="{{ weekdaysLetter }}"
                            disable="disable"
-                           min="{{ minDate }}"
+                           min="{{dateEndMin}}"
                            max="{{ maxDate }}"
                            today="today"
                            clear="clear"
@@ -83,22 +129,22 @@
                            on-close="onClose()"
                            on-set="onSet()"
                            on-stop="onStop()"/>
-                    <label for="inputEnd">Date end</label>
+                    <label for="inputEnd">Date end *</label>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s12">
                     <i class="mdi-maps-local-phone prefix"></i>
-                    <input ng-model="camp.campaignToAdd.phoneNumber" id="c_phone" type="tel">
+                    <input ng-model="camp.campaignToAdd.phoneNumber" name="c_phone" id="c_phone" type="number">
                     <label for="c_phone">Phone Number</label>
                   </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s12">
                     <i class="mdi-action-subject prefix"></i>
-                    <textarea ng-model="camp.campaignToAdd.description" required id="c_desc"
+                    <textarea ng-model="camp.campaignToAdd.description" name="c_desc" id="c_desc"
                               class="materialize-textarea"></textarea>
-                    <label for="c_desc">Description</label>
+                    <label for="c_desc">Description *</label>
                   </div>
                 </div>
                 <div class="row">
@@ -116,14 +162,14 @@
       </div>
     </li>
     <li>
-      <div id="assign-section" class="collapsible-header"><i class="mdi-action-language"></i>ASSIGN CHANNELS
+      <div style="pointer-events: none;"  id="assign-section" class="collapsible-header"><i class="mdi-action-language"></i>ASSIGN CHANNELS
       </div>
       <div class="collapsible-body">
         <div class="col s12 m12 l6">
           <div class="card-panel">
             <!--<h4 class="header2">Form with icon prefixes</h4>-->
             <div class="row">
-              <form class="col s12">
+              <form id="channels-campaign-form" class="col s12">
                 <div class="row">
                   <div class="input-field col s12">
                     <div class="input-field col s3 offset-s3">
@@ -159,7 +205,7 @@
                         <div class="row">
                           <div class="input-field col s12">
                             <i class="mdi-image-edit prefix"></i>
-                            <input ng-model="camp.campaignToAdd.channel.name" id="ch_name" type="text">
+                            <input ng-model="camp.campaignToAdd.channel.name" id="ch_name" name="ch_name" type="text">
                             <label for="ch_name">Channel Name</label>
                           </div>
 
@@ -179,11 +225,10 @@
                             <i class="mdi-image-edit prefix"></i>
                           </div>
                           <div class="input-field col s8">
-                            <select ng-model="camp.campaignToAdd.channel.type" name="type" id="ch_type">
+                            <select ng-model="camp.campaignToAdd.channel.type" name="type" name="ch_type" id="ch_type">
                               <option value="" disabled>Type</option>
                               <option value="facebook">Facebook</option>
                               <option value="twitter">Twitter</option>
-                              <option value="website">Website/Blogs</option>
                             </select>
                           </div>
                           <div
@@ -229,7 +274,7 @@
                       </button>
                     </div>
                     <div ng-show="newChannelShow==false" class="input-field s12">
-                      <button ng-click="camp.pushChannelId(camp.campaignToAdd.channelId)"
+                      <button ng-click="camp.pushChannelId(camp.campaignToAdd.channelId,false)"
                               class="col s4 offset-s4 btn grey darken-3 waves-effect waves-light center " name="action">
                         Add Channel To this Campaign
                         <i class="mdi-action-note-add right"></i>
@@ -244,7 +289,8 @@
                                          err-src
                                          alt="logo">
                                     {{channel.name}}
-                                        <i ng-click="camp.removeChannelsFromAdd($index)" class="material-icons mdi-navigation-close"></i>
+                                        <i ng-click="camp.removeChannelsFromAdd($index)"
+                                           class="material-icons mdi-navigation-close"></i>
 
                                  </div>
                               </span>
@@ -253,7 +299,7 @@
                   </div>
                   <div class="row">
                     <div class="input-field col s6">
-                      <button onclick="validateAndGoNext('#campaign-section')"
+                      <button onclick="validateAndGoPrev('#campaign-section')"
                               class="btn grey darken-3 waves-effect waves-light left" name="action">Previous
                         <i class="mdi-image-navigate-before left"></i>
                       </button>
@@ -272,7 +318,7 @@
       </div>
     </li>
     <li>
-      <div id="keywords-section" class="collapsible-header"><i class="mdi-action-book"></i>KEYWORDS</div>
+      <div style="pointer-events: none;" id="keywords-section" class="collapsible-header"><i class="mdi-action-book"></i>KEYWORDS</div>
       <div class="collapsible-body">
         <div class="col s12 m12 l6">
           <div class="card-panel">
@@ -287,7 +333,8 @@
                   </div>
 
                   <div class="input-field col s12">
-                    <div class="input-field col s3 offset-s2">
+                    <div ng-init="camp.keyword.importance='low'" class="input-field col s3 offset-s2">
+
                       <input ng-model="camp.keyword.importance" value="low" class="with-gap" name="importanceKey"
                              type="radio"
                              id="low"/>
@@ -331,7 +378,7 @@
                 </div>
                 <div class="row">
                   <div class="input-field col s6">
-                    <button onclick="validateAndGoNext('#assign-section')"
+                    <button onclick="validateAndGoPrev('#assign-section')"
                             class="btn grey darken-3 waves-effect waves-light left" name="action">Previous
                       <i class="mdi-image-navigate-before left"></i>
                     </button>
@@ -367,15 +414,96 @@
 </script>
 <script>
   function validateAndGoNext(next) {
+    if (next == '#assign-section') {
+      $("#info-campaign-form").validate({
+        rules: {
+          c_n: {
+            required: true,
+            minlength: 2
+          },
+          c_url: {
+            required: true,
+          },
+          inputCreated: {
+            required: true,
+          },
+          inputEnd: {
+            required: true,
+          },c_desc: {
+            required: true,
+          },
+          c_phone: {
+            minlength:8,
+            maxlength:15,
+            digits: true
+          },
 
-    $(next).trigger('click');
+        },
+        messages: {
+          c_phone:{
+            maxlength:"please enter a valid phone number! max length 15 !",
+            minlength:"please enter a valid phone number! min length 8 !",
+            digits:"please enter a valid phone number!"
+          }
+        },
+        errorElement: 'div',
+        errorPlacement: function (error, element) {
+          var placement = $(element).data('error');
+          if (placement) {
+
+            $(placement).append(error)
+          } else {
+            error.insertAfter(element);
+          }
+        },
+        submitHandler: function(form) {
+          $(next).trigger('click');
+        }
+      });
+    }
+
+    if (next == '#keywords-section') {
+      $("#channels-campaign-form").validate({
+        rules: {
+          ch_name: {
+
+          },
+          ch_type: {
+
+          },
+
+        },
+        messages: {
+        },
+        errorElement: 'div',
+        errorPlacement: function (error, element) {
+          var placement = $(element).data('error');
+          if (placement) {
+
+            $(placement).append(error)
+          } else {
+            error.insertAfter(element);
+          }
+        },
+        submitHandler: function(form) {
+          $(next).trigger('click');
+        }
+      });
+    }
+
 
 
   }
-  //
-  //  function validateInfoForm() {
-  //    return $("#c_n").valid() && $("#c_url").valid() && $("#datestart").valid()
-  //      && $("#dateend").valid() && $("#c_phone").valid() && $("#c_desc").valid();
-  //  }
+
+  function validateAndGoPrev(prev) {
+    $(prev).trigger('click');
+  }
+
+
+</script>
+
+
+<script type="text/javascript">
+
 
 </script>
