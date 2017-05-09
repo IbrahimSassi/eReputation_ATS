@@ -27,7 +27,7 @@
                   <div class="input-field col s12">
                     <i class="mdi-image-timer prefix"></i>
                     <!--<input ng-model="campaignToEdit.dateStart" required id="datestart" type="date" >-->
-                    <input input-date
+                    <input ng-disabled="true" input-date
                            type="text"
                            name="created"
                            id="inputCreated"
@@ -71,7 +71,7 @@
                            weekdays-short="{{ weekdaysShort }}"
                            weekdays-letter="{{ weekdaysLetter }}"
                            disable="disable"
-                           min="{{ minDate }}"
+                           min="{{campaignToEdit.dateStart}}"
                            max="{{ maxDate }}"
                            today="today"
                            clear="clear"

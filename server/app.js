@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var compression = require('compression');
-
+var cron = require('node-cron');
 var admin = require('./routes/admin');
 var index = require('./routes/index');
 var users = require('./routes/API/users/index');
@@ -33,40 +33,47 @@ var ejs = require('ejs');
 var app = express();
 //Running Twitter Scrapping Cron
 var twitterCron = require('./routes/API/twitter/twitterCron');
-//twitterCron.run();
-// twitterCron.runSentimentalAnalysis();
+ twitterCron.run();
+ twitterCron.runSentimentalAnalysis();
 //End of running Twitter Scrapping Cron
 
 var facebookCron = require('./routes/API/facebook/facebook.cron');
 var websitesCron = require('./routes/API/websites/websites.cron');
 var sentimentalCron = require('./routes/API/sentimental/SentimentalFunctions');
-/*
+
 // Facebook CRON
-
- facebookCron.facebookLauncher().then(function () {
- // Facebook Sentiment analysis
- sentimentalCron.SentimentalForSpecificProvider("FacebookCommentsProvider");
- // end Facebook Sentiment analysis
+ var taskRunner = cron.schedule('2 0 0 * * *', function () {
 
 
- // Websites CRON
- websitesCron.websitesLauncher().then(function () {
-   //Websites Sentiment Analysis
-   sentimentalCron.SentimentalForSpecificProvider("websitesProvider");
-   console.log("\n\n\n TADDAAA ... \n\n\n");
+   facebookCron.facebookLauncher().then(function () {
+     // Facebook Sentiment analysis
+     sentimentalCron.SentimentalForSpecificProvider("FacebookCommentsProvider");
+     // end Facebook Sentiment analysis
+
+
+     // Websites CRON
+     websitesCron.websitesLauncher().then(function () {
+       //Websites Sentiment Analysis
+       sentimentalCron.SentimentalForSpecificProvider("websitesProvider");
+       console.log("\n\n\n TADDAAA ... \n\n\n");
+     });
+
+   }).catch(function () {
+     // Websites CRON
+     websitesCron.websitesLauncher().then(function () {
+       //Websites Sentiment Analysis
+       sentimentalCron.SentimentalForSpecificProvider("websitesProvider");
+       console.log("\n\n\n TADDAAA ... \n\n\n");
+     });
+
+   });
+
+
  });
+taskRunner.start();
 
- }).catch(function () {
- // Websites CRON
- // websitesCron.websitesLauncher().then(function () {
- //   //Websites Sentiment Analysis
- //   sentimentalCron.SentimentalForSpecificProvider("websitesProvider");
- //   console.log("\n\n\n TADDAAA ... \n\n\n");
- // });
 
- });
 
-*/
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -38,6 +38,7 @@
     text-decoration: underline;
   }
 </style>
+<span ng-show="tableAllAnalysis.length>1">
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <span ng-init="camp.getWebsitesProviderAll('all')"></span>
 <div id="breadcrumbs-wrapper">
@@ -53,13 +54,13 @@
   </div>
   <div class="row">
     <div class="col s12 m12">
-      <label for="selectChannel">Choose Channel</label>
+      <label for="selectChannel">Choose Keywords</label>
       <div class="input-field col s12">
         <select ng-change="camp.getWebsitesProvider(camp.selectedChannel._id)" ng-model="camp.selectedChannel._id"
                 name="" id="selectChannel" material-select watch>
           <option value="" disabled selected>Choose your option</option>
-          <option ng-if="channelsofThisCampaign.length==0" disabled value="No Channles on This Category" selected>No
-            Channles on This Category
+          <option ng-if="channelsofThisCampaign.length==0" disabled value="No Keywords on This Category" selected>No
+            Keywords on This Category
           </option>
           <option ng-if="channelsofThisCampaign.length>0" ng-repeat="channel in channelsofThisCampaign"
                   value="{{channel._id}}">{{channel.name}}
@@ -162,4 +163,11 @@
 
   </div>
 
+</div>
+</span>
+
+<div ng-show="tableAllAnalysis.length<=1" class="col s12 m4 offset-m4">
+  <br/>
+  <h6 class="grey-text">Data is <b>Not Yet Available</b> For Websites Analysis  </h6>
+  <br/>
 </div>
