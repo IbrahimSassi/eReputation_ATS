@@ -108,11 +108,17 @@
     vm.idCampaign = $stateParams.idCampaign;
     $scope.allChannelTodisplay = [];
     $scope.allChannelEditTodisplay = [];
-    $scope.allChannelEditTodisplayId=[];
+    $scope.allChannelEditTodisplayId = [];
     $scope.channels = [];
     $scope.channelsId = [];
     $scope.keywords = [];
-    $scope.keywordsToEdit=[];
+    $scope.keywordsToEdit = [];
+    $scope.dateMin = moment().subtract(7, 'days');
+    $scope.$watch('toStartDate', function(newValue, oldValue){
+      console.info(newValue);
+      console.info(moment(newValue).format('MM/DD/YYYY'));
+      $scope.dateEndMin=moment(newValue,'DD/MM/YYYY').add(1,'days').format('MM/DD/YYYY');
+    }, true);
     /**
      * View Detail Methods
      */
@@ -121,7 +127,7 @@
 
     vm.displayEdit = function (id) {
       CampaignService.getCampaignById(id).then(function (data) {
-        $scope.keywordsToEdit=data[0].keywords;
+        $scope.keywordsToEdit = data[0].keywords;
         console.info("cammpaign : ", data[0]);
         $scope.campaignToEdit = data[0];
         data[0].channels.forEach(function (channelPartial) {
@@ -202,57 +208,101 @@
     // $rootScope.currentUser._id='58dcdfb7007df41d241782f7';
 
 
-
-
     vm.addChannels = function (channel) {
       //add only domain name exemple www.ifm.tn
-      if (vm.extractDomain(channel.url).toLowerCase().indexOf('facebook') != -1
-        || vm.extractDomain(channel.url).toLowerCase().indexOf('twitter') != -1) {
+      var test = 0;
+      if (!channel.name) {
+        test++;
+        swal({
+          title: "Problem !",
+          text: "Channel not Created ! \n  please verify \"Channel Name ! \"",
+          type: "warning",
+        });
       }
-      else {
-        channel.url = vm.extractDomain(channel.url);
+      if (!channel.type) {
+        test++;
+        swal({
+          title: "Problem !",
+          text: "Channel not Created ! \n  please verify \"Channel type ! \"",
+          type: "warning",
+        });
       }
-      channel.userId = $rootScope.currentUser._id;
-      if (channel.personal === undefined) {
-        channel.personal = false;
+      if (!channel.url) {
+        test++;
+        swal({
+          title: "Problem !",
+          text: "Channel not Created ! \n  please verify \"Channel URL ! \"",
+          type: "warning",
+        });
       }
-      //end
-      $scope.myChannelAaccessToken === undefined ? '' : channel.accessToken = $scope.myChannelAaccessToken;
-      //Call Service Add Channel Function
+      if (test === 0) {
+        if (vm.extractDomain(channel.url).toLowerCase().indexOf('facebook') != -1
+          || vm.extractDomain(channel.url).toLowerCase().indexOf('twitter') != -1) {
+        }
+        else {
+          channel.url = vm.extractDomain(channel.url);
+        }
+        channel.userId = $rootScope.currentUser._id;
+        if (channel.personal === undefined) {
+          channel.personal = false;
+        }
+        //end
+        $scope.myChannelAaccessToken === undefined ? '' : channel.accessToken = $scope.myChannelAaccessToken;
+        //Call Service Add Channel Function
 
 
-      ChannelService.addChannel(channel).then(function (dataChannel) {
-        vm.pushChannelId(dataChannel._id)
-      });
+        ChannelService.addChannel(channel).then(function (dataChannel) {
+          vm.pushChannelId(dataChannel._id, true)
+        }).catch(function (err) {
+          console.log("err ", err);
+        });
 
-      //end
+        //end
+      }
+
     };
 
-    vm.pushChannelId = function (idChannel) {
-      $scope.channelsId.push({'channelId': idChannel});
-      $scope.allChannelEditTodisplayId.push({'channelId': idChannel});
+    vm.pushChannelId = function (idChannel, isNew) {
+
+      $scope.channelsId.push({'channelId': idChannel, 'isNew': isNew});
+      $scope.allChannelEditTodisplayId.push({'channelId': idChannel, 'isNew': isNew});
       ChannelService.getChannelByID(idChannel).then(function (dataChannel) {
         $scope.channels.push(dataChannel);
         $scope.allChannelEditTodisplay.push(dataChannel);
       });
+
     };
     vm.removeChannelsFromAdd = function (index) {
+
       var idChannelToDelete = $scope.channelsId[index] !== undefined
         ? $scope.channelsId[index].channelId
         : $scope.allChannelEditTodisplay[index]._id;
-      ChannelService.getChannelByID(idChannelToDelete).then(function (dataChannel) {
-        ChannelService.deleteChannel(dataChannel).then(function () {
+      console.info("olalal ", idChannelToDelete);
+      if ($scope.channelsId[index] !== undefined) {
+        if ($scope.channelsId[index].isNew === true) {
+          ChannelService.getChannelByID(idChannelToDelete).then(function (dataChannel) {
+            ChannelService.deleteChannel(dataChannel).then(function () {
+              $scope.channelsId.splice(index, 1);
+
+            });
+          });
+        }
+        if ($scope.channelsId[index].isNew === false) {
+          console.info($scope.channelsId[index]);
           $scope.channelsId.splice(index, 1);
           $scope.allChannelEditTodisplayId.splice(index, 1);
-          console.info($scope.channelsId);
-        });
-      });
+        }
+      }
+      else {
+        $scope.allChannelEditTodisplayId.splice(index, 1);
+      }
+
+
     };
 
 
-    vm.addKeywords = function (keyword,edit) {
-      if(edit===true)
-      {
+    vm.addKeywords = function (keyword, edit) {
+      if (edit === true) {
         $scope.keywordsToEdit.push(
           {
             "content": keyword.content,
@@ -271,9 +321,8 @@
 
 
     };
-    vm.removeKeywordsFromAdd = function (index,edit) {
-      if(edit===true)
-      {
+    vm.removeKeywordsFromAdd = function (index, edit) {
+      if (edit === true) {
         $scope.keywordsToEdit.splice(index, 1);
         console.info($scope.keywords);
       }
@@ -292,7 +341,7 @@
     vm.addCampaign = function (campaign) {
       // init vars
       campaign.userId = $rootScope.currentUser._id;
-      campaign.channel.personal === undefined ? false : campaign.channel.personal;
+      // campaign.channel.personal === undefined ? false : campaign.channel.personal;
       campaign.channels = $scope.channelsId;
       campaign.dateStart = moment(campaign.dateStart, 'DD/MM/YYYY');
       campaign.dateEnd = moment(campaign.dateEnd, 'DD/MM/YYYY');
