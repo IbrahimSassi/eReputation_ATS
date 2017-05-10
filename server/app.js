@@ -42,28 +42,34 @@ var websitesCron = require('./routes/API/websites/websites.cron');
 var sentimentalCron = require('./routes/API/sentimental/SentimentalFunctions');
 
 // Facebook CRON
+
+
  var taskRunner = cron.schedule('2 0 0 * * *', function () {
 
 
    facebookCron.facebookLauncher().then(function () {
      // Facebook Sentiment analysis
+     sentimentalCron.SentimentalForSpecificProvider("FacebookPostsProvider");
      sentimentalCron.SentimentalForSpecificProvider("FacebookCommentsProvider");
      // end Facebook Sentiment analysis
 
 
+     console.log("\n\n\n Start Scraping Websites ... \n\n\n");
+
      // Websites CRON
      websitesCron.websitesLauncher().then(function () {
        //Websites Sentiment Analysis
+       console.log("\n\n\n Start Analyzing Websites ... \n\n\n");
        sentimentalCron.SentimentalForSpecificProvider("websitesProvider");
-       console.log("\n\n\n TADDAAA ... \n\n\n");
      });
 
    }).catch(function () {
+     console.log("\n\n\n Start Scraping Websites ... \n\n\n");
      // Websites CRON
      websitesCron.websitesLauncher().then(function () {
        //Websites Sentiment Analysis
+       console.log("\n\n\n Start Analyzing Websites ... \n\n\n");
        sentimentalCron.SentimentalForSpecificProvider("websitesProvider");
-       console.log("\n\n\n TADDAAA ... \n\n\n");
      });
 
    });
