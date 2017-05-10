@@ -90,7 +90,7 @@ mongoose.connect(configDB.uri, {
     }
   }
 });
-// mongoose.connect('mongodb://localhost:27017/ats-digital-local');
+// mongoose.connect('mongodb://localhost:27017/obama');
 
 //Adding passport require
 require('./config/passport.config');

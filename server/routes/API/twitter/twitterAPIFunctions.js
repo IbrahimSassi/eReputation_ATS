@@ -74,7 +74,7 @@ function SaveDatToTwitterProviderForRepliesToUserForChannel(since, until, channe
 
     clientForReplies.get('search/tweets', {
       q: 'to:' + mentionedUser + ' ' + finalKeywords + ' since:' + since + ' until:' + until,
-      count: 100,
+      count: 25,
       max_id: max_id
     }, function (error, tweets, response) {
       if (error) {
@@ -134,7 +134,8 @@ function SaveDatToTwitterProviderForRepliesToUserForChannel(since, until, channe
             }, 900000);
           }
           else {
-            scrap(max);
+            //scrap(max);
+            console.log("ENDDDDDDDDDDD");
           }
         }
         else {
@@ -182,7 +183,7 @@ function SaveDatToTwitterProviderForMentionedUserForChannel(since, until, channe
 
     clientForMentions.get('search/tweets', {
       q: '@' + mentionedUser + ' ' + finalKeywords + ' since:' + since + ' until:' + until,
-      count: 100,
+      count: 25,
       max_id: max_id
     }, function (error, tweets, response) {
       if (error) {
@@ -239,7 +240,8 @@ function SaveDatToTwitterProviderForMentionedUserForChannel(since, until, channe
             }, 900000);
           }
           else {
-            scrap(max);
+            //scrap(max);
+            console.log("ENDDDDDDDDDDD");
           }
         }
         else {
@@ -285,7 +287,7 @@ function TweetsScrapper(since, until, channelId, campaignId, keywords) {
 
     client.get('search/tweets', {
       q: '' + finalKeywords + ' since:' + editableSince + ' until:' + until + '',
-      count: 100, max_id: max_id
+      count: 25, max_id: max_id
     }, function (error, tweets, response) {
       if (error) {
         return -1;
@@ -340,7 +342,8 @@ function TweetsScrapper(since, until, channelId, campaignId, keywords) {
             }, 900000);
           }
           else {
-            scrap(max);
+            //scrap(max);
+            console.log("ENDDDDDDDDDDD");
           }
         }
         else {

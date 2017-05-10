@@ -45,14 +45,53 @@
      * View Detail Methods
      */
 
+
+
+    var filterSentimentalForCampaign =
+      {
+        "since":vm.since,
+        "until":vm.until,
+        "channelId": "all",
+        "campaignId": vm.idCampaign
+      };
+
+
+    var filterSentimentalForTwitter =
+      {
+        "since":vm.since,
+        "until":vm.until,
+        "source": "tweetsProvider",
+        "campaignId": vm.idCampaign
+      };
+
+    var filterSentimentalForfb =
+      {
+        "since":vm.since,
+        "until":vm.until,
+        "source": "FacebookPostsProvider",
+        "campaignId": vm.idCampaign
+      }
+
+    var filterSentimentalForWebsites=
+      {
+        "since":vm.since,
+        "until":vm.until,
+        "source": "websitesProvider",
+        "campaignId": vm.idCampaign
+      }
+
+
+
+    initSentimentalCampaignData();
+
     vm.getCampaignDetail = function (id) {
       if (id !== undefined) {
         CampaignService.getCampaignById(id).then(function (data) {
           console.info(data);
           vm.detailCampaign = data[0];
-          vm.minDate = moment(data[0].dateStart);
+          vm.minDate = moment(data[0].dateStart).subtract(1,'days');;
           vm.maxDate = moment(data[0].dateEnd);
-          vm.since = moment(data[0].dateStart);
+          vm.since = moment(data[0].dateStart).subtract(1,'days');
         }).catch(function (err) {
           console.error(err);
         });
@@ -154,38 +193,6 @@
 
 
 
-    var filterSentimentalForCampaign =
-      {
-        "since":vm.since,
-        "until":vm.until,
-        "channelId": "all",
-        "campaignId": vm.idCampaign
-      };
-
-
-    var filterSentimentalForTwitter =
-      {
-        "since":vm.since,
-        "until":vm.until,
-        "source": "tweetsProvider",
-        "campaignId": vm.idCampaign
-      };
-
-    var filterSentimentalForfb =
-      {
-        "since":vm.since,
-        "until":vm.until,
-        "source": "FacebookPostsProvider",
-        "campaignId": vm.idCampaign
-      }
-
-      var filterSentimentalForWebsites=
-        {
-          "since":vm.since,
-          "until":vm.until,
-          "source": "websitesProvider",
-          "campaignId": vm.idCampaign
-        }
 
 
     function initSentimentalCampaignData() {
