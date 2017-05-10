@@ -40,6 +40,14 @@
 
     vm.pn = 1;
 
+
+    $scope.$watch('vm.since', function(newValue, oldValue){
+      console.info(newValue);
+      console.info(moment(newValue).format('MM/DD/YYYY'));
+      $scope.dateEndMin=moment(newValue,'DD/MM/YYYY').add(1,'days').format('MM/DD/YYYY');
+    }, true);
+
+
     var filterSentimentalForMention =
       {
         "since": vm.since,
@@ -160,6 +168,8 @@
         CampaignService.getCampaignById(id).then(function (data) {
           allChannels = data[0].channels;
           vm.detailCampaign = data[0];
+          vm.minDate = moment(data[0].dateStart);
+          vm.maxDate = moment(data[0].dateEnd);
 
         }).catch(function (err) {
 

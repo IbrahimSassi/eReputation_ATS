@@ -13,9 +13,15 @@ var sentimentalFN = require('../sentimental/SentimentalFunctions');
 var today = moment(new Date()).format('YYYY-MM-DD');
 var yesterday = moment(new Date(new Date().setDate(new Date().getDate() - 1))).format('YYYY-MM-DD');
 
+
+
+
+
+
 module.exports.run = function (req, res) {
   var task = cron.schedule('2 0 0 * * *', function () { //right one
- // var task = cron.schedule('0 48 0 * * *', function () {
+ // var task = cron.schedule('1 36 * * * *', function () {
+    console.log("heyyy")
     var campaignResultData = [];
     var campaignQuery = {
       state: "active",
@@ -25,8 +31,10 @@ module.exports.run = function (req, res) {
 
 
     CampaignModel.getCampaignsByQuery(campaignQuery).then(function (campaigns) {
+
       var channelPromise;
       async.eachSeries(campaigns, function iteratee(campaign, callback) {
+
         campaign.channels.forEach(function (campaignChannel) {
           channelPromise = new Promise(function (resolve, reject) {
             Channel.getChannelByIdModel(campaignChannel.channelId, function (err, channelById) {
@@ -39,7 +47,7 @@ module.exports.run = function (req, res) {
                 if (channelById.type === "twitter") {
                   var kyTab = []
 
-
+                  console.log("My Channel:", channelById)
                   campaign.keywords.forEach(function (item) {
                     kyTab.push(item.content);
                   });
@@ -138,9 +146,13 @@ module.exports.run = function (req, res) {
 };
 
 
+
+
+
+
 module.exports.runSentimentalAnalysis = function (req, res) {
    cron.schedule('2 3 0 * * *', function(){
-  //cron.schedule('25 23 * * * *', function () {
+  //cron.schedule('30 36 * * * *', function () {
 
 
     sentimentalFN.SentimentalForSpecificProvider("tweetsProvider");
