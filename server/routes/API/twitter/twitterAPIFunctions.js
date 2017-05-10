@@ -118,7 +118,7 @@ function SaveDatToTwitterProviderForRepliesToUserForChannel(since, until, channe
 
       if (tweets.search_metadata.next_results == null) {
         //res.status(200).json({"End":tweets})
-        console.log('End Of Scrapping For Replies')
+        console.log('End Of Scrapping For Replies',mentionedUser)
 
       }
       else {
@@ -126,7 +126,7 @@ function SaveDatToTwitterProviderForRepliesToUserForChannel(since, until, channe
         console.log(max);
         if (max) {
           count1++;
-          console.log('countRep: ', count1);
+          console.log('countRep: ', count1, mentionedUser);
 
 
           if(count1==440)
@@ -139,7 +139,7 @@ function SaveDatToTwitterProviderForRepliesToUserForChannel(since, until, channe
           }
         }
         else {
-          console.log('ElsecountRep: ', count1)
+          console.log('ElsecountRep: ', count1, mentionedUser)
         }
 
         //
@@ -226,14 +226,14 @@ function SaveDatToTwitterProviderForMentionedUserForChannel(since, until, channe
 
       if (tweets.search_metadata.next_results == null) {
         //res.status(200).json({"End":tweets})
-        console.log('End Of Scrapping For Mentions')
+        console.log('End Of Scrapping For Mentions', mentionedUser)
       }
       else {
         var max = tweets.search_metadata.next_results.slice(8, 26);
         console.log(max);
         if (max) {
           count2++;
-          console.log('countMent: ', count2)
+          console.log('countMent: ', count2, mentionedUser)
           if(count2==440)
           {
             setTimeout(function(){ scrap(max); count2=0;}, 900000);
@@ -244,7 +244,7 @@ function SaveDatToTwitterProviderForMentionedUserForChannel(since, until, channe
           }
         }
         else {
-          console.log('ElsecountMent: ', count2)
+          console.log('ElsecountMent: ', count2, mentionedUser)
         }
 
         //

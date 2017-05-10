@@ -506,6 +506,16 @@ module.exports.findNulledScoreWithDataproviderType = function (type) {
   });
 }
 
+module.exports.findNulledScoreWithDataproviderTypeAndTweetType = function (type,tweetType) {
+  return new Promise(function (resolve, reject) {
+    DataProvider.findOne({contentScore: null,source:type,tweetType:tweetType}, function (err, data) {
+      if (err) reject(err);
+      resolve(data);
+    })
+
+  });
+}
+
 
 module.exports.updateScore = function (dataProviderToUpdate, score) {
   return new Promise(function (resolve, reject) {
