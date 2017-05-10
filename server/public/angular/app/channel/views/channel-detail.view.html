@@ -42,7 +42,6 @@
           <br>
 
 
-
           <div class="row"
                ng-if="!vm.selectedChannel.personal || vm.selectedChannel.type!=='facebook'">
             <div class="input-field col s12">
@@ -58,7 +57,7 @@
               <i class="mdi-action-lock-outline prefix"></i>
             </div>
             <div class="input-field col s8">
-              <select  ng-required="true" name="type" ng-model="vm.selectedChannel.type" id="type">
+              <select ng-required="true" name="type" ng-model="vm.selectedChannel.type" id="type">
                 <option value="facebook">Facebook</option>
                 <option value="twitter">Twitter</option>
               </select>
@@ -109,8 +108,6 @@
     </div>
   </div>
 </div>
-
-
 
 
 <script type="text/javascript" src="angular/app/assets/js/plugins.min.js"></script>

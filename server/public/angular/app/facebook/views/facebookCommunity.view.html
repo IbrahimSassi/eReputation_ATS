@@ -1,5 +1,5 @@
 <div class="col s12">
-  <h1>Community</h1>
+  <h1>Community <span class="grey-text small"><b>(Personal Page)</b></span></h1>
   <div class="row">
     <div class="input-field col s5 m5 l5">
       <input input-date
@@ -62,21 +62,11 @@
           <div class="move-up blue darken-1">
             <div>
               <span class="chart-title white-text">Page Storytellers by Gender/Age</span>
-              <!--<div class="chart-revenue cyan darken-2 white-text">-->
-              <!--<p class="chart-revenue-total">$4,500.85</p>-->
-              <!--<p class="chart-revenue-per"><i class="mdi-navigation-arrow-drop-up"></i> 21.80 %</p>-->
-              <!--</div>-->
-              <!--<div class="switch chart-revenue-switch right">-->
-              <!--<label class="cyan-text text-lighten-5">-->
-              <!--Month-->
-              <!--<input type="checkbox">-->
-              <!--<span class="lever"></span> Year-->
-              <!--</label>-->
-              <!--</div>-->
             </div>
             <line-chart-curved ng-if="vm.display && vm.storytellersData.length" line-labels="{{vm.storytellersLabels}}"
                                line-data="{{vm.storytellersData}}"></line-chart-curved>
             <div ng-if="!vm.storytellersData.length && !vm.display" class="card-content blue darken-1 center-align">
+              <h6 class="white-text">Data is <b>Not Yet Available</b></h6>
               <div class="spinner icon-spinner-5" aria-hidden="true"></div>
             </div>
 
@@ -89,6 +79,7 @@
             <doughnut-chart doughnut-data="{{vm.TotalStoryByGender}}"></doughnut-chart>
           </div>
           <div ng-if="!vm.TotalStoryByGender[0].value" class="col s12 m3 l3 center-align">
+            <h6 class="grey-text">Data is <b>Not Yet Available</b></h6>
             <div class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
           </div>
           <div ng-if="vm.dataPageEngagedUsers.length" class="col s12 m8 l8">
@@ -96,111 +87,11 @@
             <p>The number of people who engaged with your Page. Engagement includes any click.</p>
           </div>
           <div ng-if="!vm.dataPageEngagedUsers.length" class="col s12 m8 l8 center-align">
+            <h6 class="grey-text">Data is <b>Not Yet Available</b></h6>
             <div class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
             <p>The number of people who engaged with your Page. Engagement includes any click.</p>
           </div>
         </div>
-        <!--<div class="card-reveal">-->
-        <!--<span class="card-title grey-text text-darken-4">Revenue by Month <i-->
-          <!--class="mdi-navigation-close right"></i></span>-->
-          <!--<table class="responsive-table">-->
-            <!--<thead>-->
-            <!--<tr>-->
-              <!--<th data-field="id">ID</th>-->
-              <!--<th data-field="month">Month</th>-->
-              <!--<th data-field="item-sold">Item Sold</th>-->
-              <!--<th data-field="item-price">Item Price</th>-->
-              <!--<th data-field="total-profit">Total Profit</th>-->
-            <!--</tr>-->
-            <!--</thead>-->
-            <!--<tbody>-->
-            <!--<tr>-->
-              <!--<td>1</td>-->
-              <!--<td>January</td>-->
-              <!--<td>122</td>-->
-              <!--<td>100</td>-->
-              <!--<td>$122,00.00</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-              <!--<td>2</td>-->
-              <!--<td>February</td>-->
-              <!--<td>122</td>-->
-              <!--<td>100</td>-->
-              <!--<td>$122,00.00</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-              <!--<td>3</td>-->
-              <!--<td>March</td>-->
-              <!--<td>122</td>-->
-              <!--<td>100</td>-->
-              <!--<td>$122,00.00</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-              <!--<td>4</td>-->
-              <!--<td>April</td>-->
-              <!--<td>122</td>-->
-              <!--<td>100</td>-->
-              <!--<td>$122,00.00</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-              <!--<td>5</td>-->
-              <!--<td>May</td>-->
-              <!--<td>122</td>-->
-              <!--<td>100</td>-->
-              <!--<td>$122,00.00</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-              <!--<td>6</td>-->
-              <!--<td>June</td>-->
-              <!--<td>122</td>-->
-              <!--<td>100</td>-->
-              <!--<td>$122,00.00</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-              <!--<td>7</td>-->
-              <!--<td>July</td>-->
-              <!--<td>122</td>-->
-              <!--<td>100</td>-->
-              <!--<td>$122,00.00</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-              <!--<td>8</td>-->
-              <!--<td>August</td>-->
-              <!--<td>122</td>-->
-              <!--<td>100</td>-->
-              <!--<td>$122,00.00</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-              <!--<td>9</td>-->
-              <!--<td>Septmber</td>-->
-              <!--<td>122</td>-->
-              <!--<td>100</td>-->
-              <!--<td>$122,00.00</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-              <!--<td>10</td>-->
-              <!--<td>Octomber</td>-->
-              <!--<td>122</td>-->
-              <!--<td>100</td>-->
-              <!--<td>$122,00.00</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-              <!--<td>11</td>-->
-              <!--<td>November</td>-->
-              <!--<td>122</td>-->
-              <!--<td>100</td>-->
-              <!--<td>$122,00.00</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-              <!--<td>12</td>-->
-              <!--<td>December</td>-->
-              <!--<td>122</td>-->
-              <!--<td>100</td>-->
-              <!--<td>$122,00.00</td>-->
-            <!--</tr>-->
-            <!--</tbody>-->
-          <!--</table>-->
-        <!--</div>-->
 
       </div>
     </div>

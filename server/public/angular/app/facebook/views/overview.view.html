@@ -1,5 +1,5 @@
 <div class="col s12">
-  <h1>My Pages</h1>
+  <h1>Insights <span class="grey-text small"><b>(Personal Page)</b></span></h1>
 
   <div ng-if="vm.myChannels.length" class="row ">
     <div class="input-field col s12 m12 l12">
@@ -106,7 +106,8 @@
               <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
             </h4>
             <p class="card-stats-compare">
-              <i class=""></i> {{vm.totalFansPercent}} % <span class="blue-grey-text text-lighten-5">from yesterday</span>
+              <i class=""></i> {{vm.totalFansPercent}} % <span
+              class="blue-grey-text text-lighten-5">from yesterday</span>
             </p>
           </div>
           <div class="card-action blue-grey darken-2">
@@ -131,6 +132,7 @@
                                  line-data="{{vm.dataPageFans}}"></line-chart-curved>
             </div>
             <div ng-if="!vm.dataPageFans.length" class="card-content center-align">
+              <h6 class="white-text">Data is <b>Not Yet Available</b></h6>
               <div class="spinner icon-spinner-5" aria-hidden="true"></div>
             </div>
 
@@ -145,6 +147,7 @@
           <bar-chart bar-labels="{{vm.labelsPageFansOnline}}" bar-data="{{vm.dataPageFansOnline}}"></bar-chart>
         </div>
         <div ng-if="!vm.labelsPageFansOnline.length" class="card-content center-align">
+          <h6 class="cyan-text">Data is <b>Not Yet Available</b></h6>
           <div class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
 
@@ -167,6 +170,7 @@
           <line-chart line-labels="{{vm.labelsPageViews}}" line-data="{{vm.dataPageViews}}"></line-chart>
         </div>
         <div ng-if="!vm.dataPageViews.length" class="card-content teal darken-2 center-align">
+          <h6 class="white-text">Data is <b>Not Yet Available</b></h6>
           <div class="spinner icon-spinner-5" aria-hidden="true"></div>
         </div>
 
@@ -196,6 +200,7 @@
           </div>
         </div>
         <div ng-if="!vm.TotalStories" class="card-content center-align">
+          <h6 class="grey-text">Data is <b>Not Yet Available</b></h6>
           <div class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
 

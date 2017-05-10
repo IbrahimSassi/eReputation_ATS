@@ -65,7 +65,6 @@
     vm.editChannel = function (form) {
 
 
-
       if (!form.$valid) {
         UtilsService.AlertToast("Fill all fields", "rounded", 3000);
         return;

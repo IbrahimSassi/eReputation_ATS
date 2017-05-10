@@ -1,4 +1,4 @@
-<div class="col s12">
+<div class="col s12 m12 l12">
   <hr>
   <nav>
 
@@ -13,23 +13,17 @@
 
       </h5>
 
-      <a href="#" data-activates="mobile-demo"
-         class="button-collapse">
-        <i class="mdi-navigation-menu"></i></a>
 
-
-      <ul class="left hide-on-med-and-down">
-        <li ui-sref-active="active"><a ui-sref="campaignDetail.campaignFbAnalysis.overview">Overview</a></li>
-        <li ui-sref-active="active"><a ui-sref="campaignDetail.campaignFbAnalysis.facebookOverview">My Pages</a></li>
-        <li ui-sref-active="active"><a ui-sref="campaignDetail.campaignFbAnalysis.facebookCommunity">Community</a></li>
-        <li ui-sref-active="active"><a ui-sref="campaignDetail.campaignFbAnalysis.facebookSpecific">Specific</a></li>
-      </ul>
-      <ul class="side-nav" id="mobile-demo">
-        <li ui-sref-active="active"><a ui-sref="campaignDetail.campaignFbAnalysis.overview">Overview</a></li>
-        <li ui-sref-active="active"><a ui-sref="campaignDetail.campaignFbAnalysis.facebookOverview">My Pages</a></li>
-        <li ui-sref-active="active"><a ui-sref="campaignDetail.campaignFbAnalysis.facebookCommunity">Community</a></li>
-        <li ui-sref-active="active"><a ui-sref="campaignDetail.campaignFbAnalysis.facebookSpecific">Specific</a></li>
-      </ul>
+      <div class="col l12 s12 m12 white-text show-on-large">
+        <a ui-sref="campaignDetail.campaignFbAnalysis.overview"
+           class="white-text waves-effect btn-flat ultra-small"> Overview </a>
+        <a ui-sref="campaignDetail.campaignFbAnalysis.facebookOverview"
+           class="white-text waves-effect btn-flat ultra-small"> Insights </a>
+        <a ui-sref="campaignDetail.campaignFbAnalysis.facebookCommunity"
+           class="white-text waves-effect btn-flat ultra-small"> Community </a>
+        <a ui-sref="campaignDetail.campaignFbAnalysis.facebookSpecific"
+           class="white-text waves-effect btn-flat ultra-small"> Specific </a>
+      </div>
 
 
     </div>
