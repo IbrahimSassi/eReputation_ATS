@@ -52,8 +52,8 @@
     function statusChangeCallbackFN(response) {
       return new Promise(function (resolve, reject) {
 
-        console.log('statusChangeCallback');
-        console.log(response);
+        // console.log('statusChangeCallback');
+        // console.log(response);
 
         // The response object is returned with a status field that lets the
         // app know the current login status of the person.
@@ -148,9 +148,9 @@
     // successful.  See statusChangeCallback() for when this call is made.
     function testAPIFN() {
       return new Promise(function (resolve, reject) {
-        console.log('Welcome!  Fetching your information.... ');
+        // console.log('Welcome!  Fetching your information.... ');
         FB.api('/me?fields=id,name,accounts', function (response) {
-          console.log('Successful login for: ' + response.name);
+          // console.log('Successful login for: ' + response.name);
           resolve(response);
           // document.getElementById('status').innerHTML =
           //   'Thanks for logging in, ' + response.name + '!';
@@ -168,14 +168,14 @@
             // resolve(res);
             document.cookie = "token=" + res.authResponse.accessToken;
 
-            console.log('Welcome!  Fetching your information.... ');
+            // console.log('Welcome!  Fetching your information.... ');
             FB.api('/me?fields=id,name,accounts', function (response) {
               res.user = response;
-              console.log('Good to see you, ', response);
+              // console.log('Good to see you, ', response);
               resolve(res);
             });
           } else {
-            console.log('User cancelled login or did not fully authorize.');
+            // console.log('User cancelled login or did not fully authorize.');
             reject()
           }
         }, {
@@ -429,7 +429,7 @@
 
           // Initialise FB SDK
           window.FB.init(params);
-
+          // console.log(window.FB)
           if (!$rootScope.$$phase) {
             $rootScope.$apply();
           }

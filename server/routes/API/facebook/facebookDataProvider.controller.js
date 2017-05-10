@@ -31,7 +31,7 @@ function getPostsByPage(req, res) {
       if (err)
         return res.status(500).send(err);
       else {
-        console.log('Success facebook post saved', item.id);
+        // console.log('Success facebook post saved', item.id);
       }
 
     });
@@ -55,7 +55,7 @@ function getFacebookDataProvider(req, res, next) {
     since = moment(req.body.since).format();
     until = moment(req.body.until).format();
   }
-  console.log("hello")
+  // console.log("hello")
   // console.log("datejs formated to moment,", moment(datejs).format())
   var query;
   var sortedBy;
@@ -94,7 +94,7 @@ function getFacebookDataProvider(req, res, next) {
 
   if (req.body.keywords && req.body.keywords.length) {
     var keywords = req.body.keywords.join(" ");
-    console.log(query);
+    // console.log(query);
     query.$text.$search = keywords.toString();
     options = {"score": {$meta: "textScore"}};
     sortedBy = {"score": {$meta: "textScore"}};
@@ -103,11 +103,11 @@ function getFacebookDataProvider(req, res, next) {
   // Create DB Index !!!!!!!
   // db.dataproviders.createIndex( { content: "text",name:"text" } )
 
-  console.log("query", query);
+  // console.log("query", query);
   DataProvider.getDataProvidersByConditionSortedModel(query, options, sortedBy, function (err, docs) {
     if (err) return handleError(res, err);
     else {
-      console.log('Success ', docs.length);
+      // console.log('Success ', docs.length);
       res.status(201)
         .json(docs);
     }
@@ -129,7 +129,7 @@ function addFacebookComments(req, res, next) {
         }
         else {
           resolve(item);
-          console.log('Success facebook comments saved .. ', item._id);
+          // console.log('Success facebook comments saved .. ', item._id);
         }
 
       });
@@ -289,7 +289,7 @@ function getFacebookSentimental(req, res, next) {
   }
   else {
     var keywords = req.body.keywords.join(" ");
-    console.log(keywords)
+    // console.log(keywords)
     matchObject.$and[4].$text.$search = keywords.toString();
   }
   // }
@@ -306,8 +306,8 @@ function getFacebookSentimental(req, res, next) {
   DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, sortObject, unwindObject).then(function (data) {
     res.json(data);
   }).catch(function (err) {
-    console.log("Error");
-    console.log(err);
+    // console.log("Error");
+    // console.log(err);
     res.json(err);
   })
 
@@ -332,7 +332,7 @@ function getSentimentalByPost(req, res, next) {
     utils.getSentimentalAnalysis(comment.message)
       .then(function (result) {
 
-        console.log("result", result);
+        // console.log("result", result);
         comment.score = result;
 
         if (comment.score.positivity > _mostPositiveComment.score.positivity)
@@ -349,7 +349,7 @@ function getSentimentalByPost(req, res, next) {
       })
 
   }, function done() {
-    console.log("DONE");
+    // console.log("DONE");
     res.json({
       mostPositiveComment: _mostPositiveComment,
       mostNegativeComment: _mostNegativeComment,
@@ -404,14 +404,14 @@ function updateFacebookPost(req, res, next) {
 
                 if (err)
                   return;
-                console.log("Post update successfully with id ", item.id);
+                // console.log("Post update successfully with id ", item.id);
                 _posts.push(post.id);
                 cb();
 
               })
             })
             .catch(function (err) {
-              console.log(err);
+              // console.log(err);
               res.json(err);
             })
 

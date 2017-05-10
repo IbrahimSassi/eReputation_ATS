@@ -110,7 +110,7 @@
 
         })
           .catch(function (err) {
-            console.error(err);
+            // console.error(err);
           });
       }
 
@@ -151,7 +151,7 @@
     vm.onSelect = function () {
       ChannelService.getChannelByID(vm.selectedChannel._id).then(function (item) {
         vm.selectedChannel = item;
-        console.log(item)
+        // console.log(item)
         vm.labelsPageFans = [];
         vm.dataPageFans = [];
         initChart();

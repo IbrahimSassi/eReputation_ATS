@@ -97,17 +97,17 @@ function updateChannelModel (id, data, callback) {
   var accessToken = data.accessToken;
   var userId = data.userId;
 
-  console.log("from model",id)
-  console.log("from model",data)
+  // console.log("from model",id)
+  // console.log("from model",data)
   // var query = {_id: id};
 
   Channel.findById(id, function (err, channel) {
     if (!channel) {
-      console.log("errorrr",err)
+      //console.log("errorrr",err)
       return next(new Error('Could not load channel'));
     }
     else {
-      console.log("from model",channel)
+      // console.log("from model",channel)
       channel.name = name;
       channel.url = url;
       channel.type = type;

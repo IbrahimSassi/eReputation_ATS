@@ -182,7 +182,8 @@
           <div class="card-content indigo darken-1 white-text">
             <p class="card-stats-title"><i class="fa fa-pencil-square-o"></i> Posts </p>
             <h4 ng-if="vm.Posts.length" class="card-stats-number">{{vm.Posts.length}}</h4>
-            <h4 ng-if="!vm.Posts.length" class="card-stats-number">
+            <h4 ng-if="vm.Posts.length==0" class="card-stats-number">0</h4>
+            <h4 ng-if="!vm.Posts.length && vm.Posts.length !=0" class="card-stats-number">
               <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
             </h4>
           </div>
@@ -196,7 +197,8 @@
           <div class="card-content indigo darken-1 white-text">
             <p class="card-stats-title"><i class="fa fa-comments"></i> Comments </p>
             <h4 ng-if="vm.Comments.length" class="card-stats-number">{{vm.Comments.length}}</h4>
-            <h4 ng-if="!vm.Comments.length" class="card-stats-number">
+            <h4 ng-if="vm.Comments.length==0" class="card-stats-number">0</h4>
+            <h4 ng-if="!vm.Comments.length && vm.Comments.length!=0" class="card-stats-number">
               <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
             </h4>
           </div>
@@ -210,7 +212,8 @@
           <div class="card-content indigo darken-1 white-text">
             <p class="card-stats-title"><i class="fa fa-share-square-o"></i> Share</p>
             <h4 ng-if="vm.Shares" class="card-stats-number">{{vm.Shares}}</h4>
-            <h4 ng-if="!vm.Shares" class="card-stats-number">
+            <h4 ng-if="vm.Shares==0" class="card-stats-number">0</h4>
+            <h4 ng-if="!vm.Shares && vm.Shares!=0" class="card-stats-number">
               <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
             </h4>
           </div>
@@ -224,7 +227,8 @@
           <div class="card-content indigo darken-1 white-text">
             <p class="card-stats-title"><i class="fa  fa-thumbs-o-up"></i> Likes</p>
             <h4 ng-if="vm.Likes" class="card-stats-number">{{vm.Likes}}</h4>
-            <h4 ng-if="!vm.Likes" class="card-stats-number">
+            <h4 ng-if="vm.Likes==0" class="card-stats-number">0</h4>
+            <h4 ng-if="!vm.Likes && vm.Likes!=0" class="card-stats-number">
               <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
             </h4>
           </div>
@@ -244,6 +248,7 @@
                       h-axis="Date"></area-chart>
         </div>
         <div ng-if="vm.SentimentalFacebookData.length <=1" class="move-up center-align">
+          <h6 class="grey-text">Data is <b>Not Yet Available</b></h6>
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
 
         </div>
@@ -260,6 +265,7 @@
                         h-axis="Date"></column-chart>
         </div>
         <div ng-if="vm.reputationByReactions.length <=1" class="move-up center-align">
+          <h6 class="grey-text">Data is <b>Not Yet Available</b></h6>
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
@@ -271,6 +277,7 @@
                         h-axis="Date"></column-chart>
         </div>
         <div ng-if="vm.reputationByShares.length<=1" class="move-up center-align">
+          <h6 class="grey-text">Data is <b>Not Yet Available</b></h6>
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
@@ -285,6 +292,7 @@
                      title="Posts By Type"></pie-chart>
         </div>
         <div ng-if="vm.reputationByTypes.length<=1" class="move-up center-align">
+          <h6 class="grey-text">Data is <b>Not Yet Available</b></h6>
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
@@ -299,6 +307,7 @@
                      title="Sentimental Analysis For Links"></pie-chart>
         </div>
         <div ng-if="vm.typesLink.length<=1" class="move-up center-align">
+          <h6 class="grey-text">Data is <b>Not Yet Available</b></h6>
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
@@ -310,6 +319,7 @@
                      title="Sentimental Analysis For Status"></pie-chart>
         </div>
         <div ng-if="vm.typesStatus.length<=1" class="move-up center-align">
+          <h6 class="grey-text">Data is <b>Not Yet Available</b></h6>
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
@@ -322,6 +332,7 @@
                      title="Sentimental Analysis For Photos"></pie-chart>
         </div>
         <div ng-if="vm.typesPhoto.length<=1" class="move-up center-align">
+          <h6 class="grey-text">Data is <b>Not Yet Available</b></h6>
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
@@ -333,6 +344,7 @@
                      title="Sentimental Analysis For Video"></pie-chart>
         </div>
         <div ng-if="vm.typesVideo.length<=1" class="move-up center-align">
+          <h6 class="grey-text">Data is <b>Not Yet Available</b></h6>
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
@@ -352,6 +364,7 @@
           </div>
         </div>
         <div ng-if="vm.storytellersByCountry.length<=1" class="move-up center-align ">
+          <h6 class="grey-text">Data is <b>Not Yet Available</b></h6>
           <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
         </div>
       </div>
@@ -378,7 +391,8 @@
               <fb app-id="583444071825924" link="{{vm.topSharedPost.sourceLink}}"></fb>
             </div>
           </div>
-          <div class="row" ng-if="!vm.topSharedPost.sourceLink">
+          <div class="row center-align" ng-if="!vm.topSharedPost.sourceLink">
+            <h6 class="grey-text">Data is <b>Not Yet Available</b></h6>
             <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
 
           </div>
@@ -398,7 +412,8 @@
 
             <fb app-id="583444071825924" link="{{vm.topLikedPost.sourceLink}}"></fb>
           </div>
-          <div class="row" ng-if="!vm.topLikedPost.sourceLink">
+          <div class="row center-align" ng-if="!vm.topLikedPost.sourceLink">
+            <h6 class="grey-text">Data is <b>Not Yet Available</b></h6>
             <div style="font-size: medium;" class="spinner icon-spinner-5 cyan-text" aria-hidden="true"></div>
           </div>
         </li>
@@ -409,14 +424,3 @@
 
 
 </div>
-
-<!--<script src="angular/app/assets/js/charts/ggleloader.js"></script>-->
-<!--<div id="fb-root"></div>-->
-<!--<script>(function (d, s, id) {-->
-  <!--var js, fjs = d.getElementsByTagName(s)[0];-->
-  <!--if (d.getElementById(id)) return;-->
-  <!--js = d.createElement(s);-->
-  <!--js.id = id;-->
-  <!--js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.9&appId=583444071825924";-->
-  <!--fjs.parentNode.insertBefore(js, fjs);-->
-<!--}(document, 'script', 'facebook-jssdk'));</script>-->

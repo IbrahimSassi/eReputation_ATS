@@ -58,7 +58,7 @@ var ChannelApi = {
       setTimeout(function () {
 
         //pretend an ajax call to web api is made here
-        console.log('Pretend this just saved the channel to the DB via AJAX call...');
+        // console.log('Pretend this just saved the channel to the DB via AJAX call...');
 
         if (channel._id) {
           var existingChannelIndex = _.indexOf(channels, _.find(channels, {_id: channel._id}));
@@ -82,7 +82,7 @@ var ChannelApi = {
   deleteChannel: function (id) {
     return new Promise(function (resolve,reject) {
       setTimeout(function () {
-        console.log('Pretend this just deleted the channel from the DB via an AJAX call...');
+        // console.log('Pretend this just deleted the channel from the DB via an AJAX call...');
         _.remove(channels, {_id: id});
         resolve();
       },1000)

@@ -3,8 +3,6 @@
  */
 var config = require('../../../config/facebook.config');
 var controller = require('./facebookDataProvider.controller');
-var DataProvider = require('../../../models/dataProvider/dataProvider.model');
-var async = require('async');
 var request = require('request');
 var utils = require('../helpers/utils.helper');
 
@@ -19,7 +17,6 @@ module.exports = {
 
 function getToken(req, res) {
   req.ExtendedToken.then(function (value) {
-    console.log("token", value);
     res.json({longToken: value});
   })
 
@@ -36,16 +33,14 @@ function getReactionsByPost(req, res) {
     "reactions.type(ANGRY).limit(0).summary(total_count).as(angry)";
   var parameters = "&access_token=" + config.ACCESS_TOKEN;
   var url = config.base + posts_id + fields + parameters;
-  // console.log(url);
-  request(url, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      res.json(JSON.parse(body));
-    }
-    else {
-      res.json(JSON.parse(error));
-    }
+  utils.getData(url)
+    .then(function (data) {
+      res.json(data);
 
-  })
+    })
+    .catch(function (error) {
+      res.json(error);
+    });
 
 }
 
@@ -62,20 +57,14 @@ function pageInsights(req, res) {
     parameters = "&access_token=" + config.ACCESS_TOKEN;
 
   var url = config.base + page_id + fields + parameters;
-  console.log("****************************************************")
-  console.log(url)
-  console.log("****************************************************")
-  request(url, function (error, response, body) {
+  utils.getData(url)
+    .then(function (data) {
+      res.json(data);
 
-    if (!error && response.statusCode == 200) {
-      // console.log(JSON.parse(body))
-      res.json(JSON.parse(body));
-    }
-    else {
+    })
+    .catch(function (error) {
       res.json(error);
-    }
-
-  });
+    });
 
 
 }

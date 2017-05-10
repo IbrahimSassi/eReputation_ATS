@@ -86,7 +86,8 @@ var campaignSchema = new Schema({
       _id: false,
     }
   ],
-  twitterScrapingState: {type: Object}
+  twitterScrapingState: {type: Object},
+  facebookScrapingState: {type: Object}
 });
 
 
@@ -97,35 +98,6 @@ var myCampaign = module.exports = mongoose.model('campaigns', campaignSchema);
 module.exports.findAllCampaigns = function () {
   return new Promise(function (resolve, reject) {
     myCampaign.find({}, function (err, docs) {
-      if (err) {
-        reject(err);
-      }
-      resolve(docs);
-    });
-  });
-};
-
-//Find all new created campaigns (last day)
-module.exports.findAllNewCreatedCampaigns = function () {
-  var today = new Date(new Date().setDate(new Date().getDate() - 1));
-  today.setHours(23);
-  today.setMinutes(59);
-  today.setSeconds(59);
-  today.setMilliseconds(999)
-
-  var yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
-  yesterday.setHours(00);
-  yesterday.setMinutes(00);
-  yesterday.setSeconds(00);
-  yesterday.setMilliseconds(000)
-  console.log("yesterday: ", yesterday, "today: ", today)
-  return new Promise(function (resolve, reject) {
-    myCampaign.find({
-      dateCreation: {
-        $lt: today,
-        $gte: yesterday
-      }
-    }, function (err, docs) {
       if (err) {
         reject(err);
       }

@@ -32,7 +32,6 @@
     /**Scope Replace**/
     var vm = this;
     vm.idCampaign = $stateParams.idCampaign;
-    console.info(vm.idCampaign);
     //
 
     /**
@@ -56,9 +55,7 @@
           ]);
         });
 
-        console.info('daataaa ',$scope.tableAllAnalysis);
-      }).catch(function (err) {
-        console.error(err);
+      }).catch(function (err) {;
       });
     };
 
@@ -71,7 +68,6 @@
       WebsitesService.getWebsitesProvider(myFilter).then(function (data) {
         $scope.tableAllAnalysisSpec= [];
         $scope.tableAllAnalysisSpec.push( ["date","positive","negative","neutre"]);
-        console.info(data);
         $scope.websitesChannels = data[0];
         data.forEach(function (vrr) {
           $scope.tableAllAnalysisSpec.push(
@@ -83,7 +79,6 @@
             ]);
         });
       }).catch(function (err) {
-        console.error(err);
       });
 
       ChannelService.getChannelByID(channelId).then(function (channelData) {
@@ -99,14 +94,11 @@
 
 
         }).catch(function (err) {
-          console.error(err);
         });
 
           WebsitesService.getWebsitesAnalysis(channelData.url).then(function (data) {
-            console.info(data);
             $scope.websitesAnalysis = data;
           }).catch(function (err) {
-            console.error(err);
           });
       });
 
@@ -126,7 +118,6 @@
         campaign[0].channels.forEach(function (campa) {
 
           ChannelService.getChannelByID(campa.channelId).then(function (data) {
-            console.info("channel data ", data);
             if (data.type === 'website') {
               $scope.channelsofThisCampaign.push(data);
             }
@@ -153,7 +144,6 @@
       // });
     }).catch(function () {
       //
-      console.log('err script 1');
     });
 
     /** END of Scripts Loading first Refresh **/

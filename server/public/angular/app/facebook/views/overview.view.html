@@ -63,7 +63,8 @@
           <div class="card-content  green white-text">
             <p class="card-stats-title"><i class="mdi-action-trending-up"></i> Positive Feedback </p>
             <h4 ng-if="vm.totalPositiveFeedback" class="card-stats-number"> {{ vm.totalPositiveFeedback }}</h4>
-            <h4 ng-if="!vm.totalPositiveFeedback" class="card-stats-number">
+            <h4 ng-if="vm.totalPositiveFeedback==0" class="card-stats-number"> 0</h4>
+            <h4 ng-if="!vm.totalPositiveFeedback && vm.totalPositiveFeedback!=0" class="card-stats-number">
               <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
             </h4>
             <p class="card-stats-compare">
@@ -81,7 +82,8 @@
           <div class="card-content red lighten-1 white-text">
             <p class="card-stats-title"><i class="mdi-action-trending-down"></i> Negative Feedback</p>
             <h4 ng-if="vm.totalNegativeFeedback" class="card-stats-number">{{vm.totalNegativeFeedback }}</h4>
-            <h4 ng-if="!vm.totalNegativeFeedback" class="card-stats-number">
+            <h4 ng-if="vm.totalNegativeFeedback==0" class="card-stats-number">0</h4>
+            <h4 ng-if="!vm.totalNegativeFeedback && vm.totalNegativeFeedback!=0" class="card-stats-number">
               <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
             </h4>
             <p class="card-stats-compare">
@@ -97,10 +99,10 @@
         <div class="card">
           <div class="card-content blue-grey white-text">
             <p class="card-stats-title"><i class="mdi-social-group-add"></i> Total Fans</p>
-            <h4 ng-if="vm.totalFans"
-                class="card-stats-number">{{vm.totalFans }}</h4>
+            <h4 ng-if="vm.totalFans" class="card-stats-number">{{vm.totalFans }}</h4>
+            <h4 ng-if="vm.totalFans==0" class="card-stats-number">0</h4>
 
-            <h4 class="card-stats-number" ng-if="!vm.totalFans">
+            <h4 class="card-stats-number" ng-if="!vm.totalFans && vm.totalFans!=0">
               <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
             </h4>
             <p class="card-stats-compare">

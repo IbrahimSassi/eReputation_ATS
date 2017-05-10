@@ -18,7 +18,7 @@ module.exports = {
 function facebookCronLauncher() {
   return new Promise(function (resolve, reject) {
 
-    console.log("get called");
+    // console.log("get called");
 
     var _since = new Date(new Date().setDate(new Date().getDate() - 1));
     var _until = new Date();
@@ -32,6 +32,8 @@ function facebookCronLauncher() {
     };
     Campaign.getCampaignsByQuery(_query)
       .then(function (campaigns) {
+        // console.log("campaigns")
+        // console.log(campaigns)
         async.eachSeries(campaigns, function iteratee(campaign, callback) {
           async.eachSeries(campaign.channels, function iteratee(selectedChannel, callback) {
             channelPromise = new Promise(function (resolve, reject) {
@@ -57,9 +59,8 @@ function facebookCronLauncher() {
                 callback()
               })
               .catch(function (err) {
-                console.log("err 1");
-                console.log(err);
-                callback()
+                console.log("Error on targets",err);
+                callback();
                 // reject(err);
               })
 
@@ -71,7 +72,7 @@ function facebookCronLauncher() {
         }, function done() {
 
           async.eachSeries(_targets, function iteratee(target, callback) {
-            console.log("Target with Channel ..", target.name);
+            // console.log("Target with Channel ..", target.name);
 
             var _url = getRequestBody(
               "/api/facebook/facebookPosts",
@@ -80,7 +81,7 @@ function facebookCronLauncher() {
               target.channelId.toString(),
               target.campaignId.toString());
 
-            console.log("Start Getting Posts .....");
+            // console.log("Start Getting Posts .....");
             utils.getData(_url)
               .then(function () {
                 var _url = getRequestBody(
@@ -90,29 +91,41 @@ function facebookCronLauncher() {
                   target.channelId.toString(),
                   target.campaignId.toString());
 
-                console.log("Start Getting Comments .....");
+                // console.log("Start Getting Comments .....");
                 utils.getData(_url)
                   .then(function () {
                     //Calling next target
-                    callback();
+
+                    Campaign.update({_id: target.campaignId}, {
+                      $set: {
+                        facebookScrapingState: {
+                          firstScrap: true,
+                          date: new Date()
+                        }
+                      }
+                    }, function (err, updatedData) {
+                      if (err) {
+                        console.log("Error on updating campaign facebook scraping date", err);
+                      }
+                      callback()
+
+                    });
+
                   })
                   .catch(function (err) {
-                    console.log("err 2");
-                    console.log(err);
+                    console.log("Error on Getting Comments",err);
                     callback();
 
                   });
 
               })
               .catch(function (err) {
-                console.log("err 3");
-                console.log(err);
+                console.log("Error on Getting Posts",err);
                 reject(err);
               })
 
           }, function done() {
 
-            console.log("DONE GETTING Data");
             resolve(_targets);
           })
 
@@ -121,8 +134,7 @@ function facebookCronLauncher() {
 
       })
       .catch(function (err) {
-        console.log("err 5");
-        console.log(err);
+        console.log("Error on Getting Campaigns",err);
         reject(err);
       });
   })
