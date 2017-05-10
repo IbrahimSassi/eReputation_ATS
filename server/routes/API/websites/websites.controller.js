@@ -15,7 +15,6 @@ module.exports.getWebsitesArticles = function (tableOfKeywords, campaignId) {
     decomposeRequests(tableOfKeywords, campaignId).then(function (data) {
       resolve(data);
     }).catch(function (err) {
-      console.log(err);
       reject(err);
     });
   });
@@ -36,7 +35,7 @@ function decomposeRequests(tableOfFourKeywords, campaignId) {
       if (item.importance === 'high') {
         resultPerPage = 100;
       }
-      console.log(count);
+
       searchAndScrapeGoogleNewsByKeywords(item.content, resultPerPage, campaignId).then(function (data) {
         tableAllData.push(data);
         count++;
@@ -62,7 +61,6 @@ function searchAndScrapeGoogleNewsByKeywords(keyword, resultByPage, campaignId) 
     //end init vars
     myGoogleNews(queryToSearch, function (err, result) {
       if (err) {
-        console.error(err);
         reject(err);
       }
 
@@ -104,7 +102,6 @@ function getUrlDetails(passedUrl, campaignId) {
       meta: 'meta'
     })(function (err, obj) {
       if (err) {
-        console.error("getURLDetails ERROR: ", err);
         reject(err); //reject err
       }
 
@@ -126,7 +123,7 @@ function getUrlDetails(passedUrl, campaignId) {
           }
           if (moment(item.tagContent, moment.ISO_8601, true).isValid()
             && moment(item.tagContent, moment.ISO_8601, true).year() <= moment().year()
-            && moment(item.tagContent, moment.ISO_8601, true).year()>2000 ) {
+            && moment(item.tagContent, moment.ISO_8601, true).year() > 2000) {
 
             objToDisplay.postDate = item.tagContent; //add postDate to obj
           }

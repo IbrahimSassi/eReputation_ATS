@@ -24,8 +24,6 @@ router.post('/', function (req, res, next) {
 
   var matchObject = {
     $and: [
-      // {dateContent: {'$gte': new Date(req.body.since), '$lte': new Date(req.body.until)}},
-      // {channelId: {'$eq': req.body.channelId}},
       {
         campaignId: {
           '$eq': req.body.campaignId
@@ -89,7 +87,6 @@ router.get('/', function (req, res, next) {
     if (!docs) {
       return res.status(404).send();
     }
-    console.log(docs);
     res.status(200)
       .json(docs);
 
@@ -151,7 +148,6 @@ router.get('/getData', function (req, res, next) {
                 if (err) return handleError(res, err);
                 else {
                   callbackNews();
-                  console.log('Success websites article saved');
                 }
               });
             }

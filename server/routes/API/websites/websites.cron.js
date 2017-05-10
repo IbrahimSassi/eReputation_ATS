@@ -45,7 +45,6 @@ module.exports.websitesLauncher = function () {
                   if (err) return handleError(res, err);
                   else {
                     callbackNews();
-                    console.log('Success websites article saved');
                   }
                 });
               }
