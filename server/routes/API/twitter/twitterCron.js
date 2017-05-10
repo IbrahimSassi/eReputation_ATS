@@ -14,10 +14,9 @@ var today = moment(new Date()).format('YYYY-MM-DD');
 var yesterday = moment(new Date(new Date().setDate(new Date().getDate() - 1))).format('YYYY-MM-DD')
 
 
-
 module.exports.run = function (req, res) {
- // var task = cron.schedule('2 0 0 * * *', function () { //right one
-     var task = cron.schedule('40 18 * * * *', function () {
+  var task = cron.schedule('2 0 0 * * *', function () { //right one
+    //  var task = cron.schedule('40 18 * * * *', function () {
     console.log("heyyy")
     var campaignResultData = [];
     var campaignQuery = {
@@ -144,8 +143,8 @@ module.exports.run = function (req, res) {
 
 
 module.exports.runSentimentalAnalysis = function (req, res) {
-  //cron.schedule('2 3 0 * * *', function () {
-    cron.schedule('59 18 * * * *', function () {
+  cron.schedule('2 3 0 * * *', function () {
+    // cron.schedule('59 18 * * * *', function () {
 
 
     // sentimentalFN.SentimentalForSpecificProvider("tweetsProvider");

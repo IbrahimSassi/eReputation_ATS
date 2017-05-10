@@ -20,7 +20,6 @@
   </div>
 
 
-
   <div class="input-field col s5 m5 l5 margin push-l2 push-s2 push-m2">
     <label>Until</label>
     <input input-date
@@ -43,45 +42,44 @@
 </div>
 
 
+<div id="tab-sentiment">
 
 
+  <p class="header center ">ALL OVERVIEW</p>
 
-
-
-
-  <div id="tab-sentiment" >
-
-
-      <p class="header center ">ALL OVERVIEW</p>
-
-    <div  class="card col s6  ">
-      <div class="card-move-up waves-effect waves-block waves-light">
-    <donut-chart ng-if="camp.detailCampaign._id && camp.positive && camp.negative && camp.neutral" my-id="{{camp.detailCampaign._id}}" positive="{{camp.positive}}" negative="{{camp.negative}}" neutral="{{camp.neutral}}" my-title="Reactions for this compaign"></donut-chart>
+  <div class="card col s6  ">
+    <div class="card-move-up waves-effect waves-block waves-light">
+      <donut-chart ng-if="camp.detailCampaign._id && camp.positive && camp.negative && camp.neutral"
+                   my-id="{{camp.detailCampaign._id}}" positive="{{camp.positive}}" negative="{{camp.negative}}"
+                   neutral="{{camp.neutral}}" my-title="Reactions for this compaign"></donut-chart>
     </div>
-    </div>
-
-
-      <div  class="card col s6  ">
-    <ndraw-stacked ng-if="SentimentalCampaignData"   my-table="{{SentimentalCampaignData}}"  my-id="{{camp.detailCampaign._id}}"></ndraw-stacked>
-      </div>
-
-
-
-    <div  class="card col s6 m6 l6 ">
-      <combo-chart my-table="{{SentimentalChannelData}}" ng-if="SentimentalChannelData" my-id="458789" title="Sentimental Analysis comming from TWEETER "></combo-chart>
-    </div>
-
-
-    <div  class="card col s6 m6 l6 ">
-    <combo-chart my-table="{{SentimentalFBData}}" ng-if="SentimentalFBData" my-id="000000" title="Sentimental Analysis comming from FACEBOOK"></combo-chart>
-    </div>
-
-    <div  class="card col s12 m12 l12 ">
-    <combo-chart my-table="{{SentimentalWebData}}" ng-if="SentimentalWebData" my-id="4500" title="Sentimental Analysis comming from WEB SITES"></combo-chart>
-    </div>
-
-
   </div>
+
+
+  <div class="card col s6  ">
+    <ndraw-stacked ng-if="SentimentalCampaignData" my-table="{{SentimentalCampaignData}}"
+                   my-id="{{camp.detailCampaign._id}}"></ndraw-stacked>
+  </div>
+
+
+  <div class="card col s6 m6 l6 ">
+    <combo-chart my-table="{{SentimentalChannelData}}" ng-if="SentimentalChannelData" my-id="458789"
+                 title="Sentimental Analysis comming from TWEETER "></combo-chart>
+  </div>
+
+
+  <div class="card col s6 m6 l6 ">
+    <combo-chart my-table="{{SentimentalFBData}}" ng-if="SentimentalFBData" my-id="000000"
+                 title="Sentimental Analysis comming from FACEBOOK"></combo-chart>
+  </div>
+
+  <div class="card col s12 m12 l12 ">
+    <combo-chart my-table="{{SentimentalWebData}}" ng-if="SentimentalWebData" my-id="4500"
+                 title="Sentimental Analysis comming from WEB SITES"></combo-chart>
+  </div>
+
+
+</div>
 
 
 

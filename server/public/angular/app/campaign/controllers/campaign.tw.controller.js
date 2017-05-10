@@ -168,9 +168,9 @@
         CampaignService.getCampaignById(id).then(function (data) {
           allChannels = data[0].channels;
           vm.detailCampaign = data[0];
-          vm.minDate = moment(data[0].dateStart).subtract(1,'days');
+          vm.minDate = moment(data[0].dateStart).subtract(1, 'days');
           vm.maxDate = moment(data[0].dateEnd);
-          vm.since = moment(data[0].dateStart).subtract(1,'days');
+          vm.since = moment(data[0].dateStart).subtract(1, 'days');
         }).catch(function (err) {
           vm.until = moment().add(1, 'days')
         });
