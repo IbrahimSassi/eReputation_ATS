@@ -93,7 +93,7 @@
           filter.channelId = item._id;
 
           selectDate();
-          console.log("vm.selectedChannel",vm.selectedChannel)
+          // console.log("vm.selectedChannel",vm.selectedChannel)
           initReputationByStorytellersByCountry();
 
           initCharts();
@@ -142,7 +142,7 @@
             resolve(data)
           })
             .catch(function (err) {
-              console.error(err);
+              // console.error(err);
               reject(err)
             });
         }
@@ -214,8 +214,8 @@
           return new Date(a[0]) - new Date(b[0]);
         });
 
-        console.log("vm.SentimentalFacebookData")
-        console.log(vm.SentimentalFacebookData)
+        // console.log("vm.SentimentalFacebookData")
+        // console.log(vm.SentimentalFacebookData)
 
       })
     }
@@ -361,7 +361,7 @@
     /** Scripts Loading first Refresh **/
     angularLoad.loadScript('angular/app/assets/js/charts/ggleloader.js').then(function () {
     }).catch(function () {
-      console.log('err script 1');
+      // console.log('err script 1');
     });
     /** END of Scripts Loading first Refresh **/
 

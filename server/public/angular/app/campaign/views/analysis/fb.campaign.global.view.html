@@ -4,11 +4,11 @@
 
 
     <div class="nav-wrapper indigo darken-1">
-      <h5  ng-if="vm.selectedCampaignData.facebookScrapingState" class="brand-logo right" style="font-size: small">
+      <h5 ng-if="vm.selectedCampaignData.facebookScrapingState" class="brand-logo right" style="font-size: small">
         Last operation : {{vm.selectedCampaignData.facebookScrapingState.date | date :'MMM d, y h:mm:ss a'}}
 
       </h5>
-      <h5  ng-if="!vm.selectedCampaignData.facebookScrapingState" class="brand-logo right" style="font-size: small">
+      <h5 ng-if="!vm.selectedCampaignData.facebookScrapingState" class="brand-logo right" style="font-size: small">
         Last operation : No Data Yet
 
       </h5>

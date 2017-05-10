@@ -175,7 +175,7 @@
               resolve(res);
             });
           } else {
-            console.log('User cancelled login or did not fully authorize.');
+            // console.log('User cancelled login or did not fully authorize.');
             reject()
           }
         }, {
@@ -429,7 +429,7 @@
 
           // Initialise FB SDK
           window.FB.init(params);
-          console.log(window.FB)
+          // console.log(window.FB)
           if (!$rootScope.$$phase) {
             $rootScope.$apply();
           }
