@@ -62,6 +62,9 @@ function pageInsights(req, res) {
     parameters = "&access_token=" + config.ACCESS_TOKEN;
 
   var url = config.base + page_id + fields + parameters;
+  console.log("****************************************************")
+  console.log(url)
+  console.log("****************************************************")
   request(url, function (error, response, body) {
 
     if (!error && response.statusCode == 200) {
