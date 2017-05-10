@@ -206,11 +206,15 @@
       FacebookService.getReputationBySentimental(LocalFilter).then(function (data) {
         // console.log("Sentimental", data);
         data.forEach(function (obj) {
+          if(obj.positive_score!==null)
           vm.SentimentalFacebookData.push([obj._id.dateContent, obj.positive_score, obj.negative_score, obj.neutral_score]);
         });
         vm.SentimentalFacebookData.sort(function (a, b) {
           return new Date(a[0]) - new Date(b[0]);
         });
+
+        console.log("vm.SentimentalFacebookData")
+        console.log(vm.SentimentalFacebookData)
 
       })
     }
@@ -275,22 +279,22 @@
         data.forEach(function (obj) {
           if (obj._id.type !== null)
             vm.reputationByTypes.push([obj._id.type, obj.nb]);
-          if (obj._id.type == "link") {
+          if (obj._id.type == "link" && obj.positive_score!=null) {
             vm.typesLink.push([ConstantFactory.POSITIVE, obj.positive_score]);
             vm.typesLink.push([ConstantFactory.NEGATIVE, obj.negative_score]);
             vm.typesLink.push([ConstantFactory.NEUTRAL, obj.neutral_score]);
           }
-          if (obj._id.type == "video") {
+          if (obj._id.type == "video" && obj.positive_score!=null) {
             vm.typesVideo.push([ConstantFactory.POSITIVE, obj.positive_score]);
             vm.typesVideo.push([ConstantFactory.NEGATIVE, obj.negative_score]);
             vm.typesVideo.push([ConstantFactory.NEUTRAL, obj.neutral_score]);
           }
-          if (obj._id.type == "photo") {
+          if (obj._id.type == "photo" && obj.positive_score!=null) {
             vm.typesPhoto.push([ConstantFactory.POSITIVE, obj.positive_score]);
             vm.typesPhoto.push([ConstantFactory.NEGATIVE, obj.negative_score]);
             vm.typesPhoto.push([ConstantFactory.NEUTRAL, obj.neutral_score]);
           }
-          if (obj._id.type == "status") {
+          if (obj._id.type == "status" && obj.positive_score!=null) {
             vm.typesStatus.push([ConstantFactory.POSITIVE, obj.positive_score]);
             vm.typesStatus.push([ConstantFactory.NEGATIVE, obj.negative_score]);
             vm.typesStatus.push([ConstantFactory.NEUTRAL, obj.neutral_score]);
