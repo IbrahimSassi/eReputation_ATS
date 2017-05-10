@@ -115,8 +115,6 @@
     $scope.keywordsToEdit = [];
     $scope.dateMin = moment().subtract(7, 'days');
     $scope.$watch('toStartDate', function (newValue, oldValue) {
-      console.info(newValue);
-      console.info(moment(newValue).format('MM/DD/YYYY'));
       $scope.dateEndMin = moment(newValue, 'DD/MM/YYYY').add(1, 'days').format('MM/DD/YYYY');
     }, true);
     /**
@@ -128,7 +126,6 @@
     vm.displayEdit = function (id) {
       CampaignService.getCampaignById(id).then(function (data) {
         $scope.keywordsToEdit = data[0].keywords;
-        console.info("cammpaign : ", data[0]);
         $scope.campaignToEdit = data[0];
         data[0].channels.forEach(function (channelPartial) {
           ChannelService.getChannelByID(channelPartial.channelId).then(function (channel) {
@@ -137,7 +134,6 @@
           });
         });
       }).catch(function (err) {
-        console.error(err);
       });
 
     };
@@ -149,7 +145,6 @@
     vm.getCampaignDetail = function (id) {
       if (id !== undefined) {
         CampaignService.getCampaignById(id).then(function (data) {
-          console.info(data);
           vm.detailCampaign = data[0];
           data[0].channels.forEach(function (channelPartial) {
             ChannelService.getChannelByID(channelPartial.channelId).then(function (channel) {
@@ -157,7 +152,6 @@
             });
           });
         }).catch(function (err) {
-          console.error(err);
         });
       }
 
@@ -179,8 +173,6 @@
 
         })
 
-        //$scope.myId='58d5810511260618b0196d4e';
-        // console.log(vm.campaigns);
       });
     };
 
@@ -254,7 +246,6 @@
         ChannelService.addChannel(channel).then(function (dataChannel) {
           vm.pushChannelId(dataChannel._id, true)
         }).catch(function (err) {
-          console.log("err ", err);
         });
 
         //end
@@ -277,7 +268,6 @@
       var idChannelToDelete = $scope.channelsId[index] !== undefined
         ? $scope.channelsId[index].channelId
         : $scope.allChannelEditTodisplay[index]._id;
-      console.info("olalal ", idChannelToDelete);
       if ($scope.channelsId[index] !== undefined) {
         if ($scope.channelsId[index].isNew === true) {
           ChannelService.getChannelByID(idChannelToDelete).then(function (dataChannel) {
@@ -288,7 +278,6 @@
           });
         }
         if ($scope.channelsId[index].isNew === false) {
-          console.info($scope.channelsId[index]);
           $scope.channelsId.splice(index, 1);
           $scope.allChannelEditTodisplayId.splice(index, 1);
         }
@@ -324,11 +313,9 @@
     vm.removeKeywordsFromAdd = function (index, edit) {
       if (edit === true) {
         $scope.keywordsToEdit.splice(index, 1);
-        console.info($scope.keywords);
       }
       else {
         $scope.keywords.splice(index, 1);
-        console.info($scope.keywords);
       }
 
     };
@@ -349,7 +336,6 @@
 
       // end init vars
       CampaignService.addCampaign(campaign).then(function (data) {
-        console.log("Campaign Added");
         swal({
             title: "Good job!",
             text: "Campaign Created !",
@@ -358,7 +344,6 @@
           function () {
             $state.go("campaignList");
           });
-        console.log(data);
       }).catch(function (err) {
 
         swal({
@@ -373,7 +358,6 @@
     vm.editCampaign = function (campaignToEdit) {
       campaignToEdit.channels = $scope.allChannelEditTodisplayId;
       CampaignService.editCampaign(campaignToEdit).then(function (data) {
-        console.log("Campaign Edited");
         swal({
             title: "Good job!",
             text: "Campaign Edited !",
@@ -382,7 +366,6 @@
           function () {
             $state.go("campaignList");
           });
-        console.log(data);
       }).catch(function (err) {
 
         swal({
@@ -399,7 +382,6 @@
      */
     vm.getAllMyChannels = function () {
       ChannelService.getChannelsByUser($rootScope.currentUser._id).then(function (data) {
-        console.log(data);
         vm.allMyChannels = data;
       });
     };
@@ -445,7 +427,6 @@
 
     $scope.myFacebookPages = [];
     vm.getPermissions = function () {
-      console.log("getPermissions");
       FacebookService.initFacebookApi()
         .then(function (data) {
           var token = data.authResponse.accessToken;
@@ -455,7 +436,6 @@
             $scope.myChannelAaccessToken = newLongToken.longToken;
             data.user.accounts.data.forEach(function (page) {
               $scope.myFacebookPages.push({value: "https://www.facebook.com/" + page.id, text: page.name})
-              console.log("666" + $scope.myFacebookPages);
               var $toastContent = $('<span class="green-text">Your permission has granted , now pick a page</span>');
               var rounded = "rounded"
               Materialize.toast($toastContent, 3000, rounded);
