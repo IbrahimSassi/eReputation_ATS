@@ -13,30 +13,7 @@
                 scope: {
 
                     myId: '@myId',
-                   /* nowPositive: '@nowPositive',
-                    nowNegative: '@nowNegative',
-                    nowNeutral: '@nowNeutral',
-                    nowAvg: '@nowAvg',
 
-                    yesPositive: '@yesPositive',
-                    yesNegative: '@yesNegative',
-                    yesNeutral: '@yesNeutral',
-                    yesAvg: '@yesAvg',
-
-                    oldPositive: '@oldPositive',
-                    oldNegative: '@oldNegative',
-                    oldNeutral: '@oldNeutral',
-                    oldAvg: '@oldAvg',
-
-                    ooldPositive: '@ooldPositive',
-                    ooldNegative: '@ooldNegative',
-                    ooldNeutral: '@ooldNeutral',
-                    ooldAvg: '@ooldAvg',
-
-                    oooldPositive: '@oooldPositive',
-                    oooldNegative: '@oooldNegative',
-                    oooldNeutral: '@oooldNeutral',
-                    oooldAvg: '@oooldAvg',*/
                   title: '@title',
                   myTable: '@myTable'
 

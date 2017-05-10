@@ -67,11 +67,7 @@
 
     /** Scripts Loading first Refresh **/
     angularLoad.loadScript('angular/app/assets/js/charts/ggleloader.js').then(function () {
-      // angularLoad.loadScript('angular/app/assets/js/charts/narimen/columnchart.js').then(function () {
-      //
-      // }).catch(function () {
-      //   console.log('err script 1');
-      // });
+
     }).catch(function () {
       console.log('err script 1');
     });
@@ -107,54 +103,6 @@
           console.error('error: ',err);
       });
 
-/*      WwsaService.stackedbarchart(vm.idCampaign).then(function (data) {
-          vm.neutral_today = data.data1[0].neutral_score;
-          vm.positive_today = data.data1[0].positive_score;
-          vm.negative_today = data.data1[0].negative_score;
-          vm.neutral_last = data.data2[0].neutral_score;
-          vm.positive_last = data.data2[0].positive_score;
-          vm.negative_last = data.data2[0].negative_score;
-          vm.neutral_lastD = data.data3[0].neutral_score;
-          vm.positive_lastD = data.data3[0].positive_score;
-          vm.negative_lastD = data.data3[0].negative_score;
-        //  console.info('succ: ',data.data[0].neutral_score);
-      }).catch(function (err) {
-          console.error('error: ',err);
-      })
-
-      WwsaService.combobarchart(vm.idCampaign,vm.idChannel).then(function (data) {
-          vm.neutral_todayy = data.data1[0].neutral_score;
-          vm.positive_todayy = data.data1[0].positive_score;
-          vm.negative_todayy = data.data1[0].negative_score;
-          vm.avg_todayy= ((data.data1[0].neutral_score+data.data1[0].positive_score+data.data1[0].negative_score)/3)
-
-          vm.neutral_yes = data.data2[0].neutral_score;
-          vm.positive_yes = data.data2[0].positive_score;
-          vm.negative_yes = data.data2[0].negative_score;
-          vm.avg_yes= ((data.data2[0].neutral_score+data.data2[0].positive_score+data.data2[0].negative_score)/3)
-
-
-          vm.neutral_old = data.data3[0].neutral_score;
-          vm.positive_old = data.data3[0].positive_score;
-          vm.negative_old = data.data3[0].negative_score;
-          vm.avg_old= ((data.data3[0].neutral_score+data.data3[0].positive_score+data.data3[0].negative_score)/3)
-
-
-          vm.neutral_oold = data.data4[0].neutral_score;
-          vm.positive_oold = data.data4[0].positive_score;
-          vm.negative_oold = data.data4[0].negative_score;
-          vm.avg_oold= ((data.data4[0].neutral_score+data.data4[0].positive_score+data.data4[0].negative_score)/3)
-
-          vm.neutral_ooold = data.data5[0].neutral_score;
-          vm.positive_ooold = data.data5[0].positive_score;
-          vm.negative_ooold = data.data5[0].negative_score;
-          vm.avg_ooold= ((data.data5[0].neutral_score+data.data5[0].positive_score+data.data5[0].negative_score)/3)
-
-            console.info('succ vm.avg_todayy : ',vm.avg_todayy);
-      }).catch(function (err) {
-          console.error('error: ',err);
-      });
-*/
 
 
 
@@ -206,8 +154,8 @@
 
     var filterSentimentalForCampaign =
       {
-        "since":"2017-04-07T02:35:14+01:00",
-        "until":"2017-04-12T19:35:14+01:00",
+        "since":moment().add(-4, 'days').format('DD/MM/YYYY'),
+        "until":moment().format('DD/MM/YYYY'),
         "channelId": "all",
         "campaignId": vm.idCampaign
       };
@@ -215,31 +163,31 @@
 
     var filterSentimentalForTwitter =
       {
-        "since":"2017-04-07T02:35:14+01:00",
-        "until":"2017-04-12T19:35:14+01:00",
+        "since":moment().add(-4, 'days'),
+        "until":moment(),
         "source": "tweetsProvider",
         "campaignId": vm.idCampaign
       };
 
     var filterSentimentalForfb =
       {
-        "since":"2017-04-07T02:35:14+01:00",
-        "until":"2017-04-12T19:35:14+01:00",
+        "since":moment().add(-4, 'days').format('DD/MM/YYYY'),
+        "until":moment().format('DD/MM/YYYY'),
         "source": "FacebookPostsProvider",
         "campaignId": vm.idCampaign
       }
 
       var filterSentimentalForWebsites=
         {
-          "since":"2017-04-07T02:35:14+01:00",
-          "until":"2017-04-12T19:35:14+01:00",
+          "since":moment().add(-4, 'days').format('DD/MM/YYYY'),
+          "until":moment().format('DD/MM/YYYY'),
           "source": "websitesProvider",
           "campaignId": vm.idCampaign
         }
 
 
     function initSentimentalCampaignData() {
-      console.log("/////////////////")
+
 
       $scope.SentimentalCampaignData = [];
 
