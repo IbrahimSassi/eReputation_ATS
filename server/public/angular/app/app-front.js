@@ -16,10 +16,6 @@ angular.module('ATSApp-front', [
 
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
 
-      /* if (UserService.isLoggedIn() && ($location.path('/login').$$path == 'login' || $location.path('/register').$$path == 'register')) {
-       $window.location.href = '/admin';
-       }*/
-
 
       if (UserService.isLoggedIn() && (toState.login || toState.register)) {
         $window.location.href = '/admin';
