@@ -8,35 +8,20 @@ angular.module('ATSApp-front', [
   'angularLoad'
 
 
-
 ]).config(['$urlRouterProvider', function ($urlRouterProvider) {
   $urlRouterProvider.otherwise('/register');
 }])
-  .run(function ($rootScope, $state,$location, UserService,$window) {
+  .run(function ($rootScope, $state, $location, UserService, $window) {
 
 
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
 
-
-
-
-    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-     // console.log("location: ")
-     /* if (UserService.isLoggedIn() && ($location.path('/login').$$path == 'login' || $location.path('/register').$$path == 'register')) {
-        $window.location.href = '/admin';
-      }*/
-
-
-
-
-      if (UserService.isLoggedIn() && (toState.login || toState.register))
-      {
+      if (UserService.isLoggedIn() && (toState.login || toState.register)) {
         $window.location.href = '/admin';
       }
 
 
-
-        });
-
+    });
 
 
   });

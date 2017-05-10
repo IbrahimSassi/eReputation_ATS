@@ -195,7 +195,7 @@
                             </button>
                           </div>
                         </div>
-                        <div  ng-if="!campaignToEdit.channel.personal" class="row">
+                        <div ng-if="!campaignToEdit.channel.personal" class="row">
                           <div class="input-field col s12">
                             <i class="mdi-image-edit prefix"></i>
                             <input ng-model="campaignToEdit.channel.url" id="ch_url" type="url">
@@ -243,7 +243,8 @@
                                          err-src
                                          alt="logo">
                                     {{channel.name}}
-                                    <i ng-click="camp.removeChannelsFromAdd($index)" class="material-icons mdi-navigation-close"></i>
+                                    <i ng-click="camp.removeChannelsFromAdd($index)"
+                                       class="material-icons mdi-navigation-close"></i>
                                  </div>
                               </span>
                       <br/><br/><br/>
@@ -286,17 +287,20 @@
 
                   <div class="input-field col s12">
                     <div ng-init="camp.keyword.importance='low'" class="input-field col s3 offset-s2">
-                      <input ng-model="camp.keyword.importance" value="low" class="with-gap" name="importanceKey" type="radio"
+                      <input ng-model="camp.keyword.importance" value="low" class="with-gap" name="importanceKey"
+                             type="radio"
                              id="low"/>
                       <label for="low">Low</label>
                     </div>
                     <div class="input-field col s3">
-                      <input ng-model="camp.keyword.importance" value="medium" class="with-gap" name="importanceKey" type="radio"
+                      <input ng-model="camp.keyword.importance" value="medium" class="with-gap" name="importanceKey"
+                             type="radio"
                              id="medium"/>
                       <label for="medium">Medium</label>
                     </div>
                     <div class="input-field col s2">
-                      <input ng-model="camp.keyword.importance" value="high" class="with-gap" name="importanceKey" type="radio"
+                      <input ng-model="camp.keyword.importance" value="high" class="with-gap" name="importanceKey"
+                             type="radio"
                              id="high"/>
                       <label for="high">High</label>
                     </div>
@@ -307,7 +311,8 @@
                                  <div class="chip white-text teal">
                                     {{k.content}}
 
-                                     <i ng-click="camp.removeKeywordsFromAdd($index,true)" class="material-icons mdi-navigation-close"></i>
+                                     <i ng-click="camp.removeKeywordsFromAdd($index,true)"
+                                        class="material-icons mdi-navigation-close"></i>
                                  </div>
                               </span>
                     <br/><br/><br/>
@@ -324,7 +329,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div  class="input-field col s6">
+                  <div class="input-field col s6">
                     <button onclick="validateAndGoNext('#assign-section')"
                             class="btn grey darken-3 waves-effect waves-light left" name="action">Previous
                       <i class="mdi-image-navigate-before left"></i>
@@ -346,30 +351,15 @@
     </li>
   </ul>
 </div>
-<!--insights test -->
-<!--<script>-->
-<!--loadScriptOnlyIfNotLoaded('angular/app/assets/js/charts/ggleloader.js')-->
-<!--loadScriptOnlyIfNotLoaded('angular/app/assets/js/charts/chartTest.js')-->
-<!--</script>-->
-<!--<div id="chart_div" style="width: 100%; height: 500px;"></div>-->
-<!-- END insights test -->
 <script>
   loadScriptOnlyIfNotLoaded("angular/app/assets/js/materialize.min.js");
   loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins.min.js");
-  //  loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins/jquery-validation/jquery.validate.min.js");
-  //  loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins/jquery-validation/additional-methods.min.js");
 </script>
 <script>
   function validateAndGoNext(next) {
 
     $(next).trigger('click');
 
-
   }
-  //
-  //  function validateInfoForm() {
-  //    return $("#c_n").valid() && $("#c_url").valid() && $("#datestart").valid()
-  //      && $("#dateend").valid() && $("#c_phone").valid() && $("#c_desc").valid();
-  //  }
 
 </script>

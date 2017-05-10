@@ -97,7 +97,7 @@
                            on-close="onClose()"
                            on-set="onSet()"
                            on-stop="onStop()"/>
-                    <input type="hidden" ng-model="toStartDate" />
+                    <input type="hidden" ng-model="toStartDate"/>
                     <label for="inputCreated">Date start *</label>
                   </div>
                 </div>
@@ -162,7 +162,8 @@
       </div>
     </li>
     <li>
-      <div style="pointer-events: none;"  id="assign-section" class="collapsible-header"><i class="mdi-action-language"></i>ASSIGN CHANNELS
+      <div style="pointer-events: none;" id="assign-section" class="collapsible-header"><i
+        class="mdi-action-language"></i>ASSIGN CHANNELS
       </div>
       <div class="collapsible-body">
         <div class="col s12 m12 l6">
@@ -318,7 +319,9 @@
       </div>
     </li>
     <li>
-      <div style="pointer-events: none;" id="keywords-section" class="collapsible-header"><i class="mdi-action-book"></i>KEYWORDS</div>
+      <div style="pointer-events: none;" id="keywords-section" class="collapsible-header"><i
+        class="mdi-action-book"></i>KEYWORDS
+      </div>
       <div class="collapsible-body">
         <div class="col s12 m12 l6">
           <div class="card-panel">
@@ -399,18 +402,9 @@
     </li>
   </ul>
 </div>
-<!--insights test -->
-<!--<script>-->
-<!--loadScriptOnlyIfNotLoaded('angular/app/assets/js/charts/ggleloader.js')-->
-<!--loadScriptOnlyIfNotLoaded('angular/app/assets/js/charts/chartTest.js')-->
-<!--</script>-->
-<!--<div id="chart_div" style="width: 100%; height: 500px;"></div>-->
-<!-- END insights test -->
 <script>
   loadScriptOnlyIfNotLoaded("angular/app/assets/js/materialize.min.js");
   loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins.min.js");
-  //  loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins/jquery-validation/jquery.validate.min.js");
-  //  loadScriptOnlyIfNotLoaded("angular/app/assets/js/plugins/jquery-validation/additional-methods.min.js");
 </script>
 <script>
   function validateAndGoNext(next) {
@@ -429,21 +423,21 @@
           },
           inputEnd: {
             required: true,
-          },c_desc: {
+          }, c_desc: {
             required: true,
           },
           c_phone: {
-            minlength:8,
-            maxlength:15,
+            minlength: 8,
+            maxlength: 15,
             digits: true
           },
 
         },
         messages: {
-          c_phone:{
-            maxlength:"please enter a valid phone number! max length 15 !",
-            minlength:"please enter a valid phone number! min length 8 !",
-            digits:"please enter a valid phone number!"
+          c_phone: {
+            maxlength: "please enter a valid phone number! max length 15 !",
+            minlength: "please enter a valid phone number! min length 8 !",
+            digits: "please enter a valid phone number!"
           }
         },
         errorElement: 'div',
@@ -456,7 +450,7 @@
             error.insertAfter(element);
           }
         },
-        submitHandler: function(form) {
+        submitHandler: function (form) {
           $(next).trigger('click');
         }
       });
@@ -465,16 +459,11 @@
     if (next == '#keywords-section') {
       $("#channels-campaign-form").validate({
         rules: {
-          ch_name: {
-
-          },
-          ch_type: {
-
-          },
+          ch_name: {},
+          ch_type: {},
 
         },
-        messages: {
-        },
+        messages: {},
         errorElement: 'div',
         errorPlacement: function (error, element) {
           var placement = $(element).data('error');
@@ -485,12 +474,11 @@
             error.insertAfter(element);
           }
         },
-        submitHandler: function(form) {
+        submitHandler: function (form) {
           $(next).trigger('click');
         }
       });
     }
-
 
 
   }

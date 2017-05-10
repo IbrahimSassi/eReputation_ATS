@@ -69,18 +69,14 @@ if (ProfileService.isLoggedIn())
 
       }
 
-
       if (toState.authenticate && !ProfileService.isLoggedIn()){
-        // User isn’t authenticated
-        //$state.transitionTo("login");
-        //event.preventDefault();
+
         $window.location.href = '/';
-       // console.log("Access denied!")
+
       }
 
       if (toState.shouldConfirmed && $rootScope.currentUser.state=='INACTIVE')
       {
-       // console.log('blocked')
         $window.location.href = '/admin';
       }
 
@@ -99,8 +95,6 @@ if (ProfileService.isLoggedIn())
 
     if (ProfileService.isLoggedIn()) {
 
-
-    //  console.log("Hey Brogrammers! This is the connected user: ",$rootScope.currentUser);
     }
 
 

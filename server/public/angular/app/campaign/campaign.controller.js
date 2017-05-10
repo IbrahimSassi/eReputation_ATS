@@ -114,10 +114,10 @@
     $scope.keywords = [];
     $scope.keywordsToEdit = [];
     $scope.dateMin = moment().subtract(7, 'days');
-    $scope.$watch('toStartDate', function(newValue, oldValue){
+    $scope.$watch('toStartDate', function (newValue, oldValue) {
       console.info(newValue);
       console.info(moment(newValue).format('MM/DD/YYYY'));
-      $scope.dateEndMin=moment(newValue,'DD/MM/YYYY').add(1,'days').format('MM/DD/YYYY');
+      $scope.dateEndMin = moment(newValue, 'DD/MM/YYYY').add(1, 'days').format('MM/DD/YYYY');
     }, true);
     /**
      * View Detail Methods
