@@ -183,7 +183,7 @@
             <p class="card-stats-title"><i class="fa fa-pencil-square-o"></i> Posts </p>
             <h4 ng-if="vm.Posts.length" class="card-stats-number">{{vm.Posts.length}}</h4>
             <h4 ng-if="vm.Posts.length==0" class="card-stats-number">0</h4>
-            <h4 ng-if="!vm.Posts.length" class="card-stats-number">
+            <h4 ng-if="!vm.Posts.length && vm.Posts.length !=0" class="card-stats-number">
               <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
             </h4>
           </div>
@@ -198,7 +198,7 @@
             <p class="card-stats-title"><i class="fa fa-comments"></i> Comments </p>
             <h4 ng-if="vm.Comments.length" class="card-stats-number">{{vm.Comments.length}}</h4>
             <h4 ng-if="vm.Comments.length==0" class="card-stats-number">0</h4>
-            <h4 ng-if="!vm.Comments.length" class="card-stats-number">
+            <h4 ng-if="!vm.Comments.length && vm.Comments.length!=0" class="card-stats-number">
               <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
             </h4>
           </div>
@@ -213,7 +213,7 @@
             <p class="card-stats-title"><i class="fa fa-share-square-o"></i> Share</p>
             <h4 ng-if="vm.Shares" class="card-stats-number">{{vm.Shares}}</h4>
             <h4 ng-if="vm.Shares==0" class="card-stats-number">0</h4>
-            <h4 ng-if="!vm.Shares" class="card-stats-number">
+            <h4 ng-if="!vm.Shares && vm.Shares!=0" class="card-stats-number">
               <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
             </h4>
           </div>
@@ -228,7 +228,7 @@
             <p class="card-stats-title"><i class="fa  fa-thumbs-o-up"></i> Likes</p>
             <h4 ng-if="vm.Likes" class="card-stats-number">{{vm.Likes}}</h4>
             <h4 ng-if="vm.Likes==0" class="card-stats-number">0</h4>
-            <h4 ng-if="!vm.Likes" class="card-stats-number">
+            <h4 ng-if="!vm.Likes && vm.Likes!=0" class="card-stats-number">
               <div style="font-size: medium;" class="spinner icon-spinner-5" aria-hidden="true"></div>
             </h4>
           </div>
