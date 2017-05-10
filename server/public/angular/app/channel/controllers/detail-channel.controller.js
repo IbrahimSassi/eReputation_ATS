@@ -15,7 +15,9 @@
     '$state',
     '$stateParams',
     '$rootScope',
-    'FacebookService'
+    'FacebookService',
+    'UtilsService',
+    '$filter'
   ];
 
 
@@ -24,12 +26,15 @@
                          $state,
                          $stateParams,
                          $rootScope,
-                         FacebookService) {
+                         FacebookService,
+                         UtilsService,
+                         $filter) {
     //On Init Start
     var vm = this;
     vm.title = 'Channel List';
     vm.selectedChannel = {};
     vm.myFacebookPages = [];
+    vm.myChannels = [];
     // vm.availableOptions = [
     //   {id: '1', name: 'facebook'},
     //   {id: '2', name: 'twitter'},
@@ -39,6 +44,9 @@
     init();
 
     function init() {
+
+      FacebookService.loadSDK();
+
       vm.channelId = $stateParams.channelId;
       vm.connectedUserId = $rootScope.currentUser._id;
       // vm.userConnectedId = "58d3dc815d391346a06f48c3";
@@ -46,18 +54,33 @@
       ChannelService.getChannelByID(vm.channelId).then(function (channel) {
         vm.selectedChannel = channel;
       });
+      ChannelService.getChannelsByUser(vm.connectedUserId).then(function (data) {
+        vm.myChannels = data;
+      });
+
 
     }
 
 
-    vm.editChannel = function () {
+    vm.editChannel = function (form) {
+
+
+
+      if (!form.$valid) {
+        UtilsService.AlertToast("Fill all fields", "rounded", 3000);
+        return;
+      }
+
+
       ChannelService.updateChannel(vm.selectedChannel).then(function (data, err) {
         if (err) {
           console.log(err);
-          Materialize.toast("There were an error", 3000, "rounded");
+          UtilsService.AlertToast(
+            $('<span class="red-text">There Was an error , please try again</span>'), "rounded", 3000);
           return;
         }
-        Materialize.toast("Channel Updated", 3000, "rounded");
+        UtilsService.AlertToast(
+          $('<span class="green-text">New Channel has just updated</span>'), "rounded", 3000);
         $state.go('channels');
 
 

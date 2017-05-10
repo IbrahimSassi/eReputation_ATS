@@ -3,12 +3,24 @@
   <div class="col s12 m12 l12">
     <div class="card-panel">
       <div class="row">
-        <div class="col s12">
+        <form name="channelForm" ng-submit="vm.editChannel(channelForm)" class="col s12" novalidate>
           <div class="row">
             <div class="input-field col s12">
               <i class="mdi-action-account-circle prefix"></i>
-              <input ng-model="vm.selectedChannel.name" id="first_name" type="text">
-              <label for="first_name">Name</label>
+              <input
+                name="name"
+                ng-minlength="5"
+                ng-required="true"
+                ng-model="vm.selectedChannel.name"
+                ng-class="{ 'error' : channelForm.name.$invalid && !channelForm.name.$pristine }"
+                id="name" type="text">
+              <label for="name">Name</label>
+              <div ng-show="channelForm.name.$error.minlength" id="card-alert"
+                   class="col m11 s11 l11 push-s1 push-l1 push-m1">
+                <!--<div class="card-content black-text">-->
+                <p class="red-text ultra-small">The name is too short.</p>
+                <!--</div>-->
+              </div>
             </div>
           </div>
 
@@ -31,10 +43,11 @@
 
 
 
-          <div class="row" ng-if="!vm.selectedChannel.personal">
+          <div class="row"
+               ng-if="!vm.selectedChannel.personal || vm.selectedChannel.type!=='facebook'">
             <div class="input-field col s12">
               <i class="fa fa-link prefix"></i>
-              <input ng-model="vm.selectedChannel.url" id="url" type="url">
+              <input ng-required="true" ng-model="vm.selectedChannel.url" id="url" type="url" name="url">
               <!--ng-blur="vm.getSimalarChannels()"-->
               <label for="url">Url</label>
             </div>
@@ -45,14 +58,14 @@
               <i class="mdi-action-lock-outline prefix"></i>
             </div>
             <div class="input-field col s8">
-              <select name="type" ng-model="vm.selectedChannel.type" id="type">
+              <select  ng-required="true" name="type" ng-model="vm.selectedChannel.type" id="type">
                 <option value="facebook">Facebook</option>
                 <option value="twitter">Twitter</option>
               </select>
               <label for="type">Type</label>
             </div>
             <div ng-if="vm.selectedChannel.personal" style="margin-top: 15px;" class="input-field col s3">
-              <button ng-if="vm.selectedChannel.type=='facebook'"
+              <button prevent-default ng-if="vm.selectedChannel.type=='facebook'"
                       class="btn light-blue darken-4 waves-effect waves-light right"
                       ng-click="vm.getPermissions()"
               >
@@ -74,13 +87,16 @@
             </div>
           </div>
 
+          <div class="row">
+            <div id="status"></div>
+          </div>
 
           <div class="row">
             <div class="row">
               <div class="input-field col s12">
                 <button
                   class="btn cyan waves-effect waves-light right"
-                  ng-click="vm.editChannel()"
+                  type="submit"
                 >Submit
                   <i class="mdi-content-send right"></i>
                 </button>
@@ -88,7 +104,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>

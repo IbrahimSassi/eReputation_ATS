@@ -17,10 +17,10 @@
               >
               <label for="name">Name</label>
               <div ng-show="channelForm.name.$error.minlength" id="card-alert"
-                   class="card col m11 s11 l11 push-s1 push-l1 push-m1">
-                <div class="card-content black-text">
-                  <p>The name is too short.</p>
-                </div>
+                   class="col m11 s11 l11 push-s1 push-l1 push-m1">
+                <!--<div class="card-content black-text">-->
+                  <p class="red-text ultra-small">The name is too short.</p>
+                <!--</div>-->
               </div>
             </div>
 
@@ -57,17 +57,17 @@
               <label for="type">Type</label>
             </div>
             <div ng-if="vm.channel.personal" style="margin-top: 15px;" class="input-field col s3">
-              <button ng-if="vm.channel.type=='facebook'"
+              <button prevent-default ng-if="vm.channel.type=='facebook'"
                       ng-click="vm.getPermissions()"
                       class="btn light-blue darken-4 waves-effect waves-light right">
                 <i class="fa fa-facebook-official"></i> Give permission
               </button>
             </div>
             <div ng-show="channelForm.type.$invalid && !channelForm.type.$pristine" id="card-alert1"
-                 class="card col m11 s11 l11 push-s1 push-l1 push-m1">
-              <div class="card-content black-text">
-                <p>The type is required.</p>
-              </div>
+                 class="col m11 s11 l11 push-s1 push-l1 push-m1">
+              <!--<div class="card-content black-text">-->
+                <p class="red-text ultra-small">The type is required.</p>
+              <!--</div>-->
             </div>
 
           </div>
