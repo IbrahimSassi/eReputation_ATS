@@ -32,12 +32,11 @@
     vm.idChannel = "58dd0dfc6a60631dbc879ddb";
 
     vm.until = moment();
-    vm.since = moment().subtract(20,"days");
 
     var filterSentimental =
       {
-        "since": "2017-04-07T02:35:14+01:00",
-        "until": "2017-04-12T19:35:14+01:00",
+        "since": vm.since,
+        "until": vm.until,
         "channelId": "all",
         "campaignId": vm.idCampaign
       };
@@ -51,6 +50,9 @@
         CampaignService.getCampaignById(id).then(function (data) {
           console.info(data);
           vm.detailCampaign = data[0];
+          vm.minDate = moment(data[0].dateStart);
+          vm.maxDate = moment(data[0].dateEnd);
+          vm.since = moment(data[0].dateStart);
         }).catch(function (err) {
           console.error(err);
         });
@@ -121,26 +123,26 @@
 
       else {
 
-        filterSentimentalForCampaign.since = moment(vm.since).format();//2017-04-02
-        filterSentimentalForCampaign.until = moment(vm.until).format();
+        filterSentimentalForCampaign.since = vm.since;//2017-04-02
+        filterSentimentalForCampaign.until = vm.until;
         filterSentimentalForCampaign.channelId = "all";
         filterSentimentalForCampaign.campaignId =vm.idCampaign ;
 
 
 
-        filterSentimentalForTwitter.since = moment(vm.since).format();//2017-04-02
-        filterSentimentalForTwitter.until = moment(vm.until).format();
+        filterSentimentalForTwitter.since = vm.since;//2017-04-02
+        filterSentimentalForTwitter.until = vm.until;
         filterSentimentalForTwitter.source = "tweetsProvider";
         filterSentimentalForTwitter.campaignId =vm.idCampaign ;
 
-        filterSentimentalForfb.since = moment(vm.since).format();//2017-04-02
-        filterSentimentalForfb.until = moment(vm.until).format();
+        filterSentimentalForfb.since = vm.since;//2017-04-02
+        filterSentimentalForfb.until = vm.until;
         filterSentimentalForfb.source = "FacebookPostsProvider";
         filterSentimentalForfb.campaignId =vm.idCampaign
 
 
-        filterSentimentalForWebsites.since = moment(vm.since).format();//2017-04-02
-        filterSentimentalForWebsites.until = moment(vm.until).format();
+        filterSentimentalForWebsites.since = vm.since;
+        filterSentimentalForWebsites.until = vm.until;
         filterSentimentalForWebsites.source = "websitesProvider";
         filterSentimentalForWebsites.campaignId =vm.idCampaign ;
 
@@ -154,8 +156,8 @@
 
     var filterSentimentalForCampaign =
       {
-        "since":moment().add(-4, 'days').format('DD/MM/YYYY'),
-        "until":moment().format('DD/MM/YYYY'),
+        "since":vm.since,
+        "until":vm.until,
         "channelId": "all",
         "campaignId": vm.idCampaign
       };
@@ -163,24 +165,24 @@
 
     var filterSentimentalForTwitter =
       {
-        "since":moment().add(-4, 'days'),
-        "until":moment(),
+        "since":vm.since,
+        "until":vm.until,
         "source": "tweetsProvider",
         "campaignId": vm.idCampaign
       };
 
     var filterSentimentalForfb =
       {
-        "since":moment().add(-4, 'days').format('DD/MM/YYYY'),
-        "until":moment().format('DD/MM/YYYY'),
+        "since":vm.since,
+        "until":vm.until,
         "source": "FacebookPostsProvider",
         "campaignId": vm.idCampaign
       }
 
       var filterSentimentalForWebsites=
         {
-          "since":moment().add(-4, 'days').format('DD/MM/YYYY'),
-          "until":moment().format('DD/MM/YYYY'),
+          "since":vm.since,
+          "until":vm.until,
           "source": "websitesProvider",
           "campaignId": vm.idCampaign
         }
