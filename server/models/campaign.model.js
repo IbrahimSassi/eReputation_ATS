@@ -86,7 +86,8 @@ var campaignSchema = new Schema({
       _id: false,
     }
   ],
-  twitterScrapingState: {type: Object}
+  twitterScrapingState: {type: Object},
+  facebookScrapingState: {type: Object}
 });
 
 

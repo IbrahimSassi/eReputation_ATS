@@ -32,6 +32,8 @@ function facebookCronLauncher() {
     };
     Campaign.getCampaignsByQuery(_query)
       .then(function (campaigns) {
+        console.log("campaigns")
+        console.log(campaigns)
         async.eachSeries(campaigns, function iteratee(campaign, callback) {
           async.eachSeries(campaign.channels, function iteratee(selectedChannel, callback) {
             channelPromise = new Promise(function (resolve, reject) {
@@ -94,7 +96,24 @@ function facebookCronLauncher() {
                 utils.getData(_url)
                   .then(function () {
                     //Calling next target
-                    callback();
+
+                    Campaign.update({_id: target.campaignId}, {
+                      $set: {
+                        facebookScrapingState: {
+                          firstScrap: true,
+                          date: new Date()
+                        }
+                      }
+                    }, function (err, updatedData) {
+                      if (err) {
+                        console.log("Error on updating campaign facebook scraping date", err);
+                      }
+                      console.log("DataProvider updated for scraping state for facebook: ", updatedData);
+
+                      callback()
+
+                    });
+
                   })
                   .catch(function (err) {
                     console.log("err 2");

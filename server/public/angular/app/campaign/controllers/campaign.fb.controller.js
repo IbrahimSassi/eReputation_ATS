@@ -37,7 +37,7 @@
 
     /**Scope Replace**/
     var vm = this;
-    vm.selectedCampaign = $stateParams.idCampaign; //TODO Change It Dynamic
+    vm.selectedCampaign = $stateParams.idCampaign;
     vm.selectedChannel = {
       _id: "all"
     };
@@ -124,6 +124,7 @@
         vm.myKeywords = [];
         if (vm.selectedCampaign !== undefined) {
           CampaignService.getCampaignById(vm.selectedCampaign).then(function (data) {
+            vm.selectedCampaignData = data[0];
             vm.min = moment(data[0].dateStart);
             vm.max = moment(data[0].dateEnd);
 
