@@ -39,8 +39,6 @@ function transformPostsData(req, res, next) {
       ".limit(0).summary(true)" +
       "&since=" + encodeURIComponent(req.body.since) +
       "&until=" + encodeURIComponent(req.body.until) +
-      // "&since=" + new Date(req.body.since).getTime() /1000 + //Unix timestamps
-      // "&until=" + new Date(req.body.until).getTime() /1000 +
       "&limit=100";
 
     var parameters = "&access_token=" + config.ACCESS_TOKEN;
@@ -52,7 +50,7 @@ function transformPostsData(req, res, next) {
     var promisePrevious;
     var AllPosts = [];
     //Getting First Page
-    getData(url).then(function (data) {
+    utils.getData(url).then(function (data) {
 
       _urls.push(url);
 
@@ -62,12 +60,12 @@ function transformPostsData(req, res, next) {
       Promise.all([promisePrevious, promiseNext]).then(function () {
         //Requesting Data for all those urls
         async.eachSeries(_urls, function iteratee(url, callback) {
-          getData(url).then(function (posts) {
+          utils.getData(url).then(function (posts) {
             async.eachSeries(posts.data, function iteratee(story, callback) {
 
               // Getting Reactions For each story
               var reactionsUrl = configHost.host + '/api/facebook/posts/' + story.id + '/reactions';
-              getData(reactionsUrl)
+              utils.getData(reactionsUrl)
                 .then(function (reactions) {
                   return reactions;
                 })
@@ -154,7 +152,7 @@ function transformCommentsData(req, res, next) {
           _urls.push(url);
 
           //Get Comment For The First Comment
-          getData(url)
+          utils.getData(url)
             .then(function (initialComments) {
 
               //Start Handling Paging to get all comments urls request
@@ -164,7 +162,7 @@ function transformCommentsData(req, res, next) {
                   //All Urls are here, we will loop through them to get all comments and store them in our _comments
                   console.log("Urls For Posts " + post.id, _urls);
                   async.eachSeries(_urls, function iteratee(u, cb) {
-                    getData(u)
+                    utils.getData(u)
                       .then(function (comments) {
 
                         comments.data.forEach(function (comment) {
@@ -211,7 +209,6 @@ function getComments(req, res, next) {
 
   utils.getFacebookLongUrl(req.body.url)
     .then(function (post_id) {
-      console.log(post_id)
       var fields = "/comments?limit=100";
       var parameters = "&access_token=" + config.ACCESS_TOKEN;
       var url = config.base + post_id + fields + parameters;
@@ -226,7 +223,7 @@ function getComments(req, res, next) {
 
               async.eachSeries(_urls, function iteratee(u, callback) {
 
-                getData(u)
+                utils.getData(u)
                   .then(function (comments) {
 
                     comments.data.forEach(function (comment) {
@@ -263,14 +260,12 @@ function extendToken(req, res, next) {
 
   var url = config.base + node;
 
-  console.log("before **", req.params.token);
 
   var promise = new Promise(function (resolve, reject) {
-    getData(url).then(function (data) {
+    utils.getData(url).then(function (data) {
 
       var ExtendedToken = data.access_token;
       resolve(ExtendedToken);
-      console.log("after **", ExtendedToken);
 
     });
   });
@@ -286,7 +281,7 @@ function handleFbPaging(data, direction, postId) {
   return new Promise(function (resolve, reject) {
     if (data.paging && data.paging[direction]) {
       _urls.push(data.paging[direction]);
-      getData(data.paging[direction])
+      utils.getData(data.paging[direction])
         .then(function (newData) {
           handleFbPaging(newData, direction, postId)
             .then(function () {
@@ -308,34 +303,20 @@ function handleFbPaging(data, direction, postId) {
 
 function getChannelSelected(channelId) {
   return new Promise(function (resolve, reject) {
-    request(configHost.host + "/api/channels/" + channelId, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        var channel = JSON.parse(body);
-        // console.log()
+    var url = configHost.host + "/api/channels/" + channelId;
+
+    utils.getData(url)
+      .then(function (channel) {
         resolve(channel.url.split("/")[3]);
-      }
-      else {
+
+      })
+      .catch(function (error) {
         reject(error);
-      }
-    })
+      });
+
   });
 }
 
-function getData(url) {
-
-  return new Promise(function (resolve, reject) {
-    request(url, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        resolve(JSON.parse(body))
-      }
-      else {
-        reject(error)
-      }
-
-    });
-
-  })
-}
 
 function transformPosts(post, author, campaignId) {
 

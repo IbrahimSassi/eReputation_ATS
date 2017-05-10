@@ -59,9 +59,8 @@ function facebookCronLauncher() {
                 callback()
               })
               .catch(function (err) {
-                // console.log("err 1");
-                // console.log(err);
-                callback()
+                console.log("Error on targets",err);
+                callback();
                 // reject(err);
               })
 
@@ -106,32 +105,27 @@ function facebookCronLauncher() {
                       }
                     }, function (err, updatedData) {
                       if (err) {
-                        // console.log("Error on updating campaign facebook scraping date", err);
+                        console.log("Error on updating campaign facebook scraping date", err);
                       }
-                      // console.log("DataProvider updated for scraping state for facebook: ", updatedData);
-
                       callback()
 
                     });
 
                   })
                   .catch(function (err) {
-                    // console.log("err 2");
-                    // console.log(err);
+                    console.log("Error on Getting Comments",err);
                     callback();
 
                   });
 
               })
               .catch(function (err) {
-                // console.log("err 3");
-                // console.log(err);
+                console.log("Error on Getting Posts",err);
                 reject(err);
               })
 
           }, function done() {
 
-            // console.log("DONE GETTING Data");
             resolve(_targets);
           })
 
@@ -140,8 +134,7 @@ function facebookCronLauncher() {
 
       })
       .catch(function (err) {
-        // console.log("err 5");
-        // console.log(err);
+        console.log("Error on Getting Campaigns",err);
         reject(err);
       });
   })
