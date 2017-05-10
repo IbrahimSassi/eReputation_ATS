@@ -104,6 +104,10 @@
                 vm.myChannels.push(channel);
             })
           });
+
+          vm.min = moment(data[0].dateStart);
+          vm.max = moment(data[0].dateEnd);
+
         })
           .catch(function (err) {
             console.error(err);

@@ -51,7 +51,7 @@ function getReactionsByPost(req, res) {
 
 function pageInsights(req, res) {
 
-  var page_id = req.params.id;
+  var page_id = req.params.id.split('/')[3];
   var fields = "/insights?metric=['" + req.params.metric + "']" +
     "&limit=100&since=" + req.params.since + "&until=" + req.params.until;
 

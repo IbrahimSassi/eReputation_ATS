@@ -47,13 +47,16 @@
       if (vm.selectedCampaign !== undefined) {
         CampaignService.getCampaignById(vm.selectedCampaign)
           .then(function (data) {
-          data[0].channels.forEach(function (channelPartial) {
-            ChannelService.getChannelByID(channelPartial.channelId).then(function (channel) {
-              if (channel.type == "facebook" && channel.personal)
-                vm.myChannels.push(channel);
-            })
-          });
-        })
+            data[0].channels.forEach(function (channelPartial) {
+              ChannelService.getChannelByID(channelPartial.channelId).then(function (channel) {
+                if (channel.type == "facebook" && channel.personal)
+                  vm.myChannels.push(channel);
+              })
+            });
+            vm.min = moment(data[0].dateStart);
+            vm.max = moment(data[0].dateEnd);
+
+          })
           .catch(function (err) {
             console.error(err);
           });

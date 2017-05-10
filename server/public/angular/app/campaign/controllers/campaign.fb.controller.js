@@ -59,8 +59,6 @@
 
       vm.since = moment().subtract(15, 'days');
       vm.until = moment().add(1, 'days');
-      vm.min = moment().subtract(15, 'days');
-      vm.max = moment().add(1, 'days');
 
       selectDate();
 
@@ -126,6 +124,8 @@
         vm.myKeywords = [];
         if (vm.selectedCampaign !== undefined) {
           CampaignService.getCampaignById(vm.selectedCampaign).then(function (data) {
+            vm.min = moment(data[0].dateStart);
+            vm.max = moment(data[0].dateEnd);
 
             data[0].keywords.forEach(function (keyword) {
               vm.myKeywords.push(keyword.content);
