@@ -38,7 +38,7 @@
       }).$promise;
     };
 
-    var EditAdditionalInformation = function (userToEdit,file) {
+    var EditAdditionalInformation = function (userToEdit, file) {
       $http.post('/users/settings/profile', {
         file: file
       });

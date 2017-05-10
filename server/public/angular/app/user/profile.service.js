@@ -85,7 +85,7 @@
       getToken: getToken,
       currentUser: currentUser,
       isLoggedIn: isLoggedIn,
-      saveToken : saveToken
+      saveToken: saveToken
     };
 
 

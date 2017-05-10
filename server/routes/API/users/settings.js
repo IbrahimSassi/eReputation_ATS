@@ -15,7 +15,7 @@ router.get('/a', function (req, res, next) {
   res.json({"a": 1})
 });
 
-router.put('/basicinformationIndiv',authenticate, function (req, res, next) {
+router.put('/basicinformationIndiv', authenticate, function (req, res, next) {
 
   if (req.query.activeEmail && req.query.email && req.query.firstName && req.query.lastName && req.query.username && req.query.phoneNumber) {
     var activeEmail = req.query.activeEmail;
@@ -38,9 +38,9 @@ router.put('/basicinformationIndiv',authenticate, function (req, res, next) {
       if (err) return res.status(401);
 
 
-
-      User.findOne({ email: user.email }, function (err, userFound) {
-        if (err) return res.status(401);;
+      User.findOne({email: user.email}, function (err, userFound) {
+        if (err) return res.status(401);
+        ;
 
         var token;
         token = userFound.generateJwt();
@@ -78,8 +78,9 @@ router.put('/basicinformationBuss/:activeEmail/:email/:businessName/:businessTyp
     }, function (err, user) {
       if (err) return res.status(401);
 
-      User.findOne({ email: user.email, username:user.username }, function (err, userFound) {
-        if (err) return res.status(401);;
+      User.findOne({email: user.email, username: user.username}, function (err, userFound) {
+        if (err) return res.status(401);
+        ;
 
         var token;
         token = userFound.generateJwt();
@@ -96,9 +97,7 @@ router.put('/basicinformationBuss/:activeEmail/:email/:businessName/:businessTyp
 router.put('/additionalInformation', function (req, res, next) {
   console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 
- // console.log("Profile: ",req.params.profilePicture);
-
-
+  // console.log("Profile: ",req.params.profilePicture);
 
 
   if (req.body.activeEmail && req.body.about && req.body.birthday && req.body.country) {
@@ -114,41 +113,39 @@ router.put('/additionalInformation', function (req, res, next) {
     //*
     var profilePictureBase64 = profilePicture;
     var coverPictureBase64 = coverPicture;
-    if (req.body.profilePicture !="" && req.body.coverPicture !="")
-    {
-    fs.writeFile(__dirname + "/../../../public/uploads/images/"+profilePictureName+".png", profilePictureBase64, 'base64', function(err) {
-      if (err) console.log(err);
-    });
+    if (req.body.profilePicture != "" && req.body.coverPicture != "") {
+      fs.writeFile(__dirname + "/../../../public/uploads/images/" + profilePictureName + ".png", profilePictureBase64, 'base64', function (err) {
+        if (err) console.log(err);
+      });
 
-    fs.writeFile(__dirname + "/../../../public/uploads/images/"+coverPictureName+".jpg", coverPictureBase64, 'base64', function(err) {
-      if (err) console.log(err);
-    });
-    //*
+      fs.writeFile(__dirname + "/../../../public/uploads/images/" + coverPictureName + ".jpg", coverPictureBase64, 'base64', function (err) {
+        if (err) console.log(err);
+      });
+      //*
 
-    User.findOneAndUpdate({email: activeEmail}, {
-      $set: {
-        profilePicture: 'images/'+profilePictureName,
-        coverPicture: 'images/'+coverPictureName,
-        about: about,
-        birthday: birthday,
-        country: country
-      }
-    }, function (err, user) {
-      if (err) return res.status(401);
-
-      User.findOne({ email: user.email, username:user.username }, function (err, userFound) {
+      User.findOneAndUpdate({email: activeEmail}, {
+        $set: {
+          profilePicture: 'images/' + profilePictureName,
+          coverPicture: 'images/' + coverPictureName,
+          about: about,
+          birthday: birthday,
+          country: country
+        }
+      }, function (err, user) {
         if (err) return res.status(401);
 
-        var token;
-        token = userFound.generateJwt();
-        //console.log('token: ' + userFound);
-        res.status(200).json({"token": token});
+        User.findOne({email: user.email, username: user.username}, function (err, userFound) {
+          if (err) return res.status(401);
+
+          var token;
+          token = userFound.generateJwt();
+          //console.log('token: ' + userFound);
+          res.status(200).json({"token": token});
+        });
       });
-    });
-    res.status(200)
+      res.status(200)
     }
-else
-    {
+    else {
 
       User.findOneAndUpdate({email: activeEmail}, {
         $set: {
@@ -159,7 +156,7 @@ else
       }, function (err, user) {
         if (err) return res.status(401);
 
-        User.findOne({ email: user.email, username:user.username }, function (err, userFound) {
+        User.findOne({email: user.email, username: user.username}, function (err, userFound) {
           if (err) return res.status(401);
 
           var token;
@@ -189,7 +186,7 @@ router.put('/changepassword/:activeEmail/:oldpassword/:newpassword', function (r
     User.findOne({email: activeEmail}, function (err, user) {
 
       if (err) {
-       // console.log('err ', err);
+        // console.log('err ', err);
         return res.status(500).json(err);
       }
 
@@ -220,15 +217,6 @@ router.put('/changepassword/:activeEmail/:oldpassword/:newpassword', function (r
     res.status(400).json({"error": "All field are required!"})
   }
 });
-
-
-
-
-
-
-
-
-
 
 
 module.exports = router;

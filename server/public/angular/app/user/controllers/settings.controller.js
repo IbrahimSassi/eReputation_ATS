@@ -16,7 +16,7 @@
   /**Injection**/
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$qProvider'];
 
-  SettingsCtrl.$inject = ['$state', '$rootScope', 'angularLoad', '$location', 'SettingsService','$scope','ProfileService','$http'];
+  SettingsCtrl.$inject = ['$state', '$rootScope', 'angularLoad', '$location', 'SettingsService', '$scope', 'ProfileService', '$http'];
   /**End Of Injection**/
 
 
@@ -37,7 +37,7 @@
 
   };
 
-  function SettingsCtrl($state, $rootScope, angularLoad, $location, SettingsService,$scope,ProfileService,$http) {
+  function SettingsCtrl($state, $rootScope, angularLoad, $location, SettingsService, $scope, ProfileService, $http) {
 
     /**Scope Replace**/
     var vm = this;
@@ -53,7 +53,7 @@
 
     $scope.zz = "haha";
 
-      //*
+    //*
 
 
     /***/
@@ -80,7 +80,7 @@
     vm.additionalInformation = {
       activeEmail: $rootScope.currentUser.email,
       profilePicture: "",
-      coverPicture:"",
+      coverPicture: "",
       birthday: "",
       about: $rootScope.currentUser.about,
       country: $rootScope.currentUser.country
@@ -194,14 +194,14 @@
 
 //*********************Getting Image Base64 Codes********************
 
-    var filePickerProfilePicIndiv = function(evt) {
+    var filePickerProfilePicIndiv = function (evt) {
       var files = evt.target.files;
       var file = files[0];
 
       if (files && file) {
         var reader = new FileReader();
 
-        reader.onload = function(readerEvt) {
+        reader.onload = function (readerEvt) {
           var binaryString = readerEvt.target.result;
           vm.additionalInformation.profilePicture = btoa(binaryString);
         };
@@ -211,14 +211,14 @@
     };
 
     //***
-    var filePickerCoverPicIndiv = function(evt) {
+    var filePickerCoverPicIndiv = function (evt) {
       var files = evt.target.files;
       var file = files[0];
 
       if (files && file) {
         var reader = new FileReader();
 
-        reader.onload = function(readerEvt) {
+        reader.onload = function (readerEvt) {
           var binaryString = readerEvt.target.result;
           vm.additionalInformation.coverPicture = btoa(binaryString);
         };
@@ -228,14 +228,14 @@
     };
 
     //****
-    var filePickerProfilePicBuss = function(evt) {
+    var filePickerProfilePicBuss = function (evt) {
       var files = evt.target.files;
       var file = files[0];
 
       if (files && file) {
         var reader = new FileReader();
 
-        reader.onload = function(readerEvt) {
+        reader.onload = function (readerEvt) {
           var binaryString = readerEvt.target.result;
           vm.additionalInformation.profilePicture = btoa(binaryString);
         };
@@ -244,14 +244,14 @@
       }
     };
 //**
-    var filePickerCoverPicBuss = function(evt) {
+    var filePickerCoverPicBuss = function (evt) {
       var files = evt.target.files;
       var file = files[0];
 
       if (files && file) {
         var reader = new FileReader();
 
-        reader.onload = function(readerEvt) {
+        reader.onload = function (readerEvt) {
           var binaryString = readerEvt.target.result;
           vm.additionalInformation.coverPicture = btoa(binaryString);
         };

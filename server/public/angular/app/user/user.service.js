@@ -74,15 +74,12 @@
     };
 
 
-
-
-
     /*
      For forget password
      */
 
     var requestNewPassword = function (email) {
-      return UserFactory.requestNewPassword({email:email}).$promise;
+      return UserFactory.requestNewPassword({email: email}).$promise;
     };
     var changePassword = function (data) {
       return UserFactory.changePassword(data).$promise;
@@ -91,9 +88,6 @@
     /*
      End for forget password
      */
-
-
-
 
 
     return {
@@ -105,8 +99,8 @@
       login: login,
       logout: logout,
       SendVerificationEmail: SendVerificationEmail,
-      requestNewPassword :requestNewPassword,
-      changePassword : changePassword
+      requestNewPassword: requestNewPassword,
+      changePassword: changePassword
     };
 
 

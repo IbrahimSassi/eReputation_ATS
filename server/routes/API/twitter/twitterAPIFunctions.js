@@ -47,10 +47,8 @@ module.exports = {
 function SaveDatToTwitterProviderForRepliesToUserForChannel(since, until, channelId, campaignId, keywords, mentionedUser) {
 
 
-
   var keywordsArrayLength = keywords.length;
   var finalKeywords = null;
-
 
 
   for (var i = 0; i < keywordsArrayLength; i++) {
@@ -118,7 +116,7 @@ function SaveDatToTwitterProviderForRepliesToUserForChannel(since, until, channe
 
       if (tweets.search_metadata.next_results == null) {
         //res.status(200).json({"End":tweets})
-        console.log('End Of Scrapping For Replies',mentionedUser)
+        console.log('End Of Scrapping For Replies', mentionedUser)
 
       }
       else {
@@ -129,13 +127,14 @@ function SaveDatToTwitterProviderForRepliesToUserForChannel(since, until, channe
           console.log('countRep: ', count1, mentionedUser);
 
 
-          if(count1==440)
-          {
-            setTimeout(function(){ scrap(max); count1=0; }, 900000);
+          if (count1 == 440) {
+            setTimeout(function () {
+              scrap(max);
+              count1 = 0;
+            }, 900000);
           }
-          else
-          {
-          scrap(max);
+          else {
+            scrap(max);
           }
         }
         else {
@@ -154,7 +153,6 @@ function SaveDatToTwitterProviderForRepliesToUserForChannel(since, until, channe
 
 
 function SaveDatToTwitterProviderForMentionedUserForChannel(since, until, channelId, campaignId, keywords, mentionedUser) {
-
 
 
   var keywordsArrayLength = keywords.length;
@@ -217,7 +215,7 @@ function SaveDatToTwitterProviderForMentionedUserForChannel(since, until, channe
             console.log('Error', err);
           else {
 
-            //console.log('Saved Successfully: ', data);
+
 
           }
         });
@@ -234,12 +232,13 @@ function SaveDatToTwitterProviderForMentionedUserForChannel(since, until, channe
         if (max) {
           count2++;
           console.log('countMent: ', count2, mentionedUser)
-          if(count2==440)
-          {
-            setTimeout(function(){ scrap(max); count2=0;}, 900000);
+          if (count2 == 440) {
+            setTimeout(function () {
+              scrap(max);
+              count2 = 0;
+            }, 900000);
           }
-          else
-          {
+          else {
             scrap(max);
           }
         }
@@ -247,7 +246,7 @@ function SaveDatToTwitterProviderForMentionedUserForChannel(since, until, channe
           console.log('ElsecountMent: ', count2, mentionedUser)
         }
 
-        //
+
       }
 
     });
@@ -262,11 +261,10 @@ function SaveDatToTwitterProviderForMentionedUserForChannel(since, until, channe
 
 function TweetsScrapper(since, until, channelId, campaignId, keywords) {
 
-var editableSince=since;
+  var editableSince = since;
 
   var keywordsArrayLength = keywords.length;
   var finalKeywords = null;
-
 
 
   for (var i = 0; i < keywordsArrayLength; i++) {
@@ -302,7 +300,7 @@ var editableSince=since;
         newTwitterData.author = {
           screenName: tweets.statuses[i].user.screen_name,
           id: tweets.statuses[i].user.screen_name
-        }; //
+        };
         newTwitterData.dateOfScraping = new Date();
         newTwitterData.hashtags = tweets.statuses[i].entities.hashtags; //
         newTwitterData.tweetType = "NormalScraper";
@@ -319,7 +317,7 @@ var editableSince=since;
             console.log('Error', err);
           else {
 
-            //console.log('Saved Successfully: ', data);
+
           }
         });
       }
@@ -334,13 +332,14 @@ var editableSince=since;
         if (max) {
           count3++;
           console.log('countAll: ', count3)
-          if(count3==440)
-          {
+          if (count3 == 440) {
             editableSince.setDate(editableSince.getDate() + 1);
-            setTimeout(function(){ scrap(max); count3=0;}, 900000);
+            setTimeout(function () {
+              scrap(max);
+              count3 = 0;
+            }, 900000);
           }
-          else
-          {
+          else {
             scrap(max);
           }
         }
@@ -348,7 +347,7 @@ var editableSince=since;
           console.log('ElsecountAll: ', count3)
         }
 
-        //
+
       }
 
 

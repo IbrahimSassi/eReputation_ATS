@@ -31,7 +31,7 @@
     vm.idCampaign = $stateParams.idCampaign;
     vm.allChannelsInArray = [];
     var allChannels = null;
-    vm.since = moment().subtract(1, 'weeks');
+
     vm.until = moment();
 
 //For tab management
@@ -41,10 +41,10 @@
     vm.pn = 1;
 
 
-    $scope.$watch('vm.since', function(newValue, oldValue){
+    $scope.$watch('vm.since', function (newValue, oldValue) {
       console.info(newValue);
       console.info(moment(newValue).format('MM/DD/YYYY'));
-      $scope.dateEndMin=moment(newValue,'DD/MM/YYYY').add(1,'days').format('MM/DD/YYYY');
+      $scope.dateEndMin = moment(newValue, 'DD/MM/YYYY').add(1, 'days').format('MM/DD/YYYY');
     }, true);
 
 
@@ -170,7 +170,7 @@
           vm.detailCampaign = data[0];
           vm.minDate = moment(data[0].dateStart);
           vm.maxDate = moment(data[0].dateEnd);
-
+          vm.since = moment(data[0].dateStart);
         }).catch(function (err) {
 
         });
@@ -227,8 +227,6 @@
           TwitterService.GetUserInfo(ScreenName).then(function (item) {
 
 
-
-
             if (vm.selectChannelValue != 'all') {
               vm.name = item.name;
               vm.created_at = moment(item.created_at).format('DD-MMMM-YYYY');
@@ -275,8 +273,6 @@
      */
     //OnDateChange
     vm.onChange = function () {
-
-
 
 
       if (new Date(vm.since) > new Date(vm.until)) {
@@ -430,10 +426,10 @@
     function requestTopTweets(pn) {
       $(".indeterminate").removeClass("hide");
       TwitterService.GetTopTweet(topPositiveReply).then(function (data) {
-        document.getElementById('topPositiveReply'+pn).innerHTML = "";
+        document.getElementById('topPositiveReply' + pn).innerHTML = "";
         twttr.widgets.createTweet(
           data.id,
-          document.getElementById('topPositiveReply'+pn),
+          document.getElementById('topPositiveReply' + pn),
           {}
         );
         $(".indeterminate").addClass("hide");
@@ -441,30 +437,30 @@
       })
 
       TwitterService.GetTopTweet(topPositiveMention).then(function (data) {
-        document.getElementById('topPositiveMention'+pn).innerHTML = "";
+        document.getElementById('topPositiveMention' + pn).innerHTML = "";
         twttr.widgets.createTweet(
           data.id,
-          document.getElementById('topPositiveMention'+pn),
+          document.getElementById('topPositiveMention' + pn),
           {}
         );
         $(".indeterminate").addClass("hide");
       })
 
       TwitterService.GetTopTweet(topNegativeReply).then(function (data) {
-        document.getElementById('topNegativeReply'+pn).innerHTML = "";
+        document.getElementById('topNegativeReply' + pn).innerHTML = "";
         twttr.widgets.createTweet(
           data.id,
-          document.getElementById('topNegativeReply'+pn),
+          document.getElementById('topNegativeReply' + pn),
           {}
         );
         $(".indeterminate").addClass("hide");
       })
 
       TwitterService.GetTopTweet(topNegativeMention).then(function (data) {
-        document.getElementById('topNegativeMention'+pn).innerHTML = "";
+        document.getElementById('topNegativeMention' + pn).innerHTML = "";
         twttr.widgets.createTweet(
           data.id,
-          document.getElementById('topNegativeMention'+pn),
+          document.getElementById('topNegativeMention' + pn),
           {}
         );
         $(".indeterminate").addClass("hide");
@@ -472,14 +468,14 @@
 
     }
 
-    vm.topPageClicked = function(pn) {
+    vm.topPageClicked = function (pn) {
       vm.pn = pn;
       initTopTweets(pn);
       requestTopTweets(pn);
 
       $(".paginationC").removeClass("active");
 
-      $("#p"+pn).addClass('active');
+      $("#p" + pn).addClass('active');
 
     }
 
@@ -562,7 +558,7 @@
       vm.live = false;
     }
 
-    vm.liveClicked = function() {
+    vm.liveClicked = function () {
       vm.overview = false;
       vm.live = true;
     }

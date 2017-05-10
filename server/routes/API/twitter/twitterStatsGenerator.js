@@ -125,10 +125,8 @@ module.exports.getTwitterSentimentalForAll = function (req, res, next) {
 };
 
 
-
-
 module.exports.getTopTweet = function (req, res, next) {
-console.log("PN: ",req.body.pn);
+  console.log("PN: ", req.body.pn);
   var tweetType = req.body.tweetType;
   var score = req.body.score;
   var campaignId = req.body.campaignId;
@@ -138,7 +136,7 @@ console.log("PN: ",req.body.pn);
   var resultNumber = req.body.pn;
   if (req.body.channelId == "all") {
     DataProvider.findOne({
-       campaignId: campaignId, dateContent: {
+      campaignId: campaignId, dateContent: {
         $gte: new Date(since),
         $lt: new Date(until)
       }
@@ -154,7 +152,7 @@ console.log("PN: ",req.body.pn);
         $gte: new Date(since),
         $lt: new Date(until)
       }
-    }).sort({'contentScore.positivity': -1}).skip(resultNumber-1).then(function (doc, err) {
+    }).sort({'contentScore.positivity': -1}).skip(resultNumber - 1).then(function (doc, err) {
       if (err) res.send(err)
       console.log("*****************pos")
       console.log(doc)
@@ -173,7 +171,7 @@ console.log("PN: ",req.body.pn);
         $gte: new Date(since),
         $lt: new Date(until)
       }
-    }).sort({'contentScore.negativity': -1}).skip(resultNumber-1).then(function (doc, err) {
+    }).sort({'contentScore.negativity': -1}).skip(resultNumber - 1).then(function (doc, err) {
       if (err) res.send(err)
       res.json(doc)
     })
@@ -184,13 +182,11 @@ console.log("PN: ",req.body.pn);
 module.exports.getTopHashtags = function (req, res, next) {
 
 
-
   if (req.body.channelId == "all") {
     DataProvider.aggregate([{
       $match: {
 
         source: {'$eq': "tweetsProvider"},
-
 
 
         dateContent: {'$gte': new Date(req.body.since), '$lte': new Date(req.body.until)},
@@ -208,26 +204,27 @@ module.exports.getTopHashtags = function (req, res, next) {
     })
   }
 
-else {
-  DataProvider.aggregate([{
-    $match: {
+  else {
+    DataProvider.aggregate([{
+      $match: {
 
-      source: {'$eq': "tweetsProvider"},
-      tweetType: {'$eq': req.body.tweetType},
+        source: {'$eq': "tweetsProvider"},
+        tweetType: {'$eq': req.body.tweetType},
 
 
-      dateContent: {'$gte': new Date(req.body.since), '$lte': new Date(req.body.until)},
-      campaignId: {'$eq': req.body.campaignId},
-      channelId: {'$eq': req.body.channelId},
-    }
-  }, {$unwind: "$hashtags"}, {$group: {_id: "$hashtags", assets: {$push: {assets_id: "$_id"}}, nb: {$sum: 1}}},
+        dateContent: {'$gte': new Date(req.body.since), '$lte': new Date(req.body.until)},
+        campaignId: {'$eq': req.body.campaignId},
+        channelId: {'$eq': req.body.channelId},
+      }
+    }, {$unwind: "$hashtags"}, {$group: {_id: "$hashtags", assets: {$push: {assets_id: "$_id"}}, nb: {$sum: 1}}},
 
-    {$sort: {score: {$meta: "textScore"}, nb: -1}}])
+      {$sort: {score: {$meta: "textScore"}, nb: -1}}])
 
-    .then(function (data) {
-      res.json(data);
-    }).catch(function (err) {
-    res.json(err);
-  })}
+      .then(function (data) {
+        res.json(data);
+      }).catch(function (err) {
+      res.json(err);
+    })
+  }
 
 };

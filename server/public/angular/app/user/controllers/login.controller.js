@@ -18,7 +18,7 @@
   /**Injection**/
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$qProvider'];
 
-  LoginCtrl.$inject = ['UserService', '$state', '$rootScope', 'angularLoad', '$location', '$window','$stateParams'];
+  LoginCtrl.$inject = ['UserService', '$state', '$rootScope', 'angularLoad', '$location', '$window', '$stateParams'];
   /**End Of Injection**/
 
 
@@ -56,7 +56,7 @@
 
   /** Controller UseCtrl FUNCTION
    */
-  function LoginCtrl(UserService, $state, $rootScope, angularLoad, $location, $window,$stateParams) {
+  function LoginCtrl(UserService, $state, $rootScope, angularLoad, $location, $window, $stateParams) {
 
     /**Scope Replace**/
     var vm = this;
@@ -95,43 +95,40 @@
     };
 
 
-
-
     /*
      For forget password
      */
-vm.forgotPasswordRequestBtn = function () {
+    vm.forgotPasswordRequestBtn = function () {
 
 
-  UserService
-    .requestNewPassword(vm.requestedEmail)
-    .then(successCallback, errorCallback);
+      UserService
+        .requestNewPassword(vm.requestedEmail)
+        .then(successCallback, errorCallback);
 
 
-  function successCallback(response) {
-    swal("Success!", "An Email Was Sent To You!", "success");
-  }
+      function successCallback(response) {
+        swal("Success!", "An Email Was Sent To You!", "success");
+      }
 
-  function errorCallback(error) {
-    swal("Error! Please verify your Email");
-  }
-}
+      function errorCallback(error) {
+        swal("Error! Please verify your Email");
+      }
+    }
 
     vm.changePasswordBtn = function () {
-  if(vm.passwordChange == vm.passwordChangeAgain)
-  {
-    ChangePass();
-  }
-  else {
-    swal("Error! Please Verify Your Password");
-  }
+      if (vm.passwordChange == vm.passwordChangeAgain) {
+        ChangePass();
+      }
+      else {
+        swal("Error! Please Verify Your Password");
+      }
     }
 
     function ChangePass() {
 
 
       vm.change = {
-        token : $stateParams.token,
+        token: $stateParams.token,
         password: vm.passwordChange
       };
 
@@ -152,9 +149,6 @@ vm.forgotPasswordRequestBtn = function () {
     /*
      End for forget password
      */
-
-
-
 
 
   };

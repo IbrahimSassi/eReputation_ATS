@@ -87,18 +87,14 @@
 
     vm.onSubmitRegister = function () {
 
-if ((vm.credentialsRegister.username.length <5 && vm.credentialsRegister.businessName.length <5) || vm.credentialsRegister.password.length <6  || (vm.credentialsRegister.password != vm.credentialsRegister.passwordAgain)
-)
-{
-}
+      if ((vm.credentialsRegister.username.length < 5 && vm.credentialsRegister.businessName.length < 5) || vm.credentialsRegister.password.length < 6 || (vm.credentialsRegister.password != vm.credentialsRegister.passwordAgain)
+      ) {
+      }
 
 
-
-
-else
-{
-  register();
-}
+      else {
+        register();
+      }
 
     };
 
@@ -120,8 +116,7 @@ else
         if (error.status == 401) {
           vm.emailExists = true;
         }
-        else if (error.status == 403)
-        {
+        else if (error.status == 403) {
           vm.usernameEx = true;
         }
         else

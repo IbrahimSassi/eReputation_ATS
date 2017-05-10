@@ -8,10 +8,10 @@
     .module('ATSApp.profile')
     .factory('SettingsFactory', SettingsFactory);
 
-  SettingsFactory.$inject = ['$resource','$window'];
+  SettingsFactory.$inject = ['$resource', '$window'];
 
   /* @ngInject */
-  function SettingsFactory($resource,$window) {
+  function SettingsFactory($resource, $window) {
 
     /** Change The Link To your Rest URL From the JAVA EE APP*/
     return $resource('/users/settings',
