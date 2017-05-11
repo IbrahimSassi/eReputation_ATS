@@ -69,6 +69,136 @@ router.post('/', function (req, res, next) {
 
 });
 
+router.post('/keys', function (req, res, next) {
+
+  var matchObject = {
+    $and: [
+      {
+        campaignId: {
+          '$eq': req.body.campaignId
+        }
+      },
+      {
+        source: {
+          '$eq': "websitesProvider"
+        }
+      }
+      ,{
+        name:{
+          '$regex' : ".*"+req.body.keyword+".*"
+        }
+      }
+    ]
+  };
+
+
+  var groupObject = {
+    _id: {
+      dateContent: {
+        $substr: ["$dateContent", 0, 10]
+      }
+    },
+    neutral_score: {
+      $avg: "$contentScore.neutral"
+    },
+    positive_score: {
+      $avg: "$contentScore.positivity"
+    },
+    negative_score: {
+      $avg: "$contentScore.negativity"
+    }
+  };
+
+  if (req.body.channelId == "all") {
+    matchObject.$and.splice(0, 1);
+    // delete groupObject._id.channelId;
+  }
+
+  // var sortObject = {$sort: {dateContent: -1}};
+  DataProvider.getDataProviderMatchedAndGrouped(matchObject, groupObject, undefined, undefined).then(function (data) {
+    res.json(data);
+  }).catch(function (err) {
+    res.json(err);
+  })
+
+});
+
+router.post('/allkeys-neg', function (req, res, next) {
+
+  var matchObject = {
+    $and: [
+      {
+        campaignId: {
+          '$eq': req.body.campaignId
+        }
+      },
+      {
+        source: {
+          '$eq': "websitesProvider"
+        }
+      }
+      ,{
+        name:{
+          '$regex' : ".*"+req.body.keyword+".*"
+        }
+      }
+    ]
+  };
+
+  var sortObject=
+  {
+    "contentScore.negativity": -1 //Sort by Date Added DESC
+  }
+
+
+
+  // var sortObject = {$sort: {dateContent: -1}};
+  DataProvider.getDataProviderMatchedAndGrouped(matchObject, undefined, sortObject, undefined).then(function (data) {
+    res.json(data);
+  }).catch(function (err) {
+    res.json(err);
+  })
+
+});
+
+router.post('/allkeys-pos', function (req, res, next) {
+
+  var matchObject = {
+    $and: [
+      {
+        campaignId: {
+          '$eq': req.body.campaignId
+        }
+      },
+      {
+        source: {
+          '$eq': "websitesProvider"
+        }
+      }
+      ,{
+        name:{
+          '$regex' : ".*"+req.body.keyword+".*"
+        }
+      }
+    ]
+  };
+
+  var sortObject=
+    {
+      "contentScore.positivity": -1 //Sort by Date Added DESC
+    }
+
+
+
+  // var sortObject = {$sort: {dateContent: -1}};
+  DataProvider.getDataProviderMatchedAndGrouped(matchObject, undefined, sortObject, undefined).then(function (data) {
+    res.json(data);
+  }).catch(function (err) {
+    res.json(err);
+  })
+
+});
+
 /**
  * END Search For WebsitesProvider with chanelId & campaignId
  */

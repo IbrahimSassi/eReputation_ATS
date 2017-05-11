@@ -17,8 +17,19 @@
       return WebsitesFactory.websitesDataProvider(filter).$promise;
     }
 
+    this.getWebsitesAnalysisKeywords = function (filter) {
+      return WebsitesFactory.websitesKeywordsAnalysis(filter).$promise;
+    }
+    this.getWebsitesAnalysisKeywordsNeg = function (filter) {
+      return WebsitesFactory.websitesKeywordsAnalysisAllNeg(filter).$promise;
+    }
+
+    this.getWebsitesAnalysisKeywordsPos = function (filter) {
+      return WebsitesFactory.websitesKeywordsAnalysisAllPos(filter).$promise;
+    }
+
     this.getWebsitesAnalysis = function (url) {
-      return WebsitesFactory.websitesDataAnalisis({url:url}).$promise;
+      return WebsitesFactory.websitesDataAnalisis({url: url}).$promise;
     }
     this.getAllwebSitesProvider = function () {
       return WebsitesFactory.query().$promise;

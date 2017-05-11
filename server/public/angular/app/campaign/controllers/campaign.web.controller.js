@@ -44,20 +44,68 @@
         "channelId": id
       }
       WebsitesService.getWebsitesProvider(myFilter).then(function (data) {
-        $scope.tableAllAnalysis= [];
-        $scope.tableAllAnalysis.push( ["date","positive","negative","neutre"]);
+        $scope.tableAllAnalysis = [];
+        $scope.tableAllAnalysis.push(["date", "positive", "negative", "neutre"]);
         data.forEach(function (arr) {
           $scope.tableAllAnalysis.push([
             arr._id.dateContent,
             parseFloat(arr.positive_score)
-            ,parseFloat(arr.negative_score)
-            ,parseFloat(arr.neutral_score)
+            , parseFloat(arr.negative_score)
+            , parseFloat(arr.neutral_score)
           ]);
         });
 
-      }).catch(function (err) {;
+      }).catch(function (err) {
+        ;
       });
     };
+
+
+    vm.getWebsitesAnalysisByKeywords = function (keyword) {
+      $scope.currentKeyword=keyword;
+      var myFilter = {
+        "campaignId": vm.idCampaign,
+        "keyword": keyword
+      }
+      WebsitesService.getWebsitesAnalysisKeywords(myFilter).then(function (data) {
+        $scope.tableAllAnalysisSpec = [];
+        $scope.generalSentimentByKeyword = {};
+        var positive = 0;
+        var negative = 0;
+        var neutral = 0;
+        $scope.tableAllAnalysisSpec.push(["date", "positive", "negative", "neutral"]);
+        $scope.websitesMoyKeywords = data[0];
+        data.forEach(function (vrr, index) {
+          $scope.tableAllAnalysisSpec.push(
+            [
+              vrr._id.dateContent,
+              parseFloat(vrr.positive_score)
+              , parseFloat(vrr.negative_score)
+              , parseFloat(vrr.neutral_score)
+            ]);
+          positive += parseFloat(vrr.positive_score);
+          negative += parseFloat(vrr.negative_score);
+          neutral += parseFloat(vrr.neutral_score);
+          if (index == data.length - 1) {
+            $scope.generalSentimentByKeyword.positive_score = positive / data.length;
+            $scope.generalSentimentByKeyword.negative_score = negative / data.length;
+            $scope.generalSentimentByKeyword.neutral_score = neutral / data.length;
+          }
+        });
+
+
+      }).catch(function (err) {
+      });
+
+      WebsitesService.getWebsitesAnalysisKeywordsNeg(myFilter).then(function (negData) {
+        $scope.negArticles=negData;
+
+      });
+      WebsitesService.getWebsitesAnalysisKeywordsPos(myFilter).then(function (posData) {
+        $scope.posArticles=posData;
+      });
+
+    }
 
 
     vm.getWebsitesProvider = function (channelId) {
@@ -66,16 +114,16 @@
         "channelId": channelId
       }
       WebsitesService.getWebsitesProvider(myFilter).then(function (data) {
-        $scope.tableAllAnalysisSpec= [];
-        $scope.tableAllAnalysisSpec.push( ["date","positive","negative","neutre"]);
+        $scope.tableAllAnalysisSpec = [];
+        $scope.tableAllAnalysisSpec.push(["date", "positive", "negative", "neutre"]);
         $scope.websitesChannels = data[0];
         data.forEach(function (vrr) {
           $scope.tableAllAnalysisSpec.push(
             [
               vrr._id.dateContent,
               parseFloat(vrr.positive_score)
-              ,parseFloat(vrr.negative_score)
-              ,parseFloat(vrr.neutral_score)
+              , parseFloat(vrr.negative_score)
+              , parseFloat(vrr.neutral_score)
             ]);
         });
       }).catch(function (err) {
@@ -84,10 +132,9 @@
       ChannelService.getChannelByID(channelId).then(function (channelData) {
 
         WebsitesService.getAllwebSitesProvider().then(function (webData) {
-          $scope.allWebsitesSearch=[];
+          $scope.allWebsitesSearch = [];
           webData.forEach(function (exactData) {
-            if(channelId==exactData.channelId)
-            {
+            if (channelId == exactData.channelId) {
               $scope.allWebsitesSearch.push(exactData);
             }
           })
@@ -96,10 +143,10 @@
         }).catch(function (err) {
         });
 
-          WebsitesService.getWebsitesAnalysis(channelData.url).then(function (data) {
-            $scope.websitesAnalysis = data;
-          }).catch(function (err) {
-          });
+        WebsitesService.getWebsitesAnalysis(channelData.url).then(function (data) {
+          $scope.websitesAnalysis = data;
+        }).catch(function (err) {
+        });
       });
 
 
@@ -112,6 +159,7 @@
     // );
 
     $scope.channelsofThisCampaign = [];
+    $scope.keywordsofThisCampaign = [];
     vm.getListOfWebsitesChannels = function () {
 
       CampaignService.getCampaignById(vm.idCampaign).then(function (campaign) {
@@ -127,7 +175,16 @@
       });
     };
 
+    vm.getListOfWebsitesKeywords = function () {
+
+      CampaignService.getCampaignById(vm.idCampaign).then(function (campaign) {
+        $scope.keywordsofThisCampaign = campaign[0].keywords;
+      });
+    };
+
+
     vm.getListOfWebsitesChannels();
+    vm.getListOfWebsitesKeywords();
 
 
     /***

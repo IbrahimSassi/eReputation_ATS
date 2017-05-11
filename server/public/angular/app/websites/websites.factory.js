@@ -6,7 +6,7 @@
   'use strict';
 
   angular
-    .module('ATSApp.websites',[])
+    .module('ATSApp.websites', [])
     .factory('WebsitesFactory', WebsitesFactoryFN);
 
   WebsitesFactoryFN.$inject = ['$resource'];
@@ -18,6 +18,21 @@
       {
         'update': {method: 'PUT'},
 
+        'websitesKeywordsAnalysis': {
+          url: '/api/websites/keys',
+          method: 'POST'
+          , isArray: true
+        },
+        'websitesKeywordsAnalysisAllNeg': {
+          url: '/api/websites/allkeys-neg',
+          method: 'POST'
+          , isArray: true
+        },
+        'websitesKeywordsAnalysisAllPos': {
+          url: '/api/websites/allkeys-pos',
+          method: 'POST'
+          , isArray: true
+        },
 
         'websitesDataProvider': {
           url: '/api/websites',
@@ -33,7 +48,6 @@
 
         },
       }
-
     );
   }
 
