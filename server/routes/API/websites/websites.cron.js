@@ -25,32 +25,43 @@ module.exports.websitesLauncher = function () {
         async.eachSeries(data, function iteratee(keys, callbackData) {
           async.eachSeries(keys, function iteratee(news, callbackKeys) {
             async.eachSeries(news, function iteratee(item, callbackNews) {
-              if (item !== null && item.description && item.description !== "") {
+              if (item !== undefined) {
+                if (item.description !== undefined) {
+                  if (item !== null && item.description && item.description !== "") {
 
-                var dataToSaveWebsites = {
-                  "name": item.title ? item.title : null,
-                  "sourceLink": item.url ? item.url : null,
-                  "content": item.description ? item.description : null,
-                  "dateContent": item.postDate ? item.postDate : new Date(),
-                  "contentScore": {},
-                  "contentTopics": [],
-                  "contentEmotions": [],
-                  "contentLanguage": item.lang ? item.lang : null,
-                  "author": item.author ? item.author : null,
-                  "dateOfScraping": new Date(),
-                  "campaignId": item.campaignId ? item.campaignId : null,
-                };
-                var newWebsitesArticle = new DataProvider.websitesProvider(dataToSaveWebsites);
-                DataProvider.createDataProviderModel(newWebsitesArticle, function (err, item) {
-                  if (err) return handleError(res, err);
+                    var dataToSaveWebsites = {
+                      "name": item.title ? item.title : null,
+                      "sourceLink": item.url ? item.url : null,
+                      "content": item.description ? item.description : null,
+                      "dateContent": item.postDate ? item.postDate : new Date(),
+                      "contentScore": {},
+                      "contentTopics": [],
+                      "contentEmotions": [],
+                      "contentLanguage": item.lang ? item.lang : null,
+                      "author": item.author ? item.author : null,
+                      "dateOfScraping": new Date(),
+                      "campaignId": item.campaignId ? item.campaignId : null,
+                    };
+                    var newWebsitesArticle = new DataProvider.websitesProvider(dataToSaveWebsites);
+                    DataProvider.createDataProviderModel(newWebsitesArticle, function (err, item) {
+                      if (err) return handleError(res, err);
+                      else {
+                        callbackNews();
+                      }
+                    });
+                  }
                   else {
                     callbackNews();
                   }
-                });
+                }
+                else {
+                  callbackNews();
+                }
               }
               else {
                 callbackNews();
               }
+
             }, function done() {
               callbackKeys();
             });
