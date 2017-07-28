@@ -3,7 +3,7 @@
  */
 
 module.exports = {
-  from : "mohamedfiras.ouertani@esprit.tn",
-  pwd : "MFO11889162",
+  from : "YOUR-EMAIL",
+  pwd : "YOUR-PASSWORD",
   subject : "Digital Reputation Registration Confirmation"
 };
